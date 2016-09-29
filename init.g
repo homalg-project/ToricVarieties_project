@@ -10,17 +10,17 @@
 #############################################################################
 
 # the cohomology pieces
-ReadPackage( "ToricVarieties", "gap/ToricVarietiesAdditionalProperties.gd" );
-ReadPackage( "ToricVarieties", "gap/ICTCurves.gd" );
-ReadPackage( "ToricVarieties", "gap/VanishingSets.gd" );
-ReadPackage( "ToricVarieties", "gap/DegreeXLayer.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyOnPn.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyFromBTransform.gd" );
-ReadPackage( "ToricVarieties", "gap/NefAndMoriCone.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyViaGSForGradedModules.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyViaGSForCAP.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyFromCohomCalg.gd" );
-ReadPackage( "ToricVarieties", "gap/CohomologyFromResolution.gd" );
-ReadPackage( "ToricVarieties", "gap/MyCohom.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ToricVarietiesAdditionalProperties.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ICTCurves.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/VanishingSets.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayer.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyOnPn.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromBTransform.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyViaGSForGradedModules.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyViaGSForCAP.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromCohomCalg.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MyCohom.gd" );
 
-ReadPackage( "ToricVarieties", "gap/Multitruncations.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Multitruncations.gd" );

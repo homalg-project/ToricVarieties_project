@@ -424,8 +424,8 @@ InstallMethod( ContributingDenominators,
     # this the string that we need to address cohomCalg
     command_string := TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety );
 
-    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'TORIC VARIETIES' INSTALLED!
-    cohomCalgDirectory := DirectoriesPackageLibrary( "ToricVarieties", "cohomCalg" )[ 1 ];
+    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'SHEAF COHOMOLOGY ON TORIC VARIETIES' INSTALLED!
+    cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
     cohomCalg := Filename( cohomCalgDirectory, "cohomcalg" );
 
     # set up communication channels

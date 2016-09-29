@@ -11,10 +11,10 @@
 
 LoadPackage( "AutoDoc" );
 
-AutoDoc( "ToricVarieties" : scaffold := true, autodoc :=
+AutoDoc( "SheafCohomologyOnToricVarieties" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
                          "gap/VanishingSets.gd",
-                         "examples/examplesmanual/VanishingSets.g",
+                         "examples/VanishingSets.g",
                          #"gap/DegreeXLayer.gd",
                          #"examples/examplesmanual/DegreeXLayerVectorSpaces.g",
                          #"gap/CohomologyOnPn.gd",
