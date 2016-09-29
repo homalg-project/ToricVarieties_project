@@ -1,0 +1,20 @@
+#############################################################################
+##
+##  README              SheafCohomologyOnToricVarieties package
+##                      Martin Bies
+##
+##  Copyright 2016      ITP Universität Heidelberg
+##
+##  A package to compute sheaf cohomology on toric varieties
+##
+#############################################################################
+
+README file for the `SheafCohomologyOnToricVarieties' GAP4 package
+        
+To get the latest version of this GAP 4 package pull the corresponding branch
+from github. This completes the installation of the package.
+
+E-mail me if there are any questions, remarks, suggestions. Also, we
+would like to hear about applications of this package.
+
+Martin Bies, bies@thphys.uni-heidelberg.de
