@@ -10,6 +10,7 @@
 #############################################################################
 
 # the cohomology pieces
+ReadPackage( "ToricVarieties", "gap/ToricVarietiesAdditionalProperties.gd" );
 ReadPackage( "ToricVarieties", "gap/ICTCurves.gd" );
 ReadPackage( "ToricVarieties", "gap/VanishingSets.gd" );
 ReadPackage( "ToricVarieties", "gap/DegreeXLayer.gd" );
