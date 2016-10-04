@@ -544,6 +544,7 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
       fi;
 
     od;
+    generators := DuplicateFreeList( generators );
 
     # (3) compute the offset
     offset := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
@@ -559,36 +560,201 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
 end );
 
 # use cohomCalg to extract the denomiators that contribute to the individual cohomology classes
-# [note: ambigious monomial contributions are not yet supported, but it should not be too hard to achieve this]
+# this is a convience method
 InstallMethod( VanishingSets,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
-    local denominator_contributions, denominator_contributions_affine_semigroups, vanishing_sets, v_rec, i;
+    local serre_duality_to_be_used;
+
+    # check input
+    if not ( ( IsSmooth( variety ) and IsComplete( variety ) ) 
+             or ( IsProjective( variety ) and IsSimplicial( variety ) ) ) then
+      Error( "only implemented for (smooth, complete) and for (projective, simplicial) toric varieties" );
+      return;
+    fi;
+
+    # check if we can use Serre
+    serre_duality_to_be_used := IsSmooth( variety );
+
+    # and compute the vanishing sets
+    return VanishingSets( variety, serre_duality_to_be_used );
+
+end );
+
+# use cohomCalg to extract the denomiators that contribute to the individual cohomology classes
+# this is the generic method
+InstallMethod( VanishingSets,
+               " for toric varieties",
+               [ IsToricVariety, IsBool ],
+  function( variety, serre_duality_to_be_used )
+    local denominator_contributions, v_rec, cutoff, i, j, k, l, affine_semigroups_list, helper, found, rays_helper,
+         rays_comparer, pos, search, K_bundle, new_affine_semigroups_list, new_gens, new_offset;
+
+    # check input
+    if not ( ( IsSmooth( variety ) and IsComplete( variety ) ) 
+             or ( IsProjective( variety ) and IsSimplicial( variety ) ) ) then
+      Error( "only implemented for (smooth, complete) and for (projective, simplicial) toric varieties" );
+      return;
+    fi;
 
     # compute the denominator contributions first
     denominator_contributions := ContributingDenominators( variety );
 
-    # now turn each denominator into a shifted cone
-    denominator_contributions_affine_semigroups := List( denominator_contributions, x -> 
-                                                   List( x, k -> TurnDenominatorIntoShiftedSemigroup( variety, k ) ) );
-
-    # an wrap the shifted cones at position i to form a vanishing set - the line bundles that have vanishing H^i
-    vanishing_sets := List( [ 1 .. Length( denominator_contributions_affine_semigroups ) ],
-                                  k -> VanishingSet( variety,
-                                                     denominator_contributions_affine_semigroups[ k ],
-                                                     k-1 ) );
-
-    # for neater accessment, put the vanishing sets in a record, i.e. at position i are the vanishing sets for H^i
+    # initialise v_rec
     v_rec := rec();
-    for i in [ 1 .. Length( vanishing_sets ) ] do
-      v_rec.( String( i-1 ) ) := vanishing_sets[ i ];
+
+    # determine cutoff
+    if not serre_duality_to_be_used then
+      cutoff := Dimension( variety );
+    else
+      if IsInt( Dimension( variety ) / 2 ) then
+        cutoff := Dimension( variety ) / 2;
+      else
+        cutoff := Int( Dimension( variety ) / 2 ) + 1;
+      fi;
+    fi;
+
+    # note that i runs from 1 to cutoff +1 (i.e. we iterate over H^{i-1}
+    for i in [ 1 .. cutoff+1 ] do
+
+      if Length( denominator_contributions[ i ] ) = 0 then
+        v_rec.(String(i-1)) := VanishingSet( variety, [], i-1 );
+      elif Length( denominator_contributions[ i ] ) = 1 then
+        v_rec.(String(i-1)) := VanishingSet( variety, 
+                               [ TurnDenominatorIntoShiftedSemigroup( variety, denominator_contributions[ i ][ 1 ] ) ],
+                               i-1 );
+      else
+        affine_semigroups_list := [ TurnDenominatorIntoShiftedSemigroup( variety, denominator_contributions[ i ][ 1 ] ) ];
+        for j in [ 1 .. Length( denominator_contributions[ i ] ) ] do
+          helper := TurnDenominatorIntoShiftedSemigroup( variety, denominator_contributions[ i ][ j ] );
+          found := false;
+          k := 1;
+          while not found do
+
+            # check if we found this affine semigroup before already
+            # if so 'delete' it and otherwise add it
+
+            # note that all affine semigroups encountered here are initiated from generators - never from h-constraints
+            if Offset( helper ) = Offset( affine_semigroups_list[ k ] ) then
+
+              # pick rays of helper
+              if IsAffineSemigroupOfCone( helper ) then
+                rays_helper := UnderlyingList( UnderlyingConeVPresentationList( helper ) );
+              else
+                rays_helper := UnderlyingList( UnderlyingSemigroupGeneratorList( helper ) );
+              fi;
+
+              # pick rays of comparer
+              if IsAffineSemigroupOfCone( affine_semigroups_list[ k ] ) then
+                rays_comparer := ShallowCopy(
+                                     UnderlyingList( UnderlyingConeVPresentationList( affine_semigroups_list[ k ] ) ) );
+              else
+                rays_comparer := ShallowCopy(
+                                     UnderlyingList( UnderlyingSemigroupGeneratorList( affine_semigroups_list[ k ] ) ) );
+              fi;
+
+              # check if they are of the same length
+              if Length( rays_helper ) = Length( rays_comparer ) then
+
+                # and now compare them (up to potential permutations)
+                search := true;
+                l := 1;
+                while search do
+
+                  # find rays_helper[ l ] in rays_comparer
+                  pos := Position( rays_comparer, rays_helper[ l ] );
+
+                  # if we do not find it no need to keep comparing
+                  if pos = fail then
+                    search := false;
+                  # however if we find this ray generator we remove it from rays_comparer
+                  else
+                    Remove( rays_comparer, pos );
+                  fi;
+
+                  # increase l
+                  l := l+1;
+
+                  # check if we reached the end of rays_helper
+                  if l > Length( rays_helper ) then
+                    # terminate this search
+                    search := false;
+                    # if we found all ray_generators of rays_helper in rays_comparer and rays_comparer has no more
+                    # than these elements, we have a match
+                    if Length( rays_comparer ) = 0 then
+                      found := true;
+                    fi;
+                  fi;
+
+                od;
+
+              fi;
+
+            fi;
+
+
+            # increase k
+            k := k +1;
+
+            # check if we have checked all semigroups
+            if k > Length( affine_semigroups_list ) then
+              if not found then
+                # the affine_semigroup was not found in the list, hence add it
+                affine_semigroups_list[ Length( affine_semigroups_list ) + 1 ] := helper;
+              fi;
+
+              # and turn found into true to end the search loop
+              found := true;
+
+            fi;
+          od;
+
+        od;
+
+        # form the vanishing set of cohomological index i-1
+        v_rec.(String(i-1)) := VanishingSet( variety, affine_semigroups_list, i-1 );
+
+      fi;
+
     od;
 
-    # then return the collection of all these vanishing sets
+    # now use serre-duality
+    if serre_duality_to_be_used then
+
+      # compute canonical bundle
+      K_bundle := (-1) * Sum( List( WeightsOfIndeterminates( CoxRing( variety ) ),
+                                                              k -> UnderlyingListOfRingElements( k ) ) );
+      # and use it to determine the other vanishing sets
+      for i in [ cutoff .. Dimension( variety ) ] do
+
+        # extract the list of affine semigroup for the 'other' cohomology class
+        affine_semigroups_list := ListOfUnderlyingAffineSemigroups( v_rec.(String( Dimension( variety ) - i )) );
+        new_affine_semigroups_list := [];
+
+        # now iterate over them and manipulate each group accordingly
+        for j in [ 1 .. Length( affine_semigroups_list ) ] do
+          if IsAffineSemigroupOfCone( affine_semigroups_list[ j ] ) then
+            new_gens := (-1) * UnderlyingList( UnderlyingConeVPresentationList( affine_semigroups_list[ j ] ) );
+          else
+            new_gens := (-1) * UnderlyingList( UnderlyingSemigroupGeneratorList( affine_semigroups_list[ j ] ) );
+          fi;
+          new_offset := K_bundle - Offset( affine_semigroups_list[ j ] );
+          new_affine_semigroups_list[ j ] := AffineSemigroup( SemigroupGeneratorList( new_gens ), new_offset );
+        od;
+
+        # now define the new vanishing_set
+        v_rec.(String(i)) := VanishingSet( variety, new_affine_semigroups_list, i );
+
+      od;
+
+    fi; # <- end of Serre-duality use
+
+    # finally return the vanishing sets
     return v_rec;
 
 end );
+
 
 # compute the optimally (!) improved vanising set, which extends the GS cone
 InstallMethod( ImprovedVanishingSetForGS,

@@ -66,17 +66,10 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ [ "Convex", ">= 2015.11.06" ],
-                           [ "GradedRingForHomalg", ">=2015.12.04" ],
-                           [ "Modules", ">=2016.01.20" ],
-                           [ "GradedModules", ">=2015.12.04" ],
-                           [ "ToolsForHomalg", ">=2016.02.17" ],
-                           [ "AutoDoc", ">=2016.02.16" ],
-                           [ "GradedModulePresentationsForCAP", ">=2016.03.15" ],
+  NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "TruncationsOfGradedModulePresentationsForCAP", ">= 2016.03.15" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "NormalizInterface", ">= 0.9.7" ],
-                           [ "4ti2Interface", ">= 2015.11.06" ],
                            [ "ToricVarieties", ">=2016.05.03" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],

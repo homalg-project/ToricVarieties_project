@@ -145,8 +145,10 @@ DeclareOperation( "TurnDenominatorIntoShiftedSemigroup",
                    [ IsToricVariety, IsString ] );
 
 #!
-DeclareAttribute( "VanishingSets",
-                   IsToricVariety );
+DeclareOperation( "VanishingSets",
+                   [ IsToricVariety ] );
+DeclareOperation( "VanishingSets",
+                   [ IsToricVariety, IsBool ] );
 
 #!
 DeclareAttribute( "ImprovedVanishingSetForGS",
