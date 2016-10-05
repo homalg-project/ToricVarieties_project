@@ -46,35 +46,6 @@ DeclareOperation( "H0OnProjectiveSpaceInRangeViaLinearRegularity",
 
 
 
-###########################################################################
-##
-#! @Section Experimental methods for computations on direct products on Pns
-##
-###########################################################################
-
-#! @Description
-#! Given that variety <A>vari</A>is a direct product of complex projective spaces with Coxring <M>S</M> and that
-#! <M>M</M> a f. p. graded S-module, this is an experimental method to compute sheaf cohomology. Note that all
-#! coherent sheaves on direct products of projective spaces have finite dimensional vector spaces as their
-#! cohomology groups. Thus this method returns such a vector space.
-#! A boolean $b$ can be specified as third argument. If $b = true$ we saturate the module before the core procedure is applied.
-#! The default value is 'false', i.e. do not saturate the module.
-#! Another boolean $b2$ can be specified as fourth argument. If $b2 = true$ we display messages, which inform about the status of the
-#! computation of InternalHom - this is useful for long computations, as the user will then be informed about the status fo the 
-#! computation. Nontheless, the default value is $b2 = false$, i.e. do not display these messages.
-#! @Returns a vector space
-#! @Arguments vari, M
-DeclareOperation( "H0OnDirectProductsOfProjectiveSpaces",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
-
-DeclareOperation( "H0OnDirectProductsOfProjectiveSpaces",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
-
-DeclareOperation( "H0OnDirectProductsOfProjectiveSpaces",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
-
-
-
 #####################################################################################################################
 ##
 #! @Section Experimental methods for computations on direct products on Pns implemented for the GradedModules Package

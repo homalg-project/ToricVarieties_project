@@ -11,7 +11,6 @@
 InstallMethod( IrrelevantLeftIdealForCAP,
                " for toric varieties",
                [ IsFanRep ],
-               
   function( variety )
     local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j;
     
@@ -44,7 +43,6 @@ end );
 InstallMethod( IrrelevantRightIdealForCAP,
                " for toric varieties",
                [ IsFanRep ],
-               
   function( variety )
     local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j;
     
@@ -58,13 +56,13 @@ InstallMethod( IrrelevantRightIdealForCAP,
     
     # and now compute these generators
     for i in [ 1 .. Length( maximal_cones ) ] do
-        
+
         irrelevant_ideal[ i ] := 1;
-        
+
         for j in [ 1 .. Length( maximal_cones[ i ] ) ] do
-            
+
             irrelevant_ideal[ i ] := irrelevant_ideal[ i ] * indeterminates[ j ]^( 1 - maximal_cones[ i ][ j ] );
-            
+
         od;
         
     od;
@@ -88,7 +86,7 @@ InstallMethod( SRLeftIdealForCAP,
     
     # turn the rays_in_max_cones into a list that makes the comparision simpler
     rays_in_max_conesII := List( rays_in_max_cones, x -> Positions( x, 1 ) );
-        
+
     # iterate over the subsets of [ 1.. number ] that consist of at least 2 elements
     # then keep only those that are not contained in a maximal-cone-set
     for i in [ 2 .. number ] do
@@ -112,11 +110,11 @@ InstallMethod( SRLeftIdealForCAP,
           
             tester := false;
           
-          fi;          
+          fi;
           
           k := k + 1;
 
-        od;        
+        od;
         
         # if k = Length( rays_in_max_conesII ) + 2 we add buffer[ j ] to the SR-ideal_generators
         if k = Length( rays_in_max_conesII ) + 2 then
@@ -144,7 +142,7 @@ InstallMethod( SRLeftIdealForCAP,
       
       # then add this monomial to the monomial list
       generator_list[ i ] := buffer;
-                             
+
     od;
 
     # generator_list contains now all monomials that generate the Stanley-Reißner ideal
@@ -198,11 +196,11 @@ InstallMethod( SRRightIdealForCAP,
           
             tester := false;
           
-          fi;          
+          fi;
           
           k := k + 1;
 
-        od;        
+        od;
         
         # if k = Length( rays_in_max_conesII ) + 2 we add buffer[ j ] to the SR-ideal_generators
         if k = Length( rays_in_max_conesII ) + 2 then
@@ -230,7 +228,7 @@ InstallMethod( SRRightIdealForCAP,
       
       # then add this monomial to the monomial list
       generator_list[ i ] := buffer;
-                             
+
     od;
 
     # generator_list contains now all monomials that generate the Stanley-Reißner ideal
