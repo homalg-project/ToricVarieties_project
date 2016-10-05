@@ -515,13 +515,13 @@ InstallMethod( VanishingSets,
     serre_duality_to_be_used := IsSmooth( variety );
 
     # and compute the vanishing sets
-    return VanishingSets( variety, serre_duality_to_be_used );
+    return ComputeVanishingSets( variety, serre_duality_to_be_used );
 
 end );
 
 # use cohomCalg to extract the denomiators that contribute to the individual cohomology classes
 # this is the generic method
-InstallMethod( VanishingSets,
+InstallMethod( ComputeVanishingSets,
                " for toric varieties",
                [ IsToricVariety, IsBool ],
   function( variety, serre_duality_to_be_used )
@@ -678,28 +678,6 @@ InstallMethod( VanishingSets,
 
 end );
 
-
-# compute the optimally (!) improved vanising set, which extends the GS cone
-InstallMethod( ImprovedVanishingSetForGS,
-               " for toric varieties",
-               [ IsToricVariety ],
-  function( variety )
-    local vanishing_sets, affine_semigroup_collection, i, vanishing_set;
-
-    # compute the vanishing sets of the variety in question
-    vanishing_sets := VanishingSets( variety );
-
-    # now unite the affine semigroups that form the vanishing sets for i > 0
-    affine_semigroup_collection := [];
-    for i in [ 1 .. Dimension( variety ) ] do
-      Append( affine_semigroup_collection, ListOfUnderlyingAffineSemigroups( vanishing_sets.( String( i ) ) ) );
-    od;
-
-    # and form a new vanishing set from those 
-    return VanishingSet( variety, affine_semigroup_collection, "i>0 " );
-
-end );
-
 # check if a point (= element of the class group) is contained in the improved vanishing set
 InstallMethod( PointContainedInVanishingSet,
                " for a vanishing set and a point",
@@ -719,7 +697,7 @@ InstallMethod( PointContainedInVanishingSet,
       return true;
     fi;
 
-    # now check that the point is NOT contained in any of the shifted cones
+    # now check that the point is NOT contained in any of the affine semigroups
     for i in [ 1 .. Length( ListOfUnderlyingAffineSemigroups( vanishing_set ) ) ] do
       if PointContainedInAffineSemigroup( ListOfUnderlyingAffineSemigroups( vanishing_set )[ i ], point ) then
         return false;

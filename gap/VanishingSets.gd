@@ -123,14 +123,11 @@ DeclareOperation( "TurnDenominatorIntoShiftedSemigroup",
                    [ IsToricVariety, IsString ] );
 
 #!
-DeclareOperation( "VanishingSets",
-                   [ IsToricVariety ] );
-DeclareOperation( "VanishingSets",
+DeclareAttribute( "VanishingSets",
+                   IsToricVariety );
+DeclareOperation( "ComputeVanishingSets",
                    [ IsToricVariety, IsBool ] );
 
-#!
-DeclareAttribute( "ImprovedVanishingSetForGS",
-                   IsToricVariety );
 
 #!
 DeclareOperation( "PointContainedInVanishingSet",

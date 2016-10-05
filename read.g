@@ -18,9 +18,9 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayer.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromBTransform.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyViaGSForGradedModules.gi" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyViaGSForCAP.gi" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromCohomCalg.gi" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gi" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MyCohom.gi" );
+#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gi" );
+#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MyCohom.gi" );
 
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Multitruncations.gi" );

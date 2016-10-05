@@ -19,19 +19,24 @@
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnObjects",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
+                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnObjectsWrittenToFiles",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ] );
+                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
+                                  IsGradedLeftOrRightModulePresentationForCAP ] );
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnMorphisms",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
+                [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
+                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
 
 #!
 DeclareOperation( "GradedExtDegreeZeroOnObjects",
-                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
+                                         IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+
 
 
 #############################################################
@@ -45,14 +50,9 @@ DeclareOperation( "GradedExtDegreeZeroOnObjects",
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "H0",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
-
-DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
-
 DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
-
 DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
@@ -69,14 +69,9 @@ DeclareOperation( "H0",
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M, i
 DeclareOperation( "Hi",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ] );
-
-DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ] );
-
 DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ] );
-
 DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
 
@@ -92,15 +87,6 @@ DeclareOperation( "Hi",
 #! Computation of all sheaf cohomology classes from my theorem
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
-DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
-
-DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
-
-DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
-
 DeclareOperation( "AllHi",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
