@@ -10,70 +10,6 @@
 #############################################################################
 
 
-#################################
-##
-## Computation of the GS-cone
-##
-#################################
-
-# compute the cone C = K^sat for smooth toric varieties, then C = K^sat = K, and it is simpler to compute it
-InstallMethod( GSCone,
-                " for toric varieties.",
-                [ IsToricVariety ],
-  function( variety )
-    local deg, rayList, conesVList, buffer, i, j, conesHList;
-
-    if not IsSmooth( variety ) then
-
-      Error( "Variety must be smooth for this method to work" );
-      return;
-
-    elif not IsSmooth( variety ) then
-
-      Error( "Variety must be projective for this method to work" );
-      return;
-
-    fi;
-
-    # obtain degrees of the generators of the Coxring
-    deg := WeightsOfIndeterminates( CoxRing( variety ) );
-    deg := List( [ 1..Length( deg ) ], x -> UnderlyingListOfRingElements( deg[ x ] ) );
-
-    # figure out which rays contribute to the maximal cones in the fan
-    rayList := RaysInMaximalCones( FanOfVariety( variety ) );
-
-    # use raylist to produce list of cones to be intersected - each cone is V-presented first
-    conesVList := [];
-    for i in [ 1..Length( rayList ) ] do
-      buffer := [];
-      for j in [1..Length(rayList[i])] do
-	if rayList[ i ][ j ] = 0 then
-          # the generator j in deg should be added to buffer
-          Add( buffer, deg[ j ] );
-        fi;
-      od;
-      Add( conesVList, buffer );
-    od;
-
-    # remove duplicates in coneVList
-    conesVList := DuplicateFreeList( conesVList );
-
-    # compute the H-presentation for the cones given by the V-presentations in the above list
-    # to this end we use NormalizInterface
-    conesHList := [];
-    for i in [ 1 .. Length( conesVList ) ] do
-      Append( conesHList, NmzSupportHyperplanes( NmzCone( [ "integral_closure", conesVList[ i ] ] ) ) );
-    od;
-
-    # remove duplicates and recall that the intersection of cones is again a cone
-    conesHList := DuplicateFreeList( conesHList );
-
-    # finally turn this list into a ConeHPresentationList
-    return ConeHPresentationList( conesHList );
-
-end );
-
-
 
 ###########################################
 ##
@@ -555,7 +491,8 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
     od;
 
     # and return the affine semigroup
-    return AffineSemigroup( SemigroupGeneratorList( generators ), offset );
+    return AffineSemigroupForGradedModulePresentationsForCAP( SemigroupForGradedModulePresentationsForCAP( generators ),
+                                                              offset );
 
 end );
 
@@ -639,20 +576,8 @@ InstallMethod( VanishingSets,
             if Offset( helper ) = Offset( affine_semigroups_list[ k ] ) then
 
               # pick rays of helper
-              if IsAffineSemigroupOfCone( helper ) then
-                rays_helper := UnderlyingList( UnderlyingConeVPresentationList( helper ) );
-              else
-                rays_helper := UnderlyingList( UnderlyingSemigroupGeneratorList( helper ) );
-              fi;
-
-              # pick rays of comparer
-              if IsAffineSemigroupOfCone( affine_semigroups_list[ k ] ) then
-                rays_comparer := ShallowCopy(
-                                     UnderlyingList( UnderlyingConeVPresentationList( affine_semigroups_list[ k ] ) ) );
-              else
-                rays_comparer := ShallowCopy(
-                                     UnderlyingList( UnderlyingSemigroupGeneratorList( affine_semigroups_list[ k ] ) ) );
-              fi;
+              rays_helper := GeneratorList( UnderlyingSemigroup( helper ) );
+              rays_comparer := ShallowCopy( GeneratorList( UnderlyingSemigroup( affine_semigroups_list[ k ] ) ) );
 
               # check if they are of the same length
               if Length( rays_helper ) = Length( rays_comparer ) then
@@ -734,13 +659,11 @@ InstallMethod( VanishingSets,
 
         # now iterate over them and manipulate each group accordingly
         for j in [ 1 .. Length( affine_semigroups_list ) ] do
-          if IsAffineSemigroupOfCone( affine_semigroups_list[ j ] ) then
-            new_gens := (-1) * UnderlyingList( UnderlyingConeVPresentationList( affine_semigroups_list[ j ] ) );
-          else
-            new_gens := (-1) * UnderlyingList( UnderlyingSemigroupGeneratorList( affine_semigroups_list[ j ] ) );
-          fi;
+          new_gens := (-1) * GeneratorList( UnderlyingSemigroup( affine_semigroups_list[ j ] ) );
           new_offset := K_bundle - Offset( affine_semigroups_list[ j ] );
-          new_affine_semigroups_list[ j ] := AffineSemigroup( SemigroupGeneratorList( new_gens ), new_offset );
+          new_affine_semigroups_list[ j ] := AffineSemigroupForGradedModulePresentationsForCAP(
+                                                                  SemigroupForGradedModulePresentationsForCAP( new_gens ),
+                                                                  new_offset );
         od;
 
         # now define the new vanishing_set

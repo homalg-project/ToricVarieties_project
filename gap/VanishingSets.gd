@@ -10,28 +10,6 @@
 #############################################################################
 
 
-#################################
-##
-#! @Section The GS-cone
-##
-#################################
-
-#! For the computation of sheaf cohomology on toric varieties, knowledge about vanishing sets is important. One particular
-#! such vanishing set is a cone $C$ in the class_group of the variety in question. For all points in $C$, the associated
-#! coherent sheaf has vanishing $H^i$ for $i > 0$. As this cone was introduced in arXiv:math/0305214 we call it the 
-#! Gregory-Smith-Cone and abbreviate it by \emph{GSCone}.
-#! In this paper, we use Corollary 3.8 to identiy $C$ with $K^{\text{sat}}$. By the remark given
-#! below example 2.7 we know that for smooth toric varieties we have $K = K^{\text{sat}}$. Finally we use the 
-#! description given at the bottom of page 4 to compute the semigroup $K$. The following method performs this very computation.
-
-#! @Description
-#! Given a smooth toric variety <A>vari</A>, this method returns a ConeHPresentationList which defines the GS-cone.
-#! @Returns a ConeHPresentationList
-#! @Arguments vari
-DeclareAttribute( "GSCone",
-                 IsToricVariety );
-
-
 ###########################################
 ##
 #! @Section GAP category for vanishing sets
