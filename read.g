@@ -21,4 +21,3 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi"
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromCohomCalg.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gi" );
 
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Multitruncations.gi" );

@@ -22,4 +22,3 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyViaGSForCAP.gd" )
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromCohomCalg.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gd" );
 
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Multitruncations.gd" );
