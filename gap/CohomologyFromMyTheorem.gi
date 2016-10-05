@@ -565,12 +565,12 @@ end );
 
 #############################################################
 ##
-## Section Computation of H0 by the theorem of G.S.
+## Section Computation of H0 by my theorem
 ##
 #############################################################
 
 # compute H^0 by applying the theorem from Greg Smith
-InstallMethod( H0ByGSForCAP, 
+InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
   function( variety, module, saturation_wished, fast_algorithm_wished, display_messages )
@@ -668,30 +668,30 @@ InstallMethod( H0ByGSForCAP,
 
 end );
 
-InstallMethod( H0ByGSForCAP,
+InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
   function( variety, module, saturation_wished, fast_algorithm_wished )
 
-    return H0ByGSForCAP( variety, module, saturation_wished, fast_algorithm_wished, false );
+    return H0( variety, module, saturation_wished, fast_algorithm_wished, false );
 
 end );
 
-InstallMethod( H0ByGSForCAP,
+InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
   function( variety, module, saturation_wished )
 
-    return H0ByGSForCAP( variety, module, saturation_wished, true, false );
+    return H0( variety, module, saturation_wished, true, false );
 
 end );
 
-InstallMethod( H0ByGSForCAP,
+InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, module )
 
-    return H0ByGSForCAP( variety, module, false, true, false );
+    return H0( variety, module, false, true, false );
 
 end );
 
@@ -699,12 +699,12 @@ end );
 
 #############################################################
 ##
-#! @Section The theorem of GS implemented for CAP for Hi
+#! @Section My theorem implemented to compute Hi
 ##
 #############################################################
 
-# compute H^i by applying the theorem from Greg Smith
-InstallMethod( HiByGSForCAP,
+# compute H^i by applying my theorem
+InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ],
   function( variety, module, index, saturation_wished, fast_algorithm_wished, display_messages )
@@ -804,30 +804,30 @@ InstallMethod( HiByGSForCAP,
 
 end );
 
-InstallMethod( HiByGSForCAP,
+InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
   function( variety, module, index, saturation_wished, fast_algorithm_wished )
 
-    return HiByGSForCAP( variety, module, index, saturation_wished, fast_algorithm_wished, false );
+    return Hi( variety, module, index, saturation_wished, fast_algorithm_wished, false );
 
 end );
 
-InstallMethod( HiByGSForCAP,
+InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ],
   function( variety, module, index, saturation_wished )
 
-    return HiByGSForCAP( variety, module, index, saturation_wished, true, false );
+    return Hi( variety, module, index, saturation_wished, true, false );
 
 end );
 
-InstallMethod( HiByGSForCAP,
+InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
   function( variety, module, index )
 
-    return HiByGSForCAP( variety, module, index, false, true, false );
+    return Hi( variety, module, index, false, true, false );
 
 end );
 
@@ -835,12 +835,12 @@ end );
 
 ###################################################################################
 ##
-#! @Section The theorem of GS implemented for CAP to compute all cohomology classes
+#! @Section My theorem implemented to compute all cohomology classes
 ##
 ###################################################################################
 
-# compute all cohomology classes by applying the theorem from Greg Smith
-InstallMethod( AllCohomologiesByGSForCAP,
+# compute all cohomology classes by my theorem
+InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
   function( variety, module, saturation_wished, fast_algorithm_wished, display_messages )
@@ -969,176 +969,30 @@ InstallMethod( AllCohomologiesByGSForCAP,
 
 end );
 
-InstallMethod( AllCohomologiesByGSForCAP,
+InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
   function( variety, module, saturation_wished, fast_algorithm_wished )
 
-    return AllCohomologiesByGSForCAP( variety, module, saturation_wished, fast_algorithm_wished, false );
+    return AllHi( variety, module, saturation_wished, fast_algorithm_wished, false );
 
 end );
 
-InstallMethod( AllCohomologiesByGSForCAP,
+InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
   function( variety, module, saturation_wished )
 
-    return AllCohomologiesByGSForCAP( variety, module, saturation_wished, true, false );
+    return AllHi( variety, module, saturation_wished, true, false );
 
 end );
 
-InstallMethod( AllCohomologiesByGSForCAP,
+InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, module )
 
-    return AllCohomologiesByGSForCAP( variety, module, false, true, false );
-
-end );
-
-
-
-#############################################################
-##
-## Section Check if H0 is greater than a given lower bound
-##
-#############################################################
-
-# check if H0 is greater than a lower bound
-InstallMethod( H0GreaterThanLowerBoundByGSForCAP,
-               " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
-  function( variety, module, lower_bound, saturation_wished, fast_algorithm_wished )
-    local zero, vec_space, deg, ideal_generators, B, mSat, e, power, checker, ideal_power_generators, B_power, GH;
-
-    # check that the input is valid to work with
-    if not IsSmooth( variety ) then
-
-      Error( "Variety must be smooth" );
-      return;
-
-    elif not IsProjective( variety ) then
-
-      Error( "Variety must be projective (which implies completness)" );
-      return;
-
-    fi;
-
-    # compute smallest ample divisor via Nef cone
-    deg := ClassOfSmallestAmpleDivisor( variety );
-
-    # and the corresponding ideal in the Coxring that is generated by this degree layer
-    ideal_generators := DegreeXLayer( variety, deg );
-    B := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators ] ), CoxRing( variety ) );
-
-    # saturate the module
-    mSat := module;
-    if saturation_wished then
-      mSat := Saturate( module, B );
-    fi;
-
-    # if mSat is a submodule, replace it by a presentation
-    if IsGradedLeftOrRightSubmoduleForCAP( mSat ) then
-      mSat := PresentationForCAP( mSat );
-    fi;
-
-    # we have a specialised algorithm for H0 of vector bundles
-    zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
-    if IsZeroForObjects( Source( UnderlyingMorphism( mSat ) ) ) then
-      vec_space := UnderlyingVectorSpaceObject(
-                             DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( mSat ) ),
-                               zero )
-                                        );
-        Print( Concatenation( "H0 has been computed as H0 = ", String( Dimension( vec_space ) ), " \n" ) );
-        if Dimension( vec_space ) > lower_bound then
-          Print( "The bound is satisfied \n" );
-          return true;
-        else
-          Print( "The bound is not satisfied \n" );
-          return false;
-        fi;
-
-    fi;
-
-    # determine integer e that we need to perform the computation of the cohomology
-    e := 0;
-    while not TORIC_VARIETIES_INTERNAL_GS_PARAMETER_CHECK_FOR_CAP( variety, e, mSat, deg, 0 ) do
-      e := e + 1;
-    od;
-
-    # inform the user that we have found a suitable e
-    Print( Concatenation( "Found maximal integer: ", String( e ) , "\n" ) );
-
-    # initialise the computation
-    power := 0;
-    checker := true;
-
-    while checker do
-
-      # inform about the status
-      Print( "\n \n" );
-      Print( Concatenation( "We will now compute an estimate for H0 from power ", String( power ), "... \n" ) );
-      Print( "------------------------------------------------------- \n \n" );
-
-      # compute the power-th power of the ideal
-      ideal_power_generators := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^power );
-      B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_power_generators ] ), CoxRing( variety ) );
-
-      # compute the GradedHom
-      if fast_algorithm_wished then
-        vec_space := CokernelObject( InternalHomDegreeZeroOnObjects( variety, PresentationForCAP( B_power ), mSat ) );
-      else
-        GH := ByASmallerPresentation( InternalHomOnObjects( PresentationForCAP( B_power ), mSat ) );
-        vec_space := CokernelObject( UnderlyingVectorSpaceMorphism( DegreeXLayer( variety, GH, zero ) ) );
-      fi;
-
-      # inform the user about the result
-      Print( Concatenation( "Found that H0 must be at least of dimension ", String( Dimension( vec_space ) ), "\n" ) );
-
-      # if not, increase power
-      power := power + 1;
-
-      # if power > e, then we have computed H0 and we can thus produce and output in any case
-      if power > e then
-
-        Print( Concatenation( "H0 has been computed as H0 = ", String( Dimension( vec_space ) ), " \n" ) );
-        if Dimension( vec_space ) > lower_bound then
-          Print( "The bound is satisfied \n" );
-          return true;
-        else
-          Print( "The bound is not satisfied \n" );
-          return false;
-        fi;
-
-      fi;
-
-      # else just check the bound before we recontinue
-      if Dimension( vec_space ) > lower_bound then
-        Print( "The bound is satisfied \n" );
-        return true;
-      fi;
-
-    od;
-
-end );
-
-InstallMethod( H0GreaterThanLowerBoundByGSForCAP,
-               " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ],
-  function( variety, module, lower_bound, saturation_wished )
-
-    return H0GreaterThanLowerBoundByGSForCAP( variety, module, lower_bound, saturation_wished, true );
-
-end );
-
-InstallMethod( H0GreaterThanLowerBoundByGSForCAP,
-               " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
-  function( variety, module, lower_bound )
-
-    return H0GreaterThanLowerBoundByGSForCAP( variety, module, lower_bound, false, true );
+    return AllHi( variety, module, false, true, false );
 
 end );
 
