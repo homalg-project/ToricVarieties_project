@@ -25,7 +25,7 @@
            -> compute its cohomology with CAP
            -> reapply exactness
            in worst case, this gives better bounds on the cohomology than I have had before)
-           
+
      (if then exactness does not suffice, we could try to understand H0( intermediate_sheaf ) as elements of the Corresponding 
      'range' projective module and then induce the mappings in the remaining part of the exact sequence
      -> apply spectral sequence technology from mathematica notebook to obtain a new and (maybe?) better approximation
