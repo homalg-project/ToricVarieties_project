@@ -8,6 +8,10 @@
 ##
 #####################################################################################
 
+######################
+#! @Section Attributes
+######################
+
 #! @Description
 #! Returns the irrelevant left ideal of the Cox ring of the variety <A>vari</A>, using the language of CAP.
 #! @Returns a graded left ideal for CAP
@@ -35,3 +39,15 @@ DeclareAttribute( "SRLeftIdealForCAP",
 #! @Arguments vari
 DeclareAttribute( "SRRightIdealForCAP",
                  IsToricVariety );
+
+
+########################
+#! @Section Constructors
+########################
+
+#! @Description
+#! Creates a toric variety from a number of GLSM charges
+#! @Returns a variety
+#! @Arguments a list of lists of integers
+DeclareOperation( "ToricVarietyFromGLSMCharges",
+                  [ IsList ] );
