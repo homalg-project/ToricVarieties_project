@@ -86,6 +86,8 @@ DeclareOperation( "Hi",
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "AllHi",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "AllHi",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
 

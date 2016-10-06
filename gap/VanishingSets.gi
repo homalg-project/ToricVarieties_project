@@ -206,7 +206,7 @@ InstallMethod( Display,
       for i in [ 1 .. Length( ListOfUnderlyingAffineSemigroups( vanishing_set ) ) ] do
           Print( Concatenation( "Affine semigroup ", String( i ), ": \n" ) );
           Display( ListOfUnderlyingAffineSemigroups( vanishing_set )[ i ] );
-          Print( " \n \n" );
+          Print( "\n" );
       od;
     fi;
 

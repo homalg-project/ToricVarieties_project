@@ -4,7 +4,7 @@
 
 #! @Subsection DegreeXLayerVectorSpaces of graded projective modules (and their morphisms) on P1xP1
 
-LoadPackage( "ToricVarieties" );
+LoadPackage( "SheafCohomologyOnToricVarieties" );
 
 #! @Example
 P1 := ProjectiveSpace( 1 );

@@ -97,7 +97,9 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
                                                                           Q,
                                                                           display_messages
                                                                           ) ) );
-      Print( "\n \n" );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
 
       matrix3 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
@@ -106,7 +108,10 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
                                                                           Q,
                                                                           display_messages
                                                                           ) ) );
-      Print( "\n \n" );
+
+      if display_messages then
+        Print( "\n \n" );
+      fi;
 
       # inform that the matrices have been computed and we now compute the syzygies
       if display_messages then
@@ -927,8 +932,8 @@ end );
 # compute all cohomology classes by my theorem
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
-  function( variety, module )
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( variety, module, display_messages )
     local cohoms, i;
 
     # check that the input is valid to work with
@@ -951,7 +956,10 @@ InstallMethod( AllHi,
       Print(  "----------------------------------------------\n" );
 
       # make the computation - only display messages
-      cohoms[ i ] := Hi( variety, module, i-1, true, false );
+      cohoms[ i ] := Hi( variety, module, i-1, display_messages, false );
+
+      # additional empty line for optical separation
+      Print( "\n" );
 
     od;
 
@@ -963,5 +971,14 @@ InstallMethod( AllHi,
 
     # and finally return the results
     return cohoms;
+
+end );
+
+InstallMethod( AllHi,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, module )
+
+    return AllHi( variety, module, true );
 
 end );

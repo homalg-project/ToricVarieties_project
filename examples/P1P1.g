@@ -4,7 +4,7 @@
 
 #! @Subsection P1xP1 created by a polytope
 
-LoadPackage( "ToricVarieties" );
+LoadPackage( "SheafCohomologyOnToricVarieties" );
 
 #! @Example
 

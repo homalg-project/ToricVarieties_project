@@ -1,10 +1,10 @@
-#! @Chapter Sheaf cohomology computations on (direct products of) projective spaces
+#! @Chapter Sheaf cohomology on (direct products of) projective spaces
 
 #! @Section Sheaf cohomology on direct product of projective spaces: Examples 
 
 #! @Subsection Examples for graded modules on P1 and P1xP1
 
-LoadPackage( "ToricVarieties" );
+LoadPackage( "SheafCohomologyOnToricVarieties" );
 
 #! @Example
 
@@ -54,20 +54,4 @@ H0OnProjectiveSpaceViaLinearRegularity( P1, C );
 #! 1
 H0OnProjectiveSpaceInRangeViaLinearRegularity( P1, C, [ 0 .. 5 ] );
 #! [ [ 0, 1 ], [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5, 6 ] ]
-#! @EndExample
-
-
-
-
-
-#! @Subsection Examples for cohomology computations on P1xP1
-
-#! @Example
-H0OnDirectProductsOfProjectiveSpaces( P1xP1, C2 );
-#! <A vector space object over Q of dimension 1>
-H0OnDirectProductsOfProjectiveSpaces( P1xP1, V );
-#! <A vector space object over Q of dimension 4>
-H0OnDirectProductsOfProjectiveSpaces( P1xP1, VPrime );
-#! <A vector space object over Q of dimension 4>
-
 #! @EndExample

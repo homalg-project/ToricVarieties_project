@@ -4,7 +4,7 @@
 
 #! @Subsection Projective Space
 
-LoadPackage( "ToricVarieties" );
+LoadPackage( "SheafCohomologyOnToricVarieties" );
 
 #! @Example
 
