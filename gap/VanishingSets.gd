@@ -1,13 +1,13 @@
-#############################################################################
+################################################################################################
 ##
-##  VanishingSets.gd     ToricVarieties       Martin Bies
+##  VanishingSets.gd              SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2015- 2016, Sebastian Gutsche, TU Kaiserslautern
-##                        Martin Bies,       ITP Heidelberg
+##  Copyright 2016                Martin Bies,       ITP Heidelberg
 ##
 #! @Chapter Computation of vanishing sets
 ##
-#############################################################################
+################################################################################################
+
 
 
 ###########################################

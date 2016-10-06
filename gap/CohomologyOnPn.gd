@@ -1,13 +1,13 @@
-###################################################################################
+##########################################################################################
 ##
-##  CohomologyOnPn.gd         ToricVarieties package
+##  CohomologyOnPn.gd                  SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2015- 2016, Sebastian Gutsche, TU Kaiserslautern
-##                        Martin Bies,       ITP Heidelberg
+##  Copyright 2016                     Martin Bies,       ITP Heidelberg
 ##
 #! @Chapter Sheaf cohomology computations on (direct products of) projective spaces
 ##
-###################################################################################
+#########################################################################################
+
 
 
 ####################################################

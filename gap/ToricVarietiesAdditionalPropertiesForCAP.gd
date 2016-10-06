@@ -1,15 +1,19 @@
-####################################################################################
+################################################################################################
 ##
-##  ToricVarietiesAdditionalProperties.gd    SheafCohomologyOnToricVarieties package
+##  ToricVarietiesAdditionalPropertiesForCAP.gd        SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2011- 2016, Martin Bies, ITP Heidelberg
+##  Copyright 2016                                     Martin Bies,       ITP Heidelberg
 ##
-## Additional methods/properties for toric varieties
+#! @Chapter Additional methods/properties for toric varieties
 ##
-#####################################################################################
+################################################################################################
+
+
 
 ######################
+##
 #! @Section Attributes
+##
 ######################
 
 #! @Description
@@ -41,8 +45,11 @@ DeclareAttribute( "SRRightIdealForCAP",
                  IsToricVariety );
 
 
+
 ########################
+##
 #! @Section Constructors
+##
 ########################
 
 #! @Description

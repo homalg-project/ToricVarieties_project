@@ -1,13 +1,13 @@
-#############################################################################
+################################################################################################
 ##
-##  NefMoriAndIntersection.gi         ToricVarieties package
+##  NefMoriAndIntersection.gi          SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2015- 2016, Sebastian Gutsche, TU Kaiserslautern
-##                        Martin Bies,       ITP Heidelberg
+##  Copyright 2016                     Martin Bies,       ITP Heidelberg
 ##
-#! @Chapter Nef and mori-cone as well as basic intersection theory
+#! @Chapter Nef and Mori Cone
 ##
-#############################################################################
+################################################################################################
+
 
 
 #########################################################
