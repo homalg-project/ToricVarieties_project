@@ -107,11 +107,11 @@ DeclareProperty( "IsFull",
 #################################################
 
 #!
-DeclareOperation( "TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
+DeclareOperation( "SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
                    [ IsToricVariety, IsList ] );
 
 #!
-DeclareOperation( "TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
+DeclareOperation( "SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
                    [ IsToricVariety ] );
 
 #!

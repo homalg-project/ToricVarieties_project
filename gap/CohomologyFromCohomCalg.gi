@@ -36,7 +36,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
 
     fi;
 
-    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'TORIC VARIETIES' INSTALLED!
+    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'SHEAF COHOMOLOGY ON TORIC VARIETIES' INSTALLED!
     cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
     cohomCalg := Filename( cohomCalgDirectory, "cohomcalg" );
 
@@ -57,7 +57,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
       # not that the degrees used by CAP describe the degree of the generators of the module
       # this is related by (-1) to the degree of the corresponding bundle, as used by cohomCalg
       # -> therefore an additional (-1) is used in the following command
-      command_string := TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING(
+      command_string := SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING(
                                     variety, (-1) * UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) );
 
       # execute cohomCalg with the 'input file' described by the command_string

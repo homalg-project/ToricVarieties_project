@@ -237,7 +237,7 @@ end );
 ###############################################
 
 # produce the command string that will be used to trigger cohomCalg to compute the cohomologies of a certain line bundle
-InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
+InstallMethod( SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
                " for toric varieties",
                [ IsToricVariety, IsList ],
   function( variety, degree )
@@ -341,12 +341,12 @@ InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
 end );
 
 # produce the command string that will be used to trigger cohomCalg to compute the cohomologies of the structure sheaf
-InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
+InstallMethod( SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
 
-    return TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety,
+    return SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety,
                                                               List( [ 1 .. Rank( ClassGroup( variety ) ) ], i -> 0 )
                                                              );
 
@@ -362,7 +362,7 @@ InstallMethod( ContributingDenominators,
          contributing_monomials, index, collector, i;
 
     # this the string that we need to address cohomCalg
-    command_string := TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety );
+    command_string := SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety );
 
     # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'SHEAF COHOMOLOGY ON TORIC VARIETIES' INSTALLED!
     cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
