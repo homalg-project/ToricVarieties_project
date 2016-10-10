@@ -50,12 +50,6 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
-      map := CAPPresentationCategoryMorphism( source,
-                                              map,
-                                              range,
-                                              CapCategory( source )!.constructor_checks_wished
-                                             );
-      map := ByASmallerPresentation( map );
 
       # inform that we have the graded module presentation morphism and will now try to truncate it
       if display_messages then
@@ -67,7 +61,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 
       matrix1 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
-                                                                          UnderlyingMorphism( Source( map ) ),
+                                                                          UnderlyingMorphism( source ),
                                                                           TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
                                                                           Q,
                                                                           display_messages
@@ -92,7 +86,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
       # otherwise also compute the other matrices
       matrix2 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
-                                                                          UnderlyingMorphism( map ),
+                                                                          map,
                                                                           TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
                                                                           Q,
                                                                           display_messages
@@ -103,7 +97,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 
       matrix3 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
-                                                                          UnderlyingMorphism( Range( map ) ),
+                                                                          UnderlyingMorphism( range ),
                                                                           TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
                                                                           Q,
                                                                           display_messages
@@ -155,13 +149,13 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
       Print( Concatenation( "We will now compute the map of graded module presentations, ",
                             "whose kernel is the InternalHOM that we are interested in... \n" ) );
       range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
-                                                      UnderlyingMorphism( b ) )
-                                                      );
+                                                  IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
+                                                  UnderlyingMorphism( b ) )
+                                                  );
       source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
-                                                      UnderlyingMorphism( b ) )
-                                                      );
+                                                  IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
+                                                  UnderlyingMorphism( b ) )
+                                                  );
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
@@ -170,7 +164,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
                                               range,
                                               CapCategory( source )!.constructor_checks_wished
                                              );
-      map := ByASmallerPresentation( map );
 
       # inform that we have the graded module presentation morphism and will now try to truncate it
       Print( "Computed the map of graded module presentations. Will now truncate it... \n" );
@@ -212,8 +205,8 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
       local range, source, map, Q, matrix1, matrix2, matrix3, source_vec_space_pres, range_vec_space_pres, map_vec_space_pres,
            ker1, ker2, bridge;
 
-      # Let mor1: A -> A' and mor2: B -> B' and let A = (R_A - \rho_A G_A ) and alike for the others. Then we need to compute the 
-      # morphism Hom( A', B ) -> Hom( A, B' ). 
+      # Let mor1: A -> A' and mor2: B -> B' and let A = (R_A - \rho_A -> G_A ) and alike for the others. 
+      # Then we compute the degree zero layer of the morphism Hom( A', B ) -> Hom( A, B' ). 
 
 
       # STEP1: Hom( A', B ):
@@ -230,7 +223,7 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
       # G_{A'}^v \otimes G_B ---------- rho_{A'}^v \otimes id_{G_B} ------------> R_{A'}^v \otimes G_B
       #
 
-      # compute the map or graded module preseentations
+      # compute the map of graded module presentations
       if display_messages then
         Print( "Step1: \n" );
         Print( "------ \n" );
@@ -253,11 +246,11 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
                                               range,
                                               CapCategory( source )!.constructor_checks_wished
                                              );
-      map := ByASmallerPresentation( map );
 
       # inform that we have the graded module presentation morphism and will now try to truncate it
       if display_messages then
-        Print( Concatenation( "Computed the map of graded module presentations whose kernel is GradedHom( Range( mor1 ), Source( mor2 ) ).",
+        Print( Concatenation( "Computed the map of graded module presentations whose kernel is ",
+                              "GradedHom( Range( mor1 ), Source( mor2 ) ).",
                               "Will now truncate it... \n \n" ) );
       fi;
 
@@ -317,7 +310,7 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
       # G_{A}^v \otimes G_{B'} ---------- rho_{A}^v \otimes id_{G_{B'}} ---------> R_{A}^v \otimes G_{B'}
       #
 
-      # compute the map or graded module preseentations
+      # compute the map of graded module presentations
       if display_messages then
         Print( "\n \n" );
         Print( "Step2: \n" );
@@ -341,7 +334,6 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
                                               range,
                                               CapCategory( source )!.constructor_checks_wished
                                              );
-      map := ByASmallerPresentation( map );
 
       # inform that we have the graded module presentation morphism and will now try to truncate it
       if display_messages then
@@ -654,6 +646,62 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 end );
 
 
+##
+# function for nested loop
+##
+
+#############################################################
+##
+## Section Parameter check
+##
+#############################################################
+
+# this methods checks if the conditions in the theorem by Greg Smith are satisfied
+BindGlobal( "SHEAF_COHOMOLOGY_NESTED_LOOPS",
+  function( depth, range )
+    local previous_res, intermediate_res, res, i, j;
+
+    # if we are at the lowest level
+    if depth < 1 then
+
+      Error( "something went wrong in nested loops for sheaf cohomology" );
+
+    elif depth = 1 then
+
+      # produce a list of lists, where we enter the integers of integers in the first entry
+      res := List( range, k -> EmptyPlist( Length( range ) ) );
+      for i in [ 1 .. Length( range ) ] do
+        res[ i ][ depth ] := range[ i ];
+      od;
+
+      # and return the result
+      return res;
+
+    # otherwise...
+    elif depth > 1 then
+
+      # extract the result from on depth below
+      previous_res := SHEAF_COHOMOLOGY_NESTED_LOOPS( depth - 1, range );
+      res := [];
+
+      # add manipulate it...
+      for i in [ 1 .. Length( previous_res ) ] do
+
+        intermediate_res :=  List( [ 1 .. Length( range ) ], k -> ShallowCopy( previous_res[ i ] ) );
+
+        for j in [ 1 .. Length( range ) ] do
+          intermediate_res[ j ][ depth ] := range[ j ];
+        od;
+        res := Concatenation( res, intermediate_res );
+
+      od;
+
+      # and return the result
+      return res;
+
+    fi;
+
+ end );
 
 #############################################################
 ##
@@ -666,8 +714,9 @@ InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
   function( variety, module, display_messages, very_detailed_output )
-    local deg, e, module_presentation, ideal_generators, ideal_generators_power, B_power, zero,
-         vec_space_morphism;
+    local deg, e, module_presentation, ideal_generators, ideal_generators_power, B_power,
+    possible_powers, i, test_ideal, good_ones,
+    zero, vec_space_morphism;
 
     # check that the input is valid to work with
     if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
@@ -723,6 +772,36 @@ InstallMethod( H0,
       Print( Concatenation( "finished - found: ", String( e ) , "\n" ) );
       Print( "(*) Computing GradedHom... \n" );
     fi;
+
+ #   if display_messages then
+ #     Print( "starting more profound search...\n" );
+ #   fi;
+
+    # here we could now look for even better ideals
+    # compute all powers of the generators that are of interest to us
+    #possible_powers := SHEAF_COHOMOLOGY_NESTED_LOOPS( Length( ideal_generators ), [ e-1 .. e ] );
+    #good_ones := [];
+
+    # as it is, this scan takes quite a while!
+    # and iterate over them all
+    #for i in [ 1 .. Length( possible_powers ) ] do
+
+    #  ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], 
+    #                                k -> ideal_generators[ k ]^possible_powers[ i ][ k ] );
+    #  test_ideal := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+
+      # check if candidate
+#      if SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, test_ideal, module_presentation, 0 ) then
+#        good_ones := Concatenation( good_ones, [ possible_powers[ i ] ] );
+#      fi;
+
+#    od;
+
+#    if display_messages then
+#      Print( "Scan complete...\n" );
+#    fi;
+
+#    Error( "test" );
 
     # step 2: compute GradedHom
     # step 2: compute GradedHom

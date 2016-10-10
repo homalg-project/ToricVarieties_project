@@ -37,7 +37,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
     fi;
 
     # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'TORIC VARIETIES' INSTALLED!
-    cohomCalgDirectory := DirectoriesPackageLibrary( "ToricVarieties", "cohomCalg" )[ 1 ];
+    cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
     cohomCalg := Filename( cohomCalgDirectory, "cohomcalg" );
 
     # extract the degree_list of the module

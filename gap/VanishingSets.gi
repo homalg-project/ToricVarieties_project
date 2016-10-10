@@ -241,7 +241,7 @@ InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
                " for toric varieties",
                [ IsToricVariety, IsList ],
   function( variety, degree )
-    local output_string, weights_of_indeterminates, i, buffer, SR_ideal_generators;
+    local output_string, weights_of_indeterminates, names_of_indeterminates, i, buffer, SR_ideal_generators;
 
     # step1: check for valid input
     if Rank( ClassGroup( variety ) ) = 0 then
@@ -277,7 +277,7 @@ InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
         buffer := String( weights_of_indeterminates[ i ] );
 
         # now add "(" and ")" before and after
-        buffer := Concatenation( "( ", buffer, " )" );      
+        buffer := Concatenation( "( ", buffer, " )" );
 
         # and save the new version
         weights_of_indeterminates[ i ] := buffer;
@@ -314,8 +314,13 @@ InstallMethod( TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING,
     # step4: add the Stanley-Reisner ideal to the output string
     output_string := Concatenation( output_string, " srideal " );
     SR_ideal_generators := String( EntriesOfHomalgMatrix( MatrixOfSubobjectGenerators( SRIdeal( variety ) ) ) );
-    RemoveCharacters( SR_ideal_generators, "_" );
-    SR_ideal_generators := ReplacedString( SR_ideal_generators, "x", "u" );
+    names_of_indeterminates := IndeterminatesOfPolynomialRing( CoxRing( variety ) );
+    for i in [ 1 .. Length( names_of_indeterminates ) ] do
+      SR_ideal_generators := ReplacedString( SR_ideal_generators,
+                                             String( names_of_indeterminates[ i ] ), 
+                                             Concatenation( "u", String( i ) ) 
+                                            );
+    od;
     output_string := Concatenation( output_string, SR_ideal_generators, "; " );
 
     # step5: switch the use of intermediate monomial file off
