@@ -168,6 +168,11 @@ InstallMethod( AnalyseShortExactSequence,
 
 end );
 
+# global variable for a ring in Singular
+# otherwise we always have Singular banner whenever I call the following function -> looks extremely nasty
+SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_INTEGER_RING_IN_SINGULAR := HomalgRingOfIntegersInSingular();
+
+
 # function that computes the cohomologies of all vector bundles in a minimal free resolution of a f.p. graded module
 InstallMethod( DeductionOfSheafCohomologyFromResolution,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
@@ -207,7 +212,7 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
     # step 1: generate as many formal variables as we need to treat the yet-unknown cohomologies
     number_of_unknown_cohomologies := ( Dimension( variety ) + 1 ) * ( len - 1 );
     vars := List( [ 1 .. number_of_unknown_cohomologies ], k -> Concatenation( "a", String( k ) ) );
-    ring := HomalgRingOfIntegersInSingular() * vars;
+    ring := SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_INTEGER_RING_IN_SINGULAR * vars;
     vars := IndeterminatesOfPolynomialRing( ring );
 
     # step 2: split into short exact sequences and analyse those sequences
