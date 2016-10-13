@@ -647,62 +647,6 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 end );
 
 
-##
-# function for nested loop
-##
-
-#############################################################
-##
-## Section Parameter check
-##
-#############################################################
-
-# this methods checks if the conditions in the theorem by Greg Smith are satisfied
-BindGlobal( "SHEAF_COHOMOLOGY_NESTED_LOOPS",
-  function( depth, range )
-    local previous_res, intermediate_res, res, i, j;
-
-    # if we are at the lowest level
-    if depth < 1 then
-
-      Error( "something went wrong in nested loops for sheaf cohomology" );
-
-    elif depth = 1 then
-
-      # produce a list of lists, where we enter the integers of integers in the first entry
-      res := List( range, k -> EmptyPlist( Length( range ) ) );
-      for i in [ 1 .. Length( range ) ] do
-        res[ i ][ depth ] := range[ i ];
-      od;
-
-      # and return the result
-      return res;
-
-    # otherwise...
-    elif depth > 1 then
-
-      # extract the result from on depth below
-      previous_res := SHEAF_COHOMOLOGY_NESTED_LOOPS( depth - 1, range );
-      res := [];
-
-      # add manipulate it...
-      for i in [ 1 .. Length( previous_res ) ] do
-
-        intermediate_res :=  List( [ 1 .. Length( range ) ], k -> ShallowCopy( previous_res[ i ] ) );
-
-        for j in [ 1 .. Length( range ) ] do
-          intermediate_res[ j ][ depth ] := range[ j ];
-        od;
-        res := Concatenation( res, intermediate_res );
-
-      od;
-
-      # and return the result
-      return res;
-
-    fi;
-
- end );
 
 #############################################################
 ##
