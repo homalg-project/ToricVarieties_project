@@ -51,6 +51,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
 
+
       # inform that we have the graded module presentation morphism and will now try to truncate it
       if display_messages then
         Print( "Computed the map of graded module presentations. Will now truncate it... \n" );
@@ -567,7 +568,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 3
     # check condition 3
-    if ( 0 < Index ) and ( Index < Length( betti_ideal ) ) then
+    if ( 0 < Index ) and not ( Index -1 > Length( betti_ideal ) ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index ] ) ] do
         for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
@@ -586,7 +587,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 4
     # check condition 4
-    if ( Index + 1 < Length( betti_ideal ) ) then
+    if not ( Index > Length( betti_ideal ) ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
         for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
@@ -605,7 +606,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 5
     # check condition 5
-    if ( Index + 1 < Length( betti_ideal ) ) then
+    if not ( Index > Length( betti_ideal ) ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
         for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
@@ -624,7 +625,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 6
     # check condition 6
-    if ( Index + 2 < Length( betti_ideal ) ) then
+    if not ( Index + 1 > Length( betti_ideal ) ) then
       for j in [ 1 .. Length( betti_ideal[ Index + 2 ] ) ] do
         for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
           for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do
@@ -758,15 +759,22 @@ InstallMethod( H0,
     fi;
     deg := ClassOfSmallestAmpleDivisor( variety );
     e := 0;
-    ideal_generators := DegreeXLayer( variety, deg );
-    ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
+    ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg ) );
+    ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
     B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+    #Error( "Test" );
+    #B_power := CAPCategoryOfProjectiveGradedLeftModulesObject( [[ TheZeroElement( DegreeGroup( CoxRing( variety ) ) ), 1 ]],
+    #                                                           CoxRing( variety ) );
+    #B_power := ByASmallerPresentation( ApplyFunctor( EmbeddingOfProjCategory( CapCategory( B_power ) ), B_power ) );
+    #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
     while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, 0 ) do
 
       e := e + 1;
-      ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
+      ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
       B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-
+      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+      #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
     od;
     if display_messages then
       Print( Concatenation( "finished - found: ", String( e ) , "\n" ) );
@@ -822,7 +830,8 @@ InstallMethod( H0,
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   InternalHomDegreeZeroOnObjects,
                                             variety,
-                                            PresentationForCAP( B_power ),
+                                            #PresentationForCAP( B_power ),
+                                            B_power,
                                             module_presentation,
                                             very_detailed_output
                                   );
@@ -939,11 +948,18 @@ InstallMethod( Hi,
     ideal_generators := DegreeXLayer( variety, deg );
     ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
     B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+    #B_power := CAPCategoryOfProjectiveGradedLeftModulesObject( [[ TheZeroElement( DegreeGroup( CoxRing( variety ) ) ), 1 ]],
+    #                                                           CoxRing( variety ) );
+    #B_power := ByASmallerPresentation( ApplyFunctor( EmbeddingOfProjCategory( CapCategory( B_power ) ), B_power ) );
+    #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
     while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, index ) do
 
       e := e + 1;
       ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
       B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+      #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
 
     od;
     if display_messages then
@@ -958,7 +974,8 @@ InstallMethod( Hi,
                                   GradedExtDegreeZeroOnObjects,
                                             index,
                                             variety,
-                                            PresentationForCAP( B_power ),
+                                            B_power,
+                                            #PresentationForCAP( B_power ),
                                             module_presentation,
                                             very_detailed_output
                                   );
