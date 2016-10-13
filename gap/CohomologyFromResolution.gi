@@ -21,7 +21,7 @@ InstallMethod( CohomologiesList,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, module )
-    local res, e, resolution_list;
+    local betti_table, coho_list, i, degrees, help_module;
 
     # check that the variety matches our general requirements
     if not IsSmooth( variety ) then
@@ -36,24 +36,19 @@ InstallMethod( CohomologiesList,
 
     fi;
 
-    # compute resolution
-    res := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module ) )!.differential_func;
+    # extract Betti table
+    betti_table := BettiTableForCAP( module );
 
-    # deduce the objects in the resolution
-    e := -1;
-    resolution_list := [ ApplyFunctor( EmbeddingOfProjCategory( CapCategory( Range( res( e ) ) ) ), Range( res( e ) ) ) ];
-    while not IsZeroForObjects( Source( res( e ) ) ) do
-
-      Add( resolution_list,
-           ApplyFunctor( EmbeddingOfProjCategory( CapCategory( Source( res( e ) ) ) ), Source( res( e ) ) )
-         );
-      e := e - 1;
-
+    # now compute the cohomologies list
+    coho_list := [];
+    for i in [ 1 .. Length( betti_table ) ] do
+      degrees := List( [ 1 .. Length( betti_table[ i ] ) ], k -> [ UnderlyingListOfRingElements( betti_table[ i ][ k ] ), 1 ] );
+      help_module := CAPCategoryOfProjectiveGradedLeftModulesObject( degrees, CoxRing( variety ) );
+      coho_list[ i ] := AllCohomologiesFromCohomCalg( variety, help_module, false );
     od;
 
-    # finally compute all cohomologies via cohomCalg
-    return List( [ 1 .. Length( resolution_list ) ],
-                   i -> AllCohomologiesFromCohomCalg( variety, resolution_list[ i ], false ) );
+    # then return coho_list
+    return coho_list;
 
 end );
 

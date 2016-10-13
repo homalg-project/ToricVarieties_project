@@ -568,7 +568,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 3
     # check condition 3
-    if ( 0 < Index ) and not ( Index -1 > Length( betti_ideal ) ) then
+    if ( 0 < Index ) and not ( Index > L_ideal + 1 ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index ] ) ] do
         for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
@@ -587,7 +587,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 4
     # check condition 4
-    if not ( Index > Length( betti_ideal ) ) then
+    if not ( Index + 1 > L_ideal + 1 ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
         for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
@@ -606,7 +606,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 5
     # check condition 5
-    if not ( Index > Length( betti_ideal ) ) then
+    if not ( Index > L_ideal ) then
 
       for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
         for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
@@ -625,7 +625,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     # check condition 6
     # check condition 6
-    if not ( Index + 1 > Length( betti_ideal ) ) then
+    if not ( Index + 2 > L_ideal + 1 ) then
       for j in [ 1 .. Length( betti_ideal[ Index + 2 ] ) ] do
         for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
           for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do

@@ -89,7 +89,7 @@ Display( v5.2 );
 #! A non-full vanishing set in Z^3 for cohomological index 2 formed from the 
 #! points NOT contained in the following affine semigroup:
 #!
-#! A non-trivial affine non-cone semigroup in Z^3
+#! A non-trivial affine cone semigroup in Z^3
 #! Offset: [ -1, -1, -2 ]
 #! Semigroup generators: [ [ 1, -1, -1 ], [ -1, 0, 0 ], [ -1, 1, 0 ], [ 0\
 #! , -1, 0 ], [ 0, 0, -1 ] ]
@@ -144,7 +144,7 @@ Display( v8.3 );
 #! A non-full vanishing set in Z^7 for cohomological index 3 formed from 
 #! the points NOT contained in the following affine semigroup:
 #!
-#! A non-trivial affine non-cone semigroup in Z^7
+#! A non-trivial affine cone semigroup in Z^7
 #! Offset: [ -2, -2, -2, -1, 1, 0, 0 ]
 #! Semigroup generators: [ [ 0, 0, -1, 1, 1, 1, 1 ], [ -1, 0, 0, 1, 2, 0, 1 ],
 #! [ 0, -1, 0, -2, -1, 0, -1 ], [ -1, 0, 0, 0, 0, 0, 0 ], [ 0, -1, 0, 0, 0, 0, 0 ],
