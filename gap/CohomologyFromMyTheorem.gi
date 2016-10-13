@@ -646,6 +646,54 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
 end );
 
+# this methods checks if the conditions in the theorem by Greg Smith are satisfied
+BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL",
+  function( variety, module_presentation, index )
+    local deg, e_list, i, ideal_generators, e, ideal_generators_power, B_power, best, chosen_degree;
+
+    # determine classes of smallest ample divisors and initialise e_list
+    deg := ClassesOfSmallestAmpleDivisors( variety );
+    e_list := [];
+
+    # iterate over all these degrees
+    for i in [ 1 .. Length( deg ) ] do
+
+      # find the ideal generators for these degrees
+      ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg[ i ] ) );
+
+      # initialise the ideal to the power 0
+      e := 0;
+      ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
+      B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+
+      # and start the search
+      while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, index ) do
+
+        e := e + 1;
+        ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
+        B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+        B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+      od;
+
+      # save result
+      e_list[ i ] := e;
+
+    od;
+
+    # now compute the 'best' ideal
+    best := Position( e_list, Minimum( e_list ) );
+    chosen_degree := deg[ best ];
+    ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg[ best ] ) );
+    ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], 
+                                      k -> ideal_generators[ k ]^e_list[ best ] ) );
+    B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
+    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+
+    # and return the result
+    return [ e_list[ best ], chosen_degree, B_power ];
+
+end );
 
 
 #############################################################
@@ -659,9 +707,7 @@ InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
   function( variety, module, display_messages, very_detailed_output )
-    local deg, e, module_presentation, ideal_generators, ideal_generators_power, B_power,
-    possible_powers, i, test_ideal, good_ones,
-    zero, vec_space_morphism;
+    local module_presentation, zero, ideal_infos, B_power, vec_space_morphism;
 
     # check that the input is valid to work with
     if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
@@ -679,6 +725,19 @@ InstallMethod( H0,
       module_presentation := module;
     fi;
 
+    # we have a specialised algorithm for H0 of vector bundles
+    zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
+    if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
+      return [ 0, UnderlyingVectorSpaceObject(
+                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
+                               variety,
+                               Range( UnderlyingMorphism( module_presentation ) ),
+                               zero
+                       ) ) ];
+    fi;
+
+    # otherwise start the overall machinery
+
     # Step 0: compute the vanishing sets
     # Step 0: compute the vanishing sets
     if not HasVanishingSets( variety ) then
@@ -686,7 +745,7 @@ InstallMethod( H0,
       if display_messages then
         Print( "(*) Compute vanishing sets... " );
       fi;
-      VanishingSets( variety );
+      VanishingSets( variety );;
       if display_messages then
         Print( "finished \n" );
       fi;
@@ -696,85 +755,46 @@ InstallMethod( H0,
       fi;
     fi;
 
-    # step 1: compute ideal B( e ) = < deg of smallest ample divisor >^e such that H0 = GradedHom( B(e), M )
-    # step 1: compute ideal B( e ) = < deg of smallest ample divisor >^e such that H0 = GradedHom( B(e), M )
-    if display_messages then
-      Print( "(*) Determine ideal power... " );
-    fi;
-    deg := ClassOfSmallestAmpleDivisor( variety );
-    e := 0;
-    ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg ) );
-    ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
-    B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
-    #Error( "Test" );
-    #B_power := CAPCategoryOfProjectiveGradedLeftModulesObject( [[ TheZeroElement( DegreeGroup( CoxRing( variety ) ) ), 1 ]],
-    #                                                           CoxRing( variety ) );
-    #B_power := ByASmallerPresentation( ApplyFunctor( EmbeddingOfProjCategory( CapCategory( B_power ) ), B_power ) );
-    #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
-    while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, 0 ) do
 
-      e := e + 1;
-      ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
-      B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
-      #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
-    od;
-    if display_messages then
-      Print( Concatenation( "finished - found: ", String( e ) , "\n" ) );
-      Print( "(*) Computing GradedHom... \n" );
+    # step 1: compute Betti number of the module
+    # step 1: compute Betti number of the module
+    if HasBettiTableForCAP( module_presentation ) then
+      if display_messages then
+        Print( "(*) Betti numbers of module known... \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Compute Betti numbers of module... \n" );
+      fi;
+      BettiTableForCAP( module_presentation );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
     fi;
 
- #   if display_messages then
- #     Print( "starting more profound search...\n" );
- #   fi;
 
-    # here we could now look for even better ideals
-    # compute all powers of the generators that are of interest to us
-    #possible_powers := SHEAF_COHOMOLOGY_NESTED_LOOPS( Length( ideal_generators ), [ e-1 .. e ] );
-    #good_ones := [];
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    if display_messages then
+      Print( "(*) Determine ideal... " );
+    fi;
 
-    # as it is, this scan takes quite a while!
-    # and iterate over them all
-    #for i in [ 1 .. Length( possible_powers ) ] do
+    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, 0 );
+    B_power := ideal_infos[ 3 ];
 
-    #  ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], 
-    #                                k -> ideal_generators[ k ]^possible_powers[ i ][ k ] );
-    #  test_ideal := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-
-      # check if candidate
-#      if SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, test_ideal, module_presentation, 0 ) then
-#        good_ones := Concatenation( good_ones, [ possible_powers[ i ] ] );
-#      fi;
-
-#    od;
-
-#    if display_messages then
-#      Print( "Scan complete...\n" );
-#    fi;
-
-#    Error( "test" );
+    # and inform about the result of this computation
+    if display_messages then
+      Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
+                            " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
+      Print( "(*) Compute GradedHom... \n" );
+    fi;
 
     # step 2: compute GradedHom
     # step 2: compute GradedHom
 
-    # we have a specialised algorithm for H0 of vector bundles
-    zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
-    if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
-      return [ e, UnderlyingVectorSpaceObject(
-                             DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( module_presentation ) ),
-                               zero
-                               )
-                                        ) ];
-    fi;
-
-    # compute H0 as a vector space presentation
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   InternalHomDegreeZeroOnObjects,
                                             variety,
-                                            #PresentationForCAP( B_power ),
                                             B_power,
                                             module_presentation,
                                             very_detailed_output
@@ -785,15 +805,13 @@ InstallMethod( H0,
       Print( "\n" );
       Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
                             " seconds. Summary: \n" ) );
-      Print( Concatenation( "(*) used ideal power: ", String( e ), "\n" ) );
+      Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
       Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
                             "\n \n" ) );
     fi;
 
     # return the cokernel object of this presentation
-    return [ e, CokernelObject( vec_space_morphism[ 2 ] ) ];
-
-    #return "Finished for now";
+    return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
 
 end );
 
@@ -833,8 +851,7 @@ InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
   function( variety, module, index, display_messages, very_detailed_output )
-    local module_presentation, deg, e, ideal_generators, ideal_generators_power, B_power, zero,
-         vec_space_morphism;
+    local module_presentation, ideal_infos, B_power, zero, vec_space_morphism;
 
     # check that the input is valid to work with
     if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
@@ -865,6 +882,7 @@ InstallMethod( Hi,
       module_presentation := module;
     fi;
 
+
     # Step 0: compute the vanishing sets
     # Step 0: compute the vanishing sets
     if not HasVanishingSets( variety ) then
@@ -872,9 +890,9 @@ InstallMethod( Hi,
       if display_messages then
         Print( "(*) Compute vanishing sets... " );
       fi;
-      VanishingSets( variety );
+      VanishingSets( variety );;
       if display_messages then
-        Print( " finished \n" );
+        Print( "finished \n" );
       fi;
     else
       if display_messages then
@@ -882,44 +900,49 @@ InstallMethod( Hi,
       fi;
     fi;
 
-    # step 1: compute ideal B( e ) = < deg of smallest ample divisor >^e such that H0 = GradedHom( B(e), M )
-    # step 1: compute ideal B( e ) = < deg of smallest ample divisor >^e such that H0 = GradedHom( B(e), M )
-    if display_messages then
-      Print( "(*) Determine ideal power... " );
-    fi;
-    deg := ClassOfSmallestAmpleDivisor( variety );
-    e := 0;
-    ideal_generators := DegreeXLayer( variety, deg );
-    ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
-    B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
-    #B_power := CAPCategoryOfProjectiveGradedLeftModulesObject( [[ TheZeroElement( DegreeGroup( CoxRing( variety ) ) ), 1 ]],
-    #                                                           CoxRing( variety ) );
-    #B_power := ByASmallerPresentation( ApplyFunctor( EmbeddingOfProjCategory( CapCategory( B_power ) ), B_power ) );
-    #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
-    while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, index ) do
 
-      e := e + 1;
-      ideal_generators_power := List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e );
-      B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
-      #B_power := ByASmallerPresentation( PresentationForCAP( FrobeniusPower( IrrelevantLeftIdealForCAP( variety ), e ) ) );
-
-    od;
-    if display_messages then
-      Print( Concatenation( "finished - found: ", String( e ) , "\n" ) );
-      Print( "(*) Computing GradedExt... \n" );
+    # step 1: compute Betti number of the module
+    # step 1: compute Betti number of the module
+    if HasBettiTableForCAP( module_presentation ) then
+      if display_messages then
+        Print( "(*) Betti numbers of module known... \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Compute Betti numbers of module... \n" );
+      fi;
+      BettiTableForCAP( module_presentation );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
     fi;
 
-    # step 2: compute GradedHom
-    # step 2: compute GradedHom
+
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    if display_messages then
+      Print( "(*) Determine ideal... " );
+    fi;
+
+    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, index );
+    B_power := ideal_infos[ 3 ];
+
+    # and inform about the result of this computation
+    if display_messages then
+      Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
+                            " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
+      Print( "(*) Compute GradedHom... \n" );
+    fi;
+
+
+    # step 2: compute GradedExt
+    # step 2: compute GradedExt
 
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   GradedExtDegreeZeroOnObjects,
                                             index,
                                             variety,
                                             B_power,
-                                            #PresentationForCAP( B_power ),
                                             module_presentation,
                                             very_detailed_output
                                   );
@@ -929,7 +952,7 @@ InstallMethod( Hi,
       Print( "\n" );
       Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
                             " seconds. Summary: \n" ) );
-      Print( Concatenation( "(*) used ideal power: ", String( e ), "\n" ) );
+      Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
       Print( Concatenation( "(*) h^", String( index ), " = ", 
                             String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
                             "\n \n" ) 
@@ -937,7 +960,7 @@ InstallMethod( Hi,
     fi;
 
     # and return the result
-    return [ e, CokernelObject( vec_space_morphism[ 2 ] ) ];
+    return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
 
 end );
 
@@ -974,7 +997,7 @@ InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
   function( variety, module, display_messages )
-    local cohoms, i;
+    local cohoms, i, total_time;
 
     # check that the input is valid to work with
     if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
@@ -987,6 +1010,7 @@ InstallMethod( AllHi,
 
     # initialise variables
     cohoms := List( [ 1 .. Dimension( variety ) + 1 ] );
+    total_time := 0;
 
     # and iterate over the cohomology classes
     for i in [ 1 .. Dimension( variety ) + 1 ] do
@@ -997,6 +1021,7 @@ InstallMethod( AllHi,
 
       # make the computation - only display messages
       cohoms[ i ] := Hi( variety, module, i-1, display_messages, false );
+      total_time := total_time + cohoms[ i ][ 1 ];
 
       # additional empty line for optical separation
       Print( "\n" );
@@ -1004,9 +1029,9 @@ InstallMethod( AllHi,
     od;
 
     # computation completely finished, so print summary
-    Print( "Finished all computations. Summary: \n" );
+    Print( Concatenation( "Finished all computations after ", String( total_time ), " seconds. Summary: \n" ) );
     for i in [ 1 .. Dimension( variety ) + 1 ] do
-      Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 2 ] ) ), "\n" ) );
+      Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 3 ] ) ), "\n" ) );
     od;
 
     # and finally return the results
