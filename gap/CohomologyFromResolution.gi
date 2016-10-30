@@ -191,6 +191,11 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
       Error( "The variety has to be smooth and complete" );
       return;
 
+    elif not IsIdenticalObj( CoxRing( variety ), UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) ) then
+
+      Error( "The module is not defined over (the Cox ring of) the given variety" );
+      return;
+
     fi;
 
     # step 0: check for degenerate case, i.e. the relation module is zero so that we can use cohomCalg to compute the dimension of the

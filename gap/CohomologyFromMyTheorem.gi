@@ -764,7 +764,7 @@ InstallMethod( H0,
       fi;
     else
       if display_messages then
-        Print( "(*) Compute Betti numbers of module... \n" );
+        Print( "(*) Compute Betti numbers of module..." );
       fi;
       BettiTableForCAP( module_presentation );;
       if display_messages then
@@ -909,7 +909,7 @@ InstallMethod( Hi,
       fi;
     else
       if display_messages then
-        Print( "(*) Compute Betti numbers of module... \n" );
+        Print( "(*) Compute Betti numbers of module..." );
       fi;
       BettiTableForCAP( module_presentation );;
       if display_messages then
