@@ -789,8 +789,8 @@ InstallMethod( H0,
       Print( "(*) Compute GradedHom... \n" );
     fi;
 
-    # step 2: compute GradedHom
-    # step 2: compute GradedHom
+    # step 3: compute GradedHom
+    # step 3: compute GradedHom
 
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   InternalHomDegreeZeroOnObjects,

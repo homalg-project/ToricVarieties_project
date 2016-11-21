@@ -66,14 +66,13 @@ InstallMethod( AnalyseShortExactSequence,
                " for a list of 3 lists ",
                [ IsList ],
   function( cohomologies_list )
-    local len, unknown_cohomologies, unknown_indices, i, j, long_exact_sequence, pos,
+    local len, unknown_cohomologies, unknown_indices, i, j, long_exact_sequence, pos, simplifier, pos_variable, sign,
          zero_ending_exact_sequence_list, dummy_list, tester, constraint, constraints_list, index, var_pos;
 
     # step 0: initialise variables
     # step 0: initialise variables
     len := Length( cohomologies_list[ 2 ] );
     unknown_cohomologies := cohomologies_list[ 1 ];
-
 
     # step 1: use vanishing result on the unknown_cohomologies
     # step 1: use vanishing result on the unknown_cohomologies
@@ -96,6 +95,15 @@ InstallMethod( AnalyseShortExactSequence,
         Add( unknown_indices, i );
       fi;
     od;
+
+    # check if a further simpliciation on the unknown_cohomologies is possible
+    simplifier := false;
+    if ( cohomologies_list[ 3 ][ 1 ] <> 0 and cohomologies_list[ 2 ][ 1 ] = 0 ) then
+
+      simplifier := true;
+
+    fi;
+
 
     # step2: split the long exact sequence of vector spaces into shorter ones (if possible) which start/end with zeros as well
     #        and use these sequences to draw conclusions on the unknown cohomologies
@@ -137,6 +145,41 @@ InstallMethod( AnalyseShortExactSequence,
 
       # now add this sequence only if at least one unknown cohomology is contained in the list
       if tester then
+
+        # in this sequence, we check if a simplification is possible
+        if simplifier then
+
+          for j in [ 1 .. Length( dummy_list ) ] do
+
+            # check if dummy_list[ j ] contains cohomologies_list[ 3 ][ 1 ], which happens to vanish 
+            pos_variable := PositionSublist( String( dummy_list[ j ] ), String( cohomologies_list[ 3 ][ 1 ] ) );
+            if pos_variable <> fail then
+
+              # now we need to determine the sign with which this variable appear, so that we can either add or
+              # subtract it
+
+              # if the varables appears at position 1, then it comes with sign '+', so we subtract it
+              if pos_variable = 1 then
+                dummy_list[ j ] := dummy_list[ j ] - cohomologies_list[ 3 ][ 1 ];
+              else
+
+                # otherwise there must be a sign in front of it
+                sign := String( dummy_list[ j ] )[ pos_variable - 1 ];
+
+                # and react accordingly
+                if sign = '+' then 
+                  dummy_list[ j ] := dummy_list[ j ] - cohomologies_list[ 3 ][ 1 ];
+                else
+                  dummy_list[ j ] := dummy_list[ j ] + cohomologies_list[ 3 ][ 1 ];
+                fi;
+
+              fi;
+
+            fi;
+
+          od;
+
+        fi;
 
         # add the dummy_list as zero_ending_exact_sequence
         Add( zero_ending_exact_sequence_list, dummy_list );
