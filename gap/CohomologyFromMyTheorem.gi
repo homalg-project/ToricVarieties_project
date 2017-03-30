@@ -503,7 +503,7 @@ end );
 ##
 #############################################################
 
-# this methods checks if the conditions in the theorem by Greg Smith are satisfied
+# this methods checks if the conditions in my theorem as satisfied
 BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
   function( variety, ideal, module, Index )
     local betti_ideal, betti_module, L_ideal, L_module, u, j, k, l, diff, tester;
@@ -646,7 +646,7 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
 end );
 
-# this methods checks if the conditions in the theorem by Greg Smith are satisfied
+# this method finds an ideal to which my theorem applies
 BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL",
   function( variety, module_presentation, index )
     local deg, e_list, i, ideal_generators, e, ideal_generators_power, B_power, best, chosen_degree;
@@ -935,9 +935,8 @@ InstallMethod( Hi,
     fi;
 
 
-    # step 2: compute GradedExt
-    # step 2: compute GradedExt
-
+    # step 3: compute GradedExt
+    # step 3: compute GradedExt
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   GradedExtDegreeZeroOnObjects,
                                             index,

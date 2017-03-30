@@ -23,5 +23,5 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gi
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromBTransform.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
 
-
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MapsInResolution.gi" );
 
