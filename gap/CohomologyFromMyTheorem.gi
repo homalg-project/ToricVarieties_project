@@ -728,7 +728,7 @@ InstallMethod( H0,
     # we have a specialised algorithm for H0 of vector bundles
     zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
     if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
-      return [ 0, UnderlyingVectorSpaceObject(
+      return [ 0, 0, UnderlyingVectorSpaceObject(
                        DegreeXLayerOfProjectiveGradedLeftOrRightModule(
                                variety,
                                Range( UnderlyingMorphism( module_presentation ) ),
