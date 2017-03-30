@@ -48,6 +48,8 @@ DeclareOperation( "GradedExtDegreeZeroOnObjects",
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "H0",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
+DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
 DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
@@ -67,6 +69,8 @@ DeclareOperation( "H0",
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M, i
 DeclareOperation( "Hi",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ] );
+DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ] );
 DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ] );
@@ -85,6 +89,8 @@ DeclareOperation( "Hi",
 #! Computation of all sheaf cohomology classes from my theorem
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
+DeclareOperation( "AllHi",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
 DeclareOperation( "AllHi",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 DeclareOperation( "AllHi",

@@ -705,8 +705,8 @@ end );
 # compute H^0 by applying the theorem from Greg Smith
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
-  function( variety, module, display_messages, very_detailed_output )
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
+  function( variety, module, display_messages, very_detailed_output, timings )
     local module_presentation, zero, ideal_infos, B_power, vec_space_morphism;
 
     # check that the input is valid to work with
@@ -728,12 +728,21 @@ InstallMethod( H0,
     # we have a specialised algorithm for H0 of vector bundles
     zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
     if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
-      return [ 0, 0, UnderlyingVectorSpaceObject(
+      if timings then
+        return [ 0, 0, UnderlyingVectorSpaceObject(
                        DegreeXLayerOfProjectiveGradedLeftOrRightModule(
                                variety,
                                Range( UnderlyingMorphism( module_presentation ) ),
                                zero
                        ) ) ];
+      else
+        return [ 0, UnderlyingVectorSpaceObject(
+                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
+                               variety,
+                               Range( UnderlyingMorphism( module_presentation ) ),
+                               zero
+                       ) ) ];
+      fi;
     fi;
 
     # otherwise start the overall machinery
@@ -803,17 +812,37 @@ InstallMethod( H0,
     # signal end of computation
     if display_messages then
       Print( "\n" );
-      Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
-                            " seconds. Summary: \n" ) );
+      if timings then
+        Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
+                              " seconds. Summary: \n" ) );
+      else
+        Print( "Computation finished. Summary: \n" );
+      fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
       Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
                             "\n \n" ) );
     fi;
 
     # return the cokernel object of this presentation
-    return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    if timings then
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    else
+      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];    
+    fi;
 
 end );
+
+# convenience method
+InstallMethod( H0,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+  function( variety, module, display_messages, very_detailed_output )
+
+    # by default never show very detailed output
+    return H0( variety, module, display_messages, very_detailed_output, true );
+
+end );
+
 
 # convenience method
 InstallMethod( H0,
@@ -822,7 +851,7 @@ InstallMethod( H0,
   function( variety, module, display_messages )
 
     # by default never show very detailed output
-    return H0( variety, module, display_messages, false );
+    return H0( variety, module, display_messages, false, true );
 
 end );
 
@@ -833,7 +862,7 @@ InstallMethod( H0,
   function( variety, module )
 
     # by default show messages but not the very detailed output
-    return H0( variety, module, true, false );
+    return H0( variety, module, true, false, true );
 
 end );
 
@@ -849,8 +878,8 @@ end );
 # compute H^i by applying my theorem
 InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
-  function( variety, module, index, display_messages, very_detailed_output )
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ],
+  function( variety, module, index, display_messages, very_detailed_output, timings )
     local module_presentation, ideal_infos, B_power, zero, vec_space_morphism;
 
     # check that the input is valid to work with
@@ -872,7 +901,7 @@ InstallMethod( Hi,
 
     # if we compute H0 hand it over to that method
     if index = 0 then
-      return H0( variety, module, display_messages );
+      return H0( variety, module, display_messages, very_detailed_output, timings );
     fi;
 
     # unzip the module
@@ -948,18 +977,38 @@ InstallMethod( Hi,
 
     # signal end of computation
     if display_messages then
+
       Print( "\n" );
-      Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
-                            " seconds. Summary: \n" ) );
+      if timings then
+        Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
+                              " seconds. Summary: \n" ) );
+      else
+        Print( "Computation finished. Summary: \n" );
+      fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
       Print( Concatenation( "(*) h^", String( index ), " = ", 
                             String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
                             "\n \n" ) 
                            );
+
     fi;
 
     # and return the result
-    return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    if timings then
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    else
+      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    fi;
+
+end );
+
+InstallMethod( Hi,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
+  function( variety, module, index, display_messages, very_detailed_output )
+
+    # by default never show very detailed output
+    return Hi( variety, module, index, display_messages, very_detailed_output, true );
 
 end );
 
@@ -969,7 +1018,7 @@ InstallMethod( Hi,
   function( variety, module, index, display_messages )
 
     # by default never show very detailed output
-    return Hi( variety, module, index, display_messages, false );
+    return Hi( variety, module, index, display_messages, false, true );
 
 end );
 
@@ -979,7 +1028,7 @@ InstallMethod( Hi,
   function( variety, module, index )
 
     # by default display messages but suppress the very detailed output
-    return Hi( variety, module, index, true, false );
+    return Hi( variety, module, index, true, false, true );
 
 end );
 
@@ -994,8 +1043,8 @@ end );
 # compute all cohomology classes by my theorem
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
-  function( variety, module, display_messages )
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+  function( variety, module, display_messages, timings )
     local cohoms, i, total_time;
 
     # check that the input is valid to work with
@@ -1019,7 +1068,7 @@ InstallMethod( AllHi,
       Print(  "----------------------------------------------\n" );
 
       # make the computation - only display messages
-      cohoms[ i ] := Hi( variety, module, i-1, display_messages, false );
+      cohoms[ i ] := Hi( variety, module, i-1, display_messages, false, timings );
       total_time := total_time + cohoms[ i ][ 1 ];
 
       # additional empty line for optical separation
@@ -1027,11 +1076,27 @@ InstallMethod( AllHi,
 
     od;
 
-    # computation completely finished, so print summary
-    Print( Concatenation( "Finished all computations after ", String( total_time ), " seconds. Summary: \n" ) );
-    for i in [ 1 .. Dimension( variety ) + 1 ] do
-      Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 3 ] ) ), "\n" ) );
-    od;
+    if display_messages then
+
+      if timings then
+
+        # computation completely finished, so print summary
+        Print( Concatenation( "Finished all computations after ", String( total_time ), " seconds. Summary: \n" ) );
+        for i in [ 1 .. Dimension( variety ) + 1 ] do
+          Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 3 ] ) ), "\n" ) );
+        od;
+
+      else
+
+        # computation completely finished, so print summary
+        Print( "Finished all computations. Summary: \n" );
+        for i in [ 1 .. Dimension( variety ) + 1 ] do
+          Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 2 ] ) ), "\n" ) );
+        od;
+
+      fi;
+
+    fi;
 
     # and finally return the results
     return cohoms;
@@ -1040,9 +1105,18 @@ end );
 
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( variety, module, display_messages )
+
+    return AllHi( variety, module, display_messages, true );
+
+end );
+
+InstallMethod( AllHi,
+               " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, module )
 
-    return AllHi( variety, module, true );
+    return AllHi( variety, module, true, true );
 
 end );
