@@ -346,7 +346,7 @@ InstallMethod( NefConeInCartierDataGroup,
                " for conv toric varieties",
                [ IsToricVariety ],
   function( variety )
-    local hConstraints, cartierDataGroupConstraints, cone;
+    local hConstraints, cartierDataGroupConstraints, cone, gens;
 
     # check if the input is valid
     if not IsSmooth( variety ) then
@@ -372,9 +372,18 @@ InstallMethod( NefConeInCartierDataGroup,
     Append( hConstraints, cartierDataGroupConstraints );
     Append( hConstraints, -1 * cartierDataGroupConstraints );
 
-    # use the unifiedHConstraints to construct a cone in convex and extract its ray generators
-    cone := ConeByInequalities( hConstraints );
-    return RayGenerators( cone );
+    # use the unifiedHConstraints to construct a NmzCone
+    cone := NmzCone( [ "inequalities", hConstraints ] );
+    NmzCompute( cone );
+
+    # as this cone is not full dimensional we need a big more gymnastics to extract the relevant generators
+    gens := NmzGenerators( cone );
+    gens := Concatenation( gens, NmzMaximalSubspace( cone ) );
+    gens := Concatenation( gens, - NmzMaximalSubspace( cone ) );
+
+    #cone := ConeByInequalities( hConstraints );
+    #return RayGenerators( cone );
+    return gens;
 
 end );
 
