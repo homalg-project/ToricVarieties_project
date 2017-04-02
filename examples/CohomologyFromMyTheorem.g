@@ -23,21 +23,21 @@ P1xP1 := P1 * P1;
 #! <A toric variety of dimension 2 which is a product of 2 toric varieties>
 ByASmallerPresentation( ClassGroup( P1xP1 ) );
 #! <A free left module of rank 2 on free generators>
-C2ForCAP := GradedLeftSubmoduleForCAP( [[ "x_2*x_4" ], [ "x_2*x_3" ], [ "x_1 * x_4" ], 
+C2ForCAP := GradedLeftSubmoduleForCAP( [[ "x_2*x_4" ], [ "x_2*x_1" ], [ "x_3 * x_4" ], 
       [ "x_1 * x_3" ]], CoxRing( P1xP1 ) );
 #! <A graded left ideal of Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 VForCAP := CAPCategoryOfProjectiveGradedLeftModulesObject( 
      [[[-1,-1],1],[[2,0],1]], CoxRing( P1xP1 ) );
 #! <A projective graded left module of rank 2>
 VForCAP := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( VForCAP ) ), VForCAP );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 VPrimeForCAP := CAPCategoryOfProjectiveGradedLeftModulesObject( [[[-1,-1],1]], CoxRing( P1xP1 ) );
 #! <A projective graded left module of rank 1>
 VPrimeForCAP := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( VPrimeForCAP ) ), VPrimeForCAP );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 Hi( P1, CForCAP, 0, false, false, false );
 #! [ 1, <A vector space object over Q of dimension 1> ]
 Hi( P1xP1, C2ForCAP, 0, false, false, false );

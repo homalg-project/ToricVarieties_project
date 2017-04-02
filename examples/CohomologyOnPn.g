@@ -26,18 +26,18 @@ ByASmallerPresentation( ClassGroup( P1xP1 ) );
 C2 := GradedLeftSubmoduleForCAP( [[ "x_2*x_4" ], [ "x_2*x_3" ], [ "x_1 * x_4" ], 
       [ "x_1 * x_3" ]], CoxRing( P1xP1 ) );
 #! <A graded left ideal of Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 V := CAPCategoryOfProjectiveGradedLeftModulesObject( 
      [[[-1,-1],1],[[2,0],1]], CoxRing( P1xP1 ) );
 #! <A projective graded left module of rank 2>
 V := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( V ) ), V );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 VPrime := CAPCategoryOfProjectiveGradedLeftModulesObject( [[[-1,-1],1]], CoxRing( P1xP1 ) );
 #! <A projective graded left module of rank 1>
 VPrime := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( VPrime ) ), VPrime );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 
 #! @EndExample
 

@@ -469,6 +469,8 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
 
     od;
 
+    #Error( "Test" );
+
     # (2) compute the generators
     generators := List( [ 1 .. Length( Indeterminates( CoxRing( variety ) ) ) ] );
     for i in [ 1 .. Length( Indeterminates( CoxRing( variety ) ) ) ] do
@@ -486,6 +488,8 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
     od;
     generators := DuplicateFreeList( generators );
 
+    #Error( "Test2" );
+
     # (3) compute the offset
     offset := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
     for i in [ 1 .. Length( present_variables ) ] do
@@ -493,6 +497,8 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
         offset := offset - UnderlyingListOfRingElements( WeightsOfIndeterminates( CoxRing( variety ) )[ i ] );
       fi;
     od;
+
+    #Error( "Test3" );
 
     # and return the affine semigroup
     return AffineSemigroupForGradedModulePresentationsForCAP( SemigroupForGradedModulePresentationsForCAP( generators ),
