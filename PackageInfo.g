@@ -16,7 +16,7 @@ PackageName := "SheafCohomologyOnToricVarieties",
 Subtitle := "A package to compute sheaf cohomology on toric varieties",
 
 Version :=  Maximum( [
-  "2016.09.29", ## Martins version
+  "2017.04.02", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
