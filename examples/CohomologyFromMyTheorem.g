@@ -2,7 +2,7 @@
 
 #! @Section Sheaf cohomology via my theorem: Examples 
 
-#! @Subsection Examples for GradedModulePresentationsForCAP on P1 and P1xP1
+#! @Subsection Examples for PresentationsByProjectiveGradedModules on P1 and P1xP1
 
 LoadPackage( "SheafCohomologyOnToricVarieties" );
 

@@ -501,7 +501,7 @@ InstallMethod( TurnDenominatorIntoShiftedSemigroup,
     #Error( "Test3" );
 
     # and return the affine semigroup
-    return AffineSemigroupForGradedModulePresentationsForCAP( SemigroupForGradedModulePresentationsForCAP( generators ),
+    return AffineSemigroupForPresentationsByProjectiveGradedModules( SemigroupForPresentationsByProjectiveGradedModules( generators ),
                                                               offset );
 
 end );
@@ -671,8 +671,8 @@ InstallMethod( ComputeVanishingSets,
         for j in [ 1 .. Length( affine_semigroups_list ) ] do
           new_gens := (-1) * GeneratorList( UnderlyingSemigroup( affine_semigroups_list[ j ] ) );
           new_offset := K_bundle - Offset( affine_semigroups_list[ j ] );
-          new_affine_semigroups_list[ j ] := AffineSemigroupForGradedModulePresentationsForCAP(
-                                                                  SemigroupForGradedModulePresentationsForCAP( new_gens ),
+          new_affine_semigroups_list[ j ] := AffineSemigroupForPresentationsByProjectiveGradedModules(
+                                                                  SemigroupForPresentationsByProjectiveGradedModules( new_gens ),
                                                                   new_offset );
         od;
 
