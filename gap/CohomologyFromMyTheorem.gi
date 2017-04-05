@@ -436,7 +436,7 @@ end );
 #############################################################
 
 
-# compute H^0 by applying the theorem from Greg Smith
+# compute GradedExt degree zero layer
 InstallMethod( GradedExtDegreeZeroOnObjects,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
