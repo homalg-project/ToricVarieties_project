@@ -364,9 +364,7 @@ InstallMethod( ContributingDenominators,
     # this the string that we need to address cohomCalg
     command_string := SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING( variety );
 
-    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'SHEAF COHOMOLOGY ON TORIC VARIETIES' INSTALLED!
-    cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
-    cohomCalg := Filename( cohomCalgDirectory, "cohomcalg" );
+    cohomCalg := cohomCalgBinary( );
 
     # set up communication channels
     stdin := InputTextUser();
@@ -374,7 +372,7 @@ InstallMethod( ContributingDenominators,
     stdout := OutputTextString( output_string, true );
 
     # execute cohomCalg with the 'input file' described by the command_string
-    Process( cohomCalgDirectory, cohomCalg, stdin, stdout, ["--verbose2", command_string ] );
+    Process( cohomCalg[1], cohomCalg[2], stdin, stdout, ["--verbose2", command_string ] );
 
     # now process the string "output_string"
     # we first roughly cut off all the information that we do not need

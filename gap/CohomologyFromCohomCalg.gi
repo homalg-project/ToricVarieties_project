@@ -36,9 +36,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
 
     fi;
 
-    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'SHEAF COHOMOLOGY ON TORIC VARIETIES' INSTALLED!
-    cohomCalgDirectory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "cohomCalg" )[ 1 ];
-    cohomCalg := Filename( cohomCalgDirectory, "cohomcalg" );
+    cohomCalg := cohomCalgBinary( );
 
     # extract the degree_list of the module
     degree_list := DegreeList( Range( UnderlyingMorphism( module ) ) );
@@ -62,7 +60,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
 
       # execute cohomCalg with the 'input file' described by the command_string
       # we use the integrated mode, so that only the necessary output is generated
-      Process( cohomCalgDirectory, cohomCalg, stdin, stdout, ["--integrated", command_string ] );
+      Process( cohomCalg[1], cohomCalg[2], stdin, stdout, ["--integrated", command_string ] );
 
       # make a number of adjustments to this string
       buffer := ReplacedString( buffer, "{", "[" );
