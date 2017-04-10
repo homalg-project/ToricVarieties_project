@@ -128,11 +128,237 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 
 end );
 
+
+
+
+
+
+
+
+InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile,
+               " for a filename, a morphism of projective graded S-modules",
+               [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
+function( filename, variety, morphism, gens_source, gens_range )
+  local path, file, output, rays, max_cones, names, 
+       ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
+       matrix_entries, i, j, k, help_list;
+
+  # set up the stream
+  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+  file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
+  
+  # check if the file exists and if so, delete it if possible
+  if IsExistingFile( file ) then
+
+    # if it does, try to remove it
+    if RemoveFile( file ) = fail then
+      Error( "the file already exists and cannot be deleted before the write process" );
+      return;
+    fi;
+
+  fi;
+  
+  # now set up the stream and append to the above file
+  output := OutputTextFile( file, true );;
+
+  # check if the stream works
+  if output = fail then
+    Error( "failed to set up file-stream" );
+    return;
+  fi;
+
+  # (0) ensure that SheafCohomology is loaded
+  AppendTo( output, "LoadPackage( \"SheafCohomologyOnToricVarieties\" ); \n" );
+  
+  # (1) save the fan of the variety in question
+  rays := RayGenerators( FanOfVariety( variety ) );
+  max_cones := RaysInMaximalCones( FanOfVariety( variety ) );
+  max_cones := List( [ 1 .. Length( max_cones ) ], l -> Positions( max_cones[ l ], 1 ) );
+  
+  s := Concatenation( "rayGenerators := ", String( rays ), "; \n" );
+  AppendTo( output, s );
+  s := Concatenation( "maxCones := ", String( max_cones ), "; \n" );
+  AppendTo( output, s );
+  AppendTo( output, "fan := Fan( rayGenerators, maxCones ); \n" );
+  
+  # (2) extract the weights of the variables from the module and install the toric variety with these weights
+  ring := UnderlyingHomalgGradedRing( morphism );
+  weights := WeightsOfIndeterminates( ring );
+  weights := List( [ 1 .. Length( weights ) ], l -> UnderlyingListOfRingElements( weights[ l ] ) );
+  s := Concatenation( "variety := ToricVariety( fan, ", String( weights ), " ); \n" );
+  AppendTo( output, s );
+
+  # (3) write the non-graded ring to the file
+  AppendTo( output, "ring := CoxRing( variety ); \n" );
+  
+  # (3) write the generator_degrees to the file
+  generator_degrees := DegreeList( Range( morphism ) );
+  generator_degrees := List( generator_degrees, l -> [ UnderlyingListOfRingElements( l[ 1 ] ), l[ 2 ] ] );
+  s := Concatenation( "generator_degrees :=",
+                      String( generator_degrees ),
+                      "; \n");
+  AppendTo( output, s );
+  s := "generator := CAPCategoryOfProjectiveGradedLeftModulesObject( generator_degrees, ring ); \n";
+  AppendTo( output, s );
+
+  # (4) write the relations_degrees to the file
+  relation_degrees := DegreeList( Source( morphism ) );
+  relation_degrees := List( relation_degrees, l -> [ UnderlyingListOfRingElements( l[ 1 ] ), l[ 2 ] ] );
+  s := Concatenation( "relation_degrees :=",
+                      String( relation_degrees ),
+                      "; \n");
+  AppendTo( output, s );
+  s := "relation := CAPCategoryOfProjectiveGradedLeftModulesObject( relation_degrees, ring ); \n";
+  AppendTo( output, s );
+
+  # (5) write the matrix to the file
+  matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( morphism ) );
+  for i in [ 1 .. Length( matrix_entries ) ] do
+    help_list := List( matrix_entries[ i ], l -> String( l ) );
+    matrix_entries[ i ] := help_list;
+  od;
+  s := Concatenation( "matrix := HomalgMatrix( ",
+                      String( matrix_entries ),
+                      ", ring ); \n" );
+  AppendTo( output, s );
+
+  # (6) generate the morphism
+  s := Concatenation( "mor := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( ",
+                      "relation, matrix, generator ); \n" );
+  AppendTo( output, s );
+
+  # (7) save the gens_source
+  AppendTo( output, "gens_source := [ \n" );
+  for i in [ 1 .. Length( gens_source ) ] do
+    matrix_entries := EntriesOfHomalgMatrixAsListList( gens_source[ i ] );
+    for j in [ 1 .. Length( matrix_entries ) ] do
+      help_list := List( matrix_entries[ j ], k -> String( k ) );
+      matrix_entries[ j ] := help_list;
+    od;
+    s := Concatenation( "HomalgMatrix( ", String( matrix_entries ), ", ring ), \n" );
+    AppendTo( output, s );
+  od;
+  AppendTo( output, "]; \n" );
+
+  # (8) save gens_range
+  AppendTo( output, "record_list := []; \n" );
+  for i in [ 1 .. Length( gens_range[ 2 ] ) ] do
+    AppendTo( output, "help_rec := rec(); \n" );
+    names := RecNames( gens_range[ 2 ][ i ] );
+    for j in [ 1 .. Length( names ) ] do
+      s := Concatenation( " help_rec.( \"", names[ j ], "\" ) := ", String( gens_range[ 2 ][ i ].( names[ j ] ) ), "; \n" );
+      AppendTo( output, s );
+    od;
+    AppendTo( output, "Append( record_list, [ help_rec ] ); \n" );
+  od;
+  AppendTo( output, "gens_range := [ ", String( gens_range[ 1 ] ), ", record_list ]; \n" );
+  
+  # (9) close the stream and return success
+  CloseStream(output);
+  return true;
+
+end );
+
+
+InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile2,
+               " for a filename, a morphism of projective graded S-modules",
+               [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
+function( filename, variety, morphism, gens_source, gens_range )
+  local path, file, output, rays, max_cones, names, 
+       ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
+       matrix_entries, i, j, k, help_list, left, mapping_matrix, images, image, non_zero_rows;
+
+  # set up the stream
+  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+  file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
+  
+  # check if the file exists and if so, delete it if possible
+  if IsExistingFile( file ) then
+
+    # if it does, try to remove it
+    if RemoveFile( file ) = fail then
+      Error( "the file already exists and cannot be deleted before the write process" );
+      return;
+    fi;
+
+  fi;
+  
+  # now set up the stream and append to the above file
+  output := OutputTextFile( file, true );;
+
+  # check if the stream works
+  if output = fail then
+    Error( "failed to set up file-stream" );
+    return;
+  fi;
+
+  # (0) ensure that SheafCohomology is loaded
+  AppendTo( output, "LoadPackage( \"SheafCohomologyOnToricVarieties\" ); \n" );
+  
+  # (1) save gens_range
+  AppendTo( output, "record_list := []; \n" );
+  for i in [ 1 .. Length( gens_range[ 2 ] ) ] do
+    AppendTo( output, "help_rec := rec(); \n" );
+    names := RecNames( gens_range[ 2 ][ i ] );
+    for j in [ 1 .. Length( names ) ] do
+      s := Concatenation( " help_rec.( \"", names[ j ], "\" ) := ", String( gens_range[ 2 ][ i ].( names[ j ] ) ), "; \n" );
+      AppendTo( output, s );
+    od;
+    AppendTo( output, "Append( record_list, [ help_rec ] ); \n" );
+  od;
+  AppendTo( output, "gens_range := [ ", String( gens_range[ 1 ] ), ", record_list ]; \n" );
+
+  # (2) compute and save images of gens_source
+  # (2) compute and save images of gens_source
+
+  # identify the mapping matrix
+  left := IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( morphism );
+  mapping_matrix := UnderlyingHomalgMatrix( morphism );
+  if left then
+    mapping_matrix := Involution( mapping_matrix );
+  fi;
+
+  # save images
+  AppendTo( output, "images := [ \n" );
+  images := [];
+  for i in [ 1 .. Length( gens_source ) ] do
+    image := mapping_matrix * gens_source[ i ];
+    non_zero_rows := NonZeroRows( image );
+    image := EntriesOfHomalgMatrix( image );
+    AppendTo( output, Concatenation( "[ ", String( non_zero_rows ), ", [ \n" ) );
+    for j in [ 1 .. Length( image-1 ) ] do
+      AppendTo( output, Concatenation( "\"", String( image[ j ] ), "\", \n" ) );
+    od;
+    if i < Length( gens_source ) then
+      AppendTo( output, Concatenation( "\"", String( image[ Length( image ) ] ), "\" ] ], \n" ) );
+    else
+      AppendTo( output, Concatenation( "\"", String( image[ Length( image ) ] ), "\" ] ] \n" ) );
+    fi;
+  od;
+  AppendTo( output, "]; \n" );
+
+  # (3) save the name of the indeterminates
+  s := Concatenation( " name_of_indeterminates := ", 
+                   String( String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ] ), "; \n" );
+  AppendTo( output, s );
+
+  # (4) close the stream and return success
+  CloseStream(output);
+  return true;
+
+end );
+
+
+# declare globale variables associated to this package - they are used for communication with other gap instances
+# as the following methods is planned to be run in parallel
 InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, a, b )
-      local range, source, map, matrix1, matrix2, matrix3, new_mat, vec_space_morphism;
+      local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
+           gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
+           matrix3, compute_job3, job1, job2, job3, res, path, file, helper1, del, helper2, helper3, new_mat, 
+           vec_space_morphism; 
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -145,10 +371,21 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
       #       v                                                                      v
       # A^v \otimes B -------------- alpha^v \otimes id_B -------------------> R_A^v \otimes B
       #
+ 
+      # step0: to avoid banners, load packages here 
+      # step0: to avoid banners, load packages here 
+      LoadPackage( "GaussForHomalg" );
 
-      # compute the map or graded module preseentations
-      Print( Concatenation( "We will now compute the map of graded module presentations, ",
-                            "whose kernel is the InternalHOM that we are interested in... \n" ) );
+
+      # step1: initialise a few things
+      # step1: initialise a few things
+      rationals := HomalgFieldOfRationalsInMAGMA();
+      zero := UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) );
+
+
+      # step2: compute the map of graded module presentations
+      # step2: compute the map of graded module presentations
+      Print( "compute map of graded module presentations whose kernel is InternalHOM... \n" );
       range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
                                                   IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
                                                   UnderlyingMorphism( b ) )
@@ -165,37 +402,224 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
                                               range,
                                               CapCategory( source )!.constructor_checks_wished
                                              );
-
-      # inform that we have the graded module presentation morphism and will now try to truncate it
-      Print( "Computed the map of graded module presentations. Will now truncate it... \n" );
+      Print( "\n" );
 
 
-      # -> parallisation if possible! (speed up of up to factor 3 for this step)
-      # use e.g. MPI-gap!
-      matrix1 := WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForMAGMA( variety,
-                                                                          UnderlyingMorphism( Source( map ) ),
-                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
-                                                                          "matrix1"
-                                                                         );
-      Print( "\n \n" );
-      matrix2 := WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForMAGMA( variety,
-                                                                          UnderlyingMorphism( map ),
-                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
-                                                                          "matrix2"
-                                                                         );
-      Print( "\n \n" );
-      matrix3 := WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForMAGMA( variety,
-                                                                          UnderlyingMorphism( Range( map ) ),
-                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
-                                                                          "matrix3"
-                                                                         );
-      Print( "\n \n" );
+      # step3: compute the truncations of all projective modules in the above morphism of module presentations
+      #        formatted exactly the way we need them for later computations
+      # step3: compute the truncations of all projective modules in the above morphism of module presentations
+      #        formatted exactly the way we need them for later computations
+      Print( "truncate the projective modules in this morphism... \n" );
+      gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+                                                       variety, Source( UnderlyingMorphism( source ) ), zero );
+      gens_range_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
+                                                       variety, Range( UnderlyingMorphism( source ) ), zero );
+      Print( "done for source morphism... \n" );
+      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+                                                       variety, Range( UnderlyingMorphism( source ) ), zero );
+      gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
+                                                       variety, Range( UnderlyingMorphism( range ) ), zero );
+      Print( "done for map morphism... \n" );
+      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+                                                       variety, Source( UnderlyingMorphism( range ) ), zero );
+      gens_range_3 := gens_range_2;
+      Print( "done for range morphism... \n \n" );
 
-      # inform that the matrices have been computed and we now compute the syzygies
-      Print( "All matrices computed and written to files... \n" );
 
-      # return that computation was successful
-      return true;
+      # step4: analyse the source morphism
+      # step4: analyse the source morphism
+
+      # if its source is the zero vector space...
+      Print( "analyse the source morphism... \n" );
+      if Length( gens_source_1 ) = 0 then
+
+        matrix1 := HomalgZeroMatrix( gens_range_1[ 1 ], 0, rationals );
+        Print( "matrix 1 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+
+      # if its range is the zero vector space...      
+      elif gens_range_1[ 1 ] = 0 then
+
+        matrix1 := HomalgZeroMatrix( 0, Length( gens_source_1 ), rationals );
+        Print( "matrix 1 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+
+      else
+
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "source", variety, UnderlyingMorphism( source ),
+                                                                                         gens_source_1, gens_range_1 );
+        compute_job1 := true;
+        Print( "-> start background job for this truncation... \n \n" );
+        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+                                    [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
+
+      fi;
+
+
+      # step5: truncate the map morphism
+      # step5: truncate the map morphism
+
+      # if its source is the zero vector space...
+      Print( "analyse the map morphism... \n" );
+      if Length( gens_source_2 ) = 0 then
+
+        matrix2 := HomalgZeroMatrix( gens_range_2[ 1 ], 0, rationals );
+        Print( "matrix 2 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+
+      # if its range is the zero vector space...      
+      elif gens_range_2[ 1 ] = 0 then
+
+        matrix2 := HomalgZeroMatrix( 0, Length( gens_source_2 ), rationals );
+        Print( "matrix 2 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+
+      else
+
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "map", variety, UnderlyingMorphism( map ),
+                                                                                         gens_source_2, gens_range_2 );
+        compute_job2 := true;
+        Print( "-> start background job for this truncation... \n \n" );
+        job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+                                    [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
+
+      fi;
+
+
+      # step6: truncate the range morphism
+      # step6: truncate the range morphism
+
+      # if its source is the zero vector space...
+      Print( "analyse the range morphism... \n" );
+      if Length( gens_source_3 ) = 0 then
+
+        matrix2 := HomalgZeroMatrix( gens_range_3[ 1 ], 0, rationals );
+        Print( "matrix 3 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+
+      # if its range is the zero vector space...      
+      elif gens_range_3[ 1 ] = 0 then
+
+        matrix3 := HomalgZeroMatrix( 0, Length( gens_source_3 ), rationals );
+        Print( "matrix 3 computed... \n" );
+        Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
+        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+
+      else
+
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "range", variety, UnderlyingMorphism( range ),
+                                                                                         gens_source_3, gens_range_3 );
+        compute_job3 := true;
+        WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( "range", "helper3", true );
+
+      fi;
+
+
+      # step7: collect result of job1 and kill this job
+      # step7: collect result of job1 and kill this job
+      if compute_job1 then
+        Print( "extract result of job 1: \n" );
+        res := Pickup( job1 );
+        if not res then
+          Error( "job 1 completed with message 'fail' " );
+        else
+          path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+          file := Filename( Directory( path ), "helper1.gi" );
+          if not IsExistingFile( file ) then
+            Error( Concatenation( "the file", String( file ), "does not exist" ) );
+          fi;
+          Read( file );
+          helper1 := ValueGlobal( "helper1" );
+          matrix1 := Involution( rationals * helper1 );
+          del := RemoveFile( file );
+          if not del then
+            Error( Concatenation( "could not delete the file", String( file ) ) );
+          fi;
+          file := Filename( Directory( path ), "source.gi" );
+          del := RemoveFile( file );
+          if not del then
+            Error( Concatenation( "could not delete the file", String( file ) ) );
+          fi;
+          Kill( job1 );
+          Print( "(*) matrix 1 computed \n" );
+          Print( "(*) cleaned working directory \n \n" );
+        fi;
+      fi;
+
+
+      # step8: collect result of job2
+      # step8: collect result of job2
+      if compute_job2 then
+        res := Pickup( job2 );
+        Print( "extract result of job 2: \n" );
+        if not res then
+          Error( "job 2 completed with message 'fail' " );
+        else
+          path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+          file := Filename( Directory( path ), "helper2.gi" );
+          if not IsExistingFile( file ) then
+            Error( Concatenation( "the file", String( file ), "does not exist" ) );
+          fi;
+          Read( file );
+          helper2 := ValueGlobal( "helper2" );
+          matrix2 := Involution( rationals * helper2 );
+          del := RemoveFile( file );
+          if not del then
+            Error( Concatenation( "could not delete the file", String( file ) ) );
+          fi;
+          file := Filename( Directory( path ), "map.gi" );
+          del := RemoveFile( file );
+          if not del then
+            Error( Concatenation( "could not delete the file", String( file ) ) );
+          fi;
+          #Kill( job2 );
+          Print( "(*) matrix 2 computed \n" );
+          Print( "(*) cleaned working directory \n \n" );
+        fi;
+      fi;
+
+
+      # step9: collect result of 'job3'
+      # step9: collect result of 'job3'
+      if compute_job3 then
+        path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+        file := Filename( Directory( path ), "helper3.gi" );
+        if not IsExistingFile( file ) then
+          Error( Concatenation( "the file", String( file ), "does not exist" ) );
+        fi;
+        Read( file );
+        helper3 := ValueGlobal( "helper3" );
+        matrix3 := Involution( rationals * helper3 );
+        del := RemoveFile( file );
+        if not del then
+          Error( Concatenation( "could not delete the file", String( file ) ) );
+        fi;
+        file := Filename( Directory( path ), "range.gi" );
+        del := RemoveFile( file );
+        if not del then
+          Error( Concatenation( "could not delete the file", String( file ) ) );
+        fi;
+        Print( "(*) matrix 3 computed \n" );
+        Print( "(*) cleaned working directory \n \n" );
+      fi;
+
+
+      # step 10: compute syzygies and vec_space_morphism
+      # step 10: compute syzygies and vec_space_morphism
+      Print( "compute syzygies and vector space morphism \n" );
+      new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2, matrix3 ), matrix1 );
+      vec_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( new_mat ), rationals ),
+                                                 new_mat,
+                                                 VectorSpaceObject( NrColumns( new_mat ), rationals )
+                                                );
+
+      # and return the result
+      return vec_space_morphism;
 
 end );
 
