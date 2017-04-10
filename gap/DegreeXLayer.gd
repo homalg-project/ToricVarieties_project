@@ -389,30 +389,6 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
 #! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
 #! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
 #! toric variety $V$ and string 'file_name'. This method then computes the matrix encoding the DegreeXLayer of the 
-#! given morphism of projective modules and saves it to the file 'file_name'. This file is prepared to be used with MAAGMA.
-#! @Returns true or false
-#! @Arguments V, \varphi, degree_list, file_name
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForMAGMA",
-                  [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsString ] );
-
-#!
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForMAGMA",
-                 [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement,
-                   IsString ] );
-
-
-
-
-####################################################################
-##
-#! @Section DegreeXLayer of projective module morphism saved in file
-##
-####################################################################
-
-#! @Description
-#! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
-#! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$ and string 'file_name'. This method then computes the matrix encoding the DegreeXLayer of the 
 #! given morphism of projective modules and saves it to the file 'file_name'. This file is prepared to be used with 
 #! gap.
 #! @Returns true or false
