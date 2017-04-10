@@ -396,18 +396,6 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
 DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
                [ IsList, IsString, IsBool ] );
 
-#!
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAP",
-               [ IsList, IsString, IsBool ] );
-
-#!
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAP",
-               [ IsString, IsList, IsString, IsBool ] );
-
-#!
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAP",
-               [ IsString, IsHomalgModuleElement, IsString, IsBool ] );
-
 
 ##################################################################################################
 ##

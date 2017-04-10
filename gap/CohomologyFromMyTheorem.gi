@@ -451,7 +451,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "source", variety, UnderlyingMorphism( source ),
                                                                                          gens_source_1, gens_range_1 );
         compute_job1 := true;
-        Print( "-> start background job for this truncation... \n \n" );
+        Print( "-> starting background job for this truncation... \n \n" );
         job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
 
@@ -483,7 +483,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "map", variety, UnderlyingMorphism( map ),
                                                                                          gens_source_2, gens_range_2 );
         compute_job2 := true;
-        Print( "-> start background job for this truncation... \n \n" );
+        Print( "-> starting background job for this truncation... \n \n" );
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
 
