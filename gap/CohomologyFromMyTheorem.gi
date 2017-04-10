@@ -130,136 +130,6 @@ end );
 
 
 
-
-
-
-
-
-InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile,
-               " for a filename, a morphism of projective graded S-modules",
-               [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
-function( filename, variety, morphism, gens_source, gens_range )
-  local path, file, output, rays, max_cones, names, 
-       ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
-       matrix_entries, i, j, k, help_list;
-
-  # set up the stream
-  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-  file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
-  
-  # check if the file exists and if so, delete it if possible
-  if IsExistingFile( file ) then
-
-    # if it does, try to remove it
-    if RemoveFile( file ) = fail then
-      Error( "the file already exists and cannot be deleted before the write process" );
-      return;
-    fi;
-
-  fi;
-  
-  # now set up the stream and append to the above file
-  output := OutputTextFile( file, true );;
-
-  # check if the stream works
-  if output = fail then
-    Error( "failed to set up file-stream" );
-    return;
-  fi;
-
-  # (0) ensure that SheafCohomology is loaded
-  AppendTo( output, "LoadPackage( \"SheafCohomologyOnToricVarieties\" ); \n" );
-  
-  # (1) save the fan of the variety in question
-  rays := RayGenerators( FanOfVariety( variety ) );
-  max_cones := RaysInMaximalCones( FanOfVariety( variety ) );
-  max_cones := List( [ 1 .. Length( max_cones ) ], l -> Positions( max_cones[ l ], 1 ) );
-  
-  s := Concatenation( "rayGenerators := ", String( rays ), "; \n" );
-  AppendTo( output, s );
-  s := Concatenation( "maxCones := ", String( max_cones ), "; \n" );
-  AppendTo( output, s );
-  AppendTo( output, "fan := Fan( rayGenerators, maxCones ); \n" );
-  
-  # (2) extract the weights of the variables from the module and install the toric variety with these weights
-  ring := UnderlyingHomalgGradedRing( morphism );
-  weights := WeightsOfIndeterminates( ring );
-  weights := List( [ 1 .. Length( weights ) ], l -> UnderlyingListOfRingElements( weights[ l ] ) );
-  s := Concatenation( "variety := ToricVariety( fan, ", String( weights ), " ); \n" );
-  AppendTo( output, s );
-
-  # (3) write the non-graded ring to the file
-  AppendTo( output, "ring := CoxRing( variety ); \n" );
-  
-  # (3) write the generator_degrees to the file
-  generator_degrees := DegreeList( Range( morphism ) );
-  generator_degrees := List( generator_degrees, l -> [ UnderlyingListOfRingElements( l[ 1 ] ), l[ 2 ] ] );
-  s := Concatenation( "generator_degrees :=",
-                      String( generator_degrees ),
-                      "; \n");
-  AppendTo( output, s );
-  s := "generator := CAPCategoryOfProjectiveGradedLeftModulesObject( generator_degrees, ring ); \n";
-  AppendTo( output, s );
-
-  # (4) write the relations_degrees to the file
-  relation_degrees := DegreeList( Source( morphism ) );
-  relation_degrees := List( relation_degrees, l -> [ UnderlyingListOfRingElements( l[ 1 ] ), l[ 2 ] ] );
-  s := Concatenation( "relation_degrees :=",
-                      String( relation_degrees ),
-                      "; \n");
-  AppendTo( output, s );
-  s := "relation := CAPCategoryOfProjectiveGradedLeftModulesObject( relation_degrees, ring ); \n";
-  AppendTo( output, s );
-
-  # (5) write the matrix to the file
-  matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( morphism ) );
-  for i in [ 1 .. Length( matrix_entries ) ] do
-    help_list := List( matrix_entries[ i ], l -> String( l ) );
-    matrix_entries[ i ] := help_list;
-  od;
-  s := Concatenation( "matrix := HomalgMatrix( ",
-                      String( matrix_entries ),
-                      ", ring ); \n" );
-  AppendTo( output, s );
-
-  # (6) generate the morphism
-  s := Concatenation( "mor := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( ",
-                      "relation, matrix, generator ); \n" );
-  AppendTo( output, s );
-
-  # (7) save the gens_source
-  AppendTo( output, "gens_source := [ \n" );
-  for i in [ 1 .. Length( gens_source ) ] do
-    matrix_entries := EntriesOfHomalgMatrixAsListList( gens_source[ i ] );
-    for j in [ 1 .. Length( matrix_entries ) ] do
-      help_list := List( matrix_entries[ j ], k -> String( k ) );
-      matrix_entries[ j ] := help_list;
-    od;
-    s := Concatenation( "HomalgMatrix( ", String( matrix_entries ), ", ring ), \n" );
-    AppendTo( output, s );
-  od;
-  AppendTo( output, "]; \n" );
-
-  # (8) save gens_range
-  AppendTo( output, "record_list := []; \n" );
-  for i in [ 1 .. Length( gens_range[ 2 ] ) ] do
-    AppendTo( output, "help_rec := rec(); \n" );
-    names := RecNames( gens_range[ 2 ][ i ] );
-    for j in [ 1 .. Length( names ) ] do
-      s := Concatenation( " help_rec.( \"", names[ j ], "\" ) := ", String( gens_range[ 2 ][ i ].( names[ j ] ) ), "; \n" );
-      AppendTo( output, s );
-    od;
-    AppendTo( output, "Append( record_list, [ help_rec ] ); \n" );
-  od;
-  AppendTo( output, "gens_range := [ ", String( gens_range[ 1 ] ), ", record_list ]; \n" );
-  
-  # (9) close the stream and return success
-  CloseStream(output);
-  return true;
-
-end );
-
-
 InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile2,
                " for a filename, a morphism of projective graded S-modules",
                [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
@@ -438,7 +308,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
         Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
 
-      # if its range is the zero vector space...      
+      # if its range is the zero vector space...
       elif gens_range_1[ 1 ] = 0 then
 
         matrix1 := HomalgZeroMatrix( 0, Length( gens_source_1 ), rationals );
