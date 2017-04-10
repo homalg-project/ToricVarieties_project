@@ -218,7 +218,7 @@ function( filename, variety, morphism, gens_source, gens_range )
 end );
 
 
-InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
+InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
   function( variety, a, b )
@@ -382,11 +382,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
         compute_job3 := true;
         helper3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
                                                 variety, UnderlyingMorphism( range ), gens_source_3, gens_range_3, true );
-
-        #SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "range", variety, UnderlyingMorphism( range ),
-        #                                                                                 gens_source_3, gens_range_3 );
-        #compute_job3 := true;
-        #WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( "range", "helper3", true );
 
       fi;
 
