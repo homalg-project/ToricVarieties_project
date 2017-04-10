@@ -587,6 +587,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
       # step9: collect result of 'job3'
       # step9: collect result of 'job3'
       if compute_job3 then
+        Print( "recall result of job 3: \n" );
         path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
         file := Filename( Directory( path ), "helper3.gi" );
         if not IsExistingFile( file ) then
