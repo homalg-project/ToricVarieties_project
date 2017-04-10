@@ -129,8 +129,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 end );
 
 
-
-InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile2,
+InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile,
                " for a filename, a morphism of projective graded S-modules",
                [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
 function( filename, variety, morphism, gens_source, gens_range )
@@ -318,7 +317,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "source", variety, UnderlyingMorphism( source ),
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, UnderlyingMorphism( source ),
                                                                                          gens_source_1, gens_range_1 );
         compute_job1 := true;
         Print( "-> starting background job for this truncation... \n \n" );
@@ -350,7 +349,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "map", variety, UnderlyingMorphism( map ),
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, UnderlyingMorphism( map ),
                                                                                          gens_source_2, gens_range_2 );
         compute_job2 := true;
         Print( "-> starting background job for this truncation... \n \n" );
@@ -382,7 +381,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile2( "range", variety, UnderlyingMorphism( range ),
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "range", variety, UnderlyingMorphism( range ),
                                                                                          gens_source_3, gens_range_3 );
         compute_job3 := true;
         WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( "range", "helper3", true );
