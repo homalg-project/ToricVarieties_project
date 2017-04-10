@@ -379,10 +379,14 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "range", variety, UnderlyingMorphism( range ),
-                                                                                         gens_source_3, gens_range_3 );
         compute_job3 := true;
-        WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( "range", "helper3", true );
+        helper3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
+                                                variety, UnderlyingMorphism( range ), gens_source_3, gens_range_3, true );
+
+        #SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "range", variety, UnderlyingMorphism( range ),
+        #                                                                                 gens_source_3, gens_range_3 );
+        #compute_job3 := true;
+        #WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( "range", "helper3", true );
 
       fi;
 
@@ -455,25 +459,25 @@ InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
       # step9: collect result of 'job3'
       if compute_job3 then
         Print( "recall result of job 3: \n" );
-        path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-        file := Filename( Directory( path ), "helper3.gi" );
-        if not IsExistingFile( file ) then
-          Error( Concatenation( "the file", String( file ), "does not exist" ) );
-        fi;
-        Read( file );
-        helper3 := ValueGlobal( "helper3" );
+        #path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+        #file := Filename( Directory( path ), "helper3.gi" );
+        #if not IsExistingFile( file ) then
+        #  Error( Concatenation( "the file", String( file ), "does not exist" ) );
+        #fi;
+        #Read( file );
         matrix3 := Involution( rationals * helper3 );
-        del := RemoveFile( file );
-        if not del then
-          Error( Concatenation( "could not delete the file", String( file ) ) );
-        fi;
-        file := Filename( Directory( path ), "range.gi" );
-        del := RemoveFile( file );
-        if not del then
-          Error( Concatenation( "could not delete the file", String( file ) ) );
-        fi;
-        Print( "(*) matrix 3 computed \n" );
-        Print( "(*) cleaned working directory \n \n" );
+        #del := RemoveFile( file );
+        #if not del then
+        #  Error( Concatenation( "could not delete the file", String( file ) ) );
+        #fi;
+        #file := Filename( Directory( path ), "range.gi" );
+        #del := RemoveFile( file );
+        #if not del then
+        #  Error( Concatenation( "could not delete the file", String( file ) ) );
+        #fi;
+        #Print( "(*) matrix 3 computed \n" );
+        Print( "(*) matrix 3 identified \n" );
+        #Print( "(*) cleaned working directory \n \n" );
       fi;
 
 

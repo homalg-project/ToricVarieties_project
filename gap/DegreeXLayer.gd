@@ -377,6 +377,8 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
 DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
                   [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement ] );
 
+DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal",
+                  [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool ] );
 
 
 ####################################################################
