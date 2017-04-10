@@ -1405,9 +1405,9 @@ end );
 # a minimal version to compute degree X layer of projective graded S-module morphism
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal,
                " a toric variety, a projective graded module morphism, a list specifying a degree ",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool ],
-  function( variety, projective_module_morphism, gens_source, gens_range_original, display_messages )
-    local left, dim_range, gens_range, rationals, matrix, mapping_matrix, name_of_indeterminates, counter, i, 
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList, IsHomalgRing, IsBool ],
+  function( variety, projective_module_morphism, gens_source, gens_range_original, rationals, display_messages )
+    local left, dim_range, gens_range, matrix, mapping_matrix, name_of_indeterminates, counter, i, 
          comparer, j, non_zero_rows, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos;
 
     # check if we have to deal with a left or right module morphism
@@ -1417,196 +1417,151 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal,
     dim_range := gens_range_original[ 1 ];
     gens_range := gens_range_original[ 2 ];
 
-    # install rationals
-    rationals := HomalgFieldOfRationals();
+    # extract the underlying matrix of the morphism
+    mapping_matrix := UnderlyingHomalgMatrix( projective_module_morphism );
 
-    # check for degenerate cases
-    if Length( gens_source ) = 0 then
+    # if a left module was provided we have to transpose the mapping matrix
+    if left then
 
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
-      fi;
+      # remember that the mapping_matrix should be used as transposed matrix for left modules
+      mapping_matrix := Involution( mapping_matrix );
 
-      matrix := HomalgZeroMatrix( dim_range,
-                                  0,
-                                  rationals
-                                 );
+    fi;
 
-      if display_messages then
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
-        Print( "matrix created... \n \n" );
-      fi;
+    # figure out what names are used for the variables in the Cox ring
+    # we will later look for appearences of this char in a string (that is way faster than e.g. left divide and so on)
+    # this works only if the underlying ring is a polynomial ring and the variable names are of the form 'x1 x2 ...' or 'w_1, w_2' but for
+    # example 'hans1 hans2 hans3...' will lead to problems
+    name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
 
-    elif dim_range = 0 then
+    # initialise the matrix as a sparse matrix
+    matrix := HomalgInitialMatrix( dim_range, Length( gens_source ), rationals );
 
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
-      fi;
+    # print status of the computation
+    if display_messages then
+      Print( "Starting the matrix computation now... \n \n" );
+      Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
+      Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
+      Print( Concatenation( "Have to go until i = ", String( Length( gens_source ) ), "\n" ) );
+    fi;
 
-      matrix := HomalgZeroMatrix( 0,
-                                  Length( gens_source ),
-                                  rationals
-                                 );
+    counter := 1;
 
-      if display_messages then
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
-        Print( "matrix created... \n \n" );
-      fi;
+    for i in [ 1 .. Length( gens_source ) ] do
 
-    else;
+      # information about the status
+      if not ( Int( i / Length( gens_source ) * 100 ) < counter ) then
 
-      # extract the underlying matrix of the morphism
-      mapping_matrix := UnderlyingHomalgMatrix( projective_module_morphism );
+        # express current status as multiply of 10%, so we compute this number first
+        counter := Int( i / Length( gens_source ) * 10 ) * 10;
 
-      # if a left module was provided we have to transpose the mapping matrix
-      if left then
-
-        # remember that the mapping_matrix should be used as transposed matrix for left modules
-        mapping_matrix := Involution( mapping_matrix );
-
-      fi;
-
-      # figure out what names are used for the variables in the Cox ring
-      # we will later look for appearences of this char in a string (that is way faster than e.g. left divide and so on)
-      # this works only if the underlying ring is a polynomial ring and the variable names are of the form 'x1 x2 ...' or 'w_1, w_2' but for
-      # example 'hans1 hans2 hans3...' will lead to problems
-      name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
-
-      # initialise the matrix as a sparse matrix
-      matrix := HomalgInitialMatrix( dim_range,
-                                     Length( gens_source ),
-                                     rationals
-                                    );
-
-      # print status of the computation
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
-        Print( Concatenation( "Have to go until i = ", String( Length( gens_source ) ), "\n" ) );
-      fi;
-
-      counter := 1;
-
-      for i in [ 1 .. Length( gens_source ) ] do
-
-        # information about the status
-        if not ( Int( i / Length( gens_source ) * 100 ) < counter ) then
-
-          # express current status as multiply of 10%, so we compute this number first
-          counter := Int( i / Length( gens_source ) * 10 ) * 10;
-
-          # then inform the user
-          if display_messages then
-            Print( Concatenation( String( counter ), "% done...\n" ) );
-          fi;
-
-          # and finally increase counter
-          counter := counter + 10;
-
+        # then inform the user
+        if display_messages then
+          Print( Concatenation( String( counter ), "% done...\n" ) );
         fi;
 
-        # compute image of the i-th source generator
-        comparer := mapping_matrix * gens_source[ i ];
+        # and finally increase counter
+        counter := counter + 10;
 
-        # extract the non_zero rows of this image-column
-        non_zero_rows := NonZeroRows( comparer );
-        comparer := EntriesOfHomalgMatrix( comparer );
+      fi;
 
-        # now work over each and every nontrivial entry of comparer
-        for j in [ 1 .. Length( non_zero_rows ) ] do
+      # compute image of the i-th source generator
+      comparer := mapping_matrix * gens_source[ i ];
 
-          # consider the non_zero_rows[j]-th image as a string
-          poly := String( comparer[ non_zero_rows[ j ] ] );
+      # extract the non_zero rows of this image-column
+      non_zero_rows := NonZeroRows( comparer );
+      comparer := EntriesOfHomalgMatrix( comparer );
 
-          # find positions of plus and minus
-          split_pos := [ 1 ];
-          Append( split_pos, Positions( poly, '-' ) );
-          Append( split_pos, Positions( poly, '+' ) );
-          split_pos := DuplicateFreeList( split_pos );
-          Sort( split_pos );
+      # now work over each and every nontrivial entry of comparer
+      for j in [ 1 .. Length( non_zero_rows ) ] do
 
-          # initialise the split string
-          poly_split := List( [ 1 .. Length( split_pos ) ] );
+        # consider the non_zero_rows[j]-th image as a string
+        poly := String( comparer[ non_zero_rows[ j ] ] );
 
-          # and extract the substrings
-          for k in [ 1 .. Length( poly_split ) ] do
-             if k <> Length( poly_split ) then
-               poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-             else
-               poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-             fi;
-          od;
+        # find positions of plus and minus
+        split_pos := [ 1 ];
+        Append( split_pos, Positions( poly, '-' ) );
+        Append( split_pos, Positions( poly, '+' ) );
+        split_pos := DuplicateFreeList( split_pos );
+        Sort( split_pos );
 
-          # now initialise poly_split2
-          poly_split2 := List( [ 1 .. Length( poly_split ) ] );
+        # initialise the split string
+        poly_split := List( [ 1 .. Length( split_pos ) ] );
 
-          # now extract the coefficients of the individual monoms
-          for k in [ 1 .. Length( poly_split ) ] do
-            if poly_split[ k ][ 1 ] = name_of_indeterminates then
+        # and extract the substrings
+        for k in [ 1 .. Length( poly_split ) ] do
+           if k <> Length( poly_split ) then
+             poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
+           else
+             poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
+           fi;
+        od;
 
-              poly_split2[ k ] := [ One( rationals ), poly_split[ k ] ];
+        # now initialise poly_split2
+        poly_split2 := List( [ 1 .. Length( poly_split ) ] );
 
-            elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
+        # now extract the coefficients of the individual monoms
+        for k in [ 1 .. Length( poly_split ) ] do
+          if poly_split[ k ][ 1 ] = name_of_indeterminates then
 
-              # find first occurance of 'x' (or more generally the variables names used)
-              # -> whatever is in front of it will be our coefficient
-              pos := Position( poly_split[ k ], name_of_indeterminates );
+            poly_split2[ k ] := [ One( rationals ), poly_split[ k ] ];
 
-              if pos <> fail then
-                # at least one 'x' does appear in this string
-                coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
+          elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
 
-                # massage the coefficient
-                if coeff[ Length( coeff ) ] = '*' then
-                  Remove( coeff );
-                fi;
+            # find first occurance of 'x' (or more generally the variables names used)
+            # -> whatever is in front of it will be our coefficient
+            pos := Position( poly_split[ k ], name_of_indeterminates );
 
-                # check for degenerate case
-                if coeff = "-" then
-                  coeff := "-1";
-                elif coeff = "+" then
-                  coeff := "+1";
-                fi;
+            if pos <> fail then
+              # at least one 'x' does appear in this string
+              coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
 
-                # remove the coefficient part from poly_split
-                for l in [ 1 .. pos-1 ] do
-                  Remove( poly_split[ k ], 1 );
-                od;
-
-                # finally save the coefficient and the monom
-                poly_split2[ k ] := [ EvalString( coeff ) / rationals, poly_split[ k ] ];
-
-              else
-                # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient
-                # and the monom is just 1
-                poly_split2[ k ] := [ Int( poly_split[ k ] ) / rationals, "1" ];
-
+              # massage the coefficient
+              if coeff[ Length( coeff ) ] = '*' then
+                Remove( coeff );
               fi;
+
+              # check for degenerate case
+              if coeff = "-" then
+                coeff := "-1";
+              elif coeff = "+" then
+                coeff := "+1";
+              fi;
+
+              # remove the coefficient part from poly_split
+              for l in [ 1 .. pos-1 ] do
+                Remove( poly_split[ k ], 1 );
+              od;
+
+              # finally save the coefficient and the monom
+              poly_split2[ k ] := [ EvalString( coeff ) / rationals, poly_split[ k ] ];
+
+            else
+              # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient
+              # and the monom is just 1
+              poly_split2[ k ] := [ Int( poly_split[ k ] ) / rationals, "1" ];
 
             fi;
 
-          od;
+          fi;
 
-          # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
-          for k in [ 1 .. Length( poly_split2 ) ] do
+        od;
 
-            pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-            SetMatElm( matrix, pos, i, poly_split2[ k ][ 1 ] );
+        # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
+        for k in [ 1 .. Length( poly_split2 ) ] do
 
-          od;
+          pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
+          SetMatElm( matrix, pos, i, poly_split2[ k ][ 1 ] );
 
         od;
 
       od;
 
-      # and return the result
-      if display_messages then
-        Print( "matrix created... \n \n" );
-      fi;
+    od;
 
+    # and return the result
+    if display_messages then
+      Print( "matrix created... \n \n" );
     fi;
 
     # finally return the result

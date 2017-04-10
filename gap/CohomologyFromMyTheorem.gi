@@ -39,14 +39,10 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
         Print( Concatenation( "We will now compute the map of graded module presentations, ",
                               "whose kernel is the InternalHOM that we are interested in... \n" ) );
       fi;
-      range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
-                                                      UnderlyingMorphism( b ) )
-                                                      );
-      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
-                                                      UnderlyingMorphism( b ) )
-                                                      );
+      range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
+                                         UnderlyingMorphism( b ) );
+      source := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
+                                          UnderlyingMorphism( b ) );
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
@@ -62,7 +58,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 
       matrix1 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
-                                                                          UnderlyingMorphism( source ),
+                                                                          source,
                                                                           TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
                                                                           Q,
                                                                           display_messages
@@ -98,7 +94,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
 
       matrix3 := UnderlyingMatrix( UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
                                                                           variety,
-                                                                          UnderlyingMorphism( range ),
+                                                                          range,
                                                                           TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
                                                                           Q,
                                                                           display_messages
@@ -248,75 +244,77 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       # step1: initialise a few things
       rationals := HomalgFieldOfRationalsInMAGMA();
       zero := UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) );
-
+      compute_job1 := false;
+      compute_job2 := false;
+      compute_job3 := false;
 
       # step2: compute the map of graded module presentations
       # step2: compute the map of graded module presentations
       Print( "compute map of graded module presentations whose kernel is InternalHOM... \n" );
-      range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                  IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
-                                                  UnderlyingMorphism( b ) )
-                                                  );
-      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
-                                                  IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
-                                                  UnderlyingMorphism( b ) )
-                                                  );
+      range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
+                                         UnderlyingMorphism( b ) );
+      source := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
+                                          UnderlyingMorphism( b ) );
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
-      map := CAPPresentationCategoryMorphism( source,
-                                              map,
-                                              range,
-                                              CapCategory( source )!.constructor_checks_wished
-                                             );
-      Print( "\n" );
+      Print( "done... \n \n" );
 
 
-      # step3: compute the truncations of all projective modules in the above morphism of module presentations
-      #        formatted exactly the way we need them for later computations
-      # step3: compute the truncations of all projective modules in the above morphism of module presentations
-      #        formatted exactly the way we need them for later computations
-      Print( "truncate the projective modules in this morphism... \n" );
+      # step3: analyse the source morphism
+      # step3: analyse the source morphism
+      Print( "truncate the projective modules in the source... \n" );
       gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-                                                       variety, Source( UnderlyingMorphism( source ) ), zero );
+                                                       variety, Source( source ), zero );
       gens_range_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
-                                                       variety, Range( UnderlyingMorphism( source ) ), zero );
-      Print( "done for source morphism... \n" );
-      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-                                                       variety, Range( UnderlyingMorphism( source ) ), zero );
-      gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
-                                                       variety, Range( UnderlyingMorphism( range ) ), zero );
-      Print( "done for map morphism... \n" );
-      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-                                                       variety, Source( UnderlyingMorphism( range ) ), zero );
-      gens_range_3 := gens_range_2;
-      Print( "done for range morphism... \n \n" );
-
-
-      # step4: analyse the source morphism
-      # step4: analyse the source morphism
+                                                       variety, Range( source ), zero );
 
       # if its source is the zero vector space...
       Print( "analyse the source morphism... \n" );
       if Length( gens_source_1 ) = 0 then
 
-        matrix1 := HomalgZeroMatrix( gens_range_1[ 1 ], 0, rationals );
+        matrix1 := HomalgZeroMatrix( 0, gens_range_1[ 1 ], rationals );
         Print( "matrix 1 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+
+        # check for degenerate case
+        if NrColumns( matrix1 ) = 0 then
+
+          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+                                                                               VectorSpaceObject( 0, rationals ) );
+        elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
+
+          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+                                                                               VectorSpaceObject( 0, rationals ) );
+        fi;
 
       # if its range is the zero vector space...
       elif gens_range_1[ 1 ] = 0 then
 
-        matrix1 := HomalgZeroMatrix( 0, Length( gens_source_1 ), rationals );
+        matrix1 := HomalgZeroMatrix( Length( gens_source_1 ), 0, rationals );
         Print( "matrix 1 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
 
+        # check for degenerate case
+        if NrColumns( matrix1 ) = 0 then
+
+          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+                                                                               VectorSpaceObject( 0, rationals ) );
+        elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
+
+          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+                                                                               VectorSpaceObject( 0, rationals ) );
+        fi;
+
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, UnderlyingMorphism( source ),
-                                                                                         gens_source_1, gens_range_1 );
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
         Print( "-> starting background job for this truncation... \n \n" );
         job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
@@ -327,12 +325,17 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       # step5: truncate the map morphism
       # step5: truncate the map morphism
+      Print( "truncate the projective modules in the map... \n" );
+      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+                                                       variety, Source( map ), zero );
+      gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
+                                                       variety, Range( map ), zero );
 
       # if its source is the zero vector space...
       Print( "analyse the map morphism... \n" );
       if Length( gens_source_2 ) = 0 then
 
-        matrix2 := HomalgZeroMatrix( gens_range_2[ 1 ], 0, rationals );
+        matrix2 := HomalgZeroMatrix( 0, gens_range_2[ 1 ], rationals );
         Print( "matrix 2 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
@@ -340,15 +343,14 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       # if its range is the zero vector space...      
       elif gens_range_2[ 1 ] = 0 then
 
-        matrix2 := HomalgZeroMatrix( 0, Length( gens_source_2 ), rationals );
+        matrix2 := HomalgZeroMatrix( Length( gens_source_2 ), 0, rationals );
         Print( "matrix 2 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, UnderlyingMorphism( map ),
-                                                                                         gens_source_2, gens_range_2 );
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
         Print( "-> starting background job for this truncation... \n \n" );
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
@@ -360,19 +362,24 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       # step6: truncate the range morphism
       # step6: truncate the range morphism
 
+      Print( "truncate the projective modules in the range... \n" );
+      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+                                                       variety, Source( range ), zero );
+      gens_range_3 := gens_range_2;
+
       # if its source is the zero vector space...
       Print( "analyse the range morphism... \n" );
       if Length( gens_source_3 ) = 0 then
 
-        matrix2 := HomalgZeroMatrix( gens_range_3[ 1 ], 0, rationals );
+        matrix3 := HomalgZeroMatrix( 0, gens_range_3[ 1 ], rationals );
         Print( "matrix 3 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
 
-      # if its range is the zero vector space...      
+      # if its range is the zero vector space...
       elif gens_range_3[ 1 ] = 0 then
 
-        matrix3 := HomalgZeroMatrix( 0, Length( gens_source_3 ), rationals );
+        matrix3 := HomalgZeroMatrix( Length( gens_source_3 ), 0, rationals );
         Print( "matrix 3 computed... \n" );
         Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
@@ -381,7 +388,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         compute_job3 := true;
         helper3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
-                                                variety, UnderlyingMorphism( range ), gens_source_3, gens_range_3, true );
+                                                variety, range, gens_source_3, gens_range_3, rationals, true );
 
       fi;
 
@@ -454,25 +461,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       # step9: collect result of 'job3'
       if compute_job3 then
         Print( "recall result of job 3: \n" );
-        #path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-        #file := Filename( Directory( path ), "helper3.gi" );
-        #if not IsExistingFile( file ) then
-        #  Error( Concatenation( "the file", String( file ), "does not exist" ) );
-        #fi;
-        #Read( file );
-        matrix3 := Involution( rationals * helper3 );
-        #del := RemoveFile( file );
-        #if not del then
-        #  Error( Concatenation( "could not delete the file", String( file ) ) );
-        #fi;
-        #file := Filename( Directory( path ), "range.gi" );
-        #del := RemoveFile( file );
-        #if not del then
-        #  Error( Concatenation( "could not delete the file", String( file ) ) );
-        #fi;
-        #Print( "(*) matrix 3 computed \n" );
+        matrix3 := Involution( matrix3 ); #<- this line causes cryptic error
         Print( "(*) matrix 3 identified \n" );
-        #Print( "(*) cleaned working directory \n \n" );
       fi;
 
 
