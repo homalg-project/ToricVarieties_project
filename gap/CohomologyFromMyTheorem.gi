@@ -218,8 +218,6 @@ function( filename, variety, morphism, gens_source, gens_range )
 end );
 
 
-# declare globale variables associated to this package - they are used for communication with other gap instances
-# as the following methods is planned to be run in parallel
 InstallMethod( InternalHomDegreeZeroOnObjectsWrittenToFiles,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
