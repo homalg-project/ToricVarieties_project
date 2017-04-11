@@ -1745,27 +1745,21 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
   function( sourcefile, targetfile, display_messages )
     local path, file, f, images, gens_range, name_of_indeterminates;
 
-    # collect the morphism from a file
-    #path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-    #file := Filename( Directory( path ), Concatenation( sourcefile, ".gi" ) );
-    #Read( file );
-
+    # try to open file
     path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
     file := Concatenation( path, "/tmp/", sourcefile );
     f := IO_File( file,"r");
     if f = fail then
       Error( Concatenation( "could not read from file ", file ) );
     fi;
+
+    # read in the necessary information
     gens_range := IO_Unpickle( f );
     images := IO_Unpickle( f );
     name_of_indeterminates := IO_Unpickle( f );
     IO_Close( f );
 
-    #images := ValueGlobal( "images" );
-    #gens_range := ValueGlobal( "gens_range" );
-    #name_of_indeterminates := ValueGlobal( "name_of_indeterminates" );
-
-    # and hand it over
+    # and hand it over to next method
     return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal(
               [ images, gens_range, name_of_indeterminates ], targetfile, display_messages );
 

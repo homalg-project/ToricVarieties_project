@@ -133,51 +133,8 @@ function( filename, variety, morphism, gens_source, gens_range )
        ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
        matrix_entries, i, j, k, help_list, left, mapping_matrix, images, image, non_zero_rows;
 
-  if false then
-  # set up the stream
-  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-  file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
-  
-  # check if the file exists and if so, delete it if possible
-  if IsExistingFile( file ) then
-
-    # if it does, try to remove it
-    if RemoveFile( file ) = fail then
-      Error( "the file already exists and cannot be deleted before the write process" );
-      return;
-    fi;
-
-  fi;
-
-  # now set up the stream and append to the above file
-  output := OutputTextFile( file, true );;
-
-  # check if the stream works
-  if output = fail then
-    Error( "failed to set up file-stream" );
-    return;
-  fi;
-
-  # (0) ensure that SheafCohomology is loaded
-  AppendTo( output, "LoadPackage( \"SheafCohomologyOnToricVarieties\" ); \n" );
-
-  # (1) save gens_range
-  AppendTo( output, "record_list := []; \n" );
-  for i in [ 1 .. Length( gens_range[ 2 ] ) ] do
-    AppendTo( output, "help_rec := rec(); \n" );
-    names := RecNames( gens_range[ 2 ][ i ] );
-    for j in [ 1 .. Length( names ) ] do
-      s := Concatenation( " help_rec.( \"", names[ j ], "\" ) := ", String( gens_range[ 2 ][ i ].( names[ j ] ) ), "; \n" );
-      AppendTo( output, s );
-    od;
-    AppendTo( output, "Append( record_list, [ help_rec ] ); \n" );
-  od;
-  AppendTo( output, "gens_range := [ ", String( gens_range[ 1 ] ), ", record_list ]; \n" );
-
-  fi;
-  
-  # (2) compute and save images of gens_source
-  # (2) compute and save images of gens_source
+  # (1) compute images of gens_source
+  # (1) compute images of gens_source
 
   # identify the mapping matrix
   left := IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( morphism );
@@ -187,51 +144,21 @@ function( filename, variety, morphism, gens_source, gens_range )
   fi;
 
   # save images
-  if false then
-  AppendTo( output, "images := [ \n" );
-  fi;
   images := [];
   for i in [ 1 .. Length( gens_source ) ] do
     image := mapping_matrix * gens_source[ i ];
     non_zero_rows := NonZeroRows( image );
     image := EntriesOfHomalgMatrix( image );
-
-    if false then
-    AppendTo( output, Concatenation( "[ ", String( non_zero_rows ), ", [ \n" ) );
-    for j in [ 1 .. Length( image-1 ) ] do
-      AppendTo( output, Concatenation( "\"", String( image[ j ] ), "\", \n" ) );
-    od;
-    if i < Length( gens_source ) then
-      AppendTo( output, Concatenation( "\"", String( image[ Length( image ) ] ), "\" ] ], \n" ) );
-    else
-      AppendTo( output, Concatenation( "\"", String( image[ Length( image ) ] ), "\" ] ] \n" ) );
-    fi;
-    
-    fi;
-
     image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
     Append( images, [ [ non_zero_rows, image ] ] );
-    
   od;
-  
-  if false then
-  AppendTo( output, "]; \n" );
-  fi;
-  
-  # (3) save the name of the indeterminates
+
+  # (2) identify name of the indeterminates
+  # (2) identify name of the indeterminates
   name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
-  
-  if false then
-  s := Concatenation( " name_of_indeterminates := ", 
-                   String( String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ] ), "; \n" );
-  AppendTo( output, s );
 
-  # (4) close the stream and return success
-  CloseStream(output);
-  fi;
-
-  #Error( "Test" );
-
+  # (3) save to file via IO_Pickle
+  # (3) save to file via IO_Pickle
   path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
   file := Concatenation( path, "/tmp/", filename );
   f := IO_File( file, "w" );
