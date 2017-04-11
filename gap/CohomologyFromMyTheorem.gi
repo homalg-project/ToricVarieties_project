@@ -295,7 +295,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         fi;
 
         # start background job
-        return_name1 := Concatenation( "helper1", String( Random( [ 1 .. 100000 ] ) ) );
+        return_name1 := Concatenation( "helper1_", String( Random( [ 1 .. 100000 ] ) ) );
         job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ name1, return_name1, false ], rec( TerminateImmediately := true ) );
 
@@ -347,7 +347,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         fi;
 
         # start background job
-        return_name2 := Concatenation( "helper1", String( Random( [ 1 .. 100000 ] ) ) );
+        return_name2 := Concatenation( "helper2_", String( Random( [ 1 .. 100000 ] ) ) );
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ name2, return_name2, false ], rec( TerminateImmediately := true ) );
 
