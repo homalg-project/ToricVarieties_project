@@ -118,7 +118,7 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
                                                  new_mat,
                                                  VectorSpaceObject( NrColumns( new_mat ), Q )
                                                 );
-
+      #Error( "test" );
       # and return the result
       return vec_space_morphism;
 
@@ -147,7 +147,7 @@ function( filename, variety, morphism, gens_source, gens_range )
     fi;
 
   fi;
-  
+
   # now set up the stream and append to the above file
   output := OutputTextFile( file, true );;
 
@@ -220,8 +220,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
   function( variety, a, b )
       local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
            gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
-           matrix3, compute_job3, job1, job2, job3, res, path, file, helper1, del, helper2, helper3, new_mat, 
-           vec_space_morphism; 
+           matrix3, job1, job2, job3, res, path, file, helper1, del, helper2, new_mat, 
+           vec_space_morphism, i;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -246,7 +246,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       zero := UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) );
       compute_job1 := false;
       compute_job2 := false;
-      compute_job3 := false;
+
 
       # step2: compute the map of graded module presentations
       # step2: compute the map of graded module presentations
@@ -282,12 +282,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         if NrColumns( matrix1 ) = 0 then
 
           Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
                                                                                VectorSpaceObject( 0, rationals ) );
         elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
 
           Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
+          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
                                                                                VectorSpaceObject( 0, rationals ) );
         fi;
 
@@ -317,8 +317,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
         Print( "-> starting background job for this truncation... \n \n" );
-        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
                                     [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
+        #job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+        #                            [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -353,8 +355,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
         Print( "-> starting background job for this truncation... \n \n" );
-        job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+        job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
                                     [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
+        #job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+        #                            [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -386,12 +390,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        compute_job3 := true;
-        helper3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
+        matrix3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
                                                 variety, range, gens_source_3, gens_range_3, rationals, true );
 
       fi;
 
+      #Error( "test1" );
 
       # step7: collect result of job1 and kill this job
       # step7: collect result of job1 and kill this job
@@ -408,7 +412,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           fi;
           Read( file );
           helper1 := ValueGlobal( "helper1" );
-          matrix1 := Involution( rationals * helper1 );
+          matrix1 := HomalgInitialMatrix( helper1[ 1 ], helper1[ 2 ], rationals );
+          for i in [ 1 .. Length( helper1[ 3 ] ) ] do
+            SetMatElm( matrix1, helper1[ 3 ][ i ][ 1 ], helper1[ 3 ][ i ][ 2 ], 
+                                                                 helper1[ 3 ][ i ][ 3 ]  * One( rationals ) );
+          od;
+          #matrix1 := rationals * helper1;
           del := RemoveFile( file );
           if not del then
             Error( Concatenation( "could not delete the file", String( file ) ) );
@@ -440,7 +449,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           fi;
           Read( file );
           helper2 := ValueGlobal( "helper2" );
-          matrix2 := Involution( rationals * helper2 );
+          matrix2 := HomalgInitialMatrix( helper2[ 1 ], helper2[ 2 ], rationals );
+          for i in [ 1 .. Length( helper2[ 3 ] ) ] do
+            SetMatElm( matrix2, helper2[ 3 ][ i ][ 1 ], helper2[ 3 ][ i ][ 2 ], 
+                                                                 helper2[ 3 ][ i ][ 3 ] * One( rationals ) );
+          od;
+          #matrix2 := rationals * helper2;
           del := RemoveFile( file );
           if not del then
             Error( Concatenation( "could not delete the file", String( file ) ) );
@@ -456,18 +470,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         fi;
       fi;
 
+      #Error( "test2" );
 
-      # step9: collect result of 'job3'
-      # step9: collect result of 'job3'
-      if compute_job3 then
-        Print( "recall result of job 3: \n" );
-        matrix3 := Involution( matrix3 ); #<- this line causes cryptic error
-        Print( "(*) matrix 3 identified \n" );
-      fi;
-
-
-      # step 10: compute syzygies and vec_space_morphism
-      # step 10: compute syzygies and vec_space_morphism
+      # step 9: compute syzygies and vec_space_morphism
+      # step 9: compute syzygies and vec_space_morphism
       Print( "compute syzygies and vector space morphism \n" );
       new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2, matrix3 ), matrix1 );
       vec_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( new_mat ), rationals ),
