@@ -27,7 +27,7 @@ DeclareOperation( "SaveMorphismOfProjectiveModulesOnToricVarietyToFile",
 #!
 DeclareOperation( "InternalHomDegreeZeroOnObjectsParallel",
                 [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                  IsGradedLeftOrRightModulePresentationForCAP ] );
+                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnMorphisms",
@@ -60,6 +60,18 @@ DeclareOperation( "H0",
 DeclareOperation( "H0",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
+#! @Description
+#! Computation of sheaf cohomology from my own theorem, but in parallel (by forking).
+#! @Returns a list consisting of an integer and a vector space
+#! @Arguments vari, M
+DeclareOperation( "H0Parallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
+DeclareOperation( "H0Parallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+DeclareOperation( "H0Parallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "H0Parallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
 
 #############################################################

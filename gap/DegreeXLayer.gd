@@ -397,8 +397,6 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinima
 #! @Arguments V, \varphi, degree_list, file_name
 DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
                [ IsList, IsString, IsBool ] );
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2",
-               [ IsList, IsString, IsBool ] );
 
 
 ##################################################################################################

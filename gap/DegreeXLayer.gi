@@ -1578,7 +1578,7 @@ end );
 ######################################################################################################
 
 # compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
+InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                " a list of information and a string",
                [ IsList, IsString, IsBool ],
   function( infos, filename, display_messages )
@@ -1600,9 +1600,6 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
     stream := OutputTextFile( file, false ); # true means that we append to this file
 
     # write syntax...
-    #WriteLine( stream, "rationals := HomalgFieldOfRationals();" );
-    #WriteLine( stream, Concatenation( filename, ":= HomalgInitialMatrix( ", String( Length( images ) ), ",", 
-    #                                              String( dim_range ), ", rationals );" ) );
     WriteLine( stream, Concatenation( filename, ":= [ ", String( Length( images ) ), ",", String( dim_range ), ", [ " ) );
 
     # print status of the computation
@@ -1673,7 +1670,8 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
 
           elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
 
-            # find first occurance of 'x' (or more generally the variables names used) -> whatever is in front of it will be our coefficient
+            # find first occurance of 'x' (or more generally the variables names used) 
+            # -> whatever is in front of it will be our coefficient
             pos := Position( poly_split[ k ], name_of_indeterminates );
 
             if pos <> fail then
@@ -1715,8 +1713,6 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
         for k in [ 1 .. Length( poly_split2 ) ] do
 
           pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-          #WriteLine( stream, Concatenation( "SetMatElm( ", filename, ", ", String( i ), "," , String( pos ), ","
-          #                                  , String( poly_split2[ k ][ 1 ] ), " );" ) );
           WriteLine( stream, Concatenation( "[ ", String( i ), "," , String( pos ), ",", 
                                                                            String( poly_split2[ k ][ 1 ] ), " ]," ) );
 
@@ -1735,188 +1731,6 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
     # and return the result
     if display_messages then
       Print( "matrix entries written to file... \n \n" );
-    fi;
-
-    # signal end of computation
-    return true;
-
-end );
-
-
-InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
-               " a string, a list, a string, a ring, a bool",
-               [ IsString, IsString, IsBool ],
-  function( sourcefile, targetfile, display_messages )
-    local path, file, images, gens_range, name_of_indeterminates;
-
-    # collect the morphism from a file
-    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-    file := Filename( Directory( path ), Concatenation( sourcefile, ".gi" ) );
-    Read( file );
-
-    images := ValueGlobal( "images" );
-    gens_range := ValueGlobal( "gens_range" );
-    name_of_indeterminates := ValueGlobal( "name_of_indeterminates" );
-
-    # and hand it over
-    return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2(
-              [ images, gens_range, name_of_indeterminates ], targetfile, display_messages );
-
-end );
-
-
-# compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-               " a list of information and a string",
-               [ IsList, IsString, IsBool ],
-  function( infos, filename, display_messages )
-    local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
-         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos;
-
-    # extract the data
-    images := infos[ 1 ];
-    gens_range := infos[ 2 ];
-    name_of_indeterminates := infos[ 3 ];
-
-    # compute the dimension of the range
-    dim_range := gens_range[ 1 ];
-    gens_range := gens_range[ 2 ];
-
-    # now write the size of the matrix and the non_zero_entries to a file
-    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-    file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
-    stream := OutputTextFile( file, false ); # true means that we append to this file
-
-    # write syntax...
-    WriteLine( stream, "rationals := HomalgFieldOfRationals();" );
-    WriteLine( stream, Concatenation( filename, ":= HomalgInitialMatrix( ", String( dim_range ), ",", 
-                                                  String( Length( images ) ), ", rationals );" ) );
-
-    # print status of the computation
-    if display_messages then
-      Print( "starting the matrix computation... \n \n" );
-      Print( Concatenation( "NrRows: ", String( dim_range ), "\n" ) );
-      Print( Concatenation( "NrColumns: ", String( Length( images ) ), "\n" ) );
-      Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
-    fi;
-
-    counter := 1;
-
-    for i in [ 1 .. Length( images ) ] do
-
-      # information about the status
-      if not ( Int( i / Length( images ) * 100 ) < counter ) then
-
-        # express current status as multiply of 10%, so we compute this number first
-        counter := Int( i / Length( images ) * 10 ) * 10;
-
-        # then inform the user
-        if display_messages then
-          Print( Concatenation( String( counter ), "% done...\n" ) );
-        fi;
-
-        # and finally increase counter
-        counter := counter + 10;
-
-      fi;
-
-      # read image of the i-th source generator and the non_zero rows of this image_column
-      comparer := images[ i ][ 2 ];
-      non_zero_rows := images[ i ][ 1 ];
-
-      # now work over each and every nontrivial entry of comparer
-      for j in [ 1 .. Length( non_zero_rows ) ] do
-
-        # consider the non_zero_rows[j]-th image as a string
-        poly := String( comparer[ non_zero_rows[ j ] ] );
-
-        # find positions of plus and minus
-        split_pos := [ 1 ];
-        Append( split_pos, Positions( poly, '-' ) );
-        Append( split_pos, Positions( poly, '+' ) );
-        split_pos := DuplicateFreeList( split_pos );
-        Sort( split_pos );
-
-        # initialise the split string
-        poly_split := List( [ 1 .. Length( split_pos ) ] );
-
-        # and extract the substrings
-        for k in [ 1 .. Length( poly_split ) ] do
-          if k <> Length( poly_split ) then
-            poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          else
-            poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          fi;
-        od;
-
-        # now initialise poly_split2
-        poly_split2 := List( [ 1 .. Length( poly_split ) ] );
-
-        # now extract the coefficients of the individual monoms
-        for k in [ 1 .. Length( poly_split ) ] do
-          if poly_split[ k ][ 1 ] = name_of_indeterminates then
-
-            poly_split2[ k ] := [ "1", poly_split[ k ] ];
-
-          elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
-
-            # find first occurance of 'x' (or more generally the variables names used) -> whatever is in front of it will be our coefficient
-            pos := Position( poly_split[ k ], name_of_indeterminates );
-
-            if pos <> fail then
-              # at least one 'x' does appear in this string
-              coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
-
-              # massage the coefficient
-              if coeff[ Length( coeff ) ] = '*' then
-                Remove( coeff );
-              fi;
-
-              # check for degenerate case
-              if coeff = "-" then
-                coeff := "-1";
-              elif coeff = "+" then
-                coeff := "+1";
-              fi;
-
-              # remove the coefficient part from poly_split
-              for l in [ 1 .. pos-1 ] do
-                Remove( poly_split[ k ], 1 );
-              od;
-
-              # finally save the coefficient and the monom
-              poly_split2[ k ] := [ coeff, poly_split[ k ] ];
-
-            else
-              # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient 
-              # and the monom is just 1
-              poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
-
-            fi;
-
-          fi;
-
-        od;
-
-        # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
-        for k in [ 1 .. Length( poly_split2 ) ] do
-
-          pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-          WriteLine( stream, Concatenation( "SetMatElm( ", filename, ", ", String( pos ), "," , String( i ), ","
-                                            , String( poly_split2[ k ][ 1 ] ), " );" ) );
-
-        od;
-
-      od;
-
-    od;
-
-    # close the stream
-    CloseStream( stream );
-
-    # and return the result
-    if display_messages then
-      Print( "matrix written to file... \n \n" );
     fi;
 
     # signal end of computation

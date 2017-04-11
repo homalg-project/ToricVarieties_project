@@ -216,8 +216,8 @@ end );
 
 InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
-  function( variety, a, b )
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( variety, a, b, display_messages )
       local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
            gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
            matrix3, job1, job2, job3, res, path, file, helper1, del, helper2, new_mat, 
@@ -233,13 +233,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       #       |                                                                      |
       #       v                                                                      v
       # A^v \otimes B -------------- alpha^v \otimes id_B -------------------> R_A^v \otimes B
-      #
+
  
-      # step0: to avoid banners, load packages here 
-      # step0: to avoid banners, load packages here 
-      LoadPackage( "GaussForHomalg" );
-
-
       # step1: initialise a few things
       # step1: initialise a few things
       rationals := HomalgFieldOfRationalsInMAGMA();
@@ -250,7 +245,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       # step2: compute the map of graded module presentations
       # step2: compute the map of graded module presentations
-      Print( "compute map of graded module presentations whose kernel is InternalHOM... \n" );
+      if display_messages then
+        Print( "compute map of graded module presentations whose kernel is InternalHOM... \n" );
+      fi;
       range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
                                          UnderlyingMorphism( b ) );
       source := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
@@ -258,35 +255,46 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
-      Print( "done... \n \n" );
-
+      if display_messages then
+        Print( "done... \n \n" );
+      fi;
 
       # step3: analyse the source morphism
       # step3: analyse the source morphism
-      Print( "truncate the projective modules in the source... \n" );
+      if display_messages then
+        Print( "truncate the projective modules in the source... \n" );
+      fi;
       gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
                                                        variety, Source( source ), zero );
       gens_range_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
                                                        variety, Range( source ), zero );
 
+      if display_messages then
+        Print( "analyse the source morphism... \n" );
+      fi;
       # if its source is the zero vector space...
-      Print( "analyse the source morphism... \n" );
       if Length( gens_source_1 ) = 0 then
 
         matrix1 := HomalgZeroMatrix( 0, gens_range_1[ 1 ], rationals );
-        Print( "matrix 1 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 1 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+        fi;
 
         # check for degenerate case
         if NrColumns( matrix1 ) = 0 then
 
-          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          if display_messages then
+            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          fi;
           return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
                                                                                VectorSpaceObject( 0, rationals ) );
         elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
 
-          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          if display_messages then
+            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          fi;
           return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
                                                                                VectorSpaceObject( 0, rationals ) );
         fi;
@@ -295,19 +303,25 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       elif gens_range_1[ 1 ] = 0 then
 
         matrix1 := HomalgZeroMatrix( Length( gens_source_1 ), 0, rationals );
-        Print( "matrix 1 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 1 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
+        fi;
 
         # check for degenerate case
         if NrColumns( matrix1 ) = 0 then
 
-          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          if display_messages then
+            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          fi;
           return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
                                                                                VectorSpaceObject( 0, rationals ) );
         elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
 
-          Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          if display_messages then
+            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
+          fi;
           return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
                                                                                VectorSpaceObject( 0, rationals ) );
         fi;
@@ -316,77 +330,94 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
-        Print( "-> starting background job for this truncation... \n \n" );
-        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
+        if display_messages then
+          Print( "-> starting background job for this truncation... \n \n" );
+        fi;
+        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
-        #job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-        #                            [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
 
       fi;
 
 
       # step5: truncate the map morphism
       # step5: truncate the map morphism
-      Print( "truncate the projective modules in the map... \n" );
+      if display_messages then
+        Print( "truncate the projective modules in the map... \n" );
+      fi;
       gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
                                                        variety, Source( map ), zero );
       gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
                                                        variety, Range( map ), zero );
 
+      if display_messages then
+        Print( "analyse the map morphism... \n" );
+      fi;
+
       # if its source is the zero vector space...
-      Print( "analyse the map morphism... \n" );
       if Length( gens_source_2 ) = 0 then
 
         matrix2 := HomalgZeroMatrix( 0, gens_range_2[ 1 ], rationals );
-        Print( "matrix 2 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 2 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+        fi;
 
       # if its range is the zero vector space...      
       elif gens_range_2[ 1 ] = 0 then
 
         matrix2 := HomalgZeroMatrix( Length( gens_source_2 ), 0, rationals );
-        Print( "matrix 2 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 2 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
+        fi;
 
       else
 
         SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
-        Print( "-> starting background job for this truncation... \n \n" );
-        job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal2,
+        if display_messages then
+          Print( "-> starting background job for this truncation... \n \n" );
+        fi;
+        job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                                     [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
-        #job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-        #                            [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
 
       fi;
 
 
       # step6: truncate the range morphism
       # step6: truncate the range morphism
-
-      Print( "truncate the projective modules in the range... \n" );
+      if display_messages then
+        Print( "truncate the projective modules in the range... \n" );
+      fi;
       gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
                                                        variety, Source( range ), zero );
       gens_range_3 := gens_range_2;
 
+      if display_messages then
+        Print( "analyse the range morphism... \n" );
+      fi;
+
       # if its source is the zero vector space...
-      Print( "analyse the range morphism... \n" );
       if Length( gens_source_3 ) = 0 then
 
         matrix3 := HomalgZeroMatrix( 0, gens_range_3[ 1 ], rationals );
-        Print( "matrix 3 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 3 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+        fi;
 
       # if its range is the zero vector space...
       elif gens_range_3[ 1 ] = 0 then
 
         matrix3 := HomalgZeroMatrix( Length( gens_source_3 ), 0, rationals );
-        Print( "matrix 3 computed... \n" );
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+        if display_messages then
+          Print( "matrix 3 computed... \n" );
+          Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
+          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+        fi;
 
       else
 
@@ -395,12 +426,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       fi;
 
-      #Error( "test1" );
-
       # step7: collect result of job1 and kill this job
       # step7: collect result of job1 and kill this job
       if compute_job1 then
-        Print( "extract result of job 1: \n" );
+        if display_messages then
+          Print( "extract result of job 1: \n" );
+        fi;
         res := Pickup( job1 );
         if not res then
           Error( "job 1 completed with message 'fail' " );
@@ -417,7 +448,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
             SetMatElm( matrix1, helper1[ 3 ][ i ][ 1 ], helper1[ 3 ][ i ][ 2 ], 
                                                                  helper1[ 3 ][ i ][ 3 ]  * One( rationals ) );
           od;
-          #matrix1 := rationals * helper1;
           del := RemoveFile( file );
           if not del then
             Error( Concatenation( "could not delete the file", String( file ) ) );
@@ -428,8 +458,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
           Kill( job1 );
-          Print( "(*) matrix 1 computed \n" );
-          Print( "(*) cleaned working directory \n \n" );
+          if display_messages then
+            Print( "(*) matrix 1 computed \n" );
+            Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+            Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n" ) );
+            Print( "(*) cleaned working directory \n \n" );
+          fi;
         fi;
       fi;
 
@@ -438,7 +472,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       # step8: collect result of job2
       if compute_job2 then
         res := Pickup( job2 );
-        Print( "extract result of job 2: \n" );
+        if display_messages then
+          Print( "extract result of job 2: \n" );
+        fi;
         if not res then
           Error( "job 2 completed with message 'fail' " );
         else
@@ -454,7 +490,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
             SetMatElm( matrix2, helper2[ 3 ][ i ][ 1 ], helper2[ 3 ][ i ][ 2 ], 
                                                                  helper2[ 3 ][ i ][ 3 ] * One( rationals ) );
           od;
-          #matrix2 := rationals * helper2;
           del := RemoveFile( file );
           if not del then
             Error( Concatenation( "could not delete the file", String( file ) ) );
@@ -464,17 +499,22 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if not del then
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
-          #Kill( job2 );
-          Print( "(*) matrix 2 computed \n" );
-          Print( "(*) cleaned working directory \n \n" );
+          Kill( job2 );
+          if display_messages then
+            Print( "(*) matrix 2 computed \n" );
+            Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+            Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n" ) );
+            Print( "(*) cleaned working directory \n \n" );
+          fi;
         fi;
       fi;
 
-      #Error( "test2" );
 
       # step 9: compute syzygies and vec_space_morphism
       # step 9: compute syzygies and vec_space_morphism
-      Print( "compute syzygies and vector space morphism \n" );
+      if display_messages then
+        Print( "compute syzygies and vector space morphism \n" );
+      fi;
       new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2, matrix3 ), matrix1 );
       vec_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( new_mat ), rationals ),
                                                  new_mat,
@@ -989,7 +1029,7 @@ end );
 ##
 #############################################################
 
-# compute H^0 by applying the theorem from Greg Smith
+# compute H^0 by applying my theorem
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
@@ -1087,7 +1127,6 @@ InstallMethod( H0,
 
     # step 3: compute GradedHom
     # step 3: compute GradedHom
-
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
                                   InternalHomDegreeZeroOnObjects,
                                             variety,
@@ -1153,6 +1192,168 @@ InstallMethod( H0,
 
 end );
 
+# compute H^0 by applying my theorem
+InstallMethod( H0Parallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
+  function( variety, module, display_messages, very_detailed_output, timings )
+    local module_presentation, zero, ideal_infos, B_power, vec_space_morphism;
+
+    # check that the input is valid to work with
+    if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
+           or ( IsSimplicial( variety ) and IsProjective( variety ) ) ) then
+
+      Error( "variety must either be (smooth, complete) or (simplicial, projective)" );
+      return;
+
+    fi;
+
+    # unzip the module
+    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
+      module_presentation := PresentationForCAP( module );
+    else
+      module_presentation := module;
+    fi;
+
+    # we have a specialised algorithm for H0 of vector bundles
+    zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
+    if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
+      if timings then
+        return [ 0, 0, UnderlyingVectorSpaceObject(
+                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
+                               variety,
+                               Range( UnderlyingMorphism( module_presentation ) ),
+                               zero
+                       ) ) ];
+      else
+        return [ 0, UnderlyingVectorSpaceObject(
+                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
+                               variety,
+                               Range( UnderlyingMorphism( module_presentation ) ),
+                               zero
+                       ) ) ];
+      fi;
+    fi;
+
+    # otherwise start the overall machinery
+
+    # Step 0: compute the vanishing sets
+    # Step 0: compute the vanishing sets
+    if not HasVanishingSets( variety ) then
+
+      if display_messages then
+        Print( "(*) Compute vanishing sets... " );
+      fi;
+      VanishingSets( variety );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Vanishing sets known... \n" );
+      fi;
+    fi;
+
+
+    # step 1: compute Betti number of the module
+    # step 1: compute Betti number of the module
+    if HasBettiTableForCAP( module_presentation ) then
+      if display_messages then
+        Print( "(*) Betti numbers of module known... \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Compute Betti numbers of module..." );
+      fi;
+      BettiTableForCAP( module_presentation );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
+    fi;
+
+
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    if display_messages then
+      Print( "(*) Determine ideal... " );
+    fi;
+
+    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, 0 );
+    B_power := ideal_infos[ 3 ];
+
+    # and inform about the result of this computation
+    if display_messages then
+      Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
+                            " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
+      Print( "(*) Compute GradedHom... \n" );
+    fi;
+
+    # step 3: compute GradedHom
+    # step 3: compute GradedHom
+    vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
+                                  InternalHomDegreeZeroOnObjectsParallel,
+                                            variety,
+                                            B_power,
+                                            module_presentation,
+                                            very_detailed_output
+                                  );
+
+    # signal end of computation
+    if display_messages then
+      Print( "\n" );
+      if timings then
+        Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
+                              " seconds. Summary: \n" ) );
+      else
+        Print( "Computation finished. Summary: \n" );
+      fi;
+      Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
+      Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
+                            "\n \n" ) );
+    fi;
+
+    # return the cokernel object of this presentation
+    if timings then
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    else
+      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];    
+    fi;
+
+end );
+
+# convenience method
+InstallMethod( H0Parallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+  function( variety, module, display_messages, very_detailed_output )
+
+    # by default never show very detailed output
+    return H0Parallel( variety, module, display_messages, very_detailed_output, true );
+
+end );
+
+
+# convenience method
+InstallMethod( H0Parallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( variety, module, display_messages )
+
+    # by default never show very detailed output
+    return H0Parallel( variety, module, display_messages, false, true );
+
+end );
+
+# convenience method
+InstallMethod( H0Parallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, module )
+
+    # by default show messages but not the very detailed output
+    return H0Parallel( variety, module, true, false, true );
+
+end );
 
 
 #############################################################
