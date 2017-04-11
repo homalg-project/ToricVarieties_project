@@ -129,10 +129,11 @@ InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile,
                " for a filename, a morphism of projective graded S-modules",
                [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
 function( filename, variety, morphism, gens_source, gens_range )
-  local path, file, output, rays, max_cones, names, 
+  local path, file, output, rays, max_cones, names, name_of_indeterminates, f,
        ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
        matrix_entries, i, j, k, help_list, left, mapping_matrix, images, image, non_zero_rows;
 
+  if false then
   # set up the stream
   path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
   file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
@@ -159,7 +160,7 @@ function( filename, variety, morphism, gens_source, gens_range )
 
   # (0) ensure that SheafCohomology is loaded
   AppendTo( output, "LoadPackage( \"SheafCohomologyOnToricVarieties\" ); \n" );
-  
+
   # (1) save gens_range
   AppendTo( output, "record_list := []; \n" );
   for i in [ 1 .. Length( gens_range[ 2 ] ) ] do
@@ -173,6 +174,8 @@ function( filename, variety, morphism, gens_source, gens_range )
   od;
   AppendTo( output, "gens_range := [ ", String( gens_range[ 1 ] ), ", record_list ]; \n" );
 
+  fi;
+  
   # (2) compute and save images of gens_source
   # (2) compute and save images of gens_source
 
@@ -184,12 +187,16 @@ function( filename, variety, morphism, gens_source, gens_range )
   fi;
 
   # save images
+  if false then
   AppendTo( output, "images := [ \n" );
+  fi;
   images := [];
   for i in [ 1 .. Length( gens_source ) ] do
     image := mapping_matrix * gens_source[ i ];
     non_zero_rows := NonZeroRows( image );
     image := EntriesOfHomalgMatrix( image );
+
+    if false then
     AppendTo( output, Concatenation( "[ ", String( non_zero_rows ), ", [ \n" ) );
     for j in [ 1 .. Length( image-1 ) ] do
       AppendTo( output, Concatenation( "\"", String( image[ j ] ), "\", \n" ) );
@@ -199,16 +206,40 @@ function( filename, variety, morphism, gens_source, gens_range )
     else
       AppendTo( output, Concatenation( "\"", String( image[ Length( image ) ] ), "\" ] ] \n" ) );
     fi;
-  od;
-  AppendTo( output, "]; \n" );
+    
+    fi;
 
+    image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
+    Append( images, [ [ non_zero_rows, image ] ] );
+    
+  od;
+  
+  if false then
+  AppendTo( output, "]; \n" );
+  fi;
+  
   # (3) save the name of the indeterminates
+  name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
+  
+  if false then
   s := Concatenation( " name_of_indeterminates := ", 
                    String( String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ] ), "; \n" );
   AppendTo( output, s );
 
   # (4) close the stream and return success
   CloseStream(output);
+  fi;
+
+  #Error( "Test" );
+
+  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+  file := Concatenation( path, "/tmp/", filename );
+  f := IO_File( file, "w" );
+  IO_Pickle( f, gens_range );
+  IO_Pickle( f, images );
+  IO_Pickle( f, name_of_indeterminates );
+  IO_Close( f );
+
   return true;
 
 end );
@@ -220,8 +251,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
   function( variety, a, b, display_messages )
       local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
            gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
-           matrix3, job1, job2, job3, res, path, file, helper1, del, helper2, new_mat, 
-           vec_space_morphism, i;
+           matrix3, job1, job2, res, path, file, i, helper, del, new_mat, vec_space_morphism, name1, name2,
+           return_name1, return_name2;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -328,13 +359,18 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "source", variety, source, gens_source_1, gens_range_1 );
+        # save necessary data to file
+        name1 := Concatenation( "source", String( Random( [ 1 .. 100000 ] ) ) );
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( name1, variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
         fi;
+
+        # start background job
+        return_name1 := Concatenation( "helper1", String( Random( [ 1 .. 100000 ] ) ) );
         job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ "source", "helper1", false ], rec( TerminateImmediately := true ) );
+                                    [ name1, return_name1, false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -363,7 +399,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
         fi;
 
-      # if its range is the zero vector space...      
+      # if its range is the zero vector space...
       elif gens_range_2[ 1 ] = 0 then
 
         matrix2 := HomalgZeroMatrix( Length( gens_source_2 ), 0, rationals );
@@ -375,13 +411,18 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( "map", variety, map, gens_source_2, gens_range_2 );
+        # save necessary data to file
+        name2 := Concatenation( "map", String( Random( [ 1 .. 100000 ] ) ) );
+        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( name2, variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
         fi;
+
+        # start background job
+        return_name2 := Concatenation( "helper1", String( Random( [ 1 .. 100000 ] ) ) );
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ "map", "helper2", false ], rec( TerminateImmediately := true ) );
+                                    [ name2, return_name2, false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -426,6 +467,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       fi;
 
+
       # step7: collect result of job1 and kill this job
       # step7: collect result of job1 and kill this job
       if compute_job1 then
@@ -437,31 +479,32 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           Error( "job 1 completed with message 'fail' " );
         else
           path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-          file := Filename( Directory( path ), "helper1.gi" );
+          path := Concatenation( path, "/tmp" );
+          file := Filename( Directory( path ), Concatenation( return_name1, ".gi" ) );
           if not IsExistingFile( file ) then
             Error( Concatenation( "the file", String( file ), "does not exist" ) );
           fi;
           Read( file );
-          helper1 := ValueGlobal( "helper1" );
-          matrix1 := HomalgInitialMatrix( helper1[ 1 ], helper1[ 2 ], rationals );
-          for i in [ 1 .. Length( helper1[ 3 ] ) ] do
-            SetMatElm( matrix1, helper1[ 3 ][ i ][ 1 ], helper1[ 3 ][ i ][ 2 ], 
-                                                                 helper1[ 3 ][ i ][ 3 ]  * One( rationals ) );
+          helper := ValueGlobal( "helper" );
+          matrix1 := HomalgInitialMatrix( helper[ 1 ], helper[ 2 ], rationals );
+          for i in [ 1 .. Length( helper[ 3 ] ) ] do
+            SetMatElm( matrix1, helper[ 3 ][ i ][ 1 ], helper[ 3 ][ i ][ 2 ], 
+                                                                 helper[ 3 ][ i ][ 3 ]  * One( rationals ) );
           od;
           del := RemoveFile( file );
-          if not del then
+          if del = fail then
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
-          file := Filename( Directory( path ), "source.gi" );
+          file := Filename( Directory( path ), name1 );
           del := RemoveFile( file );
-          if not del then
+          if del = fail then
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
           Kill( job1 );
           if display_messages then
             Print( "(*) matrix 1 computed \n" );
-            Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-            Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n" ) );
+            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
+            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix1 ) ), "\n" ) );
             Print( "(*) cleaned working directory \n \n" );
           fi;
         fi;
@@ -479,31 +522,32 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           Error( "job 2 completed with message 'fail' " );
         else
           path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-          file := Filename( Directory( path ), "helper2.gi" );
+          path := Concatenation( path, "/tmp" );
+          file := Filename( Directory( path ), Concatenation( return_name2, ".gi" ) );
           if not IsExistingFile( file ) then
             Error( Concatenation( "the file", String( file ), "does not exist" ) );
           fi;
           Read( file );
-          helper2 := ValueGlobal( "helper2" );
-          matrix2 := HomalgInitialMatrix( helper2[ 1 ], helper2[ 2 ], rationals );
-          for i in [ 1 .. Length( helper2[ 3 ] ) ] do
-            SetMatElm( matrix2, helper2[ 3 ][ i ][ 1 ], helper2[ 3 ][ i ][ 2 ], 
-                                                                 helper2[ 3 ][ i ][ 3 ] * One( rationals ) );
+          helper := ValueGlobal( "helper" );
+          matrix2 := HomalgInitialMatrix( helper[ 1 ], helper[ 2 ], rationals );
+          for i in [ 1 .. Length( helper[ 3 ] ) ] do
+            SetMatElm( matrix2, helper[ 3 ][ i ][ 1 ], helper[ 3 ][ i ][ 2 ], 
+                                                                 helper[ 3 ][ i ][ 3 ] * One( rationals ) );
           od;
           del := RemoveFile( file );
-          if not del then
+          if del = fail then
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
-          file := Filename( Directory( path ), "map.gi" );
+          file := Filename( Directory( path ), name2 );
           del := RemoveFile( file );
-          if not del then
+          if del = fail then
             Error( Concatenation( "could not delete the file", String( file ) ) );
           fi;
           Kill( job2 );
           if display_messages then
             Print( "(*) matrix 2 computed \n" );
-            Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-            Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n" ) );
+            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
+            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix2 ) ), "\n" ) );
             Print( "(*) cleaned working directory \n \n" );
           fi;
         fi;

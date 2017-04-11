@@ -1595,12 +1595,12 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
     gens_range := gens_range[ 2 ];
 
     # now write the size of the matrix and the non_zero_entries to a file
-    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+    path := Concatenation( PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath, "/tmp" );
     file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
     stream := OutputTextFile( file, false ); # true means that we append to this file
 
     # write syntax...
-    WriteLine( stream, Concatenation( filename, ":= [ ", String( Length( images ) ), ",", String( dim_range ), ", [ " ) );
+    WriteLine( stream, Concatenation( "helper := [ ", String( Length( images ) ), ",", String( dim_range ), ", [ " ) );
 
     # print status of the computation
     if display_messages then
@@ -1743,16 +1743,27 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
                " a string, a list, a string, a ring, a bool",
                [ IsString, IsString, IsBool ],
   function( sourcefile, targetfile, display_messages )
-    local path, file, images, gens_range, name_of_indeterminates;
+    local path, file, f, images, gens_range, name_of_indeterminates;
 
     # collect the morphism from a file
-    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-    file := Filename( Directory( path ), Concatenation( sourcefile, ".gi" ) );
-    Read( file );
+    #path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+    #file := Filename( Directory( path ), Concatenation( sourcefile, ".gi" ) );
+    #Read( file );
 
-    images := ValueGlobal( "images" );
-    gens_range := ValueGlobal( "gens_range" );
-    name_of_indeterminates := ValueGlobal( "name_of_indeterminates" );
+    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
+    file := Concatenation( path, "/tmp/", sourcefile );
+    f := IO_File( file,"r");
+    if f = fail then
+      Error( Concatenation( "could not read from file ", file ) );
+    fi;
+    gens_range := IO_Unpickle( f );
+    images := IO_Unpickle( f );
+    name_of_indeterminates := IO_Unpickle( f );
+    IO_Close( f );
+
+    #images := ValueGlobal( "images" );
+    #gens_range := ValueGlobal( "gens_range" );
+    #name_of_indeterminates := ValueGlobal( "name_of_indeterminates" );
 
     # and hand it over
     return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal(
