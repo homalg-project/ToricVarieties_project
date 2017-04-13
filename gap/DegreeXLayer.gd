@@ -349,6 +349,12 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUn
 DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices",
                   [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsHomalgModuleElement ] );
 
+DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList",
+                  [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsList ] );
+
+DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList",
+                  [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsHomalgModuleElement ] );
+
 #! @Description
 #! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
 #! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
@@ -396,8 +402,10 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinima
 #! @Returns true or false
 #! @Arguments V, \varphi, degree_list, file_name
 DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
-               [ IsList, IsString, IsBool ] );
+               [ IsList, IsBool ] );
 
+DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
+               [ IsList, IsBool, IsInt, IsInt ] );
 
 ##################################################################################################
 ##
@@ -592,7 +600,7 @@ DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
 
 DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
                   [ IsToricVariety, IsList ] );
-                  
+
 DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
                   [ IsToricVariety, IsHomalgModuleElement, IsBool ] );
 

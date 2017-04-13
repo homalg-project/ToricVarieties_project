@@ -21,8 +21,8 @@ DeclareOperation( "InternalHomDegreeZeroOnObjects",
                                   IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
 #!
-DeclareOperation( "SaveMorphismOfProjectiveModulesOnToricVarietyToFile",
-               [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ] );
+DeclareOperation( "ComputeInput",
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ] );
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnObjectsParallel",

@@ -118,20 +118,19 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
                                                  new_mat,
                                                  VectorSpaceObject( NrColumns( new_mat ), Q )
                                                 );
-      #Error( "test" );
+
       # and return the result
       return vec_space_morphism;
 
 end );
 
 
-InstallMethod( SaveMorphismOfProjectiveModulesOnToricVarietyToFile,
+InstallMethod( ComputeInput,
                " for a filename, a morphism of projective graded S-modules",
-               [ IsString, IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
-function( filename, variety, morphism, gens_source, gens_range )
-  local path, file, output, rays, max_cones, names, name_of_indeterminates, f,
-       ring, vars, s, degree_group, weights, generator_degrees, relation_degrees, 
-       matrix_entries, i, j, k, help_list, left, mapping_matrix, images, image, non_zero_rows;
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
+function( variety, morphism, gens_source, gens_range )
+  local left, mapping_matrix, cols, non_zeros, images, i, buffer, j, col_index, image, non_zero_rows, 
+       name_of_indeterminates;
 
   # (1) compute images of gens_source
   # (1) compute images of gens_source
@@ -143,31 +142,50 @@ function( filename, variety, morphism, gens_source, gens_range )
     mapping_matrix := Involution( mapping_matrix );
   fi;
 
-  # save images
+  # extract the cols and their zeros
+  cols := EntriesOfHomalgMatrixAsListList( Involution( mapping_matrix ) );
+  non_zeros := [];
+  for i in [ 1 .. Length( cols ) ] do
+    buffer := [];
+    for j in [ 1 .. Length( cols[ i ] ) ] do
+      if cols[ i ][ j ] <> 0 then
+        Append( buffer, [ j ] );
+      fi;
+    od;
+    Append( non_zeros, [ buffer ] );
+  od;
+
+  # compute images
+  # <- this is thus far a bottleneck ->
+  # compute images 
   images := [];
   for i in [ 1 .. Length( gens_source ) ] do
-    image := mapping_matrix * gens_source[ i ];
-    non_zero_rows := NonZeroRows( image );
-    image := EntriesOfHomalgMatrix( image );
+
+    # gens_source[ i ] = [ N, monom ] for N an integer
+    # the image of this is cols[ N ] * monom
+    # the non-zero-entries are non_zeros[ N ]
+    # and I can speed up cols[ N ] * monom (maybe)
+    col_index := gens_source[ i ][ 1 ];
+    image := cols[ col_index ] * gens_source[ i ][ 2 ];
     image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
+    non_zero_rows := non_zeros[ col_index ];
     Append( images, [ [ non_zero_rows, image ] ] );
+
+    #Error( "test" );
+    #image := mapping_matrix * gens_source[ i ];
+    #non_zero_rows := NonZeroRows( image );
+    #image := EntriesOfHomalgMatrix( image );
+    #image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
+    #Append( images, [ [ non_zero_rows, image ] ] );
   od;
 
   # (2) identify name of the indeterminates
   # (2) identify name of the indeterminates
   name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
 
-  # (3) save to file via IO_Pickle
-  # (3) save to file via IO_Pickle
-  path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-  file := Concatenation( path, "/tmp/", filename );
-  f := IO_File( file, "w" );
-  IO_Pickle( f, gens_range );
-  IO_Pickle( f, images );
-  IO_Pickle( f, name_of_indeterminates );
-  IO_Close( f );
-
-  return true;
+  # (3) return result
+  # (3) return result
+  return [ images, gens_range, name_of_indeterminates ];
 
 end );
 
@@ -178,8 +196,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
   function( variety, a, b, display_messages )
       local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
            gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
-           matrix3, job1, job2, res, path, file, i, helper, del, new_mat, vec_space_morphism, name1, name2,
-           return_name1, return_name2;
+           matrix3, job1, job2, res, i, helper, new_mat, vec_space_morphism, cutoff, 
+           job31, job32, job33, compute_job3, input;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -199,6 +217,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       zero := UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) );
       compute_job1 := false;
       compute_job2 := false;
+      compute_job3 := false;
 
 
       # step2: compute the map of graded module presentations
@@ -222,7 +241,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the source... \n" );
       fi;
-      gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #                                                 variety, Source( source ), zero );
+      gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( source ), zero );
       gens_range_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
                                                        variety, Range( source ), zero );
@@ -286,18 +307,16 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        # save necessary data to file
-        name1 := Concatenation( "source", String( Random( [ 1 .. 100000 ] ) ) );
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( name1, variety, source, gens_source_1, gens_range_1 );
+        # compute input
+        input := ComputeInput( variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
         fi;
 
         # start background job
-        return_name1 := Concatenation( "helper1_", String( Random( [ 1 .. 100000 ] ) ) );
         job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ name1, return_name1, false ], rec( TerminateImmediately := true ) );
+                                    [ input, false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -307,7 +326,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the map... \n" );
       fi;
-      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #                                                 variety, Source( map ), zero );
+      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( map ), zero );
       gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
                                                        variety, Range( map ), zero );
@@ -338,18 +359,16 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        # save necessary data to file
-        name2 := Concatenation( "map", String( Random( [ 1 .. 100000 ] ) ) );
-        SaveMorphismOfProjectiveModulesOnToricVarietyToFile( name2, variety, map, gens_source_2, gens_range_2 );
+        # compute input
+        input := ComputeInput( variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
         fi;
 
         # start background job
-        return_name2 := Concatenation( "helper2_", String( Random( [ 1 .. 100000 ] ) ) );
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ name2, return_name2, false ], rec( TerminateImmediately := true ) );
+                                    [ input, false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -359,7 +378,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the range... \n" );
       fi;
-      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
+      #                                                 variety, Source( range ), zero );
+      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( range ), zero );
       gens_range_3 := gens_range_2;
 
@@ -389,8 +410,40 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
       else
 
-        matrix3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal( 
-                                                variety, range, gens_source_3, gens_range_3, rationals, true );
+        # compute input
+        input := ComputeInput( variety, range, gens_source_3, gens_range_3 );
+        compute_job3 := true;
+        if display_messages then
+          Print( "-> starting 2 background jobs for this truncation...\n" );
+        fi;
+
+        # determine cutoff
+        if IsInt( Length( gens_source_3 ) /3 ) then
+          cutoff := Length( gens_source_3 ) / 3;
+        else
+          cutoff := Int( Length( gens_source_3 ) / 3 ) + 1;
+        fi;
+
+        # start background job1
+        job31 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+                                    [ input, false, 1, cutoff ], rec( TerminateImmediately := true ) );
+        if display_messages then
+          Print( "-> job31 running... \n" );
+        fi;
+
+        # start background job2
+        job32 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+             [ input, false, cutoff + 1, 2 * cutoff ], rec( TerminateImmediately := true ) );
+        if display_messages then
+          Print( "-> job32 running... \n" );
+        fi;
+
+        # start background job2
+        job33 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+             [ input, false, 2 * cutoff + 1, Length( gens_source_3 ) ], rec( TerminateImmediately := true ) );
+        if display_messages then
+          Print( "-> job33 running... \n \n" );
+        fi;
 
       fi;
 
@@ -402,37 +455,29 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           Print( "extract result of job 1: \n" );
         fi;
         res := Pickup( job1 );
-        if not res then
+        if res = fail then
           Error( "job 1 completed with message 'fail' " );
         else
-          path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-          path := Concatenation( path, "/tmp" );
-          file := Filename( Directory( path ), Concatenation( return_name1, ".gi" ) );
-          if not IsExistingFile( file ) then
-            Error( Concatenation( "the file", String( file ), "does not exist" ) );
+          if display_messages then
+            Print( "(*) process completed... \n" );
           fi;
-          Read( file );
-          helper := ValueGlobal( "helper" );
-          matrix1 := HomalgInitialMatrix( helper[ 1 ], helper[ 2 ], rationals );
-          for i in [ 1 .. Length( helper[ 3 ] ) ] do
-            SetMatElm( matrix1, helper[ 3 ][ i ][ 1 ], helper[ 3 ][ i ][ 2 ], 
-                                                                 helper[ 3 ][ i ][ 3 ]  * One( rationals ) );
+          helper := res;
+          if display_messages then
+            Print( "(*) result read... \n" );
+          fi;
+          matrix1 := HomalgInitialMatrix( Length( gens_source_1 ), gens_range_1[ 1 ], rationals );
+          for i in [ 1 .. Length( helper ) ] do
+            SetMatElm( matrix1, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
           od;
-          del := RemoveFile( file );
-          if del = fail then
-            Error( Concatenation( "could not delete the file", String( file ) ) );
-          fi;
-          file := Filename( Directory( path ), name1 );
-          del := RemoveFile( file );
-          if del = fail then
-            Error( Concatenation( "could not delete the file", String( file ) ) );
+          if display_messages then
+            Print( "(*) matrix values set... \n" );
           fi;
           Kill( job1 );
           if display_messages then
-            Print( "(*) matrix 1 computed \n" );
+            Print( "(*) process killed \n \n" );
+            Print( "matrix 1 computed \n" );
             Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix1 ) ), "\n" ) );
-            Print( "(*) cleaned working directory \n \n" );
+            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
           fi;
         fi;
       fi;
@@ -445,41 +490,125 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         if display_messages then
           Print( "extract result of job 2: \n" );
         fi;
-        if not res then
+        if res = fail then
           Error( "job 2 completed with message 'fail' " );
         else
-          path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-          path := Concatenation( path, "/tmp" );
-          file := Filename( Directory( path ), Concatenation( return_name2, ".gi" ) );
-          if not IsExistingFile( file ) then
-            Error( Concatenation( "the file", String( file ), "does not exist" ) );
+          if display_messages then
+            Print( "(*) process completed \n" );
           fi;
-          Read( file );
-          helper := ValueGlobal( "helper" );
-          matrix2 := HomalgInitialMatrix( helper[ 1 ], helper[ 2 ], rationals );
-          for i in [ 1 .. Length( helper[ 3 ] ) ] do
-            SetMatElm( matrix2, helper[ 3 ][ i ][ 1 ], helper[ 3 ][ i ][ 2 ], 
-                                                                 helper[ 3 ][ i ][ 3 ] * One( rationals ) );
+          helper := res;
+          if display_messages then
+            Print( "(*) result read \n" );
+          fi;
+          matrix2 := HomalgInitialMatrix( Length( gens_source_2 ), gens_range_2[ 1 ], rationals );
+          for i in [ 1 .. Length( helper ) ] do
+            SetMatElm( matrix2, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
           od;
-          del := RemoveFile( file );
-          if del = fail then
-            Error( Concatenation( "could not delete the file", String( file ) ) );
-          fi;
-          file := Filename( Directory( path ), name2 );
-          del := RemoveFile( file );
-          if del = fail then
-            Error( Concatenation( "could not delete the file", String( file ) ) );
+          if display_messages then
+            Print( "(*) matrix values set \n" );
           fi;
           Kill( job2 );
           if display_messages then
-            Print( "(*) matrix 2 computed \n" );
+            Print( "(*) process killed \n \n" );
+            Print( "matrix 2 computed \n" );
             Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix2 ) ), "\n" ) );
-            Print( "(*) cleaned working directory \n \n" );
+            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
           fi;
         fi;
       fi;
 
+
+      # step9: collect result of job31 and job32 and kill them
+      # step9: collect result of job31 and job32 and kill them
+      if compute_job3 then
+
+        # extract result of job31 first
+        if display_messages then
+          Print( "extract result of job31: \n" );
+        fi;
+        res := Pickup( job31 );
+        if res = fail then
+          Error( "job31 completed with message 'fail' " );
+        else
+          if display_messages then
+            Print( "(*) process completed \n" );
+          fi;
+          helper := res;
+          if display_messages then
+            Print( "(*) result read \n" );
+          fi;
+          matrix3 := HomalgInitialMatrix( Length( gens_source_3 ), gens_range_3[ 1 ], rationals );
+          for i in [ 1 .. Length( helper ) ] do # <- these loops somehow are bottleneck #2
+            SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
+          od;
+          if display_messages then
+            Print( "(*) matrix values set \n" );
+          fi;
+          Kill( job31 );
+          if display_messages then
+            Print( "(*) process killed \n \n" );
+          fi;
+        fi;
+
+
+        # extract result of job32 next
+        if display_messages then
+          Print( "extract result of job32: \n" );
+        fi;
+        res := Pickup( job32 );
+        if res = fail then
+          Error( "job32 completed with message 'fail' " );
+        else
+          if display_messages then
+            Print( "(*) process completed \n" );
+          fi;
+          helper := res;
+          if display_messages then
+            Print( "(*) result read \n" );
+          fi;
+          for i in [ 1 .. Length( helper ) ] do
+            SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
+          od;
+          if display_messages then
+            Print( "(*) matrix values set \n" );
+          fi;
+          Kill( job32 );
+          if display_messages then
+            Print( "(*) process killed \n \n" );
+          fi;
+        fi;
+
+        # extract result of job33 next
+        if display_messages then
+          Print( "extract result of job33: \n" );
+        fi;
+        res := Pickup( job33 );
+        if res = fail then
+          Error( "job33 completed with message 'fail' " );
+        else
+          if display_messages then
+            Print( "(*) process completed \n" );
+          fi;
+          helper := res;
+          if display_messages then
+            Print( "(*) result read \n" );
+          fi;
+          for i in [ 1 .. Length( helper ) ] do
+            SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
+          od;
+          if display_messages then
+            Print( "(*) matrix values set \n" );
+          fi;
+          Kill( job33 );
+          if display_messages then
+            Print( "(*) process killed \n \n" );
+            Print( "matrix3 computed \n" );
+            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
+            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
+          fi;
+        fi;
+
+      fi;
 
       # step 9: compute syzygies and vec_space_morphism
       # step 9: compute syzygies and vec_space_morphism

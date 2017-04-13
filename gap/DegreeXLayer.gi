@@ -222,6 +222,7 @@ InstallMethod( DegreeXLayerVectorsAsColumnMatrices,
 end );
 
 
+
 ##############################################################################################
 ##
 ## Section GAP category of DegreeXLayerVectorSpaces(Morphisms)
@@ -1035,6 +1036,91 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionO
 
 end );
 
+# compute degree X layer of projective graded S-module
+InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList,
+               " a toric variety, a projective graded module, a list specifying a degree ",
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsList ],
+  function( variety, projective_module, degree )
+    local left, degree_list, extended_degree_list, i, generators, mons;
+
+    # check if we have to deal with a left or right module morphism
+    left := IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module );
+
+    # check that the input is valid to work with
+    if not IsSmooth( variety ) then
+
+      Error( "Variety must be smooth for this method to work" );
+      return;
+
+    elif not IsComplete( variety ) then
+
+      Error( "Variety must be complete for this method to work" );
+      return;
+
+    elif left and not IsIdenticalObj( CapCategory( projective_module ), 
+                                      CAPCategoryOfProjectiveGradedLeftModules( CoxRing( variety ) ) ) then
+
+      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
+                                   " over the Coxring of the variety" ) );
+      return;
+
+    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
+                                              CAPCategoryOfProjectiveGradedRightModules( CoxRing( variety ) ) ) then
+
+      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
+                            " over the Coxring of the variety" ) );
+      return;
+
+    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
+
+      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
+                            " of the Cox ring is a field" ) );
+      return;
+
+    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
+
+      Error( "The given list does not specify an element of the class group of the variety in question" );
+      return;
+
+    fi;
+
+    # compute the degree layers of S that need to be computed
+    degree_list := DegreeList( projective_module );
+
+    # 'unzip' the degree_list
+    extended_degree_list := [];
+    for i in [ 1 .. Length( degree_list ) ] do
+      extended_degree_list := Concatenation( extended_degree_list,
+                                        ListWithIdenticalEntries( degree_list[ i ][ 2 ],
+                                                                  degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] )
+                                                                 ) );
+    od;
+
+    # now extract the generators
+    generators := [];
+    for i in [ 1 .. Rank( projective_module ) ] do
+
+      mons := MonomsOfCoxRingOfDegreeByNormaliz( variety, extended_degree_list[ i ] );
+      mons := List( [ 1 .. Length( mons ) ], k -> [ i, mons[ k ] ] );
+      Append( generators, mons );
+
+    od;
+
+    # return the result
+    return generators;
+
+end );
+
+InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList,
+               " a toric variety, a projective graded module, a homalg_module_element specifying a degree ",
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsHomalgModuleElement ],
+  function( variety, projective_module, degree )
+
+    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
+                                               variety, projective_module, UnderlyingListOfRingElements( degree ) );
+
+end );
+
 # compute degree X layer of projective graded S-module morphism
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
                " a toric variety, a projective graded module morphism, a list specifying a degree ",
@@ -1580,10 +1666,10 @@ end );
 # compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
 InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
                " a list of information and a string",
-               [ IsList, IsString, IsBool ],
-  function( infos, filename, display_messages )
+               [ IsList, IsBool ],
+  function( infos, display_messages )
     local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
-         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos;
+         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions;
 
     # extract the data
     images := infos[ 1 ];
@@ -1594,14 +1680,6 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
     dim_range := gens_range[ 1 ];
     gens_range := gens_range[ 2 ];
 
-    # now write the size of the matrix and the non_zero_entries to a file
-    path := Concatenation( PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath, "/tmp" );
-    file := Filename( Directory( path ), Concatenation( filename, ".gi" ) );
-    stream := OutputTextFile( file, false ); # true means that we append to this file
-
-    # write syntax...
-    WriteLine( stream, Concatenation( "helper := [ ", String( Length( images ) ), ",", String( dim_range ), ", [ " ) );
-
     # print status of the computation
     if display_messages then
       Print( "starting the matrix computation... \n \n" );
@@ -1610,8 +1688,11 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
       Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
     fi;
 
+    # set the counter and initialise positions
     counter := 1;
+    positions := [];
 
+    # identify the matrix entries
     for i in [ 1 .. Length( images ) ] do
 
       # information about the status
@@ -1713,8 +1794,7 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
         for k in [ 1 .. Length( poly_split2 ) ] do
 
           pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-          WriteLine( stream, Concatenation( "[ ", String( i ), "," , String( pos ), ",", 
-                                                                           String( poly_split2[ k ][ 1 ] ), " ]," ) );
+          Append( positions, [ [ i, pos, poly_split2[ k ][ 1 ] ] ] );
 
         od;
 
@@ -1722,48 +1802,177 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
 
     od;
 
-    # close the list
-    WriteLine( stream, " ] ]; \n" );
-
-    # close the stream
-    CloseStream( stream );
-
     # and return the result
     if display_messages then
-      Print( "matrix entries written to file... \n \n" );
+      Print( "matrix entries have been identified... \n \n" );
     fi;
 
     # signal end of computation
-    return true;
+    return positions;
 
 end );
 
 
+# compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
 InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-               " a string, a list, a string, a ring, a bool",
-               [ IsString, IsString, IsBool ],
-  function( sourcefile, targetfile, display_messages )
-    local path, file, f, images, gens_range, name_of_indeterminates;
+               " a list of information and a string",
+               [ IsList, IsBool, IsInt, IsInt ],
+  function( infos, display_messages, starting_pos, ending_pos )
+    local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
+         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions;
 
-    # try to open file
-    path := PackageInfo( "SheafCohomologyOnToricVarieties" )[ 1 ]!.InstallationPath;
-    file := Concatenation( path, "/tmp/", sourcefile );
-    f := IO_File( file,"r");
-    if f = fail then
-      Error( Concatenation( "could not read from file ", file ) );
+    # extract the data
+    images := infos[ 1 ];
+    gens_range := infos[ 2 ];
+    name_of_indeterminates := infos[ 3 ];
+
+    # compute the dimension of the range
+    dim_range := gens_range[ 1 ];
+    gens_range := gens_range[ 2 ];
+
+    # initialise positions
+    positions := [];
+
+    # print status of the computation
+    if display_messages then
+      Print( "starting the matrix computation... \n \n" );
+      Print( Concatenation( "NrRows: ", String( Length( images ) ), "\n" ) );
+      Print( Concatenation( "NrColumns: ", String( dim_range ), "\n" ) );
+      Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
     fi;
 
-    # read in the necessary information
-    gens_range := IO_Unpickle( f );
-    images := IO_Unpickle( f );
-    name_of_indeterminates := IO_Unpickle( f );
-    IO_Close( f );
+    # set the counter
+    counter := 1;
 
-    # and hand it over to next method
-    return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal(
-              [ images, gens_range, name_of_indeterminates ], targetfile, display_messages );
+    # check that the ranges are meaningful
+    if starting_pos < 0 then
+      Error( "the starting position must be non-negative" );
+    elif starting_pos > ending_pos then
+      Error( "the starting position must not be smaller than the ending position" );
+    elif ending_pos > Length( images ) then
+      Error( "the ending position must not be bigger than the number of images to translate" );
+    fi;
+
+    # now perform the computation
+    for i in [ starting_pos .. ending_pos ] do
+
+      # information about the status
+      if not ( Int( i / Length( images ) * 100 ) < counter ) then
+
+        # express current status as multiply of 10%, so we compute this number first
+        counter := Int( i / Length( images ) * 10 ) * 10;
+
+        # then inform the user
+        if display_messages then
+          Print( Concatenation( String( counter ), "% done...\n" ) );
+        fi;
+
+        # and finally increase counter
+        counter := counter + 10;
+
+      fi;
+
+      # read image of the i-th source generator and the non_zero rows of this image_column
+      comparer := images[ i ][ 2 ];
+      non_zero_rows := images[ i ][ 1 ];
+
+      # now work over each and every nontrivial entry of comparer
+      for j in [ 1 .. Length( non_zero_rows ) ] do
+
+        # consider the non_zero_rows[j]-th image as a string
+        poly := String( comparer[ non_zero_rows[ j ] ] );
+
+        # find positions of plus and minus
+        split_pos := [ 1 ];
+        Append( split_pos, Positions( poly, '-' ) );
+        Append( split_pos, Positions( poly, '+' ) );
+        split_pos := DuplicateFreeList( split_pos );
+        Sort( split_pos );
+
+        # initialise the split string
+        poly_split := List( [ 1 .. Length( split_pos ) ] );
+
+        # and extract the substrings
+        for k in [ 1 .. Length( poly_split ) ] do
+          if k <> Length( poly_split ) then
+            poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
+          else
+            poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
+          fi;
+        od;
+
+        # now initialise poly_split2
+        poly_split2 := List( [ 1 .. Length( poly_split ) ] );
+
+        # now extract the coefficients of the individual monoms
+        for k in [ 1 .. Length( poly_split ) ] do
+          if poly_split[ k ][ 1 ] = name_of_indeterminates then
+
+            poly_split2[ k ] := [ "1", poly_split[ k ] ];
+
+          elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
+
+            # find first occurance of 'x' (or more generally the variables names used) 
+            # -> whatever is in front of it will be our coefficient
+            pos := Position( poly_split[ k ], name_of_indeterminates );
+
+            if pos <> fail then
+              # at least one 'x' does appear in this string
+              coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
+
+              # massage the coefficient
+              if coeff[ Length( coeff ) ] = '*' then
+                Remove( coeff );
+              fi;
+
+              # check for degenerate case
+              if coeff = "-" then
+                coeff := "-1";
+              elif coeff = "+" then
+                coeff := "+1";
+              fi;
+
+              # remove the coefficient part from poly_split
+              for l in [ 1 .. pos-1 ] do
+                Remove( poly_split[ k ], 1 );
+              od;
+
+              # finally save the coefficient and the monom
+              poly_split2[ k ] := [ coeff, poly_split[ k ] ];
+
+            else
+              # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient 
+              # and the monom is just 1
+              poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
+
+            fi;
+
+          fi;
+
+        od;
+
+        # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
+        for k in [ 1 .. Length( poly_split2 ) ] do
+
+          pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
+          Append( positions, [ [ i, pos, poly_split2[ k ][ 1 ] ] ] );
+
+        od;
+
+      od;
+
+    od;
+
+    # signal end of computation
+    if display_messages then
+      Print( "matrix entries have been identified... \n \n" );
+    fi;
+
+    # return the result
+    return positions;
 
 end );
+
 
 
 ######################################################################################################
@@ -2497,7 +2706,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOf
       return;
 
     elif not IsFree( projective_module ) then
-    
+
       Error( "The module is not free" );
       return;
 
@@ -2506,7 +2715,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOf
       return [];
 
     fi;
-    
+
     # compute the degree layers of S that need to be computed
     degree_list := DegreesOfGenerators( projective_module );
 
