@@ -213,7 +213,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
  
       # step1: initialise a few things
       # step1: initialise a few things
-      rationals := HomalgFieldOfRationalsInMAGMA();
+      #rationals := HomalgFieldOfRationalsInMAGMA();
+      rationals := HomalgFieldOfRationals();
       zero := UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) );
       compute_job1 := false;
       compute_job2 := false;
@@ -539,6 +540,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           fi;
           matrix3 := HomalgInitialMatrix( Length( gens_source_3 ), gens_range_3[ 1 ], rationals );
           for i in [ 1 .. Length( helper ) ] do # <- these loops somehow are bottleneck #2
+            Error( "my test" );
+            # i guess the actual method is in IO_ForHomalg
+            # there is a method for SetMatElm( matrix3, posInt, posInt, String, rationals )
+            # -> maybe if I call this method immedately, I could have it run a little quicker
             SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
           od;
           if display_messages then
