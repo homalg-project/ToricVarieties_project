@@ -242,8 +242,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the source... \n" );
       fi;
-      #gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-      #                                                 variety, Source( source ), zero );
       gens_source_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( source ), zero );
       gens_range_1 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
@@ -309,6 +307,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       else
 
         # compute input
+        if display_messages then
+          Print( "-> compute image... \n" );
+        fi;
         input := ComputeInput( variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
         if display_messages then
@@ -327,8 +328,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the map... \n" );
       fi;
-      #gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-      #                                                 variety, Source( map ), zero );
       gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( map ), zero );
       gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
@@ -361,6 +360,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       else
 
         # compute input
+        if display_messages then
+          Print( "-> compute image... \n" );
+        fi;
         input := ComputeInput( variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
         if display_messages then
@@ -379,8 +381,6 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "truncate the projective modules in the range... \n" );
       fi;
-      #gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-      #                                                 variety, Source( range ), zero );
       gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
                                                        variety, Source( range ), zero );
       gens_range_3 := gens_range_2;
@@ -412,6 +412,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       else
 
         # compute input
+        if display_messages then
+          Print( "-> compute image... \n" );
+        fi;
         input := ComputeInput( variety, range, gens_source_3, gens_range_3 );
         compute_job3 := true;
         if display_messages then
