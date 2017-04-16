@@ -308,7 +308,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         # compute input
         if display_messages then
-          Print( "-> compute image... \n" );
+          Print( "-> compute images... \n" );
         fi;
         input := ComputeInput( variety, source, gens_source_1, gens_range_1 );
         compute_job1 := true;
@@ -361,7 +361,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         # compute input
         if display_messages then
-          Print( "-> compute image... \n" );
+          Print( "-> compute images... \n" );
         fi;
         input := ComputeInput( variety, map, gens_source_2, gens_range_2 );
         compute_job2 := true;
@@ -413,12 +413,12 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         # compute input
         if display_messages then
-          Print( "-> compute image... \n" );
+          Print( "-> compute images... \n" );
         fi;
         input := ComputeInput( variety, range, gens_source_3, gens_range_3 );
         compute_job3 := true;
         if display_messages then
-          Print( "-> starting 2 background jobs for this truncation...\n" );
+          Print( "-> starting 3 background jobs for this truncation...\n" );
         fi;
 
         # determine cutoff
