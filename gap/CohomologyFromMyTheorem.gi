@@ -468,14 +468,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if display_messages then
             Print( "(*) result read... \n" );
           fi;
-          #helper := List( [ 1 .. Length( helper ) ], i -> [ helper[ i ][ 1 ], helper[ i ][ 2 ],
-          #                                                        helper[ i ][ 3 ] / rationals ] );
           matrix1 := CreateHomalgMatrixFromSparseString( String( helper ), 
                                                          Length( gens_source_1 ), gens_range_1[ 1 ], rationals );
-          #matrix1 := HomalgInitialMatrix( Length( gens_source_1 ), gens_range_1[ 1 ], rationals );
-          #for i in [ 1 .. Length( helper ) ] do
-          #  SetMatElm( matrix1, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
-          #od;
           if display_messages then
             Print( "(*) matrix values set... \n" );
           fi;
@@ -507,14 +501,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if display_messages then
             Print( "(*) result read \n" );
           fi;
-          #helper := List( [ 1 .. Length( helper ) ], i -> [ helper[ i ][ 1 ], helper[ i ][ 2 ],
-          #                                                        helper[ i ][ 3 ] / rationals ] );
           matrix2 := CreateHomalgMatrixFromSparseString( String( helper ), 
                                                          Length( gens_source_2 ), gens_range_2[ 1 ], rationals );
-          #matrix2 := HomalgInitialMatrix( Length( gens_source_2 ), gens_range_2[ 1 ], rationals );
-          #for i in [ 1 .. Length( helper ) ] do
-          #  SetMatElm( matrix2, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
-          #od;
           if display_messages then
             Print( "(*) matrix values set \n" );
           fi;
@@ -544,18 +532,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if display_messages then
             Print( "(*) process completed \n" );
           fi;
-          #res := List( [ 1 .. Length( res ) ], i -> [ res[ i ][ 1 ], res[ i ][ 2 ], res[ i ][ 3 ] / rationals ] );
           helper := res;
           if display_messages then
             Print( "(*) result read \n" );
           fi;
-          #matrix3 := HomalgInitialMatrix( Length( gens_source_3 ), gens_range_3[ 1 ], rationals );
-          #for i in [ 1 .. Length( helper ) ] do
-          #  SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
-          #od;
-          #if display_messages then
-          #  Print( "(*) matrix values set \n" );
-          #fi;
           Kill( job31 );
           if display_messages then
             Print( "(*) process killed \n \n" );
@@ -574,18 +554,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if display_messages then
             Print( "(*) process completed \n" );
           fi;
-          #res := List( [ 1 .. Length( res ) ], i -> [ res[ i ][ 1 ], res[ i ][ 2 ], res[ i ][ 3 ] / rationals ] );
           Append( helper, res );
-          #helper := res;
           if display_messages then
             Print( "(*) result read \n" );
           fi;
-          #for i in [ 1 .. Length( helper ) ] do
-          #  SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
-          #od;
-          #if display_messages then
-          #  Print( "(*) matrix values set \n" );
-          #fi;
           Kill( job32 );
           if display_messages then
             Print( "(*) process killed \n \n" );
@@ -603,15 +575,10 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
           if display_messages then
             Print( "(*) process completed \n" );
           fi;
-          #res := List( [ 1 .. Length( res ) ], i -> [ res[ i ][ 1 ], res[ i ][ 2 ], res[ i ][ 3 ] / rationals ] );
           Append( helper, res );
-          #helper := res;
           if display_messages then
             Print( "(*) result read \n" );
           fi;
-          #for i in [ 1 .. Length( helper ) ] do
-          #  SetMatElm( matrix3, helper[ i ][ 1 ], helper[ i ][ 2 ], helper[ i ][ 3 ] / rationals );
-          #od;
           matrix3 := CreateHomalgMatrixFromSparseString( String( helper ), 
                                                          Length( gens_source_3 ), gens_range_3[ 1 ], rationals );
           if display_messages then
