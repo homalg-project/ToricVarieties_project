@@ -1668,147 +1668,9 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
                " a list of information and a string",
                [ IsList, IsBool ],
   function( infos, display_messages )
-    local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
-         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions;
 
-    # extract the data
-    images := infos[ 1 ];
-    gens_range := infos[ 2 ];
-    name_of_indeterminates := infos[ 3 ];
-
-    # compute the dimension of the range
-    dim_range := gens_range[ 1 ];
-    gens_range := gens_range[ 2 ];
-
-    # print status of the computation
-    if display_messages then
-      Print( "starting the matrix computation... \n \n" );
-      Print( Concatenation( "NrRows: ", String( Length( images ) ), "\n" ) );
-      Print( Concatenation( "NrColumns: ", String( dim_range ), "\n" ) );
-      Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
-    fi;
-
-    # set the counter and initialise positions
-    counter := 1;
-    positions := [];
-
-    # identify the matrix entries
-    for i in [ 1 .. Length( images ) ] do
-
-      # information about the status
-      if not ( Int( i / Length( images ) * 100 ) < counter ) then
-
-        # express current status as multiply of 10%, so we compute this number first
-        counter := Int( i / Length( images ) * 10 ) * 10;
-
-        # then inform the user
-        if display_messages then
-          Print( Concatenation( String( counter ), "% done...\n" ) );
-        fi;
-
-        # and finally increase counter
-        counter := counter + 10;
-
-      fi;
-
-      # read image of the i-th source generator and the non_zero rows of this image_column
-      comparer := images[ i ][ 2 ];
-      non_zero_rows := images[ i ][ 1 ];
-
-      # now work over each and every nontrivial entry of comparer
-      for j in [ 1 .. Length( non_zero_rows ) ] do
-
-        # consider the non_zero_rows[j]-th image as a string
-        poly := String( comparer[ non_zero_rows[ j ] ] );
-
-        # find positions of plus and minus
-        split_pos := [ 1 ];
-        Append( split_pos, Positions( poly, '-' ) );
-        Append( split_pos, Positions( poly, '+' ) );
-        split_pos := DuplicateFreeList( split_pos );
-        Sort( split_pos );
-
-        # initialise the split string
-        poly_split := List( [ 1 .. Length( split_pos ) ] );
-
-        # and extract the substrings
-        for k in [ 1 .. Length( poly_split ) ] do
-          if k <> Length( poly_split ) then
-            poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          else
-            poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          fi;
-        od;
-
-        # now initialise poly_split2
-        poly_split2 := List( [ 1 .. Length( poly_split ) ] );
-
-        # now extract the coefficients of the individual monoms
-        for k in [ 1 .. Length( poly_split ) ] do
-          if poly_split[ k ][ 1 ] = name_of_indeterminates then
-
-            poly_split2[ k ] := [ "1", poly_split[ k ] ];
-
-          elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
-
-            # find first occurance of 'x' (or more generally the variables names used) 
-            # -> whatever is in front of it will be our coefficient
-            pos := Position( poly_split[ k ], name_of_indeterminates );
-
-            if pos <> fail then
-              # at least one 'x' does appear in this string
-              coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
-
-              # massage the coefficient
-              if coeff[ Length( coeff ) ] = '*' then
-                Remove( coeff );
-              fi;
-
-              # check for degenerate case
-              if coeff = "-" then
-                coeff := "-1";
-              elif coeff = "+" then
-                coeff := "+1";
-              fi;
-
-              # remove the coefficient part from poly_split
-              for l in [ 1 .. pos-1 ] do
-                Remove( poly_split[ k ], 1 );
-              od;
-
-              # finally save the coefficient and the monom
-              poly_split2[ k ] := [ coeff, poly_split[ k ] ];
-
-            else
-              # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient 
-              # and the monom is just 1
-              poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
-
-            fi;
-
-          fi;
-
-        od;
-
-        # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
-        for k in [ 1 .. Length( poly_split2 ) ] do
-
-          pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-          Append( positions, [ [ i, pos, poly_split2[ k ][ 1 ] ] ] );
-
-        od;
-
-      od;
-
-    od;
-
-    # and return the result
-    if display_messages then
-      Print( "matrix entries have been identified... \n \n" );
-    fi;
-
-    # signal end of computation
-    return positions;
+  return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( 
+  infos, display_messages, 1, Length( infos[ 1 ] ) );
 
 end );
 
@@ -1954,8 +1816,14 @@ InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFil
         # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
         for k in [ 1 .. Length( poly_split2 ) ] do
 
+          # identify the position
           pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-          Append( positions, [ [ i, pos, poly_split2[ k ][ 1 ] ] ] );
+
+          # remove '+' from poly_split2
+          RemoveCharacters( poly_split2[ k ][ 1 ], "+" );
+
+          # and append the evaluation to integer
+          Append( positions, [ [ i, pos, Int( poly_split2[ k ][ 1 ] ) ] ] );
 
         od;
 
