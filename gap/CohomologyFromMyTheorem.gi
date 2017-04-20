@@ -127,12 +127,11 @@ end );
 
 InstallMethod( ComputeInput,
                " for a filename, a morphism of projective graded S-modules",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ],
-function( variety, morphism, gens_source, gens_range )
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList ],
+function( variety, morphism, gens_source )
   local left, mapping_matrix, cols, non_zeros, images, i, buffer, j, col_index, image, non_zero_rows, 
-       name_of_indeterminates;
+       name_of_indeterminates, rank_source;
 
-  # (1) compute images of gens_source
   # (1) compute images of gens_source
 
   # identify the mapping matrix
@@ -155,37 +154,27 @@ function( variety, morphism, gens_source, gens_range )
     Append( non_zeros, [ buffer ] );
   od;
 
-  # compute images
-  # <- this is thus far a bottleneck ->
-  # compute images 
+  rank_source := Length( cols[ 1 ] );
   images := [];
   for i in [ 1 .. Length( gens_source ) ] do
 
-    # gens_source[ i ] = [ N, monom ] for N an integer
-    # the image of this is cols[ N ] * monom
-    # the non-zero-entries are non_zeros[ N ]
-    # and I can speed up cols[ N ] * monom (maybe)
+    # compute the image smartly by only multiplying non-zero entries
     col_index := gens_source[ i ][ 1 ];
-    image := cols[ col_index ] * gens_source[ i ][ 2 ];
-    image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
     non_zero_rows := non_zeros[ col_index ];
+    image := ListWithIdenticalEntries( rank_source, "0" );
+    for j in [ 1 .. Length( non_zero_rows ) ] do
+      image[ non_zero_rows[ j ] ] := String( cols[ col_index ][ non_zero_rows[ j ] ] * gens_source[ i ][ 2 ] );
+    od;
+
     Append( images, [ [ non_zero_rows, image ] ] );
 
-    #Error( "test" );
-    #image := mapping_matrix * gens_source[ i ];
-    #non_zero_rows := NonZeroRows( image );
-    #image := EntriesOfHomalgMatrix( image );
-    #image := List( [ 1 .. Length( image ) ], k -> String( image[ k ] ) );
-    #Append( images, [ [ non_zero_rows, image ] ] );
   od;
 
-  # (2) identify name of the indeterminates
   # (2) identify name of the indeterminates
   name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
 
   # (3) return result
-  # (3) return result
-  return [ images, gens_range, name_of_indeterminates ];
+  return [ images, name_of_indeterminates ];
 
 end );
 
@@ -194,10 +183,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
   function( variety, a, b, display_messages )
-      local range, source, map, rationals, zero, gens_source_1, gens_range_1, gens_source_2, gens_range_2, 
-           gens_source_3, gens_range_3, matrix1, compute_job1, matrix2, compute_job2, 
-           matrix3, job1, job2, res, i, helper, new_mat, vec_space_morphism, cutoff, 
-           job31, job32, job33, compute_job3, input;
+      local rationals, zero, compute_job1, compute_job2, compute_job3, range, source, map, 
+           gens_source_1, gens_range_1, matrix1, input, job1, gens_source_2, gens_range_2, matrix2, job2,
+           gens_source_3, gens_range_3, matrix3, cutoff, job31, job32, job33, res, helper, new_mat, vec_space_morphism;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -309,15 +297,15 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         if display_messages then
           Print( "-> compute images... \n" );
         fi;
-        input := ComputeInput( variety, source, gens_source_1, gens_range_1 );
+        input := ComputeInput( variety, source, gens_source_1 );
         compute_job1 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
         fi;
 
         # start background job
-        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ input, false ], rec( TerminateImmediately := true ) );
+        job1 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal, 
+                              [ [ input[ 1 ], gens_range_1, input[ 2 ] ], false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -362,7 +350,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         if display_messages then
           Print( "-> compute images... \n" );
         fi;
-        input := ComputeInput( variety, map, gens_source_2, gens_range_2 );
+        input := ComputeInput( variety, map, gens_source_2 );
         compute_job2 := true;
         if display_messages then
           Print( "-> starting background job for this truncation... \n \n" );
@@ -370,7 +358,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         # start background job
         job2 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ input, false ], rec( TerminateImmediately := true ) );
+                              [ [ input[ 1 ], gens_range_2, input[ 2 ] ], false ], rec( TerminateImmediately := true ) );
 
       fi;
 
@@ -414,7 +402,7 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         if display_messages then
           Print( "-> compute images... \n" );
         fi;
-        input := ComputeInput( variety, range, gens_source_3, gens_range_3 );
+        input := ComputeInput( variety, range, gens_source_3 );
         compute_job3 := true;
         if display_messages then
           Print( "-> starting 3 background jobs for this truncation...\n" );
@@ -429,21 +417,23 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
 
         # start background job1
         job31 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-                                    [ input, false, 1, cutoff ], rec( TerminateImmediately := true ) );
+                    [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, 1, cutoff ], rec( TerminateImmediately := true ) );
         if display_messages then
           Print( "-> job31 running... \n" );
         fi;
 
         # start background job2
         job32 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-             [ input, false, cutoff + 1, 2 * cutoff ], rec( TerminateImmediately := true ) );
+                                              [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, cutoff + 1, 2 * cutoff ],
+                                                                                    rec( TerminateImmediately := true ) );
         if display_messages then
           Print( "-> job32 running... \n" );
         fi;
 
         # start background job2
         job33 := BackgroundJobByFork( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
-             [ input, false, 2 * cutoff + 1, Length( gens_source_3 ) ], rec( TerminateImmediately := true ) );
+                             [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, 2 * cutoff + 1, Length( gens_source_3 ) ],
+                                                                                    rec( TerminateImmediately := true ) );
         if display_messages then
           Print( "-> job33 running... \n \n" );
         fi;
@@ -463,12 +453,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         else
           if display_messages then
             Print( "(*) process completed... \n" );
-          fi;
-          helper := res;
-          if display_messages then
             Print( "(*) result read... \n" );
           fi;
-          matrix1 := CreateHomalgMatrixFromSparseString( String( helper ), 
+          matrix1 := CreateHomalgMatrixFromSparseString( String( res ), 
                                                          Length( gens_source_1 ), gens_range_1[ 1 ], rationals );
           if display_messages then
             Print( "(*) matrix values set... \n" );
@@ -496,12 +483,9 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
         else
           if display_messages then
             Print( "(*) process completed \n" );
-          fi;
-          helper := res;
-          if display_messages then
             Print( "(*) result read \n" );
           fi;
-          matrix2 := CreateHomalgMatrixFromSparseString( String( helper ), 
+          matrix2 := CreateHomalgMatrixFromSparseString( String( res ), 
                                                          Length( gens_source_2 ), gens_range_2[ 1 ], rationals );
           if display_messages then
             Print( "(*) matrix values set \n" );

@@ -22,7 +22,7 @@ DeclareOperation( "InternalHomDegreeZeroOnObjects",
 
 #!
 DeclareOperation( "ComputeInput",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList ] );
+               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList ] );
 
 #!
 DeclareOperation( "InternalHomDegreeZeroOnObjectsParallel",

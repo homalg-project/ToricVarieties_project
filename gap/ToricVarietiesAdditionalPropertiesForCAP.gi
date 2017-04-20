@@ -252,6 +252,26 @@ InstallMethod( SRRightIdealForCAP,
 
 end );
 
+# f.p. graded left S-modules category
+InstallMethod( SfpgrmodLeft,
+               " for toric varieties",
+               [ IsToricVariety ],
+  function( variety )
+
+    return SfpgrmodLeft( CoxRing( variety ) );
+
+end );
+
+# f.p. graded right S-modules category
+InstallMethod( SfpgrmodRight,
+               " for toric varieties",
+               [ IsToricVariety ],
+  function( variety )
+
+    return SfpgrmodRight( CoxRing( variety ) );
+
+end );
+
 
 
 ########################
