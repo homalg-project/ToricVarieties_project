@@ -49,7 +49,7 @@ DeclareOperation( "InternalHomDegreeZeroOnMorphisms",
 #!
 DeclareOperation( "InternalHomDegreeZeroOnMorphismsParallel",
                 [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
-                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
+                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool, IsHomalgRing ] );
 
 
 #############################################################

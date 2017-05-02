@@ -1710,7 +1710,7 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
     if starting_pos < 0 then
       Error( "the starting position must be non-negative" );
     elif starting_pos > ending_pos then
-      Error( "the starting position must not be smaller than the ending position" );
+      Error( "the starting position must not be bigger than the ending position" );
     elif ending_pos > Length( images ) then
       Error( "the ending position must not be bigger than the number of images to translate" );
     fi;

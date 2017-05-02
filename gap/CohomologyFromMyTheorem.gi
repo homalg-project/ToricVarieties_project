@@ -599,10 +599,10 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsHomalgRing ],
   function( variety, a, b, display_messages, rationals )
-      local rationals, zero, compute_job1, compute_job2, compute_job3, range, source, map, 
+      local zero, compute_job1, compute_job2, compute_job3, range, source, map, 
            gens_source_1, gens_range_1, matrix1, input, job1, gens_source_2, gens_range_2, matrix2, job2,
            gens_source_3, gens_range_3, matrix3, cutoff, job31, job32, job33, res, helper, 
-           source_vecspace_presentation, map_vecspace_presentation, range_vecspace_presentation;
+           source_vecspace_presentation, map_vecspace_morphism, range_vecspace_presentation;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -627,7 +627,7 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
       # step2: compute the map of graded module presentations
       # step2: compute the map of graded module presentations
       if display_messages then
-        Print( "compute map of graded module presentations whose kernel is InternalHOM... \n" );
+        Print( "compute map of graded module presentations whose kernel is InternalHOM... \n \n" );
       fi;
       range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
                                          UnderlyingMorphism( b ) );
@@ -636,9 +636,6 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
-      if display_messages then
-        Print( "done... \n \n" );
-      fi;
 
       # step3: analyse the source morphism
       # step3: analyse the source morphism
@@ -653,6 +650,7 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "analyse the source morphism... \n" );
       fi;
+
       # if its source is the zero vector space...
       if Length( gens_source_1 ) = 0 then
 
@@ -663,23 +661,6 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
           Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
         fi;
 
-        # check for degenerate case
-        if NrColumns( matrix1 ) = 0 then
-
-          if display_messages then
-            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          fi;
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
-                                                                               VectorSpaceObject( 0, rationals ) );
-        elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
-
-          if display_messages then
-            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          fi;
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ),
-                                                                               VectorSpaceObject( 0, rationals ) );
-        fi;
-
       # if its range is the zero vector space...
       elif gens_range_1[ 1 ] = 0 then
 
@@ -688,23 +669,6 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
           Print( "matrix 1 computed... \n" );
           Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
           Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
-        fi;
-
-        # check for degenerate case
-        if NrColumns( matrix1 ) = 0 then
-
-          if display_messages then
-            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          fi;
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
-                                                                               VectorSpaceObject( 0, rationals ) );
-        elif NrColumns( matrix1 ) - ColumnRankOfMatrix( matrix1 ) = 0 then
-
-          if display_messages then
-            Print( "Syzygies computed, now computing the dimension of the cokernel object... \n" );
-          fi;
-          return ZeroMorphism( ZeroObject( CapCategory( VectorSpaceObject( 0, rationals ) ) ), 
-                                                                               VectorSpaceObject( 0, rationals ) );
         fi;
 
       else
@@ -997,25 +961,20 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
 
       # step 10: compute vec_space_morphisms to represent source, map and range
       # step 10: compute vec_space_morphisms to represent source, map and range
-      if display_messages then
-        Print( "compute vector space presentations of source, map and range \n" );
-      fi;
-
-      source_vec_space_presentation := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix1 ), rationals ),
+      source_vecspace_presentation := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix1 ), rationals ),
                                                 matrix1,
                                                 VectorSpaceObject( NrColumns( matrix1 ), rationals )
                                                 );
-      source_vecspace_presentation := CAPPresentationCategoryObject( source_vec_space_presentation );
-      map_vec_space_presentation := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix2 ), rationals ),
-                                                matrix2,
-                                                VectorSpaceObject( NrColumns( matrix2 ), rationals )
-                                                );
-      map_vecspace_presentation := CAPPresentationCategoryObject( map_vec_space_presentation );
-      range_vec_space_presentation := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix3 ), rationals ),
+      source_vecspace_presentation := CAPPresentationCategoryObject( source_vecspace_presentation );
+      map_vecspace_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix2 ), rationals ),
+                                                    matrix2,
+                                                    VectorSpaceObject( NrColumns( matrix2 ), rationals )
+                                                   );
+      range_vecspace_presentation := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix3 ), rationals ),
                                                 matrix3,
                                                 VectorSpaceObject( NrColumns( matrix3 ), rationals )
                                                 );
-      range_vecspace_presentation := CAPPresentationCategoryObject( range_vec_space_presentation );
+      range_vecspace_presentation := CAPPresentationCategoryObject( range_vecspace_presentation );
 
       # step 11: compute kernel embedding
       # step 11: compute kernel embedding
@@ -1023,9 +982,9 @@ InstallMethod( InternalHomEmbeddingDegreeZeroOnObjectsParallel,
         Print( "compute kernel embedding \n" );
       fi;
 
-      return KernelEmbedding( CAPPresentationCategoryMorphism( source_vec_space_presentation,
-                                                                map_vec_space_presentation,
-                                                                range_vec_space_presentation,
+      return KernelEmbedding( CAPPresentationCategoryMorphism( source_vecspace_presentation,
+                                                                map_vecspace_morphism,
+                                                                range_vecspace_presentation,
                                                                 CapCategory( source )!.constructor_checks_wished
                                                                ) );
 
@@ -1252,10 +1211,8 @@ InstallMethod( InternalHomDegreeZeroOnMorphisms,
                                                 );
 
 
-      # STEP3: The bridge map
-      # STEP3: The bridge map
-
-      # compute the lift
+      # STEP4: The lift
+      # STEP4: The lift
       if display_messages then
         Print( "\n \n \n" );
         Print( "Step4: \n" );
@@ -1269,101 +1226,83 @@ end );
 
 InstallMethod( InternalHomDegreeZeroOnMorphismsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ],
-  function( variety, mor1, mor2, display_messages )
-      local rationals, ker1, ker2, map, bridge, zero, gens_source, gens_range, input, positions, matrix,
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool, IsHomalgRing ],
+  function( variety, mor1, mor2, display_messages, rationals )
+      local ker1, ker2, map, bridge, zero, gens_source, gens_range, input, positions, matrix,
            map_vecspace_morphism;
 
       # Let mor1: A -> A' and mor2: B -> B' and let A = (R_A - \rho_A -> G_A ) and alike for the others. 
       # Then we compute the degree zero layer of the morphism Hom( A', B ) -> Hom( A, B' ). 
 
-      # Step 0: Initialise Q
-      # Step 0: Initialise Q
-      rationals := HomalgFieldOfRationalsInMAGMA();
-
-
       # Step 1: Kernel-embedding of Hom( A', B ):
       # Step 1: Kernel-embedding of Hom( A', B ):
       if display_messages then
-        Print( "Step1: \n" );
-        Print( "------ \n" );
-        Print( "Compute the kernel embedding of Hom( A', B ) \n" );
+        Print( "Step1: Compute the kernel embedding of Hom( A', B ) \n" );
+        Print( "--------------------------------------------------- \n \n" );
+        ker1 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Range( mor1 ), Source( mor2 ), true, rationals );
+        Print( "--------------------------------------------------- \n \n \n" );
+      else
+        ker1 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Range( mor1 ), Source( mor2 ), false, rationals );
       fi;
-
-      ker1 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Range( mor1 ), Source( mor2 ), true, rationals );
-
 
       # Step 2: Hom( A, B' ):
       # Step 2: Hom( A, B' ):
       if display_messages then
-        Print( "Step2: \n" );
-        Print( "------ \n" );
-        Print( "Compute the kernel embedding of Hom( A, B' ) \n" );
+        Print( "Step2: Compute the kernel embedding of Hom( A, B' ) \n" );
+        Print( "--------------------------------------------------- \n \n" );
+        ker2 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Source( mor1 ), Range( mor2 ), true, rationals );
+        Print( "--------------------------------------------------- \n \n \n" );
+      else
+        ker2 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Source( mor1 ), Range( mor2 ), false, rationals );
       fi;
-
-      ker2 := InternalHomEmbeddingDegreeZeroOnObjectsParallel( variety, Source( mor1 ), Range( mor2 ), true, rationals );
-
 
       # Step 3: The bridge map
       # Step 3: The bridge map
 
       # compute the map or graded module preseentations
       if display_messages then
-        Print( "\n \n" );
-        Print( "Step3: \n" );
-        Print( "------ \n" );
-        Print( "Compute the bridge map... \n" );
+        Print( "Step3: Compute the bridge map... \n" );
       fi;
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( mor1 ) ),
                                        UnderlyingMorphism( mor2 )
                                       );
 
-      if display_messages then
-        Print( "and truncate it... \n \n" );
-      fi;
-
       # check for degenerate cases
       if Dimension( Range( UnderlyingMorphism( Range( ker1 ) ) ) ) = 0 then
-        bridge := TheZeroMorphism( VectorSpaceObject( 0, rationals ), Range( UnderlyingMorphism( Range( ker2 ) ) ) );
+        map_vecspace_morphism := ZeroMorphism( 
+                                       VectorSpaceObject( 0, rationals ), Range( UnderlyingMorphism( Range( ker2 ) ) ) );
       elif Dimension( Range( UnderlyingMorphism( Range( ker2 ) ) ) ) = 0 then
-        bridge := TheZeroMorphism( Range( UnderlyingMorphism( Range( ker1 ) ) ), VectorSpaceObject( 0, rationals ) );
-      fi;
+        map_vecspace_morphism  := ZeroMorphism( 
+                                       Range( UnderlyingMorphism( Range( ker1 ) ) ), VectorSpaceObject( 0, rationals ) );
+      else
+        # otherwise compute the truncation of this map
+        zero := TheZeroElement( DegreeGroup( CoxRing( variety ) ) );
+        gens_source := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
+                                                         variety, Source( map ), zero );
+        gens_range := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
+                                                         variety, Range( map ), zero );
 
-      # otherwise compute the truncation of this map
-      zero := TheZeroElement( DegreeGroup( CoxRing( variety ) ) );
-      gens_source := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
-                                                       variety, Source( map ), zero );
-      gens_range := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
-                                                       variety, Range( map ), zero );
-
-      # compute input
-      if display_messages then
-        Print( "-> compute images... \n" );
+        # compute input
+        input := ComputeInput( variety, map, gens_source );
+        positions := ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally( 
+                                                             [ input[ 1 ], gens_range, input[ 2 ] ], false );
+        matrix := CreateHomalgMatrixFromSparseString( String( positions ), 
+                                                              Length( gens_source ), gens_range[ 1 ], rationals );
+        map_vecspace_morphism := VectorSpaceMorphism( Range( UnderlyingMorphism( ker1 ) ),
+                                                       matrix,
+                                                       Range( UnderlyingMorphism( ker2 ) )
+                                                       );
       fi;
-      input := ComputeInput( variety, map, gens_source_2 );
-      positions := ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally( 
-                                                           [ input[ 1 ], gens_range, input[ 2 ] ], false );
-      matrix := CreateHomalgMatrixFromSparseString( String( positions ), 
-                                                            Length( gens_source ), gens_range[ 1 ], rationals );
-      map_vecspace_morphism := VectorSpaceMorphism( Range( UnderlyingMorphism( ker1 ) ),
-                                                     matrix,
-                                                     Range( UnderlyingMorphism( ker2 ) )
-                                                     );
-      bridge := CAPPresentationCategoryMorphism( Range( ker1 ),
-                                                 map_vecspace_morphism,
-                                                 Range( ker2 ),
-                                                 CapCategory( source )!.constructor_checks_wished
-                                                );
+      bridge := CAPPresentationCategoryMorphism( Range( ker1 ), map_vecspace_morphism, Range( ker2 ),
+                                                 CapCategory( Range( ker1 ) )!.constructor_checks_wished
+                                                 );
 
       # Step 4: Compute the required lift
       # Step 4: Compute the required lift
 
       # compute the lift
       if display_messages then
-        Print( "\n \n" );
-        Print( "Step4: \n" );
-        Print( "------ \n" );
-        Print( "Compute the necessary lift... \n \n" );
+        Print( "Step4: Compute the necessary lift... \n" );
       fi;
 
       return Lift( PreCompose( ker1, bridge ), ker2 );
@@ -1445,7 +1384,7 @@ InstallMethod( GradedExtDegreeZeroOnObjectsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
   function( i, variety, module1, module2, display_messages )
-    local left, mu, graded_hom_mapping;
+    local left, mu, graded_hom_mapping, rationals;
 
     # check input
     left := IsGradedLeftModulePresentationForCAP( module1 );
@@ -1465,13 +1404,14 @@ InstallMethod( GradedExtDegreeZeroOnObjectsParallel,
       module2 := PresentationForCAP( module2 );
     fi;
 
-    # now compute the extension module
+    # Step 0: Initialise Q
+    # Step 0: Initialise Q
+    rationals := HomalgFieldOfRationalsInMAGMA();
 
-    # step1:
+    # step1: Identify resolution morphism
+    # step1: Identify resolution morphism
     if display_messages then
-      Print( "Step 0: \n" );
-      Print( "------- \n");
-      Print( "We will now extract the 'i-th' morphism \mu in the resolution of module1... \n" );
+      Print( "Step 0: Extract 'i-th' morphism in resolution of module1... \n \n \n" );
     fi;
 
     if i = 0 then
@@ -1482,19 +1422,18 @@ InstallMethod( GradedExtDegreeZeroOnObjectsParallel,
       mu := KernelEmbedding( CokernelProjection( mu ) );
     fi;
 
-    # step2:
-    if display_messages then
-      Print( "Next will now compute GradedHom( Range( mu ), module2 )_0 -> GradedHom( Source( mu ), module2 )_0... \n \n \n \n" );
-    fi;
-    graded_hom_mapping := InternalHomDegreeZeroOnMorphismsParallel( variety, mu, IdentityMorphism( module2 ), display_messages );
 
-    # (3) then return the cokernel object of this morphism (this is a vector space presentation)
-    if display_messages then
-      Print( "Step 5: \n" );
-      Print( "------- \n");
-      Print( "Finally, we now compute the cokernel of this morphism... \n \n" );
-    fi;
+    # step2: GradedHom on morphisms
+    # step2: GradedHom on morphisms
+    graded_hom_mapping := InternalHomDegreeZeroOnMorphismsParallel( variety, mu, IdentityMorphism( module2 ), 
+                                                                                          display_messages, rationals );
 
+
+    # step3: return the cokernel object of this morphism
+    # step3: return the cokernel object of this morphism
+    if display_messages then
+      Print( "Step5: Identify the cokernel of this morphism... \n" );
+    fi;
     return UnderlyingMorphism( CokernelObject( graded_hom_mapping ) );
 
 end );
