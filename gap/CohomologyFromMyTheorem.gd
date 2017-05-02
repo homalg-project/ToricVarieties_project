@@ -11,7 +11,7 @@
 
 #############################################################
 ##
-#! @Section Specialised InternalHom methods
+#! @Section Specialised InternalHomOnObjects methods
 ##
 #############################################################
 
@@ -30,7 +30,23 @@ DeclareOperation( "InternalHomDegreeZeroOnObjectsParallel",
                                   IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
 #!
+DeclareOperation( "InternalHomEmbeddingDegreeZeroOnObjectsParallel",
+                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
+                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsHomalgRing ] );
+
+#############################################################
+##
+#! @Section Specialised InternalHomOnMorphisms methods
+##
+#############################################################
+
+#!
 DeclareOperation( "InternalHomDegreeZeroOnMorphisms",
+                [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
+                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
+
+#!
+DeclareOperation( "InternalHomDegreeZeroOnMorphismsParallel",
                 [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
                                   IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
 

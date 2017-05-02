@@ -1664,19 +1664,19 @@ end );
 ######################################################################################################
 
 # compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
                " a list of information and a string",
                [ IsList, IsBool ],
   function( infos, display_messages )
 
-  return WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal( 
+  return ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally( 
   infos, display_messages, 1, Length( infos[ 1 ] ) );
 
 end );
 
 
 # compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal,
+InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
                " a list of information and a string",
                [ IsList, IsBool, IsInt, IsInt ],
   function( infos, display_messages, starting_pos, ending_pos )

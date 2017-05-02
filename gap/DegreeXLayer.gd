@@ -401,10 +401,10 @@ DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinima
 #! gap.
 #! @Returns true or false
 #! @Arguments V, \varphi, degree_list, file_name
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
+DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally",
                [ IsList, IsBool ] );
 
-DeclareOperation( "WriteDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismToFileForGAPMinimal",
+DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally",
                [ IsList, IsBool, IsInt, IsInt ] );
 
 ##################################################################################################
