@@ -39,8 +39,8 @@ InstallMethod( IsNef,
     fi;
 
     # now compute the nef cone and its defining inequalities
-    nefCone := NmzCone( [ "integral_closure", NefConeInClassGroup( variety ) ] );
-    nefConeInequalities := NmzSupportHyperplanes( nefCone );
+    nefCone := Cone( NefConeInClassGroup( variety ) );
+    nefConeInequalities := DefiningInequalities( nefCone );
 
     # extract the class of the divisor
     class := UnderlyingListOfRingElements( ClassOfDivisor( divisor ) );
@@ -60,7 +60,7 @@ InstallMethod( IsNef,
 
     # all tests passed, so the divisor is indeed nef
     return true;
-    
+
 end );
 
 InstallMethod( IsAmpleViaNefCone,
@@ -86,8 +86,8 @@ InstallMethod( IsAmpleViaNefCone,
     fi;
 
     # now compute the nef cone and its defining inequalities
-    nefCone := NmzCone( [ "integral_closure", NefConeInClassGroup( variety ) ] );
-    nefConeInequalities := NmzSupportHyperplanes( nefCone );
+    nefCone := Cone( NefConeInClassGroup( variety ) );
+    nefConeInequalities := DefiningInequalities( nefCone );
 
     # extract the class of the divisor
     class := UnderlyingListOfRingElements( ClassOfDivisor( divisor ) );
@@ -346,7 +346,7 @@ InstallMethod( NefConeInCartierDataGroup,
                " for conv toric varieties",
                [ IsToricVariety ],
   function( variety )
-    local hConstraints, cartierDataGroupConstraints, cone, gens;
+    local hConstraints, cartierDataGroupConstraints, cone;
 
     # check if the input is valid
     if not IsSmooth( variety ) then
@@ -367,23 +367,15 @@ InstallMethod( NefConeInCartierDataGroup,
     # extract the matrix whose kernel is the CartierDataGroup
     cartierDataGroupConstraints := CartierDataGroup( variety );
 
-    # now add the h-constraints to a unified h-constraint
-    #unifiedHConstraints := ShallowCopy( hConstraints );
+    # now add the CartierDataGroupConstraints
     Append( hConstraints, cartierDataGroupConstraints );
     Append( hConstraints, -1 * cartierDataGroupConstraints );
 
-    # use the unifiedHConstraints to construct a NmzCone
-    cone := NmzCone( [ "inequalities", hConstraints ] );
-    NmzCompute( cone );
+    # use the unifiedHConstraints to construct the cone
+    cone := ConeByInequalities( hConstraints );
 
-    # as this cone is not full dimensional we need a big more gymnastics to extract the relevant generators
-    gens := NmzGenerators( cone );
-    gens := Concatenation( gens, NmzMaximalSubspace( cone ) );
-    gens := Concatenation( gens, - NmzMaximalSubspace( cone ) );
-
-    #cone := ConeByInequalities( hConstraints );
-    #return RayGenerators( cone );
-    return gens;
+    # return its ray generators
+    return RayGenerators( cone );
 
 end );
 
@@ -483,8 +475,7 @@ InstallMethod( NefConeInClassGroup,
     gensOfPushforwardCone := DuplicateFreeList( List( [ 1 .. Length( gensOfCone ) ], x -> matrix * gensOfCone[ x ] ) );
 
     # return the pushforward gens
-    return NmzExtremeRays( NmzCone( [ "integral_closure", gensOfPushforwardCone ] ) );
-    #return gensOfPushforwardCone;
+    return RayGenerators( Cone( gensOfPushforwardCone ) );
 
 end );
 
@@ -551,22 +542,11 @@ InstallMethod( ClassesOfSmallestAmpleDivisors,
     Append( extremeRays2, [ UnderlyingListOfRingElements( TheZeroElement( ClassGroup( variety ) ) ) ] );
 
     # construct polytope
-    polytope := NmzCone( [ "polytope", extremeRays2 ] );
-
-    # compute the lattice points
-    latticePoints := NmzDeg1Elements( polytope );
-
-    # note that normaliz produces redundant output which forces us to delete the last of the entries in each 'sublists'
-    for i in [ 1 .. Length( latticePoints ) ] do
-
-      buffer := latticePoints[ i ];
-      Remove( buffer, Length( buffer ) );
-      latticePoints[ i ] := buffer;
-
-    od;
+    polytope := Polytope( extremeRays2 );
+    latticePoints := LatticePoints( polytope );
 
     # select the interior points!!!
-    inequalities := NmzSupportHyperplanes( NmzCone( [ "integral_closure", extremeRays ] ) );
+    inequalities := DefiningInequalities( Cone( extremeRays ) );
 
     # now search for the INTERNAL points which have the smallest Euclidean distance from the origin
     classesOfSmallestAmpleDivisors := [ Sum( extremeRays ) ];
@@ -687,10 +667,9 @@ InstallMethod( MoriCone,
     hConstraints := List( [ 1 .. Length( nefConeGenerators ) ], x -> matrix * nefConeGenerators[ x ] );
 
     # now define the mori cone
-    moriCone := NmzCone( [ "inequalities", hConstraints ] );
+    moriCone := ConeByInequalities( hConstraints );
 
-    # and return the result
-    #return moriCone;
-    return NmzExtremeRays( moriCone );
+    # and return the ray generators
+    return RayGenerators( moriCone );
 
 end );
