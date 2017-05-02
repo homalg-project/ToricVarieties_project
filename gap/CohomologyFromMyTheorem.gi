@@ -1039,7 +1039,233 @@ end );
 ##
 #############################################################
 
+InstallMethod( InternalHomDegreeZeroOnMorphisms,
+               " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ],
+  function( variety, mor1, mor2, display_messages )
+      local range, source, map, Q, matrix1, matrix2, matrix3, source_vec_space_pres, range_vec_space_pres, map_vec_space_pres,
+           ker1, ker2, bridge;
 
+      # Let mor1: A -> A' and mor2: B -> B' and let A = (R_A - \rho_A -> G_A ) and alike for the others. 
+      # Then we compute the degree zero layer of the morphism Hom( A', B ) -> Hom( A, B' ). 
+
+
+      # STEP1: Hom( A', B ):
+      # STEP1: Hom( A', B ):
+
+      # We have the following map
+      #
+      # G_{A'}^v \otimes R_B -----------rho_{A'}^v \otimes id_{R_B} --------------> R_{A'}^v \otimes R_B
+      #       |                                                                      |
+      #       |                                                                      |
+      # id_{G_{A'}^v} \otimes rho_B                                            id_{R_{A'}^v} \otimes rho_B
+      #       |                                                                      |
+      #       v                                                                      v
+      # G_{A'}^v \otimes G_B ---------- rho_{A'}^v \otimes id_{G_B} ------------> R_{A'}^v \otimes G_B
+      #
+
+      # compute the map of graded module presentations
+      if display_messages then
+        Print( "Step1: \n" );
+        Print( "------ \n" );
+        Print( Concatenation( "We will now compute the map of graded module presentations, ",
+                              "whose kernel is GradedHom( Range( mor1 ), Source( mor2 ) )... \n" ) );
+      fi;
+      range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( Range( mor1 ) ) ) ) ),
+                                                      UnderlyingMorphism( Source( mor2 ) ) )
+                                                      );
+      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( Range( mor1 ) ) ) ) ),
+                                                      UnderlyingMorphism( Source( mor2 ) ) )
+                                                      );
+      map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( Range( mor1 ) ) ),
+                                       IdentityMorphism( Range( UnderlyingMorphism( Source( mor2 ) ) ) )
+                                      );
+      map := CAPPresentationCategoryMorphism( source,
+                                              map,
+                                              range,
+                                              CapCategory( source )!.constructor_checks_wished
+                                             );
+
+      # inform that we have the graded module presentation morphism and will now try to truncate it
+      if display_messages then
+        Print( Concatenation( "Computed the map of graded module presentations whose kernel is ",
+                              "GradedHom( Range( mor1 ), Source( mor2 ) ).",
+                              "Will now truncate it... \n \n" ) );
+      fi;
+
+      # Set up rationals in MAGMA, so that we can compute the kernels and so on of matrices with MAGMA
+      Q := HomalgFieldOfRationalsInMAGMA();
+
+      source_vec_space_pres := CAPPresentationCategoryObject(
+                                    UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( Source( map ) ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      map_vec_space_pres := UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( map ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      range_vec_space_pres := CAPPresentationCategoryObject( 
+                                   UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( Range( map ) ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      ker1 := KernelEmbedding( CAPPresentationCategoryMorphism( source_vec_space_pres,
+                                                                map_vec_space_pres,
+                                                                range_vec_space_pres,
+                                                                CapCategory( source )!.constructor_checks_wished
+                                                               ) );
+
+
+      # STEP2: Hom( A, B' ):
+      # STEP2: Hom( A, B' ):
+
+      # We have the following map
+      #
+      # G_{A}^v \otimes R_{B'} -------rho_{A}^v \otimes id_{R_{B'}} ----------> R_{A}^v \otimes R_{B'}
+      #       |                                                                      |
+      #       |                                                                      |
+      # id_{G_{A}^v} \otimes rho_{B'}                                       id_{R_{A}^v} \otimes rho_{B'}
+      #       |                                                                      |
+      #       v                                                                      v
+      # G_{A}^v \otimes G_{B'} ---------- rho_{A}^v \otimes id_{G_{B'}} ---------> R_{A}^v \otimes G_{B'}
+      #
+
+      # compute the map of graded module presentations
+      if display_messages then
+        Print( "\n \n" );
+        Print( "Step2: \n" );
+        Print( "------ \n" );
+        Print( Concatenation( "We will now compute the map of graded module presentations, ",
+                              "whose kernel is GradedHom( Source( mor1 ), Range( mor2 ) )... \n" ) );
+      fi;
+      range := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( Source( mor1 ) ) ) ) ),
+                                                      UnderlyingMorphism( Range( mor2 ) ) )
+                                                      );
+      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( Source( mor1 ) ) ) ) ),
+                                                      UnderlyingMorphism( Range( mor2 ) ) )
+                                                      );
+      map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( Source( mor1 ) ) ),
+                                       IdentityMorphism( Range( UnderlyingMorphism( Range( mor2 ) ) ) )
+                                      );
+      map := CAPPresentationCategoryMorphism( source,
+                                              map,
+                                              range,
+                                              CapCategory( source )!.constructor_checks_wished
+                                             );
+
+      # inform that we have the graded module presentation morphism and will now try to truncate it
+      if display_messages then
+        Print( Concatenation( "Computed the map of graded module presentations whose kernel is GradedHom( Source( mor1 ), Range( mor2 ) ).",
+                              "Will now truncate it... \n \n" ) );
+      fi;
+
+      source_vec_space_pres := CAPPresentationCategoryObject(
+                                    UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( Source( map ) ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      map_vec_space_pres := UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( map ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      range_vec_space_pres := CAPPresentationCategoryObject( 
+                                    UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          UnderlyingMorphism( Range( map ) ),
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) ) );
+      if display_messages then
+        Print( "\n \n" );
+      fi;
+      ker2 := KernelEmbedding( CAPPresentationCategoryMorphism( source_vec_space_pres,
+                                                                map_vec_space_pres,
+                                                                range_vec_space_pres,
+                                                                CapCategory( source )!.constructor_checks_wished
+                                                               ) );
+
+
+      # STEP3: The bridge map
+      # STEP3: The bridge map
+
+      # compute the map or graded module preseentations
+      if display_messages then
+        Print( "\n \n" );
+        Print( "Step3: \n" );
+        Print( "------ \n" );
+        Print( "We will now compute the bridge map... \n" );
+      fi;
+      map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( mor1 ) ),
+                                       UnderlyingMorphism( mor2 )
+                                      );
+      if display_messages then
+        Print( "and truncate it... \n \n" );
+      fi;
+      map_vec_space_pres := UnderlyingVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+                                                                          variety,
+                                                                          map,
+                                                                          TheZeroElement( DegreeGroup( CoxRing( variety ) ) ),
+                                                                          Q,
+                                                                          display_messages
+                                                                          ) );
+
+      bridge := CAPPresentationCategoryMorphism( Range( ker1 ),
+                                                 map_vec_space_pres,
+                                                 Range( ker2 ),
+                                                 CapCategory( source )!.constructor_checks_wished
+                                                );
+
+
+      # STEP3: The bridge map
+      # STEP3: The bridge map
+
+      # compute the lift
+      if display_messages then
+        Print( "\n \n \n" );
+        Print( "Step4: \n" );
+        Print( "------ \n" );
+        Print( "We will compute the necessary lift and return it... \n \n \n \n" );
+      fi;
+
+      return Lift( PreCompose( ker1, bridge ), ker2 );
+
+end );
 
 InstallMethod( InternalHomDegreeZeroOnMorphismsParallel,
                " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
