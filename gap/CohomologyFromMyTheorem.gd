@@ -34,6 +34,7 @@ DeclareOperation( "InternalHomEmbeddingDegreeZeroOnObjectsParallel",
                 [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
                                   IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsHomalgRing ] );
 
+
 #############################################################
 ##
 #! @Section Specialised InternalHomOnMorphisms methods
@@ -50,11 +51,22 @@ DeclareOperation( "InternalHomDegreeZeroOnMorphismsParallel",
                 [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
                                   IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
 
+
+#############################################################
+##
+## Section Specialised GradedExt methods
+##
+#############################################################
+
 #!
 DeclareOperation( "GradedExtDegreeZeroOnObjects",
                 [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
                                          IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
+#!
+DeclareOperation( "GradedExtDegreeZeroOnObjectsParallel",
+                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
+                                         IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
 
 
 #############################################################

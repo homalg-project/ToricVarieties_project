@@ -1440,6 +1440,64 @@ InstallMethod( GradedExtDegreeZeroOnObjects,
 
 end );
 
+# compute GradedExt degree zero layer
+InstallMethod( GradedExtDegreeZeroOnObjectsParallel,
+               " for a toric variety, a f.p. graded left S-module, a f.p. graded left S-module",
+               [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( i, variety, module1, module2, display_messages )
+    local left, mu, graded_hom_mapping;
+
+    # check input
+    left := IsGradedLeftModulePresentationForCAP( module1 );
+    if i < 0 then
+      Error( "the integer i must be non-negative" );
+      return;
+    elif IsGradedLeftModulePresentationForCAP( module2 ) <> left then
+      Error( "the two modules must either both be left or both be right modules" );
+      return;
+    fi;
+
+    # if we are given submodules, then turn them into presentations
+    if IsGradedLeftOrRightSubmoduleForCAP( module1 ) then
+      module1 := PresentationForCAP( module1 );
+    fi;
+    if IsGradedLeftOrRightSubmoduleForCAP( module2 ) then
+      module2 := PresentationForCAP( module2 );
+    fi;
+
+    # now compute the extension module
+
+    # step1:
+    if display_messages then
+      Print( "Step 0: \n" );
+      Print( "------- \n");
+      Print( "We will now extract the 'i-th' morphism \mu in the resolution of module1... \n" );
+    fi;
+
+    if i = 0 then
+      mu := ZeroMorphism( module1, ZeroObject( CapCategory( module1 ) ) );
+    else
+      mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
+      mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
+      mu := KernelEmbedding( CokernelProjection( mu ) );
+    fi;
+
+    # step2:
+    if display_messages then
+      Print( "Next will now compute GradedHom( Range( mu ), module2 )_0 -> GradedHom( Source( mu ), module2 )_0... \n \n \n \n" );
+    fi;
+    graded_hom_mapping := InternalHomDegreeZeroOnMorphismsParallel( variety, mu, IdentityMorphism( module2 ), display_messages );
+
+    # (3) then return the cokernel object of this morphism (this is a vector space presentation)
+    if display_messages then
+      Print( "Step 5: \n" );
+      Print( "------- \n");
+      Print( "Finally, we now compute the cokernel of this morphism... \n \n" );
+    fi;
+
+    return UnderlyingMorphism( CokernelObject( graded_hom_mapping ) );
+
+end );
 
 
 #############################################################
