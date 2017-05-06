@@ -185,7 +185,8 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
   function( variety, a, b, display_messages )
       local rationals, zero, compute_job1, compute_job2, compute_job3, range, source, map, 
            gens_source_1, gens_range_1, matrix1, input, job1, gens_source_2, gens_range_2, matrix2, job2,
-           gens_source_3, gens_range_3, matrix3, cutoff, job31, job32, job33, res, helper, new_mat, vec_space_morphism;
+           gens_source_3, gens_range_3, matrix3, cutoff, job31, job32, job33, res, helper, new_mat, vec_space_morphism,
+           trans1, trans3, matrix1b, matrix2b, matrix3b;
 
       # Let a = ( R_A --- alpha ---> A ) and b = (R_B --- beta ---> B ). Then we have to compute the kernel embedding of the
       # following map:
@@ -584,6 +585,41 @@ InstallMethod( InternalHomDegreeZeroOnObjectsParallel,
       if display_messages then
         Print( "compute syzygies and vector space morphism \n" );
       fi;
+
+      #Error( "Test" );
+      #source := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix1 ), rationals ),
+      #                               matrix1,
+      #                               VectorSpaceObject( NrColumns( matrix1 ), rationals ) );
+      #source := CAPPresentationCategoryObject( source );
+      #map := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix2 ), rationals ),
+      #                            matrix2,
+      #                            VectorSpaceObject( NrColumns( matrix2 ), rationals ) );
+      #range := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix3 ), rationals ),
+      #                              matrix3,
+      #                              VectorSpaceObject( NrColumns( matrix3 ), rationals ) );
+      #range := CAPPresentationCategoryObject( range );
+      #morphism := CAPPresentationCategoryMorphism( source, map, range, CapCategory( source )!.constructor_checks_wished );
+      #morphism := ByASmallerPresentation( morphism );
+
+      #Error( "Test2" );
+      #matrix1 := UnderlyingHomalgMatrix( UnderlyingMorphism( Source( morphism ) ) );
+      #matrix2 := UnderlyingHomalgMatrix( UnderlyingMorphism( morphism ) );
+      #matrix3 := UnderlyingHomalgMatrix( UnderlyingMorphism( Range( morphism ) ) );
+
+      #Error( "Test" );
+
+      #trans1 := LessGradedGeneratorsTransformationTripleLeft( matrix1 );
+      #trans3 := LessGradedGeneratorsTransformationTripleLeft( matrix3 );
+
+      #matrix1b := trans1[ 1 ];
+      #matrix2b := trans1[ 3 ] * matrix2 * trans3[ 2 ];
+      #matrix3b := trans3[ 1 ];
+
+      #Error( "Test2" );
+
+      #new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2b, matrix3b ), matrix1b );
+
+      #Error( "Test" );
       new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2, matrix3 ), matrix1 );
       vec_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( new_mat ), rationals ),
                                                  new_mat,
