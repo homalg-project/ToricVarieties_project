@@ -259,3 +259,146 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     return true;
 
 end );
+
+
+##############################################################################################
+##
+##  Section Approximation Of Sheaf Cohomologies
+##
+##############################################################################################
+
+InstallMethod( BPowerLeft,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt ],
+  function( variety, power )
+    local ideal_generators, ideal_generators_power, B_power;
+
+    # check input
+    if power < 0 then
+      Error( "The power must not be negative" );
+      return;
+    fi;
+
+    # return the result
+    return FrobeniusPower( PresentationForCAP( IrrelevantLeftIdealForCAP( variety ) ), power );
+
+end );
+
+InstallMethod( BPowerRight,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt ],
+  function( variety, power )
+    local ideal_generators, ideal_generators_power, B_power;
+
+    # check input
+    if power < 0 then
+      Error( "The power must not be negative" );
+      return;
+    fi;
+
+    # return the result
+    return FrobeniusPower( PresentationForCAP( IrrelevantRightIdealForCAP( variety ) ), power );
+
+end );
+
+InstallMethod( ApproxH0,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, e, module )
+    local left, vec_space_morphism;
+
+    # check if we are computing for a left-module
+    left := IsGradedLeftModulePresentationForCAP( module );
+
+    # compute vec_space_morphism
+    if left then
+      vec_space_morphism := InternalHomDegreeZeroOnObjects( variety, BPowerLeft( variety, e ), module, true );
+    else
+      vec_space_morphism := InternalHomDegreeZeroOnObjects( variety, BPowerRight( variety, e ), module, true );
+    fi;
+
+    # return the cokernel object
+    return CokernelObject( vec_space_morphism );
+
+end );
+
+InstallMethod( ApproxH0Parallel,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, e, module )
+    local left, vec_space_morphism;
+
+    # check if we are computing for a left-module
+    left := IsGradedLeftModulePresentationForCAP( module );
+
+    # compute vec_space_morphism
+    if left then
+      vec_space_morphism := InternalHomDegreeZeroOnObjectsParallel( variety, BPowerLeft( variety, e ), module, true );
+    else
+      vec_space_morphism := InternalHomDegreeZeroOnObjectsParallel( variety, BPowerRight( variety, e ), module, true );
+    fi;
+
+    # return the cokernel object
+    return CokernelObject( vec_space_morphism );
+
+end );
+
+InstallMethod( ApproxHi,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, index, e, module )
+    local left, vec_space_morphism;
+
+    # check if the index is in the correct range
+    if index < 0 then
+      Error( "The cohomology index must not be negative" );
+      return;
+    elif index > Dimension( variety ) then
+      Error( "The cohomology index must not be larger than the dimension of the variety" );
+      return;
+    fi;
+
+    # check if we are computing for a left-module
+    left := IsGradedLeftModulePresentationForCAP( module );
+
+    # compute vec_space_morphism
+    if left then
+      vec_space_morphism := GradedExtDegreeZeroOnObjects( index, variety, BPowerLeft( variety, e ), module, true );
+    else
+      vec_space_morphism := GradedExtDegreeZeroOnObjects( index, variety, BPowerRight( variety, e ), module, true );
+    fi;
+
+    # return the cokernel object
+    return CokernelObject( vec_space_morphism );
+
+end );
+
+InstallMethod( ApproxHiParallel,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, index, e, module )
+    local left, vec_space_morphism;
+
+    # check if the index is in the correct range
+    if index < 0 then
+      Error( "The cohomology index must not be negative" );
+      return;
+    elif index > Dimension( variety ) then
+      Error( "The cohomology index must not be larger than the dimension of the variety" );
+      return;
+    fi;
+
+    # check if we are computing for a left-module
+    left := IsGradedLeftModulePresentationForCAP( module );
+
+    # compute vec_space_morphism
+    if left then
+      vec_space_morphism := GradedExtDegreeZeroOnObjectsParallel( index, variety, BPowerLeft( variety, e ), module, true );
+    else
+      vec_space_morphism := GradedExtDegreeZeroOnObjectsParallel( index, variety, BPowerRight( variety, e ), module, true );
+    fi;
+
+    # return the cokernel object
+    return CokernelObject( vec_space_morphism );
+
+end );
