@@ -2172,6 +2172,163 @@ InstallMethod( Hi,
 end );
 
 
+# compute H^i by applying my theorem, but use parallelisation for speedup
+InstallMethod( HiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ],
+  function( variety, module, index, display_messages, very_detailed_output, timings )
+    local module_presentation, ideal_infos, B_power, zero, vec_space_morphism;
+
+    # check that the input is valid to work with
+    if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
+           or ( IsSimplicial( variety ) and IsProjective( variety ) ) ) then
+
+      Error( "variety must either be (smooth, complete) or (simplicial, projective)" );
+      return;
+
+    fi;
+
+    # check if the index makes sense
+    if ( index < 0 ) or ( index > Dimension( variety ) ) then
+
+      Error( "the cohomological index must not be negative and must not exceed the dimension of the variety" );
+      return;
+
+    fi;
+
+    # if we compute H0 hand it over to that method
+    if index = 0 then
+      return H0Parallel( variety, module, display_messages, very_detailed_output, timings );
+    fi;
+
+    # unzip the module
+    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
+      module_presentation := PresentationForCAP( module );
+    else
+      module_presentation := module;
+    fi;
+
+
+    # Step 0: compute the vanishing sets
+    # Step 0: compute the vanishing sets
+    if not HasVanishingSets( variety ) then
+
+      if display_messages then
+        Print( "(*) Compute vanishing sets... " );
+      fi;
+      VanishingSets( variety );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Vanishing sets known... \n" );
+      fi;
+    fi;
+
+
+    # step 1: compute Betti number of the module
+    # step 1: compute Betti number of the module
+    if HasBettiTableForCAP( module_presentation ) then
+      if display_messages then
+        Print( "(*) Betti numbers of module known... \n" );
+      fi;
+    else
+      if display_messages then
+        Print( "(*) Compute Betti numbers of module..." );
+      fi;
+      BettiTableForCAP( module_presentation );;
+      if display_messages then
+        Print( "finished \n" );
+      fi;
+    fi;
+
+
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    # step 2: compute ideal B such that H0 = GradedHom( B, M )
+    if display_messages then
+      Print( "(*) Determine ideal... " );
+    fi;
+
+    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, index );
+    B_power := ideal_infos[ 3 ];
+
+    # and inform about the result of this computation
+    if display_messages then
+      Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
+                            " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
+      Print( "(*) Compute GradedHom... \n" );
+    fi;
+
+
+    # step 3: compute GradedExt
+    # step 3: compute GradedExt
+    vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
+                                  GradedExtDegreeZeroOnObjectsParallel,
+                                            index,
+                                            variety,
+                                            B_power,
+                                            module_presentation,
+                                            very_detailed_output
+                                  );
+
+    # signal end of computation
+    if display_messages then
+
+      Print( "\n" );
+      if timings then
+        Print( Concatenation( "Computation finished after ", String( vec_space_morphism[ 1 ] ), 
+                              " seconds. Summary: \n" ) );
+      else
+        Print( "Computation finished. Summary: \n" );
+      fi;
+      Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
+      Print( Concatenation( "(*) h^", String( index ), " = ", 
+                            String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
+                            "\n \n" ) 
+                           );
+
+    fi;
+
+    # and return the result
+    if timings then
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    else
+      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+    fi;
+
+end );
+
+InstallMethod( HiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
+  function( variety, module, index, display_messages, very_detailed_output )
+
+    # by default never show very detailed output
+    return HiParallel( variety, module, index, display_messages, very_detailed_output, true );
+
+end );
+
+InstallMethod( HiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ],
+  function( variety, module, index, display_messages )
+
+    # by default never show very detailed output
+    return HiParallel( variety, module, index, display_messages, false, true );
+
+end );
+
+InstallMethod( HiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
+  function( variety, module, index )
+
+    # by default display messages but suppress the very detailed output
+    return HiParallel( variety, module, index, true, false, true );
+
+end );
+
 
 ###################################################################################
 ##
@@ -2257,5 +2414,87 @@ InstallMethod( AllHi,
   function( variety, module )
 
     return AllHi( variety, module, true, true );
+
+end );
+
+
+# compute all cohomology classes by my theorem
+InstallMethod( AllHiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+  function( variety, module, display_messages, timings )
+    local cohoms, i, total_time;
+
+    # check that the input is valid to work with
+    if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
+           or ( IsSimplicial( variety ) and IsProjective( variety ) ) ) then
+
+      Error( "variety must either be (smooth, complete) or (simplicial, projective)" );
+      return;
+
+    fi;
+
+    # initialise variables
+    cohoms := List( [ 1 .. Dimension( variety ) + 1 ] );
+    total_time := 0;
+
+    # and iterate over the cohomology classes
+    for i in [ 1 .. Dimension( variety ) + 1 ] do
+
+      # inform about the status of the computation
+      Print( Concatenation( "Computing h^", String( i-1 ), "\n" ) );
+      Print(  "----------------------------------------------\n" );
+
+      # make the computation - only display messages
+      cohoms[ i ] := HiParallel( variety, module, i-1, display_messages, false, timings );
+      total_time := total_time + cohoms[ i ][ 1 ];
+
+      # additional empty line for optical separation
+      Print( "\n" );
+
+    od;
+
+    if display_messages then
+
+      if timings then
+
+        # computation completely finished, so print summary
+        Print( Concatenation( "Finished all computations after ", String( total_time ), " seconds. Summary: \n" ) );
+        for i in [ 1 .. Dimension( variety ) + 1 ] do
+          Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 3 ] ) ), "\n" ) );
+        od;
+
+      else
+
+        # computation completely finished, so print summary
+        Print( "Finished all computations. Summary: \n" );
+        for i in [ 1 .. Dimension( variety ) + 1 ] do
+          Print( Concatenation( "h^", String( i-1 ), " = ", String( Dimension( cohoms[ i ][ 2 ] ) ), "\n" ) );
+        od;
+
+      fi;
+
+    fi;
+
+    # and finally return the results
+    return cohoms;
+
+end );
+
+InstallMethod( AllHiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+  function( variety, module, display_messages )
+
+    return AllHiParallel( variety, module, display_messages, true );
+
+end );
+
+InstallMethod( AllHiParallel,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( variety, module )
+
+    return AllHiParallel( variety, module, true, true );
 
 end );

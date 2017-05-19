@@ -121,6 +121,18 @@ DeclareOperation( "Hi",
 DeclareOperation( "Hi",
                   [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
 
+#! @Description
+#! Computation of sheaf cohomology from my own theorem, but in parallel (by forking).
+#! @Returns a list consisting of an integer and a vector space
+#! @Arguments vari, M
+DeclareOperation( "HiParallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ] );
+DeclareOperation( "HiParallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ] );
+DeclareOperation( "HiParallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ] );
+DeclareOperation( "HiParallel",
+                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
 
 
 ###################################################################################
@@ -129,7 +141,7 @@ DeclareOperation( "Hi",
 ##
 ###################################################################################
 
-#! @Description
+#! @Descriptin
 #! Computation of all sheaf cohomology classes from my theorem
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
@@ -140,6 +152,16 @@ DeclareOperation( "AllHi",
 DeclareOperation( "AllHi",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
+#! @Descriptin
+#! Computation of all sheaf cohomology classes from my theorem, but by use of parallelisation.
+#! @Returns a list of lists, which in turn consist each of an integer and a vector space
+#! @Arguments vari, M
+DeclareOperation( "AllHiParallel",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+DeclareOperation( "AllHiParallel",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "AllHiParallel",
+               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
 
 #######################################################################
