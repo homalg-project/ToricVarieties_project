@@ -141,7 +141,7 @@ DeclareOperation( "HiParallel",
 ##
 ###################################################################################
 
-#! @Descriptin
+#! @Description
 #! Computation of all sheaf cohomology classes from my theorem
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
@@ -152,7 +152,7 @@ DeclareOperation( "AllHi",
 DeclareOperation( "AllHi",
                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
 
-#! @Descriptin
+#! @Description
 #! Computation of all sheaf cohomology classes from my theorem, but by use of parallelisation.
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
