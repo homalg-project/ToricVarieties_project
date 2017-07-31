@@ -21,7 +21,9 @@ InstallMethod( Exponents,
                "for a toric variety and a list describing a degree",
                [ IsToricVariety, IsList ],
   function( variety, degree )
-    local divisor, A, rays, n, input, i, buffer, p, l, ListOfExponents, Deg1Elements, grading, C, exponent;
+    local divisor, cox_ring, ring, points, rays, n, ListOfExponents, i, exponent;
+    
+    #A, rays, n, input, i, buffer, p, l, ListOfExponents, Deg1Elements, grading, C, exponent;
 
     if not IsSmooth( variety ) then
 
@@ -42,77 +44,29 @@ InstallMethod( Exponents,
 
     # construct divisor of given class
     divisor := DivisorOfGivenClass( variety, degree );
-    A := UnderlyingListOfRingElements( UnderlyingGroupElement( divisor ) );
+    cox_ring := CoxRing( variety );
+    ring := ListOfVariablesOfCoxRing( variety );
 
-    # compute the ray generators
+    # compute the lattice points in question
+    if not IsBounded( PolytopeOfDivisor( divisor ) ) then
+        Error( "list is infinite, cannot compute basis because it is not finite\n" );
+    fi;
+    points := LatticePoints( PolytopeOfDivisor( divisor ) );
     rays := RayGenerators( FanOfVariety( variety ) );
+    divisor := UnderlyingListOfRingElements( UnderlyingGroupElement( divisor ) );
     n := Length( rays );
 
-    # now produce input, which we can pass to the NormalizInterface to encode this polytope
-    input := [];
-    for i in [ 1.. Length( rays ) ] do
-      buffer := ShallowCopy( rays[ i ] );
-      Add( buffer, A[ i ] );
-      Add( input, buffer );
+    # and extract the exponents from these lattice points
+    ListOfExponents := [ ];
+    for i in points do
+
+        exponent := List( [ 1 .. n ], j -> Sum( List( [ 1 .. Length( i ) ], m -> rays[ j ][ m ] * i[ m ] ) ) + divisor[ j ] );
+        Add( ListOfExponents, exponent );
+
     od;
 
-    # introduce polytope to Normaliz
-    p := NmzCone( [ "inhom_inequalities", input ] );
-
-    # and compute its vertices 
-    # this line can cause Normaliz to print "warning: matrix has rank 0. Please check input data."
-    # I guess this is the case whenever l = [], but I do not yet know how to turn it off easily
-    # fixme
-    l := NmzVerticesOfPolyhedron( p ); 
-
-    # now distinguish cases
-    if l = [] then
-
-      # => the polytope is empty, so
-      return [];
-
-    else 
-
-      # => the polytope is not empty so distinguish again
-      if Length( l ) = 1 then
-
-        # there is only one vertex in the polytope, i.e. this vertex is the single lattice point in the polytope
-        # thus we have (after removing the last entry <-> redundant output)
-        Deg1Elements := l;
-        Remove( Deg1Elements[1], Length( Deg1Elements[1] ) );
-
-      else
-
-        # there are at least 2 vertices and thus at least 2 lattice points to this polytope
-        # hence we need to compute them properly by Normaliz
-        # this is why we need to introduce a grading
-        grading := List( [ 1..Length( rays[ 1 ] ) ], n -> 0 );
-        Add( grading, 1 );
-
-        # which we use to construct the corresponding cone in Normaliz...
-        C := NmzCone( [ "inequalities", input, "grading", [ grading ] ] );
-
-        # ...and then compute its lattice points
-        Deg1Elements := NmzDeg1Elements( C );
-
-        # finally drop from all elements in myList the last element <-> redundant output from Normaliz
-        for i in [ 1..Length( Deg1Elements ) ] do
-          Remove( Deg1Elements[ i ], Length( Deg1Elements[ i ] ) );
-        od;
-
-      fi;
-
-      # now turn myList into the exponents that we are looking for
-      ListOfExponents := [];
-      for i in Deg1Elements do
-        exponent := List( [ 1..n ], j -> A[ j ] + Sum( List( [ 1..Length( i ) ], m -> rays[ j ][ m ] * i[ m ] ) ) );
-        Add( ListOfExponents, exponent );
-      od;
-
-      # and return the list of exponents
-      return ListOfExponents;
-
-    fi;
+    # and return the list of exponents
+    return ListOfExponents;
 
 end );
 
