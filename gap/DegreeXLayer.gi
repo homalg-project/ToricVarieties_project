@@ -1777,7 +1777,7 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
           RemoveCharacters( poly_split2[ k ][ 1 ], "+" );
 
           # and append the evaluation to integer
-          Append( positions, [ [ i, pos, Int( poly_split2[ k ][ 1 ] ) ] ] );
+          Append( positions, [ [ i, pos, Rat( poly_split2[ k ][ 1 ] ) ] ] );
 
         od;
 
