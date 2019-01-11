@@ -1876,14 +1876,9 @@ InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentation,
     local proj_category, left, degree_list, degrees, extended_degree_list, i, j, generators, homalg_graded_ring, vectorSpace;
 
     # check first that the overall input is valid to work with
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "Variety must be smooth for this method to work" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "Variety must be complete for this method to work" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
