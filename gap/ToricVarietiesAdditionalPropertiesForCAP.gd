@@ -9,6 +9,23 @@
 ################################################################################################
 
 
+######################
+##
+#! @Section Properties
+##
+######################
+
+#! @Description
+#! Returns if the given variety V is a valid input for cohomology computations.
+#! If the variable SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY is set to false (default),
+#! then we just check if the variety is smooth, complete. In case of success we return true and
+#! false otherwise. If however SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY is set to true,
+#! then we will check if the variety is smooth, complete or simplicial, projective. In case of
+#! success we return true and false other.
+#! @Arguments V
+DeclareProperty( "IsValidInputForCohomologyComputations",
+                  IsToricVariety );
+
 
 ######################
 ##
