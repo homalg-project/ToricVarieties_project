@@ -36,7 +36,7 @@ InstallMethod( AllCohomologiesFromCohomCalg,
 
     fi;
 
-    # identify the loaction of cohomcalg
+    # identify the location of cohomcalg
     cohomCalg := cohomCalgBinary( );
 
     # extract the degree_list of the module
