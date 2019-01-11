@@ -368,14 +368,9 @@ InstallMethod( NefConeInTorusInvariantWeilDivisorGroup,
          rayGeneratorsOfPushforwardCone;
 
     # check for valid input
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety must be smooth" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety must be complete" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
