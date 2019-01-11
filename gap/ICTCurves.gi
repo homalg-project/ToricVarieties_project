@@ -356,15 +356,11 @@ InstallMethod( ICTCurves,
   function( variety )
     local max_cones, ray_generators, i, j, k, l, rays_in_max_cone_i, rays_in_max_cone_j, rays_tau, dim_tau, cone_tau, ICT_curves_list, 
          test_curve, exists;
+
     # check if the input is valid
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
