@@ -31,16 +31,10 @@ InstallMethod( CohomologiesList,
   function( variety, module )
     local betti_table, coho_list, i, degrees, help_module;
 
-    # check that the variety matches our general requirements
-    if not IsSmooth( variety ) then
+    # check if the input is valid
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety has to be smooth and complete" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety has to be smooth and complete" );
-      return;
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
 
     fi;
 
