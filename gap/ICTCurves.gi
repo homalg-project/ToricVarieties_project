@@ -130,14 +130,9 @@ InstallMethod( ICTCurve,
          vars, defining_variables, ICT_curve;
 
     # check if the input is valid
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
