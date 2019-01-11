@@ -1770,7 +1770,7 @@ InstallMethod( H0,
     if timings then
       return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
     else
-      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];    
+      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
     fi;
 
 end );
