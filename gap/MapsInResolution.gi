@@ -24,10 +24,9 @@ InstallMethod( MapsInResolution,
     local module_presentation, res, alphas, i, non_trivial_morphism, dummy_map, induced_cohomology_maps, dummy_maps;
 
     # check that the input is valid to work with
-    if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
-           or ( IsSimplicial( variety ) and IsProjective( variety ) ) ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "variety must either be (smooth, complete) or (simplicial, projective)" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
