@@ -23,6 +23,15 @@ InstallMethod( AllCohomologiesFromCohomCalg,
     local cohomCalgDirectory, cohomCalg, degree_list, stdin, stdout, outputs, i, buffer, 
          position, command_string, dimensions, Q;
 
+    # check if the variety gives us a valid input
+    if not ( ( IsComplete( variety) and IsSmooth( variety ) ) or
+             ( IsSimplicial( Fan( variety ) ) and IsProjective( variety ) ) ) then 
+
+      Error( "The variety has to be smooth, complete or simplicial, projective" );
+      return;
+
+    fi;
+
     # check if the module is projective
     if not IsZeroForObjects( Source( UnderlyingMorphism( module ) ) ) then
 
