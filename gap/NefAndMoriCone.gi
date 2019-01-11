@@ -67,15 +67,15 @@ InstallMethod( IsAmpleViaNefCone,
     # compute the ambient variety
     variety := AmbientToricVariety( divisor );
 
-    # check if that variety is smooth and complete, for then we can compute the nef cone
+    # check if that variety is smooth and projective, for then we can compute the nef cone
     if not IsSmooth( variety ) then
 
-      Error( "Only for smooth and projective varieties a method is implemented that can decide IsAmple" );
+      Error( "Only for smooth and projective varieties we can decide IsAmple via NefCone" );
       return;
 
     elif not IsProjective( variety ) then
 
-      Error( "Only for smooth and projective varieties a method is implemented that can decide IsAmple" );
+      Error( "Only for smooth and projective varieties we can decide IsAmple via NefCone" );
       return;
 
     fi;
