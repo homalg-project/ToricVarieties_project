@@ -213,10 +213,6 @@ InstallMethod( AnalyseShortExactSequence,
 
 end );
 
-# global variable for a ring in Singular
-# otherwise we always have Singular banner whenever I call the following function -> looks extremely nasty
-SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_INTEGER_RING_IN_SINGULAR := HomalgRingOfIntegersInSingular();
-
 
 # function that computes the cohomologies of all vector bundles in a minimal free resolution of a f.p. graded module
 InstallMethod( DeductionOfSheafCohomologyFromResolution,
