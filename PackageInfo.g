@@ -32,11 +32,13 @@ rec(
     IsMaintainer  := true,
     Email := "martin.bies@alumni.uni-heidelberg.de",
     WWWHome := "https://www.ulb.ac.be/sciences/ptm/pmif/people.html",
-    PostalAddress := Concatenation( [
-                       "Martin Bies\n",
-                       "Philosophenweg 19\n",
-                       "69120 Heidelberg\n",
-                       "Germany" ] ),
+    PostalAddress := Concatenation(
+                 "Physique Théorique et Mathématique \n",
+                 "Université Libre de Bruxelles \n",
+                 "Campus Plaine - CP 231 \n",
+                 "Building NO - Level 6 - Office O.6.111 \n",
+                 "1050 Brussels \n",
+                 "Belgium" ), 
     Place         := "Brussels",
     Institution   := "ULB Brussels"
   ),
