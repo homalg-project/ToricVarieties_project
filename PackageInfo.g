@@ -30,7 +30,7 @@ rec(
     FirstNames    := "Martin",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "m.bies@thphys.uni-heidelberg.de",
+    Email := "martin.bies@alumni.uni-heidelberg.de",
     WWWHome := "https://www.ulb.ac.be/sciences/ptm/pmif/people.html",
     PostalAddress := Concatenation( [
                        "Martin Bies\n",
