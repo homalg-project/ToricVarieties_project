@@ -2508,14 +2508,10 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionO
     local degree_list, degrees, extended_degree_list, i, generators, matrix, pos;
 
     # check that the input is valid to work with
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "Variety must be smooth for this method to work" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
-
-    elif not IsComplete( variety ) then
-
-      return Error( "Variety must be complete for this method to work" );
 
     elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
 
