@@ -477,14 +477,9 @@ InstallMethod( ClassesOfSmallestAmpleDivisors,
          classesOfSmallestAmpleDivisors, lengthOfClassOfSmallestAmpleDivisor, checker, computeInequality, refLength;
 
     # check if it is smooth and complete
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety needs to be smooth" );
-      return;
-
-    elif not IsProjective( variety) then
-
-      Error( "The variety needs to be projective" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
