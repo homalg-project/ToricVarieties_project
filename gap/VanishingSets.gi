@@ -506,11 +506,11 @@ InstallMethod( VanishingSets,
   function( variety )
     local serre_duality_to_be_used;
 
-    # check input
-    if not ( ( IsSmooth( variety ) and IsComplete( variety ) ) 
-             or ( IsProjective( variety ) and IsSimplicial( variety ) ) ) then
-      Error( "only implemented for (smooth, complete) and for (projective, simplicial) toric varieties" );
+    if not IsValidInputForCohomologyComputations( variety ) then
+
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
+
     fi;
 
     # check if we can use Serre
