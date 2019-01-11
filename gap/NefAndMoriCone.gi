@@ -26,14 +26,9 @@ InstallMethod( IsNef,
     variety := AmbientToricVariety( divisor );
 
     # check if that variety is smooth and complete, for then we can compute the nef cone
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "Only for smooth and complete varieties a method is implemented that can decide IsNef" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "Only for smooth and complete varieties a method is implemented that can decide IsNef" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
