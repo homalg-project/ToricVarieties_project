@@ -45,7 +45,7 @@ rec(
 ],
 
 Status := "developement",
-PackageWWWHome := "todo",
+PackageWWWHome := "https://github.com/HereAround/SheafCohomologyOnToricVarieties",
 ArchiveFormats := ".tar.gz .zip",
 ArchiveURL     := "todo",
 README_URL     := "todo",
