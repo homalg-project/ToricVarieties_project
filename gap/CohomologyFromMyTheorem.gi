@@ -46,8 +46,6 @@ InstallMethod( InternalHomDegreeZeroOnObjects,
       map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ),
                                        IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
                                       );
-
-
       # inform that we have the graded module presentation morphism and will now try to truncate it
       if display_messages then
         Print( "Computed the map of graded module presentations. Will now truncate it... \n" );
