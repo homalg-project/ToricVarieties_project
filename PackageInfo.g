@@ -37,8 +37,8 @@ rec(
                        "Philosophenweg 19\n",
                        "69120 Heidelberg\n",
                        "Germany" ] ),
-    Place         := "Heidelberg",
-    Institution   := "University of Heidelberg"
+    Place         := "Brussels",
+    Institution   := "ULB Brussels"
   ),
 ],
 
