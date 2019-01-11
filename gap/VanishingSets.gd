@@ -125,6 +125,8 @@ DeclareOperation( "TurnDenominatorIntoShiftedSemigroup",
 #!
 DeclareAttribute( "VanishingSets",
                    IsToricVariety );
+
+#!
 DeclareOperation( "ComputeVanishingSets",
                    [ IsToricVariety, IsBool ] );
 
