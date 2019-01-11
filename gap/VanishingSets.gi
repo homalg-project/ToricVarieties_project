@@ -530,11 +530,11 @@ InstallMethod( ComputeVanishingSets,
     local denominator_contributions, v_rec, cutoff, i, j, k, l, affine_semigroups_list, helper, found, rays_helper,
          rays_comparer, pos, search, K_bundle, new_affine_semigroups_list, new_gens, new_offset;
 
-    # check input
-    if not ( ( IsSmooth( variety ) and IsComplete( variety ) ) 
-             or ( IsProjective( variety ) and IsSimplicial( variety ) ) ) then
-      Error( "only implemented for (smooth, complete) and for (projective, simplicial) toric varieties" );
+    if not IsValidInputForCohomologyComputations( variety ) then
+
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
+
     fi;
 
     # compute the denominator contributions first
