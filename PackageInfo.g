@@ -31,7 +31,7 @@ rec(
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "m.bies@thphys.uni-heidelberg.de",
-    WWWHome       := "",
+    WWWHome := "https://www.ulb.ac.be/sciences/ptm/pmif/people.html",
     PostalAddress := Concatenation( [
                        "Martin Bies\n",
                        "Philosophenweg 19\n",
