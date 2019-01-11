@@ -160,14 +160,9 @@ BindGlobal( "TORIC_VARIETIES_INTERNAL_INTERSECTIONPRODUCTUCOLLECTIONCONEHCONSTRA
     local ulist, dimensionOfFan, numberOfMaximalCones, lengthOfVector, ures, i, j, k, position, newUList, buffer;
 
     # check if the input is valid
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety must be smooth" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety must be complete" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
