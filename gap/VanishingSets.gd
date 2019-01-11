@@ -130,7 +130,6 @@ DeclareAttribute( "VanishingSets",
 DeclareOperation( "ComputeVanishingSets",
                    [ IsToricVariety, IsBool ] );
 
-
 #!
 DeclareOperation( "PointContainedInVanishingSet",
                   [ IsVanishingSet, IsList ] );
