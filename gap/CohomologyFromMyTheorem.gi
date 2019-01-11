@@ -2384,11 +2384,10 @@ InstallMethod( AllHiParallel,
   function( variety, module, display_messages, timings )
     local cohoms, i, total_time;
 
-    # check that the input is valid to work with
-    if not ( ( IsSmooth( variety ) and IsComplete( variety ) )
-           or ( IsSimplicial( variety ) and IsProjective( variety ) ) ) then
+    # check if the input is valid
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "variety must either be (smooth, complete) or (simplicial, projective)" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
