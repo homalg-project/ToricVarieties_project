@@ -22,17 +22,10 @@ InstallMethod( Exponents,
                [ IsToricVariety, IsList ],
   function( variety, degree )
     local divisor, cox_ring, ring, points, rays, n, ListOfExponents, i, exponent;
-    
-    #A, rays, n, input, i, buffer, p, l, ListOfExponents, Deg1Elements, grading, C, exponent;
 
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "Variety must be smooth for this method to work" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "Variety must be complete for this method to work" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     elif not Length( degree ) = Rank( ClassGroup( variety ) ) then
