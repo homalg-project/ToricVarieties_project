@@ -604,14 +604,9 @@ InstallMethod( MoriCone,
     local nefConeGenerators, intersectionForm, matrix, hConstraints, i, moriCone;
 
     # check for valid input
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety must be simplicial" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety is not complete" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
