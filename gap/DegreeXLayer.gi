@@ -1766,14 +1766,9 @@ InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
     local source_category, range_category, functor;
 
     # check if the input is valid to work with
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety must be smooth for this method to work" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety must be complete for this method to work" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
