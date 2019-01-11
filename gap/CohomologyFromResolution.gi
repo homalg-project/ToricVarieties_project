@@ -221,15 +221,10 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
   function( variety, module, print_deduction )
     local cohomologies_list, len, number_of_unknown_cohomologies, vars, ring, short_exact_sequences_list, dummy, intermediate_coh, i, j, s;
 
-    # check that the variety matches our general requirements
-    if not IsSmooth( variety ) then
+    # check if the input is valid
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "The variety has to be smooth and complete" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "The variety has to be smooth and complete" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     elif not IsIdenticalObj( CoxRing( variety ), UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) ) then
