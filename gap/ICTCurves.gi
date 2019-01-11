@@ -572,14 +572,9 @@ InstallMethod( Proper1Cycle,
     local cycle, k;
 
     # check for valid input
-    if not IsSmooth( variety ) then
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "Currently this method is only supported for smooth and complete toric varieties" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "Currently this method is only supported for smooth and complete toric varieties" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     elif Length( list ) <> Length( GeneratorsOfProper1Cycles( variety ) ) then
