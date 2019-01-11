@@ -2,7 +2,7 @@
 ##
 ##  ICTCurves.gi                       SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2016                     Martin Bies,       ITP Heidelberg
+##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
 #! @Chapter Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety
 ##

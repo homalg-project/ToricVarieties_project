@@ -2,7 +2,7 @@
 ##
 ##  CohomologyOnPn.gd                  SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2016                     Martin Bies,       ITP Heidelberg
+##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
 #! @Chapter Sheaf cohomology computations on (direct products of) projective spaces
 ##

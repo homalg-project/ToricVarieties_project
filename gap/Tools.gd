@@ -2,7 +2,7 @@
 ##
 ##  Tools.gd          SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2017                     Martin Bies,       ITP Heidelberg
+##  Copyright 2017                     Martin Bies,       ULB Brussels
 ##
 #! @Chapter Tools
 ##

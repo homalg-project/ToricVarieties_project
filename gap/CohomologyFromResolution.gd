@@ -2,7 +2,7 @@
 ##
 ##  CohomologyFromResolution.gd        SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2016                     Martin Bies,       ITP Heidelberg
+##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
 #! @Chapter Cohomology of coherent sheaves from resolution
 ##

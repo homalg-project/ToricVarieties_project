@@ -2,7 +2,7 @@
 ##
 ##  CohomologyFromCohomCalg.gd               SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2016, Martin Bies,             ITP Heidelberg
+##  Copyright 2019, Martin Bies,             ULB Brussels
 ##
 #! @Chapter Cohomology of vector bundles on (smooth and compact) toric varieties from cohomCalg
 ##
