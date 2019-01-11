@@ -705,14 +705,10 @@ InstallMethod( IntersectionForm,
   function( variety )
     local matrix_entries, cycles, i, degree, divisor, row;
 
-    if not IsSmooth( variety ) then
+    # check for valid input
+    if not IsValidInputForCohomologyComputations( variety ) then
 
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
-      return;
-
-    elif not IsComplete( variety ) then
-
-      Error( "This method is currently only supported for smooth and complete toric varieties" );
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
     fi;
