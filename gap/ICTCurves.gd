@@ -195,7 +195,7 @@ DeclareOperation( "Proper1Cycle",
 #! @Returns a toric variety
 #! @Arguments C
 DeclareAttribute( "AmbientToricVariety",
-                   IsICTCurve );
+                   IsProper1Cycle );
 
 #! @Description
 #! The argument is a proper 1-cycle. We then return the underlying group element (with respect to the generators 
