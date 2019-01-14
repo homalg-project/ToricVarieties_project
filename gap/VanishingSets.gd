@@ -63,15 +63,15 @@ DeclareAttribute( "EmbeddingDimension",
                   IsVanishingSet );
 
 #! @Description
-#! The argument is a vanishingSet $V$. This vanishing set identifies those $D \in \text{Pic} \left( X_\Sigma \right)$
+#! The argument is a vanishingSet $V$. This vanishing set identifies those $D \in Pic \left( X_\Sigma \right)$
 #! such that $H^i \left( X_\Sigma, \mathcal{O} \left( D \right) \right) = 0$. We return the integer $i$.
-#! @Returns an integer between $0$ and $\text{dim} \left( X_\Sigma \right)$
+#! @Returns an integer between $0$ and $dim \left( X_\Sigma \right)$
 #! @Arguments V
 DeclareAttribute( "CohomologicalIndex",
                   IsVanishingSet );
 
 #! @Description
-#! The argument is a vanishingSet $V$. This could for example identify those $D \in \text{Pic} \left( X_\Sigma \right)$
+#! The argument is a vanishingSet $V$. This could for example identify those $D \in Pic \left( X_\Sigma \right)$
 #! such that $H^i \left( X_\Sigma, \mathcal{O} \left( D \right) \right) = 0$ for all $i > 0$. 
 #! If such a specification is known, it will be returned by this method.
 #! @Returns a string

@@ -29,7 +29,7 @@ DeclareOperation( "H0OnProjectiveSpaceViaLinearRegularity",
 #! @Description
 #! Given that variety is a complex projective space with Coxring <M>S</M> and <M>M</M> a f. p. graded S-module, this method computes a
 #! function <M>f \colon \mathbb{N}_{\geq 0} \to \mathbb{N}_{\geq 0}</M> such that <M>f \left( n \right) = 
-#! \text{dim} \left( H^0 \left( X_\Sigma, \widetilde{M} \left( n \right) \right) \right)</M>. This function is returned.
+#! dim \left( H^0 \left( X_\Sigma, \widetilde{M} \left( n \right) \right) \right)</M>. This function is returned.
 #! @Returns a function
 #! @Arguments vari, M
 DeclareOperation( "H0OnProjectiveSpaceForAllPositiveTwistsViaLinearRegularity",
@@ -37,8 +37,9 @@ DeclareOperation( "H0OnProjectiveSpaceForAllPositiveTwistsViaLinearRegularity",
 
 #! @Description
 #! Given that variety is a complex projective space with Coxring <M>S</M> and <M>M</M> a f. p. graded S-module, this method uses 
-#! the function <M>f \colon \mathbb{N}_{\geq 0} \to \mathbb{N}_{\geq 0}</M> computed by <M>\text{H0OnCPNForAllTwistsViaLinReg}</M> 
-#! and evaluates it for all integers in <M>\text{range}</M>. The resulting list of non-negative integers is returned.
+#! the function <M>f \colon \mathbb{N}_{\geq 0} \to \mathbb{N}_{\geq 0}</M> computed by 
+#! H0OnCPNForAllTwistsViaLinReg and evaluates it for all integers in range. The resulting list of non-negative 
+#! integers is returned.
 #! @Returns a list of non-negative integers
 #! @Arguments vari, M, range
 DeclareOperation( "H0OnProjectiveSpaceInRangeViaLinearRegularity",

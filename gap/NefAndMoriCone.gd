@@ -41,7 +41,7 @@ DeclareProperty( "IsAmpleViaNefCone",
 
 #! @Description
 #! Given a toric variety <A>vari</A>, we compute the integral vectors in 
-#! <M>\mathbb{Z}^{n \left| \Sigma_{\text{max}} \right|}</M>, <M>n</M> is the rank of the character lattice 
+#! <M>\mathbb{Z}^{n \left| \Sigma_{max} \right|}</M>, <M>n</M> is the rank of the character lattice 
 #! which encodes a toric Cartier divisor according to theorem 4.2.8. in Cox-Schenk-Little. We return a list of lists. 
 #! When interpreting this list of lists as a matrix, then the kernel of this matrix is the set of these vectors.
 #! @Returns a list of lists
@@ -51,7 +51,7 @@ DeclareAttribute( "CartierDataGroup",
 
 #! @Description
 #! Given a smooth and complete toric variety <A>vari</A>, we compute the nef cone within the proper Cartier data in 
-#! <M>\mathbb{Z}^{n \left| \Sigma_{\text{max}} \right|}</M>, <M>n</M> is the rank of the character lattice. 
+#! <M>\mathbb{Z}^{n \left| \Sigma_{max} \right|}</M>, <M>n</M> is the rank of the character lattice. 
 #! We return a list of ray generators of this cone.
 #! @Returns a list of lists
 #! @Arguments vari
@@ -60,7 +60,7 @@ DeclareAttribute( "NefConeInCartierDataGroup",
 
 #! @Description
 #! Given a smooth and complete toric variety, we compute the nef cone within 
-#! <M> \text{Div}_T \left( X_\Sigma \right) </M>. We return a list of ray generators of this cone.
+#! <M> Div_T \left( X_\Sigma \right) </M>. We return a list of ray generators of this cone.
 #! @Returns a list of lists
 #! @Arguments vari
 DeclareAttribute( "NefConeInTorusInvariantWeilDivisorGroup",
@@ -68,7 +68,7 @@ DeclareAttribute( "NefConeInTorusInvariantWeilDivisorGroup",
 
 #! @Description
 #! Given a smooth and complete toric variety, we compute the nef cone within 
-#! <M> \text{Cl} \left( X_\Sigma \right) </M>. We return a list of ray generators of this cone.
+#! <M> Cl \left( X_\Sigma \right) </M>. We return a list of ray generators of this cone.
 #! @Returns a list of lists
 #! @Arguments vari
 DeclareAttribute( "NefConeInClassGroup",
@@ -80,7 +80,7 @@ DeclareAttribute( "NefCone",
 #! Given a smooth and complete toric variety, we compute the smallest divisor class, such that the 
 #! associated divisor is ample. This is based on theorem 6.3.22 in Cox-Schenk-Little, which implies that this 
 #! task is equivalent to finding the smallest lattice point within the nef cone 
-#! (in <M>\text{Cl} \left( X_\Sigma \right)</M>). We return a list of integers encoding this lattice point.
+#! (in <M>Cl \left( X_\Sigma \right)</M>). We return a list of integers encoding this lattice point.
 #! @Returns a list of integers
 #! @Arguments vari
 DeclareAttribute( "ClassesOfSmallestAmpleDivisors",

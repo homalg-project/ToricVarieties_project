@@ -34,7 +34,7 @@ DeclareCategory( "IsICTCurve",
 #! @Description
 #! The arguments are a smooth and complete toric variety $X_\Sigma$ and two non-negative and distinct integers $i,j$.
 #! We then consider the i-th and j-th maximal cones $\sigma_i$ and $\sigma_j$. ! If $\tau := \sigma_i \cap \sigma_j$ 
-#! satisfies $\text{dim} \left( \tau \right) = \text{dim} \left( \sigma_1 \right) - 1$, then $\tau$ corresponds to 
+#! satisfies $dim \left( \tau \right) = dim \left( \sigma_1 \right) - 1$, then $\tau$ corresponds to 
 #! an ICT-curve. We then construct this very ICT-curve.
 #! @Returns an ICT curve
 #! @Arguments X_Sigma, i, j
@@ -101,7 +101,7 @@ DeclareAttribute( "IntersectionU",
 #! @Description
 #! The argument is an ICT curve $C$. The output is a list with the intersection numbers of a canonical base 
 #! of the class group. This basis is to take $\left( e_1, \dots, e_k \right)$ with $e_i = \left( 0, \dots, 0, 
-#! 1, 0, \dots, 0 \right) \in \text{Cl} \left( X_\Sigma \right)$.
+#! 1, 0, \dots, 0 \right) \in Cl \left( X_\Sigma \right)$.
 #! @Returns a list of integers
 #! @Arguments C
 DeclareAttribute( "IntersectionList",
