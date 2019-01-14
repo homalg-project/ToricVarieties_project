@@ -322,7 +322,7 @@ InstallMethod( CartierDataGroup,
 
     #return the composition of these two matrices
     if Length( matrixDifferences ) = 0 then
-        return List( [ 1 .. Length( maximalCones ) * Length( rays[ 1 ] ) ], x -> 0 );
+        return [ List( [ 1 .. Length( maximalCones ) * Length( rays[ 1 ] ) ], x -> 0 ) ];
     else
         return matrixDifferences * matrixScalarProducts;
     fi;
