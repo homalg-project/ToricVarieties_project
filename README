@@ -12,7 +12,13 @@
 README file for the `SheafCohomologyOnToricVarieties' GAP4 package
         
 To get the latest version of this GAP 4 package pull the corresponding branch
-from github. This completes the installation of the package.
+from github. 
+
+To complete the installation you need a working version of cohomCalg. A version prepared for the use with this package, can be obtained from the development branch 'martindevel' of my repository https://github.com/HereAround/cohomCalg/. 
+
+Once you download/clone this repository, just switch into the folder 'cohomCalg' and type make. Now you should find a binary file in /cohomCalg/bin. This binary file needs to be moved to the SheafCohomologyOnToricVarieties package folder. This package contains a subfolder /cohomCalg, which in turn currently contains two subfolders. The latter two are named 'linux' and 'apple', respectively. Place the binary in the folder which fits your system.
+
+Note that the folder name, has to match the exact architecture string used by gap. You can find this string by startgin gap and entering "GAPInfo.Architecture". If a folder with this name does not yet exist in the /cohomCalg subfolder, then please create it and subsequently place the binary in this folder. This completes the installation of the package.
 
 E-mail me if there are any questions, remarks, suggestions. Also, we
 would like to hear about applications of this package.
