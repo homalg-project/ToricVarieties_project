@@ -2,8 +2,8 @@ InstallGlobalFunction( cohomCalgBinary,
   function( )
     local arch, linux, apple, dir, cohomcalg;
     
-    arch := GAPInfo.ArchitectureBase;
-    
+    arch := GAPInfo.Architecture;
+
     linux := "x86_64-pc-linux";
     apple := "x86_64-apple-darwin";
     
