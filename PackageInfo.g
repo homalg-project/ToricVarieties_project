@@ -45,12 +45,12 @@ rec(
   ),
 ],
 
-Status := "developement",
+Status := "dev",
 PackageWWWHome := "https://github.com/HereAround/SheafCohomologyOnToricVarieties",
 ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := "todo",
-README_URL     := "todo",
-PackageInfoURL := "todo",
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "SheafCohomologyOnToricVarieties-", ~.Version ),
+README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML := 
   Concatenation( "SheafCohomologyOnToricVarieties provides an extension of the ToricVarieties package",
