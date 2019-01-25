@@ -7,13 +7,15 @@
 ##
 ##  A package to communicate with the software Topcom
 ##
+#! @Chapter Functionality of Topcom
+##
 #############################################################################
 
 
 
 ##############################################################################################
 ##
-#! @Section Install functions to communicate with Topcom
+#! @Section Functions to communicate with Topcom
 ##
 ##############################################################################################
 
