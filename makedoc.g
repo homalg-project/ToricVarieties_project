@@ -13,7 +13,8 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "TopcomInterface" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
-                         #"gap/VanishingSets.gd",
+                         "gap/Tools.gd",
+                         "gap/Functions.gd",
                          #"examples/VanishingSets.g",
                          ],
              scan_dirs := []
