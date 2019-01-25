@@ -67,7 +67,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
-                             "ToricVarieties", ">=2016.05.03" ]
+                           [ "ToricVarieties", ">=2016.05.03" ]
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
