@@ -18,9 +18,22 @@
 ##############################################################################################
 
 #! @Description
-#! This operation identifies the location of the software topcom. The name of the latter has 
-#! to be provided as string
+#! This operation identifies the location where the topcom operations are stored.
 #! @Returns the corresponding directory
-#! @Arguments Name of the binary as string
-DeclareOperation( "FindTopcomDirectory",
-                  [ IsString ] );
+#! @Arguments none
+DeclareOperation( "FindTopcomDirectory", [ ] );
+
+
+
+##############################################################################################
+##
+#! @Section Execute topcom
+##
+##############################################################################################
+
+#! @Description
+#! This operation executes topcom with three pieces of input information.
+#! @Returns the corresponding quantity as computed by Topcom as a string
+#! @Arguments TopcomBinary (as Filename) and three lists
+DeclareOperation( "ExecuteTopcom",
+                  [ IsDirectory, IsString, IsList, IsList, IsList ] );
