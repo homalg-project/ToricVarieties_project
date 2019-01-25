@@ -131,7 +131,7 @@ F := Fan( rays, cones );
 #! <A fan in |R^3>
 T := ToricVariety( F );
 #! <A toric variety of dimension 3>
-[ IsSmooth( T ), IsComplete( T ), IsProjectiveToricVariety( T ) ];
+[ IsSmooth( T ), IsComplete( T ), IsProjective( T ) ];
 #! [ true, true, false ]
 SRIdeal( T );
 #! <A graded torsion-free (left) ideal given by 23 generators>
