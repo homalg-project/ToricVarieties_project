@@ -51,8 +51,7 @@ ArchiveURL     := Concatenation( ~.PackageWWWHome, "TopcomInterface-", ~.Version
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-AbstractHTML := 
-  Concatenation( "TopcomInterface enables to communicate with software Topcom via gap" ),
+AbstractHTML := "TopcomInterface enables to communicate with software Topcom via gap",
 
 PackageDoc := rec(
   BookName  := "TopcomInterface",
