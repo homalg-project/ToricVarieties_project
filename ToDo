@@ -1,0 +1,11 @@
+Functions which involve "chiro" are currently not functional (typically unable to Eval the string)
+-> Input format seems to be more flexible than currently anticipated
+-> Fix this and add examples/tests for these functions also
+
+Note that EvalString also fails if not triangulation is found. This definitely needs to be fixed.
+
+Also, the command line options are more flexible than so-far anticipated - we may have "--..." but also "-..." can be used. This is currently not supported either.
+
+Add global variable, which lists all options that are supported by Topcom currently, and check this before the input is given to Topcom.
+
+Currently, Topcom produces lots of output in the console, which is not nice when using gap. Can this be adjusted?
