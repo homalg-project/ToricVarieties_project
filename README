@@ -11,10 +11,22 @@
 
 README file for the `TopcomInterface' GAP4 package
         
-To get the latest version of this GAP 4 package pull the corresponding branch
-from github. 
+To get the latest version of this GAP 4 package pull the corresponding branch from github. 
 
-To complete the installation you need a working version of topcom on your computer. This completes the installation of the package.
+This package requires a working installation of topcom on your computer. To this end download the latest version from
+http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
+
+The installation of this software typically means to perform the following steps inside the Topcom folder:
+
+./configure CFLAGS="-m64" CXXFLAGS="-m64"
+make
+make check
+make install
+make clean
+
+More details/information can be found in the topcom package. This completes the installation of this gap-package.
+
+Currently, the functions involving "chiro" are not yet supported by this package.
 
 E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
