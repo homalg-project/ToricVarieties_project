@@ -10,42 +10,35 @@
 #############################################################################
 
 
-
 ##############################################################################################
 ##
-#! @Section Install functions to communicate with Topcom
+## Install functions to communicate with Topcom
 ##
 ##############################################################################################
 
 # compute the maps in a minimal free resolution of a f.p. graded module presentation
 InstallMethod( points2allfinetriangs,
-               "a list of points",
-               [ IsList ],
-  function( points )
+               "a list of points, a reference triangulation and a list of options",
+               [ IsList, IsList, IsList ],
+  function( points, ref_triangulation, options_list )
 
-  local topcomBinary, trias_string, output, command_string, input;
+  local topcomDirectory, result;
 
     # find the topcom binary
-    topcomBinary := FindTopcomBinary( "points2allfinetriangs" );
+    topcomDirectory := FindTopcomDirectory( );
 
-    # prepare to launch topcom
-    trias_string := "";
-    output := OutputTextString( trias_string, true );
-    command_string := Concatenation( String( points ), " [] " );
-    input := InputTextString(command_string);
+    # execute topcom with this input
+    result := ExecuteTopcom( topcomDirectory, 
+                             "points2allfinetriangs", 
+                             points, 
+                             ref_triangulation, 
+                             options_list );
 
-    # execute topcom
-    Process( DirectoryCurrent(), topcom, input, output, [ "--regular" ] );
+    # finally evaluate the output
+    result := EvalString( result );
+    # fails if result = "" -> special catch needed
 
-    # now process the triangulations
-    trias_string := ReplacedString( trias_string, "{", "[" );
-    trias_string := ReplacedString( trias_string, "}", "]" );
-    RemoveCharacters( trias_string, "\n" );
-
-    # finally evaluate this string
-    trias := EvalString( trias_string );
-    # this fails if trias_string = "". The latter is the case if there does not exists a triangulation.
-
-    return trias;
+    # return the result
+    return result;
 
 end );
