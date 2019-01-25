@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g       SheafCohomologyOnToricVarieties package
+##  PackageInfo.g       TopcomInterface package
 ##                      Martin Bies
 ##
 ##  Copyright 2019      ULB Brussels
@@ -66,7 +66,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ [ "ToricVarieties", ">=2016.05.03" ]
+  NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
+                             "ToricVarieties", ">=2016.05.03" ]
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
