@@ -15,13 +15,14 @@ AutoDoc( "TopcomInterface" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
                          "gap/Tools.gd",
                          "gap/Functions.gd",
-                         #"examples/VanishingSets.g",
+                         "examples/examples.g"
                          ],
              scan_dirs := []
              ),
          maketest := rec( folder := ".",
                           commands :=
-                            [ #"LoadPackage( \"SheafCohomologyOnToricVarieties\" );",
+                            [ "LoadPackage( \"IO_ForHomalg\" );",
+                              "LoadPackage( \"TopcomInterface\" );",
                               "HOMALG_IO.show_banners := false;",
                               "HOMALG_IO.suppress_PID := true;",
                               "HOMALG_IO.use_common_stream := true;",
