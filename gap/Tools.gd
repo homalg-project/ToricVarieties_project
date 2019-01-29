@@ -20,10 +20,10 @@
 ##############################################################################################
 
 #! @Description
-#! This operation identifies the location where the topcom operations are stored.
-#! @Returns the corresponding directory
+#! This operation identifies the cohomCalg directory D and binary B
+#! @Returns list L = [ D, B ]
 #! @Arguments none
-DeclareOperation( "FindTopcomDirectory", [ ] );
+DeclareOperation( "cohomCalgBinary", [ ] );
 
 
 

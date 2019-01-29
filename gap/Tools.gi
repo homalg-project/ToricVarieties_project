@@ -13,41 +13,40 @@
 
 ##############################################################################################
 ##
-## Section Find the TopcomDirectory
+## Section Find cohomCalgBinary
 ##
 ##############################################################################################
 
-InstallMethod( FindTopcomDirectory,
+InstallMethod( cohomCalgBinary,
                "a string -- name of TopcomBinary",
                [ ],
-  function( )  
-  local sys_programs, which, path, output, input, path_steps, directory;
-  
-    # find the program "which"
-    sys_programs := DirectoriesSystemPrograms();
-    which := Filename( sys_programs, "which" );
-    if IsExistingFile( which ) = false then
-        Error( "program which not found" );
+  function( )
+    local arch, linux, apple, dir, cohomcalg;
+    
+    arch := GAPInfo.Architecture;
+
+    linux := "x86_64-pc-linux";
+    apple := "x86_64-apple-darwin";
+    
+    if arch{[ 1 .. 15 ]} = linux then
+        arch := linux;
+    elif arch{[ 1 .. 19 ]} = apple then
+        arch := apple;
     fi;
-
-    # find path to the topcom file 
-    path := "";
-    output := OutputTextString( path, true );
-    input := InputTextUser();
-    Process( DirectoryCurrent(), which, input, output, [ "points2chiro" ] );
-    # we use the hard-coded name "points2chiro", as this is one of the many methods provided by topcom
-
-    # process the output
-    RemoveCharacters( path, "\n" );
-    path_steps := SplitString( path, "/" );
-    path_steps := List( [ 1 .. Length( path_steps ) - 1 ], i -> Concatenation( path_steps[ i ], "/" ) );
-    directory := Directory( Concatenation( path_steps ) );
-
-    # return the directory
-    return directory;
-
+    
+    arch := Concatenation( "cohomCalg/", arch );
+    
+    dir := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", arch )[ 1 ];
+    
+    cohomcalg := Filename( dir, "cohomcalg" );
+    
+    if not IsExistingFile( cohomcalg ) then
+        Error( "no cohomcalg binary found in the subdirectory ", arch );
+    fi;
+    
+    return [ dir, cohomcalg ];
+    
 end );
-
 
 
 ##############################################################################################
