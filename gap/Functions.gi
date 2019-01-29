@@ -12,765 +12,83 @@
 
 ##############################################################################################
 ##
-## Install functions to communicate with Topcom
+## Install functions to communicate with cohomCalg
 ##
 ##############################################################################################
 
 
-InstallMethod( points2chiro,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
+InstallMethod( AllHi,
+               "for a toric variety and a list of degrees and a bool
+               [ IsToricVariety, IsList ],
+  function( variety, degree_list )
+    local cohomCalgDirectory, cohomCalg, stdin, stdout, outputs, i, buffer, 
+         position, command_string, dimensions, Q;
 
-  local topcomDirectory, result;
+    # check if the variety gives us a valid input
+    if not ( ( IsComplete( variety) and IsSmooth( variety ) ) or
+             ( IsSimplicial( Fan( variety ) ) and IsProjective( variety ) ) ) then 
 
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
+      Error( "The variety has to be smooth, complete or simplicial, projective" );
+      return;
 
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2chiro", 
-                             input1,
-                             input2,
-                             options_list );
+    fi;
 
-    # finally evaluate the output
-    return EvalString( result );
+    # identify the location of cohomcalg
+    cohomCalg := cohomCalgBinary( );
 
-end );
+    # set up communication channels
+    stdin := InputTextUser();
+    outputs := List( [ 1 .. Length( degree_list ) ] );
 
+    # iterate over all degree layers
+    for i in [ 1 .. Length( degree_list ) ] do
 
-InstallMethod( chiro2dual,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
+      buffer := "";
+      stdout := OutputTextString( buffer, true );
 
-  local topcomDirectory, result;
+      # this is the string that we need to address cohomCalg
+      # not that the degrees used by CAP describe the degree of the generators of the module
+      # this is related by (-1) to the degree of the corresponding bundle, as used by cohomCalg
+      # -> therefore an additional (-1) is used in the following command
+      command_string := SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING(
+                                    variety, (-1) * UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) );
 
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
+      # execute cohomCalg with the 'input file' described by the command_string
+      # we use the integrated mode, so that only the necessary output is generated
+      Process( cohomCalg[1], cohomCalg[2], stdin, stdout, ["--integrated", command_string ] );
 
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2dual", 
-                             input1,
-                             input2,
-                             options_list );
+      # make a number of adjustments to this string
+      buffer := ReplacedString( buffer, "{", "[" );
+      buffer := ReplacedString( buffer, "}", "]" );
 
-    # finally evaluate the output
-    return EvalString( result );
+      # check if something went wrong during the computation
+      if buffer[ 2 ] = 'F' then
 
-end );
+        Error( Concatenation( "cohomCalg experienced an error while computing the cohomologies of the bundle ",
+                              String( degree_list[ i ][ 1 ] ) ) );
+        return;
 
+      else
 
-InstallMethod( chiro2circuits,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
+        buffer[ 2 ] := 't';
 
-  local topcomDirectory, result;
+      fi;
 
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
+      # cut off the information, which specifies which rationoms contribute to which cohomology classes
+      position := Positions( buffer, '[' )[ 4 ];
+      buffer := List( [ 1 .. position-2 ], j -> buffer[ j ] );
+      Add( buffer, ']' );
+      Add( buffer, ']' );
 
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2circuits", 
-                             input1,
-                             input2,
-                             options_list );
+      # now evaluate the string buffer
+      buffer := EvalString( buffer );
 
-    # finally evaluate the output
-    return EvalString( result );
+      # and assign this new value
+      outputs[ i ] := degree_list[ i ][ 2 ] * buffer[ 2 ][ 1 ];
 
-end );
+    od;
 
-
-InstallMethod( chiro2cocircuits,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2cocircuits", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( cocircuits2facets,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cocircuits2facets", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2facets,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2facets", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2nflips,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nflips", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2flips,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2flips", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2placingtriang,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2placingtriang", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2placingtriang,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2placingtriang", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2finetriang,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2finetriang", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2finetriang,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2finetriang", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2triangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2triangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2triangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2triangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2ntriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2ntriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2ntriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2ntriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2finetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2finetriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2finetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2finetriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2nfinetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2nfinetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2alltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2alltriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2alltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2alltriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2nalltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nalltriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2nalltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nalltriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( chiro2allfinetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2allfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result );
-
-end );
-
-
-InstallMethod( points2allfinetriangs,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2allfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( chiro2nallfinetriangs,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nallfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( points2nallfinetriangs,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nallfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( cube,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cube", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( cyclic,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cyclic", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( cross,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cross", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( hypersimplex,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "hypersimplex", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( santos_triang,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "santos_triang", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    # now return the cohomology dimensions
+    return Sum( outputs );
 
 end );
