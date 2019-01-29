@@ -46,17 +46,3 @@ DeclareOperation( "cohomCalgCommandString",
 #! @Arguments a toric variety
 DeclareOperation( "cohomCalgCommandString", 
                    [ IsToricVariety ] );
-
-
-##############################################################################################
-##
-#! @Section Executing topcom
-##
-##############################################################################################
-
-#! @Description
-#! This operation executes topcom with three pieces of input information.
-#! @Returns the corresponding quantity as computed by Topcom as a string
-#! @Arguments TopcomBinary (as Filename) and three lists
-DeclareOperation( "ExecuteTopcom",
-                  [ IsDirectory, IsString, IsList, IsList, IsList ] );
