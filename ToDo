@@ -9,3 +9,5 @@ Also, the command line options are more flexible than so-far anticipated - we ma
 Add global variable, which lists all options that are supported by Topcom currently, and check this before the input is given to Topcom.
 
 Currently, Topcom produces lots of output in the console, which is not nice when using gap. Can this be adjusted?
+
+ToricVarieties should not be a required package.
