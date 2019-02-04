@@ -392,20 +392,24 @@ InstallMethod( ToricVarietyFromGLSMCharges,
                                 FanOfVariety, fan
                                 );
 
-# gradings got shuffled!
+        # the ray generators got shuffled, so we need to shuffle the gradings accordingly
+        shuffled_grading := [];
+        for j in [ 1 .. Length( TransposedMat( grading ) ) ] do
+            Add( shuffled_grading, TransposedMat( grading )[ Position( rays, RayGenerators( fan )[ j ] ) ] );
+        od;
 
-        # and identify its map from the Weil divisors to the class group according to the given grading
-        map := HomalgMap( TransposedMat( grading ),
+        # identify the map from the Weil divisors to the class group
+        map := HomalgMap( shuffled_grading,
                           TorusInvariantDivisorGroup( variety ),
-                          Length( grading[ 1 ] ) * HOMALG_MATRICES.ZZ
+                          Length( shuffled_grading[ 1 ] ) * HOMALG_MATRICES.ZZ
                         );
 
-        # then set the maps accordingly
+        # and set this map accordingly
         SetMapFromWeilDivisorsToClassGroup( variety, map );
 
         # and save this variety
         varieties[ i ] := variety;
-Error( "Test" );
+
     od;
 
 

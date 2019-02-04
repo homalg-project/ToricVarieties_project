@@ -28,7 +28,7 @@ Display( v1.1 );
 #! A non-trivial affine cone-semigroup in Z^1
 #! Offset: [ -2 ]
 #! Hilbert basis: [ [ -1 ] ]
-P1xP1 := P1 * P1;
+P1xP1 := ToricVarietyFromGLSMCharges( [[ 1,1,0,0 ],[0,0,1,1]] )[ 1 ];
 #! <A smooth toric variety of dimension 2 which is a product of
 #! 2 toric varieties>
 v2 := VanishingSets( P1xP1 );
