@@ -1,1 +1,4 @@
 Currently, Topcom produces lots of output in the console, which is not nice when using gap. Can this be adjusted?
+
+Docu not yet so nice, since the output is too long to be displayed in single line
+-> Adjust this
