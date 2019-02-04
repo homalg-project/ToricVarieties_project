@@ -218,8 +218,12 @@ InstallMethod( chiro2placingtriang,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return EvalString( result );
+    # finally return the result
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -242,7 +246,11 @@ InstallMethod( points2placingtriang,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else    
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -265,7 +273,11 @@ InstallMethod( chiro2finetriang,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -288,7 +300,11 @@ InstallMethod( points2finetriang,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else 
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -426,7 +442,11 @@ InstallMethod( points2finetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -495,7 +515,11 @@ InstallMethod( chiro2alltriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        result := [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -518,7 +542,11 @@ InstallMethod( points2alltriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -587,7 +615,11 @@ InstallMethod( chiro2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -610,7 +642,11 @@ InstallMethod( points2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    if result = "" then
+        return [];
+    else
+        return EvalString( result );
+    fi;
 
 end );
 
@@ -633,7 +669,7 @@ InstallMethod( chiro2nallfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    return EvalString( result );
 
 end );
 
@@ -656,6 +692,6 @@ InstallMethod( points2nallfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    return EvalString( result );
 
 end );
