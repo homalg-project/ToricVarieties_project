@@ -299,11 +299,7 @@ InstallMethod( chiro2placingtriang,
                                     options_list );
 
     # finally return the result
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -336,11 +332,7 @@ InstallMethod( points2placingtriang,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else    
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -373,11 +365,7 @@ InstallMethod( chiro2finetriang,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -410,11 +398,7 @@ InstallMethod( points2finetriang,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else 
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -612,11 +596,7 @@ InstallMethod( points2finetriangs,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -715,11 +695,7 @@ InstallMethod( chiro2alltriangs,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        result := [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -752,11 +728,7 @@ InstallMethod( points2alltriangs,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -855,11 +827,7 @@ InstallMethod( chiro2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
@@ -892,11 +860,7 @@ InstallMethod( points2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    if result = "" then
-        return [];
-    else
-        return EvalString( result );
-    fi;
+    return EvalString( Concatenation( "[", result, "]" ) );
 
 end );
 
