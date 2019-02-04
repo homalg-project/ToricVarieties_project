@@ -22,39 +22,45 @@
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
 #! of the options supported by topcom.
-#! @Returns List
+#! @Returns String
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2chiro",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2dual",
                   [ IsString, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2circuits",
                   [ IsString, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2cocircuits",
                   [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
 #! of the options supported by topcom.
-#! @Returns List
+#! @Returns String
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2facets",
                   [ IsList, IsList, IsList ] );
@@ -62,7 +68,7 @@ DeclareOperation( "points2facets",
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
 #! of the options supported by topcom.
-#! @Returns List
+#! @Returns Integer
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2nflips",
                   [ IsList, IsList, IsList ] );
@@ -70,16 +76,18 @@ DeclareOperation( "points2nflips",
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
 #! of the options supported by topcom.
-#! @Returns List
+#! @Returns String
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2flips",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2placingtriang",
                   [ IsString, IsList, IsList ] );
 
@@ -92,10 +100,12 @@ DeclareOperation( "points2placingtriang",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2finetriang",
                   [ IsString, IsList, IsList ] );
 
@@ -108,26 +118,30 @@ DeclareOperation( "points2finetriang",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2triangs",
                   [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
 #! of the options supported by topcom.
-#! @Returns List
+#! @Returns String
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2triangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2ntriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -140,10 +154,12 @@ DeclareOperation( "points2ntriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2finetriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -156,10 +172,12 @@ DeclareOperation( "points2finetriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2nfinetriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -172,10 +190,12 @@ DeclareOperation( "points2nfinetriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2alltriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -188,10 +208,12 @@ DeclareOperation( "points2alltriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2nalltriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -204,10 +226,12 @@ DeclareOperation( "points2nalltriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2allfinetriangs",
                   [ IsString, IsList, IsList ] );
 
@@ -220,10 +244,12 @@ DeclareOperation( "points2allfinetriangs",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
 DeclareOperation( "chiro2nallfinetriangs",
                   [ IsString, IsList, IsList ] );
 
