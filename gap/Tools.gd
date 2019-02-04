@@ -34,8 +34,27 @@ DeclareOperation( "FindTopcomDirectory", [ ] );
 ##############################################################################################
 
 #! @Description
-#! This operation executes topcom with three pieces of input information.
+#! This operation executes topcom with five pieces of input information.
+#! The first is the directory of topcom, the second the name of the binary 
+#! that is to be executed within topcom, the third is a list of points,
+#! the fourth a list containing a seed triangulation (this is optional) and
+#! the fifth a number of options (also optional). In case no seed 
+#! triangulation or option is to be used, the empty list should be handed to
+#! the gap method.
 #! @Returns the corresponding quantity as computed by Topcom as a string
-#! @Arguments TopcomBinary (as Filename) and three lists
-DeclareOperation( "ExecuteTopcom",
+#! @Arguments A Directory, a string and three lists
+DeclareOperation( "ExecuteTopcomForPoints",
                   [ IsDirectory, IsString, IsList, IsList, IsList ] );
+
+#! @Description
+#! This operation executes topcom with five pieces of input information.
+#! The first is the directory of topcom, the second the name of the binary 
+#! that is to be executed within topcom, the third is a string encoding a chiro,
+#! the fourth a list containing a seed triangulation (this is optional) and
+#! the fifth a number of options (also optional). In case no seed 
+#! triangulation or option is to be used, the empty list should be handed to
+#! the gap method.
+#! @Returns the corresponding quantity as computed by Topcom as a string
+#! @Arguments A Directory, a string, a string and two lists
+DeclareOperation( "ExecuteTopcomForChiro",
+                  [ IsDirectory, IsString, IsString, IsList, IsList ] );
