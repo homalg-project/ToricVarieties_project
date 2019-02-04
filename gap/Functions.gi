@@ -109,6 +109,30 @@ InstallMethod( chiro2cocircuits,
 end );
 
 
+InstallMethod( cocircuits2facets,
+               "a list, a list and a list of strings encoding options of topcom",
+               [ IsString, IsList, IsList ],
+  function( input1, input2, options_list )
+
+  local topcomDirectory, result;
+
+    # find the topcom binary
+    topcomDirectory := FindTopcomDirectory( );
+
+    # execute topcom with this input
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "cocircuits2facets", 
+                                    input1,
+                                    input2,
+                                    options_list );
+
+    # finally evaluate the output
+    return result;
+    #return 0;
+    
+end );
+
+
 InstallMethod( points2facets,
                "a list, a list and a list of strings encoding options of topcom",
                [ IsList, IsList, IsList ],
@@ -631,152 +655,6 @@ InstallMethod( points2nallfinetriangs,
                                     points, 
                                     ref_triangulation, 
                                     options_list );
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-## Methods that are currently not supported yet
-
-InstallMethod( cocircuits2facets,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "cocircuits2facets", 
-    #                         input1,
-    #                         input2,
-    #                         options_list );
-
-    # finally evaluate the output
-    #return EvalString( result );
-    return 0;
-    
-end );
-
-
-InstallMethod( cube,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "cube", 
-    #                         points, 
-    #                         ref_triangulation, 
-    #                         options_list );
-
-    # finally evaluate the output
-    # return EvalString( result ); # fails if result = "" -> special catch needed
-    return 0;
-
-end );
-
-
-InstallMethod( cyclic,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "cyclic", 
-    #                         points, 
-    #                         ref_triangulation, 
-    #                         options_list );
-
-    # finally evaluate the output
-    #return EvalString( result ); # fails if result = "" -> special catch needed
-    return 0;
-
-end );
-
-
-InstallMethod( cross,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "cross", 
-    #                         points, 
-    #                         ref_triangulation, 
-    #                         options_list );
-
-    # finally evaluate the output
-    #return EvalString( result ); # fails if result = "" -> special catch needed
-    return 0;
-
-end );
-
-
-InstallMethod( hypersimplex,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "hypersimplex", 
-    #                         points, 
-    #                         ref_triangulation, 
-    #                         options_list );
-    return 0;
-
-    # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
-
-end );
-
-
-InstallMethod( santos_triang,
-               "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
-  function( points, ref_triangulation, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "santos_triang", 
-    #                         points, 
-    #                         ref_triangulation, 
-    #                         options_list );
-    return 0;
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
