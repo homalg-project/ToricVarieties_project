@@ -58,7 +58,7 @@ end );
 
 # Execute topcom
 InstallMethod( ExecuteTopcom,
-               "input1, input2 and a list of options",
+               "directory, executable binary, input1, input2 and a list of options",
                [ IsDirectory, IsString, IsList, IsList, IsList ],
   function( topcomDirectory, name_of_binary, input1, input2, options_list )
 
