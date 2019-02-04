@@ -51,7 +51,7 @@ end );
 
   
 InstallMethod( chiro2dual,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -73,8 +73,18 @@ InstallMethod( chiro2dual,
 end );
 
 
+InstallMethod( chiro2dual,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2dual( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2circuits,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -96,8 +106,18 @@ InstallMethod( chiro2circuits,
 end );
 
 
+InstallMethod( chiro2circuits,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2circuits( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2cocircuits,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -119,8 +139,18 @@ InstallMethod( chiro2cocircuits,
 end );
 
 
+InstallMethod( chiro2cocircuits,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2cocircuits( input1, [], [] );
+
+end );
+
+
 InstallMethod( cocircuits2facets,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -139,6 +169,16 @@ InstallMethod( cocircuits2facets,
     # finally evaluate the output
     return result;
     
+end );
+
+
+InstallMethod( cocircuits2facets,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return cocircuits2facets( input1, [], [] );
+
 end );
 
 
@@ -161,6 +201,16 @@ InstallMethod( points2facets,
 
     # finally evaluate the output
     return result;
+
+end );
+
+
+InstallMethod( points2facets,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2facets( input1, [], [] );
 
 end );
 
@@ -188,6 +238,16 @@ InstallMethod( points2nflips,
 end );
 
 
+InstallMethod( points2nflips,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2nflips( input1, [], [] );
+
+end );
+
+
 InstallMethod( points2flips,
                "a list, a list and a list of strings encoding options of topcom",
                [ IsList, IsList, IsList ],
@@ -211,8 +271,18 @@ InstallMethod( points2flips,
 end );
 
 
+InstallMethod( points2flips,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2flips( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2placingtriang,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -234,6 +304,16 @@ InstallMethod( chiro2placingtriang,
     else
         return EvalString( result );
     fi;
+
+end );
+
+
+InstallMethod( chiro2placingtriang,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2placingtriang( input1, [], [] );
 
 end );
 
@@ -265,8 +345,18 @@ InstallMethod( points2placingtriang,
 end );
 
 
+InstallMethod( points2placingtriang,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2placingtriang( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2finetriang,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -288,6 +378,16 @@ InstallMethod( chiro2finetriang,
     else
         return EvalString( result );
     fi;
+
+end );
+
+
+InstallMethod( chiro2finetriang,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2finetriang( input1, [], [] );
 
 end );
 
@@ -319,8 +419,18 @@ InstallMethod( points2finetriang,
 end );
 
 
+InstallMethod( points2finetriang,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2finetriang( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2triangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -338,6 +448,16 @@ InstallMethod( chiro2triangs,
 
     # finally evaluate the output
     return result;
+
+end );
+
+
+InstallMethod( chiro2triangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2triangs( input1, [], [] );
 
 end );
 
@@ -365,8 +485,18 @@ InstallMethod( points2triangs,
 end );
 
 
+InstallMethod( points2triangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2triangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2ntriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -384,6 +514,16 @@ InstallMethod( chiro2ntriangs,
 
     # finally evaluate the output
     return EvalString( result );
+
+end );
+
+
+InstallMethod( chiro2ntriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2ntriangs( input1, [], [] );
 
 end );
 
@@ -411,8 +551,18 @@ InstallMethod( points2ntriangs,
 end );
 
 
+InstallMethod( points2ntriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2ntriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2finetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -430,6 +580,16 @@ InstallMethod( chiro2finetriangs,
 
     # finally evaluate the output
     return result;
+
+end );
+
+
+InstallMethod( chiro2finetriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2finetriangs( input1, [], [] );
 
 end );
 
@@ -461,8 +621,18 @@ InstallMethod( points2finetriangs,
 end );
 
 
+InstallMethod( points2finetriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2finetriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2nfinetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -480,6 +650,16 @@ InstallMethod( chiro2nfinetriangs,
 
     # finally evaluate the output
     return EvalString( result );
+
+end );
+
+
+InstallMethod( chiro2nfinetriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2nfinetriangs( input1, [], [] );
 
 end );
 
@@ -507,8 +687,18 @@ InstallMethod( points2nfinetriangs,
 end );
 
 
+InstallMethod( points2nfinetriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2nfinetriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2alltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -530,6 +720,16 @@ InstallMethod( chiro2alltriangs,
     else
         return EvalString( result );
     fi;
+
+end );
+
+
+InstallMethod( chiro2alltriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2alltriangs( input1, [], [] );
 
 end );
 
@@ -561,8 +761,18 @@ InstallMethod( points2alltriangs,
 end );
 
 
+InstallMethod( points2alltriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2alltriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2nalltriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -580,6 +790,16 @@ InstallMethod( chiro2nalltriangs,
 
     # finally evaluate the output
     return EvalString( result );
+
+end );
+
+
+InstallMethod( chiro2nalltriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2nalltriangs( input1, [], [] );
 
 end );
 
@@ -607,8 +827,18 @@ InstallMethod( points2nalltriangs,
 end );
 
 
+InstallMethod( points2nalltriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2nalltriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2allfinetriangs,
-               "a list, a list and a list of strings encoding options of topcom",
+               "a string, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
@@ -630,6 +860,16 @@ InstallMethod( chiro2allfinetriangs,
     else
         return EvalString( result );
     fi;
+
+end );
+
+
+InstallMethod( chiro2allfinetriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2allfinetriangs( input1, [], [] );
 
 end );
 
@@ -661,8 +901,18 @@ InstallMethod( points2allfinetriangs,
 end );
 
 
+InstallMethod( points2allfinetriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2allfinetriangs( input1, [], [] );
+
+end );
+
+
 InstallMethod( chiro2nallfinetriangs,
-               "a list of points, a reference triangulation and a list of options",
+               "a string, a reference triangulation and a list of options",
                [ IsString, IsList, IsList ],
   function( points, ref_triangulation, options_list )
 
@@ -680,6 +930,16 @@ InstallMethod( chiro2nallfinetriangs,
 
     # finally evaluate the output
     return EvalString( result );
+
+end );
+
+
+InstallMethod( chiro2nallfinetriangs,
+               "a string",
+               [ IsString ],
+  function( input1 )
+
+    return chiro2nallfinetriangs( input1, [], [] );
 
 end );
 
@@ -703,5 +963,15 @@ InstallMethod( points2nallfinetriangs,
 
     # finally evaluate the output
     return EvalString( result );
+
+end );
+
+
+InstallMethod( points2nallfinetriangs,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2nallfinetriangs( input1, [], [] );
 
 end );
