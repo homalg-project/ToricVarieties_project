@@ -333,108 +333,83 @@ end );
 InstallMethod( ToricVarietyFromGLSMCharges,
                "for a list of lists of integers",
                [ IsList ],
-  function( GLSM_charges )
-    local len, i, j, sage_Triangulisation_Directory, sage_Triangulisation, stdin, output_string, stdout, fan, 
-         shuffled_degree_vectors, variety, map;
+  function( grading )
+    local len, i, j, myZ, rays, trias, varieties, fan, shuffled_degree_vectors, variety, map;
 
     # (step0) check for valid input
 
-    # are the GLSM-charges all of the same length
-    len := DuplicateFreeList( List( [ 1 .. Length( GLSM_charges ) ], i -> Length( GLSM_charges[ i ] ) ) );
+    # are the gradings all of the same length
+    len := DuplicateFreeList( List( [ 1 .. Length( grading ) ], i -> Length( grading[ i ] ) ) );
     if Length( len ) > 1 then
-
-      Error( "The GLSM_charges must all be of the same length " );
+      Error( "The gradings must all be of the same length " );
       return;
-
     fi;
 
-    # next check if all entries are integers
-    for i in [ 1 .. Length( GLSM_charges ) ] do
-
+    # are the entries of the gradings integers?
+    for i in [ 1 .. Length( grading ) ] do
       for j in [ 1 .. len[ 1 ] ] do
-
-        if not IsInt( GLSM_charges[ i ][ j ] ) then
-
-          Error( "All entries of the GLSM_charges must be integers " );
+        if not IsInt( grading[ i ][ j ] ) then
+          Error( "All entries of the gradings must be integers " );
           return;
+        fi;
+      od;
+    od;
+
+
+    # (step1) compute the fans compatible with these gradings
+    myZ := HomalgRingOfIntegers();
+    rays := EntriesOfHomalgMatrixAsListList( 
+                                SyzygiesOfColumns( HomalgMatrix( grading, myZ ) ) );
+    trias := points2allfinetriangs( rays, [], ["regular"] );
+
+
+    # (step2) to match NConvex, the counting must start at 1, whilst topcom starts a 0 so...
+    Apply( trias, i -> i +1 );
+
+
+    # (step3) iterate over the obtained triangulations
+    varieties := [];
+    for i in [ 1 .. Length( trias ) ] do
+    
+        # compute the fan 
+        fan := Fan( rays, trias[ i ] );
+
+        # and check its properties
+        if not IsPointed( fan ) then
+
+            Error( "input fan must only contain strictly convex cones" );
+
+        elif not IsFullDimensional( fan ) then
+
+            Error( "currently the construction from gradings is only supported for toric varieties without torus factor" );
 
         fi;
 
-      od;
+        # then construct the variety
+        variety := rec( WeilDivisors := WeakPointerObj( [ ] ), DegreeXLayers := rec() );
+        ObjectifyWithAttributes(
+                                variety, TheTypeFanToricVariety,
+                                FanOfVariety, fan
+                                );
 
+# gradings got shuffled!
+
+        # and identify its map from the Weil divisors to the class group according to the given grading
+        map := HomalgMap( TransposedMat( grading ),
+                          TorusInvariantDivisorGroup( variety ),
+                          Length( grading[ 1 ] ) * HOMALG_MATRICES.ZZ
+                        );
+
+        # then set the maps accordingly
+        SetMapFromWeilDivisorsToClassGroup( variety, map );
+
+        # and save this variety
+        varieties[ i ] := variety;
+Error( "Test" );
     od;
 
 
-    # (step1) compute a fan from the given GLSM_charges
-
-    # HARD_CODED PATH CHOICE! MAKE SURE THERE IS A UNIQUE 'TORIC VARIETIES' INSTALLED!
-    # ALSO SAGE IS REQUIRED TO PERFORM THIS PIECE OF cOMPUTATION
-    sage_Triangulisation_Directory := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties",
-                                                                 "Sage" )[ 1 ];
-    sage_Triangulisation := Filename( sage_Triangulisation_Directory, "Sage_Triangulisation.sh" );
-
-    # note that sage computes a kernel to determine the ray generators
-    # so the ray generators might point in the wrong direction and thus not produce a complete fan 
-    # this is checked below, so that we never get fooled this way
-
-    # set up communication channels
-    stdin := InputTextUser();
-    output_string := "";
-    stdout := OutputTextString( output_string, true );
-
-    # execute sage_Triangulisation with the 'input file' described by the command_string
-    Process( sage_Triangulisation_Directory, sage_Triangulisation, stdin, stdout, [ String( GLSM_charges ) ] );
-
-    # remove line break charater
-    Remove( output_string );
-
-    # and evaluate the string
-    output_string := EvalString( output_string );
-
-    # now compute the fan 
-    fan := Fan( output_string[ 1 ], output_string[ 2 ] );
-
-
-    # (step3) check that the fan is valid
-    if not IsPointed( fan ) then
-
-        Error( "input fan must only contain strictly convex cones\n" );
-
-    elif not IsSmooth( fan ) then
-
-        Error( "currently the construction from GLSM charges only supports smooth and compact toric varieties\n" );
-
-    elif not IsComplete( fan ) then
-
-        Error( "currently the construction from GLSM charges only supports smooth and compact toric varieties\n" );
-
-    fi;
-
-    variety := rec( WeilDivisors := WeakPointerObj( [ ] ), DegreeXLayers := rec() );
-    ObjectifyWithAttributes(
-                             variety, TheTypeFanToricVariety,
-                             FanOfVariety, fan
-                            );
-
-    # (step4) compute the map from the Weil divisors to the class group according to the given GLSM charges
-
-    # the ray generators got shuffled, so we need to shuffle the GLSM charges accordingly
-    shuffled_degree_vectors := [];
-    for i in [ 1 .. Length( GLSM_charges ) ] do
-      Add( shuffled_degree_vectors, GLSM_charges[ Position( output_string[ 1 ], RayGenerators( fan )[ i ] ) ] );
-    od;
-
-    # compute the map associated to 'shuffled_degree_vectors'
-    # we know the class group since X_\Sigma is smooth - we set it here explicitely to avoid a cyclic problematic
-    map := HomalgMap( shuffled_degree_vectors,
-                      TorusInvariantDivisorGroup( variety ),
-                      Length( shuffled_degree_vectors[ 1 ] ) * HOMALG_MATRICES.ZZ
-                     );
-
-    # then set the maps accordingly
-    SetMapFromWeilDivisorsToClassGroup( variety, map );
-
-    # and now return the variety
-    return variety;
+    # (step4) return all these varieties
+    return varieties;
 
 end );
