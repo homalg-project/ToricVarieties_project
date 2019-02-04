@@ -56,14 +56,6 @@ DeclareOperation( "chiro2cocircuits",
 #! of the options supported by topcom.
 #! @Returns List
 #! @Arguments List1, List2, List3
-DeclareOperation( "cocircuits2facets",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
 DeclareOperation( "points2facets",
                   [ IsList, IsList, IsList ] );
 
@@ -241,6 +233,17 @@ DeclareOperation( "chiro2nallfinetriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2nallfinetriangs",
+                  [ IsList, IsList, IsList ] );
+
+
+# The following methods are not yet supported
+                  
+#! @Description
+#! The first two lists are the input required by topcom. The third is a list of strings, consisting
+#! of the options supported by topcom.
+#! @Returns List
+#! @Arguments List1, List2, List3
+DeclareOperation( "cocircuits2facets",
                   [ IsList, IsList, IsList ] );
 
 #! @Description
