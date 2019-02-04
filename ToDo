@@ -6,8 +6,6 @@ Note that EvalString also fails if not triangulation is found. This definitely n
 
 Also, the command line options are more flexible than so-far anticipated - we may have "--..." but also "-..." can be used. This is currently not supported either.
 
-Add global variable, which lists all options that are supported by Topcom currently, and check this before the input is given to Topcom.
-
 Currently, Topcom produces lots of output in the console, which is not nice when using gap. Can this be adjusted?
 
 ToricVarieties should not be a required package.
