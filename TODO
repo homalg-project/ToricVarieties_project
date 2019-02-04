@@ -70,3 +70,8 @@ Final idea for improvement is then to speed up the DegreeXLayerComputation. In p
 "cohomCalg + Koszul-Extension + mySpectralSequenz + TheoremOfGSImproved"-mathematica notebook.
 -> That would probably be very sweet, although very few people use mathematica due to its commercial uses.
 -> Maybe rewrite it all in Maple?
+
+
+Add conifold example as construction of toric variety from gradings ,i.e.
+ToricVarietyFromGrading( [[1,1,-1,-1]] );
+-> Nice check
