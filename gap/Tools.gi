@@ -62,7 +62,7 @@ InstallMethod( ExecuteTopcom,
                [ IsDirectory, IsString, IsList, IsList, IsList ],
   function( topcomDirectory, name_of_binary, input1, input2, options_list )
 
-  local topcomBinary, output_string, output, input_string, input, options, i, trias;
+  local topcomBinary, output_string, output, input_string, input, options, supported_options, i, trias;
 
     # setup filename for this file
     topcomBinary := Filename( topcomDirectory, name_of_binary );
@@ -78,6 +78,17 @@ InstallMethod( ExecuteTopcom,
     input_string := Concatenation( String( input1 ), " ", String( input2 )," " );
     input := InputTextString( input_string );
     
+    # introduce the options currently supported by topcom and this interface
+    supported_options := [ "checktriang", "flipdeficiency", "heights", "noinsertion", 
+                           "reducepoints", "regular", "nonregular", "memopt", "soplex", "dump" ];
+
+    # check that all options provided are currently supported
+    for i in [ 1 .. Length( options_list ) ] do
+        if Position( supported_options, options_list[ i ] ) = fail then
+            Error( Concatenation( "option ", options_list[ i ], " is currently not supported by TopcomInterface" ) );            
+        fi;
+    od;
+
     # prepare options to be handed to topcom
     options := "";
     for i in [ 1 .. Length( options_list ) ] do
