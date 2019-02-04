@@ -16,68 +16,70 @@ chiro := "12, 4:-+--+++---++---++-+---++-+++-----++--++-++++--++---+++-+++--+---
 #! -++++---++-+++++-+++++--+++---++---++--++-++++-+++--++--+----+++--+---\
 #! --+-----++--+++--++--+----+++-+-----+-----++----++-+++++-+++++--++----\
 #! ----++--++-"
-points2chiro( rays, [], [] );
+points2chiro( rays );
 #! "3,2:+-+[]"
-chiro2dual( chiro, [], [] );
+chiro2dual( chiro );
 #! "12,8:0++----++-+--+-++--++--+---++-+++---+--++--+---++-++++-++--+++--+-++-++--++-++---+--+++--+--++---++-+--+---++---++-+--+--++-+++--++-++---+--+++--+--++---++-+--+---++---++-+--+--++-++++--+++--+-++-++--+--+--+--+-++--+--+++-++---++-++--+++--+-++-+++--+++--+-++-++--+----++---++-+--+--++-++-++-+++--++---++-+--+--++-++-++-+++-++-++---++--+--+++-++---++---++---++-+--+---++---++-+--+--++-++++--+++--+-++-++--+--+--+---++--+++--+-++-++--+--+--+---+--+--++--++---++-+--+-+--+--+--+----++-++---++-++---"
-chiro2circuits( points2chiro( rays, [], [] ), [], [] );
+chiro2circuits( points2chiro( rays ) );
 #! "3,2:[[[0,1,2],[]]]"
-chiro2cocircuits( points2chiro( rays, [], [] ), [], [] );
+chiro2cocircuits( points2chiro( rays ) );
 #! "3,2:[[[0],[1]][[1],[2]][[0],[2]]]"
-result := cocircuits2facets( chiro2cocircuits( chiro, [], [] ), [], [] );
+result := cocircuits2facets( chiro2cocircuits( chiro ) );
 #! ""
-points2facets( rays, [], [] );
+points2facets( rays );
 #! "3,2:[]"
-points2nflips( rays, [], [] );
+points2nflips( rays );
 #! 3
-points2flips( rays, [], [] );
+points2flips( rays );
 #! "[3,2:[[[0,1,2],[]]->0]]"
-chiro2placingtriang( chiro, [], [] );
+chiro2placingtriang( chiro );
 #! [ [ 0, 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 0, 1, 3, 4 ], [ 0, 1, 2, 4 ], [ 0, 2, 3, 5 ], [ 0, 3, 4, 6 ], 
 #! [ 0, 2, 4, 6 ], [ 0, 3, 5, 6 ], [ 0, 2, 5, 6 ], [ 2, 3, 4, 7 ], [ 2, 3, 5, 7 ], [ 3, 4, 7, 8 ], 
 #! [ 2, 4, 7, 8 ], [ 3, 5, 7, 8 ], [ 2, 5, 7, 8 ], [ 3, 4, 8, 9 ], [ 2, 4, 8, 9 ], [ 3, 5, 8, 9 ], 
 #! [ 2, 5, 8, 9 ], [ 3, 4, 6, 10 ], [ 2, 4, 6, 10 ], [ 3, 5, 6, 10 ], [ 2, 5, 6, 10 ] ]  
-points2placingtriang( rays, [], [] );
+points2placingtriang( rays );
 #! [ [ 0, 1 ], [ 1, 2 ], [ 0, 2 ] ]
-chiro2finetriang( chiro, [], [] );
+chiro2finetriang( chiro );
 #! [ [ 0, 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 0, 1, 3, 4 ], [ 0, 1, 2, 4 ], [ 0, 2, 3, 5 ], [ 0, 3, 4, 6 ], 
 #! [ 0, 2, 4, 6 ], [ 0, 3, 5, 6 ], [ 0, 2, 5, 6 ], [ 2, 3, 4, 7 ], [ 2, 3, 5, 7 ], [ 3, 4, 7, 8 ], 
 #! [ 2, 4, 7, 8 ], [ 3, 5, 7, 8 ], [ 2, 5, 7, 8 ], [ 3, 4, 8, 9 ], [ 2, 4, 8, 9 ], [ 3, 5, 8, 9 ], 
 #! [ 2, 5, 8, 9 ], [ 3, 4, 6, 10 ], [ 2, 4, 6, 10 ], [ 3, 5, 6, 10 ], [ 2, 5, 6, 11 ], [ 2, 6, 10, 11 ], 
 #! [ 5, 6, 10, 11 ], [ 2, 5, 10, 11 ] ]
-points2finetriang( rays, [], [] );
+points2finetriang( rays );
 #! [ [ 0, 1 ], [ 1, 2 ], [ 0, 2 ] ]
-chiro2triangs( points2chiro( rays, [], [] ), [], [] );
+chiro2triangs( points2chiro( rays ) );
 #! "T[0]:=[0->3,2:[[0,1],[1,2],[0,2]]];T[1]:=[1->3,2:[]];"
-points2triangs( rays, [], [] );
+points2triangs( rays );
 #! "T[0]:=[0->3,2:[[0,1],[1,2],[0,2]]];T[1]:=[1->3,2:[]];"
-chiro2ntriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2ntriangs( points2chiro( rays ) );
 #! 2
-points2ntriangs( rays, [], [] );
+points2ntriangs( rays );
 #! 2
-chiro2finetriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2finetriangs( points2chiro( rays ) );
 #! "T[0]:=[0->3,2:[[0,1],[1,2],[0,2]]];T[1]:=[1->3,2:[]];"
-points2finetriang( rays, [], [] );
+points2finetriang( rays );
 #! [ [ 0, 1 ], [ 1, 2 ], [ 0, 2 ] ]
-chiro2nfinetriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2nfinetriangs( points2chiro( rays ) );
 #! 2
-points2nfinetriangs( rays, [], [] );
+points2nfinetriangs( rays );
 #! 2
-chiro2alltriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2alltriangs( points2chiro( rays ) );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
-points2alltriangs( rays, [], [] );
+points2alltriangs( rays );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
-chiro2nalltriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2nalltriangs( points2chiro( rays ) );
 #! 1
-points2nalltriangs( rays, [], [] );
+points2nalltriangs( rays );
 #! 1
-chiro2allfinetriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2allfinetriangs( points2chiro( rays ) );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
-points2allfinetriangs( rays, [], [] );
+points2allfinetriangs( rays );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
 points2allfinetriangs( rays, [], ["regular"] );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
-chiro2nallfinetriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2nallfinetriangs( points2chiro( rays ) );
+#! 1
+points2nallfinetriangs( rays );
 #! 1
 points2nallfinetriangs( rays, [], [] );
 #! 1
