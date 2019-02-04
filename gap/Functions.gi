@@ -109,30 +109,6 @@ InstallMethod( chiro2cocircuits,
 end );
 
 
-InstallMethod( cocircuits2facets,
-               "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
-  function( input1, input2, options_list )
-
-  local topcomDirectory, result;
-
-    # find the topcom binary
-    topcomDirectory := FindTopcomDirectory( );
-
-    # execute topcom with this input
-    #result := ExecuteTopcom( topcomDirectory, 
-    #                         "cocircuits2facets", 
-    #                         input1,
-    #                         input2,
-    #                         options_list );
-
-    # finally evaluate the output
-    #return EvalString( result );
-    return 0;
-    
-end );
-
-
 InstallMethod( points2facets,
                "a list, a list and a list of strings encoding options of topcom",
                [ IsList, IsList, IsList ],
@@ -659,6 +635,32 @@ InstallMethod( points2nallfinetriangs,
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
 
+end );
+
+
+## Methods that are currently not supported yet
+
+InstallMethod( cocircuits2facets,
+               "a list, a list and a list of strings encoding options of topcom",
+               [ IsList, IsList, IsList ],
+  function( input1, input2, options_list )
+
+  local topcomDirectory, result;
+
+    # find the topcom binary
+    topcomDirectory := FindTopcomDirectory( );
+
+    # execute topcom with this input
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "cocircuits2facets", 
+    #                         input1,
+    #                         input2,
+    #                         options_list );
+
+    # finally evaluate the output
+    #return EvalString( result );
+    return 0;
+    
 end );
 
 
