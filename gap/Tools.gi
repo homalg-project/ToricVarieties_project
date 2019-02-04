@@ -70,11 +70,15 @@ InstallMethod( ExecuteTopcom,
         Error( Concatenation( "could not find the binary ", name_of_binary, " provided by topcom" ) );
     fi;
   
-    # prepare to launch topcom
+    # prepare output_stream to launch topcom
     output_string := "";
     output := OutputTextString( output_string, true );
+
+    # prepare input_stream to launch topcom
     input_string := Concatenation( String( input1 ), " ", String( input2 )," " );
     input := InputTextString( input_string );
+    
+    # prepare options to be handed to topcom
     options := "";
     for i in [ 1 .. Length( options_list ) ] do
       options := Concatenation( options, "--", String( options_list[ i ] ), " " );
