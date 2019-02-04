@@ -40,6 +40,16 @@ InstallMethod( points2chiro,
 end );
 
 
+InstallMethod( points2chiro,
+               "a list",
+               [ IsList ],
+  function( input1 )
+
+    return points2chiro( input1, [], [] );
+
+end );
+
+  
 InstallMethod( chiro2dual,
                "a list, a list and a list of strings encoding options of topcom",
                [ IsString, IsList, IsList ],
