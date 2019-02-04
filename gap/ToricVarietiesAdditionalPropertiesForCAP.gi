@@ -330,7 +330,7 @@ end );
 ##
 ########################
 
-InstallMethod( ToricVarietyFromGLSMCharges,
+InstallMethod( ToricVarietyFromGrading,
                "for a list of lists of integers",
                [ IsList ],
   function( grading )

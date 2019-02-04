@@ -91,5 +91,5 @@ DeclareAttribute( "SfpgrmodRight",
 #! Creates a toric variety from a number of GLSM charges
 #! @Returns a variety
 #! @Arguments a list of lists of integers
-DeclareOperation( "ToricVarietyFromGLSMCharges",
+DeclareOperation( "ToricVarietyFromGrading",
                   [ IsList ] );
