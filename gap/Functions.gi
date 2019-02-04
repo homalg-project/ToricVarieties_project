@@ -35,7 +35,7 @@ InstallMethod( points2chiro,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -58,7 +58,7 @@ InstallMethod( chiro2dual,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -81,7 +81,7 @@ InstallMethod( chiro2circuits,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -104,7 +104,7 @@ InstallMethod( chiro2cocircuits,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -127,7 +127,7 @@ InstallMethod( points2facets,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -173,7 +173,7 @@ InstallMethod( points2flips,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -288,7 +288,7 @@ InstallMethod( chiro2triangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -311,7 +311,7 @@ InstallMethod( points2triangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
@@ -380,7 +380,7 @@ InstallMethod( chiro2finetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( result );
+    return result;
 
 end );
 
