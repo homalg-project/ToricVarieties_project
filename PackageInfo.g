@@ -16,7 +16,7 @@ PackageName := "TopcomInterface",
 Subtitle := "A package to communicate with the software Topcom",
 
 Version :=  Maximum( [
-  "2019.01.25", # Martins version  
+  "2019.02.04", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
