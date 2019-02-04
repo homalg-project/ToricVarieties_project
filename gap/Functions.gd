@@ -27,6 +27,11 @@
 DeclareOperation( "points2chiro",
                   [ IsList, IsList, IsList ] );
 
+#!
+DeclareOperation( "points2chiro",
+                  [ IsList ] );
+
+
 #! @Description
 #! The first argument is a string encoding the chiro and the
 #! second a list encoding an (optional) sample triangulation. 
