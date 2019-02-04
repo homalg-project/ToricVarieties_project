@@ -33,7 +33,7 @@ DeclareOperation( "points2chiro",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2dual",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -41,7 +41,7 @@ DeclareOperation( "chiro2dual",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2circuits",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -49,7 +49,7 @@ DeclareOperation( "chiro2circuits",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2cocircuits",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -89,7 +89,7 @@ DeclareOperation( "points2flips",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2placingtriang",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -105,7 +105,7 @@ DeclareOperation( "points2placingtriang",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2finetriang",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -121,7 +121,7 @@ DeclareOperation( "points2finetriang",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2triangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -137,7 +137,7 @@ DeclareOperation( "points2triangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2ntriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -153,7 +153,7 @@ DeclareOperation( "points2ntriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2finetriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -169,7 +169,7 @@ DeclareOperation( "points2finetriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2nfinetriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -185,7 +185,7 @@ DeclareOperation( "points2nfinetriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2alltriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -201,7 +201,7 @@ DeclareOperation( "points2alltriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2nalltriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -217,7 +217,7 @@ DeclareOperation( "points2nalltriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2allfinetriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -233,7 +233,7 @@ DeclareOperation( "points2allfinetriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "chiro2nallfinetriangs",
-                  [ IsList, IsList, IsList ] );
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting

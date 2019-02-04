@@ -57,7 +57,7 @@ end );
 ##############################################################################################
 
 # Execute topcom
-InstallMethod( ExecuteTopcom,
+InstallMethod( ExecuteTopcomForPoints,
                "directory, executable binary, input1, input2 and a list of options",
                [ IsDirectory, IsString, IsList, IsList, IsList ],
   function( topcomDirectory, name_of_binary, input1, input2, options_list )
@@ -97,7 +97,7 @@ InstallMethod( ExecuteTopcom,
     
     # execute topcom
     Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
-
+    
     # now process the triangulations
     output_string := ReplacedString( output_string, "{", "[" );
     output_string := ReplacedString( output_string, "}", "]" );
@@ -108,3 +108,54 @@ InstallMethod( ExecuteTopcom,
 
 end );
 
+# Execute topcom
+InstallMethod( ExecuteTopcomForChiro,
+               "directory, executable binary, input1, input2 and a list of options",
+               [ IsDirectory, IsString, IsString, IsList, IsList ],
+  function( topcomDirectory, name_of_binary, input1, input2, options_list )
+
+  local topcomBinary, output_string, output, input_string, input, options, supported_options, i, trias;
+
+    # setup filename for this file
+    topcomBinary := Filename( topcomDirectory, name_of_binary );
+    if IsExistingFile( topcomBinary ) = false then
+        Error( Concatenation( "could not find the binary ", name_of_binary, " provided by topcom" ) );
+    fi;
+  
+    # prepare output_stream to launch topcom
+    output_string := "";
+    output := OutputTextString( output_string, true );
+
+    # prepare input_stream to launch topcom
+    input_string := Concatenation( input1, " ", String( input2 )," " );
+    input := InputTextString( input_string );
+    
+    # introduce the options currently supported by topcom and this interface
+    supported_options := [ "checktriang", "flipdeficiency", "heights", "noinsertion", 
+                           "reducepoints", "regular", "nonregular", "memopt", "soplex", "dump" ];
+
+    # check that all options provided are currently supported
+    for i in [ 1 .. Length( options_list ) ] do
+        if Position( supported_options, options_list[ i ] ) = fail then
+            Error( Concatenation( "option ", options_list[ i ], " is currently not supported by TopcomInterface" ) );            
+        fi;
+    od;
+
+    # prepare options to be handed to topcom
+    options := "";
+    for i in [ 1 .. Length( options_list ) ] do
+      options := Concatenation( options, "--", String( options_list[ i ] ), " " );
+    od;
+    
+    # execute topcom
+    Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
+    
+    # now process the triangulations
+    output_string := ReplacedString( output_string, "{", "[" );
+    output_string := ReplacedString( output_string, "}", "]" );
+    RemoveCharacters( output_string, "\n" );
+
+    # finally return the result
+    return output_string;
+
+end );
