@@ -99,6 +99,7 @@ InstallMethod( ExecuteTopcomForPoints,
     Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
     
     # now process the triangulations
+    output_string := ReplacedString( output_string, "}\n{", "],[" );
     output_string := ReplacedString( output_string, "{", "[" );
     output_string := ReplacedString( output_string, "}", "]" );
     RemoveCharacters( output_string, "\n" );
@@ -151,6 +152,7 @@ InstallMethod( ExecuteTopcomForChiro,
     Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
     
     # now process the triangulations
+    output_string := ReplacedString( output_string, "}\n{", "],[" );
     output_string := ReplacedString( output_string, "{", "[" );
     output_string := ReplacedString( output_string, "}", "]" );
     RemoveCharacters( output_string, "\n" );
