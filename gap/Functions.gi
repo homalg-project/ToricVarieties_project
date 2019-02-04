@@ -128,7 +128,6 @@ InstallMethod( cocircuits2facets,
 
     # finally evaluate the output
     return result;
-    #return 0;
     
 end );
 
