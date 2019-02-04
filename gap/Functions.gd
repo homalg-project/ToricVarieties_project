@@ -56,6 +56,16 @@ DeclareOperation( "chiro2circuits",
 #! @Arguments String, List2, List3
 DeclareOperation( "chiro2cocircuits",
                   [ IsString, IsList, IsList ] );
+                  
+#! @Description
+#! The first argument is a string encoding the chiro and the
+#! second a list encoding an (optional) sample triangulation. 
+#! The third argument is a list of strings, consisting of the
+#! options supported by topcom.
+#! @Returns String
+#! @Arguments String, List2, List3
+DeclareOperation( "cocircuits2facets",
+                  [ IsString, IsList, IsList ] );
 
 #! @Description
 #! The first two lists are the input required by topcom. The third is a list of strings, consisting
@@ -259,55 +269,4 @@ DeclareOperation( "chiro2nallfinetriangs",
 #! @Returns List
 #! @Arguments List1, List2, List3
 DeclareOperation( "points2nallfinetriangs",
-                  [ IsList, IsList, IsList ] );
-
-
-# The following methods are not yet supported
-                  
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "cocircuits2facets",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "cube",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "cyclic",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "cross",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "hypersimplex",
-                  [ IsList, IsList, IsList ] );
-
-#! @Description
-#! The first two lists are the input required by topcom. The third is a list of strings, consisting
-#! of the options supported by topcom.
-#! @Returns List
-#! @Arguments List1, List2, List3
-DeclareOperation( "santos_triang",
                   [ IsList, IsList, IsList ] );

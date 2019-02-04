@@ -24,6 +24,8 @@ chiro2circuits( points2chiro( rays, [], [] ), [], [] );
 #! "3,2:[[[0,1,2],[]]]"
 chiro2cocircuits( points2chiro( rays, [], [] ), [], [] );
 #! "3,2:[[[0],[1]][[1],[2]][[0],[2]]]"
+result := cocircuits2facets( chiro2cocircuits( chiro, [], [] ), [], [] );
+#! ""
 points2facets( rays, [], [] );
 #! "3,2:[]"
 points2nflips( rays, [], [] );
@@ -69,7 +71,7 @@ chiro2nalltriangs( points2chiro( rays, [], [] ), [], [] );
 #! 1
 points2nalltriangs( rays, [], [] );
 #! 1
-result := chiro2allfinetriangs( points2chiro( rays, [], [] ), [], [] );
+chiro2allfinetriangs( points2chiro( rays, [], [] ), [], [] );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
 points2allfinetriangs( rays, [], [] );
 #! [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ]
