@@ -28,11 +28,11 @@ InstallMethod( points2chiro,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2chiro", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2chiro", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -42,7 +42,7 @@ end );
 
 InstallMethod( chiro2dual,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -51,11 +51,11 @@ InstallMethod( chiro2dual,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2dual", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2dual", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -65,7 +65,7 @@ end );
 
 InstallMethod( chiro2circuits,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -74,11 +74,11 @@ InstallMethod( chiro2circuits,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2circuits", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2circuits", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -88,7 +88,7 @@ end );
 
 InstallMethod( chiro2cocircuits,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -97,11 +97,11 @@ InstallMethod( chiro2cocircuits,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2cocircuits", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2cocircuits", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -120,15 +120,16 @@ InstallMethod( cocircuits2facets,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cocircuits2facets", 
-                             input1,
-                             input2,
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "cocircuits2facets", 
+    #                         input1,
+    #                         input2,
+    #                         options_list );
 
     # finally evaluate the output
-    return EvalString( result );
-
+    #return EvalString( result );
+    return 0;
+    
 end );
 
 
@@ -143,11 +144,11 @@ InstallMethod( points2facets,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2facets", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2facets", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -166,11 +167,11 @@ InstallMethod( points2nflips,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nflips", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2nflips", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -189,11 +190,11 @@ InstallMethod( points2flips,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2flips", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2flips", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -203,7 +204,7 @@ end );
 
 InstallMethod( chiro2placingtriang,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -212,11 +213,11 @@ InstallMethod( chiro2placingtriang,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2placingtriang", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2placingtriang", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -235,11 +236,11 @@ InstallMethod( points2placingtriang,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2placingtriang", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2placingtriang", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -249,7 +250,7 @@ end );
 
 InstallMethod( chiro2finetriang,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -258,11 +259,11 @@ InstallMethod( chiro2finetriang,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2finetriang", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2finetriang", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -281,11 +282,11 @@ InstallMethod( points2finetriang,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2finetriang", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2finetriang", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -295,7 +296,7 @@ end );
 
 InstallMethod( chiro2triangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -304,11 +305,11 @@ InstallMethod( chiro2triangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2triangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2triangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -327,11 +328,11 @@ InstallMethod( points2triangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2triangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2triangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -341,7 +342,7 @@ end );
 
 InstallMethod( chiro2ntriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -350,11 +351,11 @@ InstallMethod( chiro2ntriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2ntriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2ntriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -373,11 +374,11 @@ InstallMethod( points2ntriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2ntriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2ntriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -387,7 +388,7 @@ end );
 
 InstallMethod( chiro2finetriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -396,11 +397,11 @@ InstallMethod( chiro2finetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2finetriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2finetriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -419,11 +420,11 @@ InstallMethod( points2finetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2finetriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2finetriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -433,7 +434,7 @@ end );
 
 InstallMethod( chiro2nfinetriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -442,11 +443,11 @@ InstallMethod( chiro2nfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2nfinetriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -465,11 +466,11 @@ InstallMethod( points2nfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2nfinetriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -479,7 +480,7 @@ end );
 
 InstallMethod( chiro2alltriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -488,11 +489,11 @@ InstallMethod( chiro2alltriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2alltriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2alltriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -511,11 +512,11 @@ InstallMethod( points2alltriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2alltriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2alltriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -525,7 +526,7 @@ end );
 
 InstallMethod( chiro2nalltriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -534,11 +535,11 @@ InstallMethod( chiro2nalltriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nalltriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2nalltriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -557,11 +558,11 @@ InstallMethod( points2nalltriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nalltriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2nalltriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -571,7 +572,7 @@ end );
 
 InstallMethod( chiro2allfinetriangs,
                "a list, a list and a list of strings encoding options of topcom",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
   local topcomDirectory, result;
@@ -580,11 +581,11 @@ InstallMethod( chiro2allfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2allfinetriangs", 
-                             input1,
-                             input2,
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2allfinetriangs", 
+                                    input1,
+                                    input2,
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result );
@@ -603,11 +604,11 @@ InstallMethod( points2allfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2allfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2allfinetriangs", 
+                                    points, 
+                                    ref_triangulation, 
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
@@ -617,7 +618,7 @@ end );
 
 InstallMethod( chiro2nallfinetriangs,
                "a list of points, a reference triangulation and a list of options",
-               [ IsList, IsList, IsList ],
+               [ IsString, IsList, IsList ],
   function( points, ref_triangulation, options_list )
 
   local topcomDirectory, result;
@@ -626,11 +627,11 @@ InstallMethod( chiro2nallfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "chiro2nallfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    result := ExecuteTopcomForChiro( topcomDirectory, 
+                                    "chiro2nallfinetriangs", 
+                                    points, 
+                                    ref_triangulation, 
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
@@ -649,11 +650,11 @@ InstallMethod( points2nallfinetriangs,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "points2nallfinetriangs", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    result := ExecuteTopcomForPoints( topcomDirectory, 
+                                    "points2nallfinetriangs", 
+                                    points, 
+                                    ref_triangulation, 
+                                    options_list );
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
@@ -672,14 +673,15 @@ InstallMethod( cube,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cube", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "cube", 
+    #                         points, 
+    #                         ref_triangulation, 
+    #                         options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    # return EvalString( result ); # fails if result = "" -> special catch needed
+    return 0;
 
 end );
 
@@ -695,14 +697,15 @@ InstallMethod( cyclic,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cyclic", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "cyclic", 
+    #                         points, 
+    #                         ref_triangulation, 
+    #                         options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    #return EvalString( result ); # fails if result = "" -> special catch needed
+    return 0;
 
 end );
 
@@ -718,14 +721,15 @@ InstallMethod( cross,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "cross", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "cross", 
+    #                         points, 
+    #                         ref_triangulation, 
+    #                         options_list );
 
     # finally evaluate the output
-    return EvalString( result ); # fails if result = "" -> special catch needed
+    #return EvalString( result ); # fails if result = "" -> special catch needed
+    return 0;
 
 end );
 
@@ -741,11 +745,12 @@ InstallMethod( hypersimplex,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "hypersimplex", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "hypersimplex", 
+    #                         points, 
+    #                         ref_triangulation, 
+    #                         options_list );
+    return 0;
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
@@ -764,11 +769,12 @@ InstallMethod( santos_triang,
     topcomDirectory := FindTopcomDirectory( );
 
     # execute topcom with this input
-    result := ExecuteTopcom( topcomDirectory, 
-                             "santos_triang", 
-                             points, 
-                             ref_triangulation, 
-                             options_list );
+    #result := ExecuteTopcom( topcomDirectory, 
+    #                         "santos_triang", 
+    #                         points, 
+    #                         ref_triangulation, 
+    #                         options_list );
+    return 0;
 
     # finally evaluate the output
     return EvalString( result ); # fails if result = "" -> special catch needed
