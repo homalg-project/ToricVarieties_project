@@ -78,18 +78,3 @@ DeclareAttribute( "SfpgrmodLeft",
 #! @Arguments variety
 DeclareAttribute( "SfpgrmodRight",
                  IsToricVariety );
-
-
-
-########################
-##
-#! @Section Constructors
-##
-########################
-
-#! @Description
-#! Creates a toric variety from a number of GLSM charges
-#! @Returns a variety
-#! @Arguments a list of lists of integers
-DeclareOperation( "ToricVarietyFromGrading",
-                  [ IsList ] );
