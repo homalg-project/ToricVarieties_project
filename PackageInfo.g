@@ -73,8 +73,7 @@ Dependencies := rec(
                            [ "TruncationsOfPresentationsByProjectiveGradedModules", ">= 2016.03.15" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "NormalizInterface", ">= 0.9.7" ],
-                           [ "ToricVarieties", ">=2016.05.03" ],
-                           [ "TopcomInterface", ">= 2019.02.04" ]
+                           [ "ToricVarieties", ">=2016.05.03" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],
   ExternalConditions := []
