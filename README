@@ -26,7 +26,7 @@ make clean
 
 More details/information can be found in the topcom package. This completes the installation of this gap-package.
 
-Currently, the functions involving "chiro" are not yet supported by this package.
+Currently, some functionality is not yet supported. In particular, this include the command line options -d, -h, -v, cardinality[k], frequency[ k ] and the input-type "chiro".
 
 E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
