@@ -16,7 +16,7 @@ PackageName := "TopcomInterface",
 Subtitle := "A package to communicate with the software Topcom",
 
 Version :=  Maximum( [
-  "2019.02.04", # Martins version  
+  "2019.06.15", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -68,7 +68,7 @@ Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],                           
                            ],
-  SuggestedOtherPackages := [ [ "ToricVarieties", ">=2016.05.03" ] ],
+  SuggestedOtherPackages := [ ],
   ExternalConditions := []
 
 ),
