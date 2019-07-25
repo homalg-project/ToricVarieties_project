@@ -93,17 +93,7 @@ InstallMethod( IrrelevantLeftIdealForCAP,
         
     od;
     
-    # construct the ideal with generators encoded in 'irrelevant_ideal'
-    matrix := HomalgMatrix( TransposedMat( [ irrelevant_ideal ] ), cox_ring );
-    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
-    alpha := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
-
-    if not IsWellDefined( alpha ) then
-      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
-      return;
-    fi;
-
-    return FreydCategoryObject( KernelEmbedding( alpha ) );
+    return LeftIdealForCAP( irrelevant_ideal, cox_ring );
 
 end );
 
@@ -134,17 +124,7 @@ InstallMethod( IrrelevantRightIdealForCAP,
         
     od;
     
-    # construct the ideal with generators encoded in 'irrelevant_ideal'
-    matrix := HomalgMatrix( [ irrelevant_ideal ], cox_ring );
-    range := GradedColumn( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
-    alpha := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
-
-    if not IsWellDefined( alpha ) then
-      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
-      return;
-    fi;
-
-    return FreydCategoryObject( KernelEmbedding( alpha ) );
+    return RightIdealForCAP( irrelevant_ideal, cox_ring );
 
 end );
 
@@ -170,17 +150,7 @@ InstallMethod( SRLeftIdealForCAP,
         Add( SR_generators, buffer );
     od;
 
-    # construct the ideal with generators encoded in 'irrelevant_ideal'
-    matrix := HomalgMatrix( TransposedMat( [ SR_generators ] ), cox_ring );
-    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
-    alpha := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
-
-    if not IsWellDefined( alpha ) then
-      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
-      return;
-    fi;
-
-    return FreydCategoryObject( KernelEmbedding( alpha ) );
+    return LeftIdealForCAP( SR_generators, cox_ring );
 
 end );
 
@@ -206,17 +176,7 @@ InstallMethod( SRRightIdealForCAP,
         Add( SR_generators, buffer );
     od;
 
-    # construct the ideal with generators encoded in 'irrelevant_ideal'
-    matrix := HomalgMatrix( [ SR_generators ], cox_ring );
-    range := GradedColumn( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
-    alpha := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
-
-    if not IsWellDefined( alpha ) then
-      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
-      return;
-    fi;
-
-    return FreydCategoryObject( KernelEmbedding( alpha ) );
+    return RightIdealForCAP( SR_generators, cox_ring );
 
 end );
 

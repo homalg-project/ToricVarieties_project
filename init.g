@@ -27,4 +27,4 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gd
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gd" );
 
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MapsInResolution.gd" );
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Tools.gd" );
+#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gd" );

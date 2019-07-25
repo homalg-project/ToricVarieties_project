@@ -11,6 +11,55 @@
 
 ####################################################################################
 ##
+#! @Section Left and right ideals
+##
+####################################################################################
+
+# Construct a left ideal
+InstallMethod( LeftIdealForCAP,
+               "for a list of generators and a homalg graded ring",
+               [ IsList, IsHomalgGradedRing ],
+  function( generators, graded_ring )
+    local matrix, range, alpha;
+
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( TransposedMat( [ generators ] ), graded_ring );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( graded_ring ) ), NrColumns( matrix ) ] ], graded_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
+
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
+
+    return FreydCategoryObject( WeakKernelEmbedding( alpha ) );
+
+end );
+
+# Construct a right ideal
+InstallMethod( RightIdealForCAP,
+               "for a list of generators and a homalg graded ring",
+               [ IsList, IsHomalgGradedRing ],
+  function( generators, graded_ring )
+    local matrix, range, alpha;
+  
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( [ generators ], graded_ring );
+    range := GradedColumn( [ [ TheZeroElement( DegreeGroup( graded_ring ) ), NrRows( matrix ) ] ], graded_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
+
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
+
+    return FreydCategoryObject( WeakKernelEmbedding( alpha ) );
+
+end );
+
+
+####################################################################################
+##
 #! @Section Minimal free resolutions
 ##
 ####################################################################################
