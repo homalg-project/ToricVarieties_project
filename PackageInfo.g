@@ -71,6 +71,7 @@ Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
+                           [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
                            [ "cohomCalgInterface", ">=2019.07.25" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "NormalizInterface", ">= 0.9.7" ],

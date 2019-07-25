@@ -10,6 +10,7 @@
 #############################################################################
 
 # the cohomology pieces
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ToolsForFPGradedModules.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ToricVarietiesAdditionalPropertiesForCAP.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ICTCurves.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gi" );
