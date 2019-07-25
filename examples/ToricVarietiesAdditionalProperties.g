@@ -7,10 +7,12 @@ LoadPackage( "SheafCohomologyOnToricVarieties" );
 #! @Example
 P2 := ProjectiveSpace( 2 );
 #! <A projective toric variety of dimension 2>
-SR1 := SRLeftIdealForCAP( P2 );
-#!
-SR2 := SRRightIdealForCAP( P2 );
-#!
+SR1 := SRLeftIdealForCAP( P2 );;
+IsWellDefined( SR1 );
+#! true
+SR2 := SRRightIdealForCAP( P2 );;
+IsWellDefined( SR2 );
+#! true
 #! @EndExample
 
 
@@ -19,10 +21,12 @@ SR2 := SRRightIdealForCAP( P2 );
 #! @Subsection Examples
 P2 := ProjectiveSpace( 2 );
 #! <A projective toric variety of dimension 2>
-IR1 := IrrelevantLeftIdealForCAP( P2 );
-#!
-IR2 := IrrelevantRightIdealForCAP( P2 );
-#!
+IR1 := IrrelevantLeftIdealForCAP( P2 );;
+IsWellDefined( IR1 );
+#! true
+IR2 := IrrelevantRightIdealForCAP( P2 );;
+IsWellDefined( IR2 );
+#! true
 #! @Example
 
 #! @EndExample
