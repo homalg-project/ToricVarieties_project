@@ -21,7 +21,7 @@
 
 #! @Description
 #! This operation identifies the cohomCalg directory D and binary B
-#! @Returns list L = [ D, B ]
+#! @Returns list [ D, B ]
 #! @Arguments none
 DeclareOperation( "cohomCalgBinary", [ ] );
 
@@ -34,15 +34,17 @@ DeclareOperation( "cohomCalgBinary", [ ] );
 ##############################################################################################
 
 #! @Description
-#! This operation prepares the command string that is handed over to cohomCalg
+#! Given a toric variety vari and an element d of the class group, this 
+#! operation prepares the command string that is handed over to cohomCalg
 #! @Returns string
-#! @Arguments a toric variety and an element of the class group (thereby encoding a line bundle)
+#! @Arguments vari, d
 DeclareOperation( "cohomCalgCommandString", 
                    [ IsToricVariety, IsList ] );
 
 #! @Description
-#! This is a convenience method. It call the previous method with the zero element of the class group.
+#! This is a convenience method. Given a toric variety vari, it calls
+#! the previous method with the zero element of the class group.
 #! @Returns string
-#! @Arguments a toric variety
+#! @Arguments vari
 DeclareOperation( "cohomCalgCommandString", 
                    [ IsToricVariety ] );
