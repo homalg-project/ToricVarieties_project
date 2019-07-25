@@ -51,7 +51,7 @@ ArchiveURL     := Concatenation( ~.PackageWWWHome, "cohomCalgInterface-", ~.Vers
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-AbstractHTML := "cohomCalgInterface enables to communicate with software Topcom via gap",
+AbstractHTML := "cohomCalgInterface enables to communicate with software cohomCalg via gap",
 
 PackageDoc := rec(
   BookName  := "cohomCalgInterface",
@@ -59,7 +59,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A package to communicate with the software Topcom",
+  LongTitle := "A package to communicate with the software cohomCalg",
   Autoload  := false
 ),
 
