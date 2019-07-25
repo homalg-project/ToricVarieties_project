@@ -45,7 +45,7 @@ InstallMethod( CohomologiesList,
     coho_list := [];
     for i in [ 1 .. Length( betti_table ) ] do
       degrees := List( [ 1 .. Length( betti_table[ i ] ) ], k -> [ UnderlyingListOfRingElements( betti_table[ i ][ k ] ), 1 ] );
-      coho_list[ i ] := AllHiByCohomCalg( variety, degrees, false );
+      coho_list[ i ] := AllHiByCohomCalg( variety, degrees );
     od;
 
     # then return coho_list
@@ -226,7 +226,7 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
       Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
 
-    elif not IsIdenticalObj( CoxRing( variety ), UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) ) then
+    elif not IsIdenticalObj( CoxRing( variety ), UnderlyingHomalgGradedRing( RelationMorphism( module ) ) ) then
 
       Error( "The module is not defined over (the Cox ring of) the given variety" );
       return;
@@ -235,7 +235,7 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
 
     # step 0: check for degenerate case, i.e. the relation module is zero so that we can use cohomCalg to compute the dimension of the
     # step 0: sheaf cohomologies immediately
-    if IsZero( Source( UnderlyingMorphism( module ) ) ) then
+    if IsZero( Source( RelationMorphism( module ) ) ) then
 
       if print_deduction then
         Print( "This is a projective module. So we used cohomCalg immediately to deduce the sheaf cohomologies. \n" );
