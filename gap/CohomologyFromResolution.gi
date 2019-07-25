@@ -27,7 +27,7 @@ SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_INTEGER_RING_IN_SINGULAR := HomalgR
 # function that computes the cohomologies of all vector bundles in a minimal free resolution of a f.p. graded module
 InstallMethod( CohomologiesList,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
     local betti_table, coho_list, i, degrees, help_module;
 
@@ -46,7 +46,7 @@ InstallMethod( CohomologiesList,
     for i in [ 1 .. Length( betti_table ) ] do
       degrees := List( [ 1 .. Length( betti_table[ i ] ) ], k -> [ UnderlyingListOfRingElements( betti_table[ i ][ k ] ), 1 ] );
       help_module := CAPCategoryOfProjectiveGradedLeftModulesObject( degrees, CoxRing( variety ) );
-      coho_list[ i ] := AllCohomologiesFromCohomCalg( variety, help_module, false );
+      coho_list[ i ] := AllHiByCohomCalg( variety, help_module, false );
     od;
 
     # then return coho_list
@@ -217,7 +217,7 @@ end );
 # function that computes the cohomologies of all vector bundles in a minimal free resolution of a f.p. graded module
 InstallMethod( DeductionOfSheafCohomologyFromResolution,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, print_deduction )
     local cohomologies_list, len, number_of_unknown_cohomologies, vars, ring, short_exact_sequences_list, dummy, intermediate_coh, i, j, s;
 
@@ -242,7 +242,7 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
         Print( "This is a projective module. So we used cohomCalg immediately to deduce the sheaf cohomologies. \n" );
       fi;
 
-      return AllCohomologiesFromCohomCalg( variety, module );
+      return AllHiByCohomCalg( variety, module );
 
     fi;
 
@@ -347,7 +347,7 @@ end );
 # function that computes the cohomologies of all vector bundles in a minimal free resolution of a f.p. graded module
 InstallMethod( DeductionOfSheafCohomologyFromResolution,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
 
     return DeductionOfSheafCohomologyFromResolution( variety, module, false );

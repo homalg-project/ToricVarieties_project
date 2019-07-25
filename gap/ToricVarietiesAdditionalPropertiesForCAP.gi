@@ -70,7 +70,7 @@ InstallMethod( IrrelevantLeftIdealForCAP,
                " for toric varieties",
                [ IsFanRep ],
   function( variety )
-    local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j;
+    local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j, matrix, range, alpha;
     
     # extract the necessary information
     cox_ring := CoxRing( variety );
@@ -93,16 +93,25 @@ InstallMethod( IrrelevantLeftIdealForCAP,
         
     od;
     
-    # irrelevant_ideal is now a list that contains all generators of this ideal
-    return GradedLeftSubmoduleForCAP( TransposedMat( [ irrelevant_ideal ] ), cox_ring );
-    
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( TransposedMat( [ irrelevant_ideal ] ), cox_ring );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
+
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
+
+    return FreydCategoryObject( KernelEmbedding( alpha ) );
+
 end );
 
 InstallMethod( IrrelevantRightIdealForCAP,
                " for toric varieties",
                [ IsFanRep ],
   function( variety )
-    local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j;
+    local cox_ring, maximal_cones, indeterminates, irrelevant_ideal, i, j, matrix, range, alpha;
     
     # extract the necessary information
     cox_ring := CoxRing( variety );
@@ -125,19 +134,29 @@ InstallMethod( IrrelevantRightIdealForCAP,
         
     od;
     
-    # irrelevant_ideal is now a list that contains all generators of this ideal
-    return GradedRightSubmoduleForCAP( [ irrelevant_ideal ], cox_ring );
-    
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( [ irrelevant_ideal ], cox_ring );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
+
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
+
+    return FreydCategoryObject( KernelEmbedding( alpha ) );
+
 end );
 
 InstallMethod( SRLeftIdealForCAP,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
-    local number, generators_of_the_SR_ideal, rays_in_max_cones, rays_in_max_conesII, i, j, k, l, buffer, tester,
-         generator_list, SR_ideal, embedding;
+    local cox_ring, number, generators_of_the_SR_ideal, rays_in_max_cones, rays_in_max_conesII, i, j, k, l, 
+         buffer, tester, generator_list, matrix, range, alpha;
   
     # initialise the variables
+    cox_ring := CoxRing( variety );
     number := Length( RayGenerators( FanOfVariety( variety ) ) );
     generators_of_the_SR_ideal := [];
     rays_in_max_cones := RaysInMaximalCones( FanOfVariety( variety ) );
@@ -203,16 +222,17 @@ InstallMethod( SRLeftIdealForCAP,
 
     od;
 
-    # generator_list contains now all monomials that generate the Stanley-Reißner ideal
-    # we have to transpose this list to use it for a graded left-module presentation
-    SR_ideal := GradedLeftSubmoduleForCAP( TransposedMat( [ generator_list ] ), CoxRing( variety ) );
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( TransposedMat( [ generator_list ] ), cox_ring );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
 
-    # simplify this presentation
-    SR_ideal := GradedStandardModule( LessGradedGenerators( PresentationForCAP( SR_ideal ) ) );
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
 
-    # and return the ideal
-    embedding := EmbeddingInProjectiveObject( SR_ideal );
-    return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    return FreydCategoryObject( KernelEmbedding( alpha ) );
 
 end );
 
@@ -220,10 +240,11 @@ InstallMethod( SRRightIdealForCAP,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
-    local number, generators_of_the_SR_ideal, rays_in_max_cones, rays_in_max_conesII, i, j, k, l, buffer, tester,
-         generator_list, SR_ideal, embedding;
+    local cox_ring, number, generators_of_the_SR_ideal, rays_in_max_cones, rays_in_max_conesII, i, j, k, l,
+         buffer, tester, generator_list, matrix, range, alpha;
   
     # initialise the variables
+    cox_ring := CoxRing( variety );
     number := Length( RayGenerators( FanOfVariety( variety ) ) );
     generators_of_the_SR_ideal := [];
     rays_in_max_cones := RaysInMaximalCones( FanOfVariety( variety ) );
@@ -289,16 +310,17 @@ InstallMethod( SRRightIdealForCAP,
 
     od;
 
-    # generator_list contains now all monomials that generate the Stanley-Reißner ideal
-    # we have to transpose this list to use it for a graded left-module presentation
-    SR_ideal := GradedRightSubmoduleForCAP( [ generator_list ], CoxRing( variety ) );
+    # construct the ideal with generators encoded in 'irrelevant_ideal'
+    matrix := HomalgMatrix( [ generator_list ], cox_ring );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), NrColumns( matrix ) ] ], cox_ring );
+    alpha := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
 
-    # simplify this presentation
-    SR_ideal := GradedStandardModule( LessGradedGenerators( PresentationForCAP( SR_ideal ) ) );
+    if not IsWellDefined( alpha ) then
+      Error( "Cannot deduce underlying morphism of graded rows from the given input." );
+      return;
+    fi;
 
-    # and return the ideal
-    embedding := EmbeddingInProjectiveObject( SR_ideal );
-    return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    return FreydCategoryObject( KernelEmbedding( alpha ) );
 
 end );
 
@@ -308,7 +330,7 @@ InstallMethod( SfpgrmodLeft,
                [ IsToricVariety ],
   function( variety )
 
-    return SfpgrmodLeft( CoxRing( variety ) );
+    return FpGradedLeftModules( CoxRing( variety ) );
 
 end );
 
@@ -318,6 +340,6 @@ InstallMethod( SfpgrmodRight,
                [ IsToricVariety ],
   function( variety )
 
-    return SfpgrmodRight( CoxRing( variety ) );
+    return FpGradedRightModules( CoxRing( variety ) );
 
 end );

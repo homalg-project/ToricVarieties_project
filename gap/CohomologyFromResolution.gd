@@ -23,7 +23,7 @@
 #! @Returns a list of lists of integers
 #! @Arguments vari, M
 DeclareOperation( "CohomologiesList",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 
 
@@ -41,10 +41,10 @@ DeclareOperation( "CohomologiesList",
 #! @Returns a list
 #! @Arguments vari, M
 DeclareOperation( "DeductionOfSheafCohomologyFromResolution",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 
 DeclareOperation( "DeductionOfSheafCohomologyFromResolution",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 DeclareOperation( "AnalyseShortExactSequence",
                   [ IsList ] );
