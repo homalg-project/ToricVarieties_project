@@ -17,7 +17,7 @@
 ##############################################################################################
 
 
-InstallMethod( AllHi,
+InstallMethod( AllHiByCohomCalg,
                "for a toric variety and a list of degrees and a bool",
                [ IsToricVariety, IsList ],
   function( variety, degree_list )
@@ -49,8 +49,7 @@ InstallMethod( AllHi,
       # this is the string that we need to address cohomCalg
       # not that the degrees used by CAP describe the degree of the generators of the module
       # this is related by (-1) to the degree of the corresponding bundle, as used by cohomCalg
-      # -> therefore an additional (-1) is used in the following command
-      command_string := cohomCalgCommandString( variety, (-1) * UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) );
+      command_string := cohomCalgCommandString( variety, degree_list[ i ][ 1 ] );
 
       # execute cohomCalg with the 'input file' described by the command_string
       # we use the integrated mode, so that only the necessary output is generated
@@ -89,5 +88,14 @@ InstallMethod( AllHi,
 
     # now return the cohomology dimensions
     return Sum( outputs );
+
+end );
+
+InstallMethod( HiByCohomCalg,
+               "for a toric variety and a list of degrees and a bool",
+               [ IsToricVariety, IsInt, IsList ],
+  function( variety, cohomologyIndex, degree_list )
+
+    return AllHiByCohomCalg( variety, degree_list )[ cohomologyIndex + 1 ];
 
 end );

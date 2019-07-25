@@ -26,5 +26,8 @@
 #! The output is a list of integers, each representing the corresponding sheaf cohomology dimension.
 #! @Returns List
 #! @Arguments vari, L
-DeclareOperation( "AllHi",
+DeclareOperation( "AllHiByCohomCalg",
                   [ IsToricVariety, IsList ] );
+
+DeclareOperation( "HiByCohomCalg",
+                  [ IsToricVariety, IsInt, IsList ] );
