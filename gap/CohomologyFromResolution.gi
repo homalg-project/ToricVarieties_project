@@ -45,8 +45,7 @@ InstallMethod( CohomologiesList,
     coho_list := [];
     for i in [ 1 .. Length( betti_table ) ] do
       degrees := List( [ 1 .. Length( betti_table[ i ] ) ], k -> [ UnderlyingListOfRingElements( betti_table[ i ][ k ] ), 1 ] );
-      help_module := CAPCategoryOfProjectiveGradedLeftModulesObject( degrees, CoxRing( variety ) );
-      coho_list[ i ] := AllHiByCohomCalg( variety, help_module, false );
+      coho_list[ i ] := AllHiByCohomCalg( variety, degrees, false );
     od;
 
     # then return coho_list
