@@ -18,7 +18,7 @@
 
 
 InstallMethod( AllHi,
-               "for a toric variety and a list of degrees and a bool
+               "for a toric variety and a list of degrees and a bool",
                [ IsToricVariety, IsList ],
   function( variety, degree_list )
     local cohomCalgDirectory, cohomCalg, stdin, stdout, outputs, i, buffer, 
