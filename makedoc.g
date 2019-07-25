@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g       TopcomInterface package
+##  PackageInfo.g       cohomCalgInterface package
 ##                      Martin Bies
 ##
 ##  Copyright 2019      ULB Brussels
@@ -11,7 +11,7 @@
 
 LoadPackage( "AutoDoc" );
 
-AutoDoc( "TopcomInterface" : scaffold := true, autodoc :=
+AutoDoc( "cohomCalgInterface" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
                          "gap/Tools.gd",
                          "gap/Functions.gd",
