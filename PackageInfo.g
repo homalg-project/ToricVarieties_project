@@ -70,6 +70,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
+                           [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
                            [ "TruncationsOfPresentationsByProjectiveGradedModules", ">= 2016.03.15" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "NormalizInterface", ">= 0.9.7" ],
