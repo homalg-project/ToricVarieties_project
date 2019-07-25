@@ -18,7 +18,7 @@ IsWellDefined( SR2 );
 
 #! @Section Example: Irrelevant ideal for CAP
 
-#! @Subsection Examples
+#! @Example
 P2 := ProjectiveSpace( 2 );
 #! <A projective toric variety of dimension 2>
 IR1 := IrrelevantLeftIdealForCAP( P2 );;
@@ -27,6 +27,4 @@ IsWellDefined( IR1 );
 IR2 := IrrelevantRightIdealForCAP( P2 );;
 IsWellDefined( IR2 );
 #! true
-#! @Example
-
 #! @EndExample

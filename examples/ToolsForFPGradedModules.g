@@ -12,8 +12,6 @@ IsWellDefined( IR );
 #! true
 resolution := MinimalFreeResolutionForCAP( IR );
 #! <An object in Complex category of Category of graded rows over Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
-BT := BettiTable( IR );
+BT := BettiTableForCAP( IR );
 #! [ [ -1, -1, -1 ], [ -2, -2, -2 ], [ -3 ] ]
-#! @Example
-
 #! @EndExample
