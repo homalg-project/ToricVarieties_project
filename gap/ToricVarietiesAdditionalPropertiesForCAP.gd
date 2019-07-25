@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2019                                     Martin Bies,       ULB Brussels
 ##
-#! @Chapter Additional methods/properties for toric varieties
+#! @Chapter Additional methods and properties for toric varieties
 ##
 ################################################################################################
 

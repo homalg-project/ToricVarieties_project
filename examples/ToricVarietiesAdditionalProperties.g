@@ -1,4 +1,4 @@
-#! @Chapter Additional properties of toric varieties
+#! @Chapter Additional methods and properties for toric varieties
 
 #! @Section Example: Stanley-Reisner ideal for CAP
 
