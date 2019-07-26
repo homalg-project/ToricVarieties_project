@@ -18,7 +18,7 @@ AutoDoc( "SheafCohomologyOnToricVarieties" : scaffold := true, autodoc :=
                          "gap/ToolsForFPGradedModules.gd",
                          "examples/ToolsForFPGradedModules.g",
                          "gap/CohomologyFromResolution.gd",
-                         #"examples/CohomologyFromResolution.g",
+                         "examples/CohomologyFromResolution.g",
                          "gap/VanishingSets.gd",
                          #"examples/VanishingSets.g",
                          "gap/MapsInResolution.gd",

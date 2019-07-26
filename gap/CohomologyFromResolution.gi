@@ -218,7 +218,8 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, print_deduction )
-    local cohomologies_list, len, number_of_unknown_cohomologies, vars, ring, short_exact_sequences_list, dummy, intermediate_coh, i, j, s;
+    local degree, cohomologies_list, len, number_of_unknown_cohomologies, vars, 
+         ring, short_exact_sequences_list, dummy, intermediate_coh, i, j, s;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -241,7 +242,9 @@ InstallMethod( DeductionOfSheafCohomologyFromResolution,
         Print( "This is a projective module. So we used cohomCalg immediately to deduce the sheaf cohomologies. \n" );
       fi;
 
-      return AllHiByCohomCalg( variety, module );
+      degree := DegreeList( Range( RelationMorphism( module ) ) );
+      degree := List( [ 1 .. Length( degree ) ], i -> [ UnderlyingListOfRingElements( degree[ i ][ 1 ] ), degree[ i ][ 2 ] ] );
+      return AllHiByCohomCalg( variety, degree );
 
     fi;
 
