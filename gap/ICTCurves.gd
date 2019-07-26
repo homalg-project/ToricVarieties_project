@@ -83,11 +83,19 @@ DeclareAttribute( "DefiningVariables",
                    IsICTCurve );
 
 #! @Description
-#! The argument is an ICT curve $C$. The output is the f.p. graded S-module which sheafifes to the structure sheaf 
-#! of this curve $C$.
-#! @Returns a f.p. graded module
+#! The argument is an ICT curve $C$. The output is the f.p. graded left S-module which
+#! sheafifes to the structure sheaf of this curve $C$.
+#! @Returns a f.p. graded left S-module
 #! @Arguments C
-DeclareAttribute( "StructureSheaf",
+DeclareAttribute( "LeftStructureSheaf",
+                   IsICTCurve );
+
+#! @Description
+#! The argument is an ICT curve $C$. The output is the f.p. graded right S-module which
+#! sheafifes to the structure sheaf of this curve $C$.
+#! @Returns a f.p. graded right S-module
+#! @Arguments C
+DeclareAttribute( "RightStructureSheaf",
                    IsICTCurve );
 
 #! @Description

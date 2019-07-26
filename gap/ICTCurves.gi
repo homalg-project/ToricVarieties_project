@@ -299,8 +299,8 @@ InstallMethod( Display,
   Print( "and irrelevant ideal: \n \n" );
   Display( IrrelevantIdeal( AmbientToricVariety( curve ) ) );
   Print( "\n" );
-  Print( "The structure sheaf of the curve is obtained from sheafifying the following module:" );
-  FullInformation( StructureSheaf( curve ) );
+  Print( "The left structure sheaf of the curve is obtained from sheafifying the following left module:" );
+  Display( LeftStructureSheaf( curve ) );
 
 end );
 
@@ -330,18 +330,39 @@ end );
 ##
 ##############################################################################################
 
-InstallMethod( StructureSheaf,
+InstallMethod( LeftStructureSheaf,
                " for ICT-curve",
                [ IsICTCurve ],
   function( curve )
-    local ideal;
+    local cox_ring, range, matrix, mor;
 
-    # now construct the structure sheaf
-    ideal := GradedLeftSubmoduleForCAP( DefiningVariables( curve ), CoxRing( AmbientToricVariety( curve ) ) );
-    return CAPPresentationCategoryObject( UnderlyingMorphism( EmbeddingInSuperObjectForCAP( ideal ) ) );
+    cox_ring := CoxRing( AmbientToricVariety( curve ) );
+    range := GradedRow( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), 1 ] ], cox_ring );
+    matrix := HomalgMatrix( TransposedMat( [ DefiningVariables( curve ) ] ), cox_ring );
+    mor := DeduceMapFromMatrixAndRangeForGradedRows( matrix, range );
+    if not IsWellDefined( mor ) then
+        Error( "The relation morphism of the structure sheaf could not be constructed" );
+    fi;
+    return FreydCategoryObject( mor );
 
 end );
 
+InstallMethod( RightStructureSheaf,
+               " for ICT-curve",
+               [ IsICTCurve ],
+  function( curve )
+    local cox_ring, range, matrix, mor;
+
+    cox_ring := CoxRing( AmbientToricVariety( curve ) );
+    range := GradedColumn( [ [ TheZeroElement( DegreeGroup( cox_ring ) ), 1 ] ], cox_ring );
+    matrix := HomalgMatrix( [ DefiningVariables( curve ) ], cox_ring );
+    mor := DeduceMapFromMatrixAndRangeForGradedCols( matrix, range );
+    if not IsWellDefined( mor ) then
+        Error( "The relation morphism of the structure sheaf could not be constructed" );
+    fi;
+    return FreydCategoryObject( mor );
+
+end );
 
 
 ##############################################################################################
