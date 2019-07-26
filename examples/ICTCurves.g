@@ -24,12 +24,8 @@ IntersectionProduct( DivisorOfGivenClass( P2, [ 5 ] ), C1 );
 #! @Example
 P3 := ProjectiveSpace( 3 );
 #! <A projective toric variety of dimension 3>
-ICTCurves( P3 );
-#! [ <An irreducible, complete, torus-invariant curve in a toric variety given as V( [ x_3 ] )>,
-#!   <An irreducible, complete, torus-invariant curve in a toric variety given as V( [ x_2 ] )>,
-#!   <An irreducible, complete, torus-invariant curve in a toric variety given as V( [ x_1 ] )> ]
 C1 := ICTCurves( P3 )[ 1 ];
-#! <An irreducible, complete, torus-invariant curve in a toric variety given as V( [ x_3 ] )>
+#! <An irreducible, complete, torus-invariant curve in a toric variety given as V( [ x_3, x_4 ] )>
 vars := DefiningVariables( C1 );
 #! [ x_3, x_4 ]
 structureSheaf1 := LeftStructureSheaf( C1 );;
