@@ -11,7 +11,8 @@ IR := IrrelevantLeftIdealForCAP( P2 );;
 IsWellDefined( IR );
 #! true
 resolution := MinimalFreeResolutionForCAP( IR );
-#! <An object in Complex category of Category of graded rows over Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
+#! <An object in Complex category of Category of graded
+#! rows over Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
 BT := BettiTableForCAP( IR );
 #! [ [ -1, -1, -1 ], [ -2, -2, -2 ], [ -3 ] ]
 #! @EndExample
