@@ -11,7 +11,8 @@ LoadPackage( "SheafCohomologyOnToricVarieties" );
 P2 := ProjectiveSpace( 2 );
 #! <A projective toric variety of dimension 2>
 P2xP2 := P2*P2;
-#! <A projective toric variety of dimension 4 which is a product of 2 toric varieties>
+#! <A projective toric variety of dimension 4
+#! which is a product of 2 toric varieties>
 NefCone( P2 );
 #! [ [ 1 ] ]
 NefCone( P2xP2 );
