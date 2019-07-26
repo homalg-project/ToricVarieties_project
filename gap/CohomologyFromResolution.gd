@@ -9,12 +9,11 @@
 #########################################################################################
 
 
-
-###################################################################################
+#############################################################################################################
 ##
-#! @Section Mapping between the cohomology classes computed by the theorem of GS
+#! @Section Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution
 ##
-###################################################################################
+#############################################################################################################
 
 #! @Description
 #! Given a smooth and projective toric variety <M>vari</M> with Coxring <M>S</M> and a f. p.
@@ -24,14 +23,6 @@
 #! @Arguments vari, M
 DeclareOperation( "CohomologiesList",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
-
-
-
-#############################################################################################################
-##
-#! @Section Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution
-##
-#############################################################################################################
 
 #! @Description
 #! Given a smooth and projective toric variety <M>vari</M> with Coxring <M>S</M> and a f. p.
