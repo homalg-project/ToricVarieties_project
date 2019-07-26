@@ -58,7 +58,7 @@ DeclareOperation( "DegreeXLayerVectorsAsColumnMatrices",
 
 ##############################################################################################
 ##
-#! @Section GAP category of DegreeXLayerVectorSpaces(Morphisms)
+#! @Section GAP category of DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
 ##
 ##############################################################################################
 
