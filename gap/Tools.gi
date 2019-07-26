@@ -61,11 +61,12 @@ InstallMethod( cohomCalgCommandString,
                " for toric varieties",
                [ IsToricVariety, IsList ],
   function( variety, degree )
-    local output_string, weights_of_indeterminates, names_of_indeterminates, i, buffer, SR_ideal_generators;
+    local bool1, bool2, output_string, weights_of_indeterminates, names_of_indeterminates, i, buffer, SR_ideal_generators;
 
     # step0: check if the toric variety can be treated with cohomCalg
-    if not ( IsSmooth( variety ) and IsComplete( variety ) )
-       or not ( IsProjective( variety ) and IsSimplicial( Fan( variety ) ) ) then
+    bool1 := IsSmooth( variety ) and IsComplete( variety );
+    bool2 := IsProjective( variety ) and IsSimplicial( Fan( variety ) );
+    if not ( bool1 or bool2 ) then
 
         Error( "The toric variety must be either (smooth, complete) or (simplicial, projective)" );
         return;
