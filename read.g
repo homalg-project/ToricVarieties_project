@@ -17,7 +17,7 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/SemigroupAndConeWrapper.gi"
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/VanishingSets.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ICTCurves.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gi" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayer.gi" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayerVectorSpace.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyOnPn.gi" );

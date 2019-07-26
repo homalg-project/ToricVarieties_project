@@ -95,7 +95,7 @@ DeclareCategory( "IsDegreeXLayerVectorSpacePresentationMorphism",
 
 ##############################################################################################
 ##
-#! @Section Constructors for DegreeXLayerVectorSpaces(Morphisms)
+#! @Section Constructors for DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
 ##
 ##############################################################################################
 
@@ -141,7 +141,7 @@ DeclareOperation( "DegreeXLayerVectorSpacePresentationMorphism",
 
 ##############################################################################################
 ##
-#! @Section Attributes for DegreeXLayerVectorSpaces(Morphisms)
+#! @Section Attributes for DegreeXLayerVectorSpaces
 ##
 ##############################################################################################
 
@@ -176,6 +176,13 @@ DeclareAttribute( "UnderlyingVectorSpaceObject",
 #! @Arguments V
 DeclareAttribute( "EmbeddingDimension",
                   IsDegreeXLayerVectorSpace );
+
+
+##############################################################################################
+##
+#! @Section Attributes for DegreeXLayerVectorSpaceMorphisms
+##
+##############################################################################################
 
 #! @Description
 #! The argument is a DegreeXLayerVectorSpaceMorphism $a$. The output is its source.
