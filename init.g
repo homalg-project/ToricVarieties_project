@@ -13,7 +13,8 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ToolsForFPGradedModules.gd"
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ToricVarietiesAdditionalPropertiesForCAP.gd" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MapsInResolution.gd" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/VanishingSets.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/SemigroupAndConeWrapper.gd" );
+#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/VanishingSets.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayer.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ICTCurves.gd" );

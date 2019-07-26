@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2019                Martin Bies,       ULB Brussels
 ##
-#! @Chapter Computation of vanishing sets
+#! @Chapter Vanishing sets on toric varieties
 ##
 ################################################################################################
 

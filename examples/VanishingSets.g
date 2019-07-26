@@ -1,8 +1,6 @@
-#! @Chapter Computation of vanishing sets
+#! @Chapter Vanishing sets on toric varieties
 
-#! @Section Vanishing sets
-
-#! We compute thev  for a number of examples.
+#! @Section Examples
 
 LoadPackage( "SheafCohomologyOnToricVarieties" );
 
