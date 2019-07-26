@@ -65,7 +65,7 @@ InstallMethod( cohomCalgCommandString,
 
     # step0: check if the toric variety can be treated with cohomCalg
     bool1 := IsSmooth( variety ) and IsComplete( variety );
-    bool2 := IsProjective( variety ) and IsSimplicial( Fan( variety ) );
+    bool2 := IsProjective( variety ) and IsOrbifold( variety );
     if not ( bool1 or bool2 ) then
 
         Error( "The toric variety must be either (smooth, complete) or (simplicial, projective)" );

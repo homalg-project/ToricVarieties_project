@@ -31,3 +31,13 @@ DeclareOperation( "AllHiByCohomCalg",
 
 DeclareOperation( "HiByCohomCalg",
                   [ IsToricVariety, IsInt, IsList ] );
+
+#! @Description
+#! Given a toric variety vari, cohomCalg identifies line bundle cohomology as rationoms, i.e.
+#! fractions of monomials. This routine identifies all denominators of such rations,
+#! that appear as cohomologies of line bundles on the given toric variety.
+#! @Returns List
+#! @Arguments vari
+DeclareOperation( "ContributingDenominators",
+                   [ IsToricVariety ] );
+
