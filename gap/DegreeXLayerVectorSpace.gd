@@ -11,7 +11,7 @@
 
 ##############################################################################################
 ##
-#! @Section GAP category of DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
+#! @Section GAP category of DegreeXLayerVectorSpaces
 ##
 ##############################################################################################
 
@@ -48,14 +48,14 @@ DeclareCategory( "IsDegreeXLayerVectorSpacePresentationMorphism",
 
 ##############################################################################################
 ##
-#! @Section Constructors for DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
+#! @Section Constructors for DegreeXLayerVectorSpaces
 ##
 ##############################################################################################
 
 #! @Description
 #! The arguments are a list of monomials $L$, a homalg graded ring $S$ (the Coxring of the 
-#! variety in question)), a vector space $V$ and a non-negative integer $n$. $V$ is to be 
-#! given as a vector space defined in the package 'LinearAlgebraForCAP'. 
+#! variety in question), a vector space $V$ and a non-negative integer $n$. $V$ is to be
+#! given as a vector space defined in the package 'LinearAlgebraForCAP'.
 #! This method then returns the corresponding DegreeXLayerVectorSpace.
 #! @Returns a CAPCategoryObject
 #! @Arguments L, S, V, n
@@ -166,6 +166,13 @@ DeclareAttribute( "UnderlyingVectorSpaceMorphism",
 DeclareAttribute( "UnderlyingHomalgGradedRing",
                   IsDegreeXLayerVectorSpaceMorphism );
 
+
+##############################################################################################
+##
+#! @Section Attributes for DegreeXLayerVectorSpacePresentations
+##
+##############################################################################################
+
 #! @Description
 #! The argument is a DegreeXLayerVectorSpacePresentation $a$. The output is the underlying
 #! DegreeXLayerVectorSpaceMorphism
@@ -206,6 +213,13 @@ DeclareAttribute( "UnderlyingHomalgGradedRing",
 DeclareAttribute( "UnderlyingVectorSpacePresentation",
                   IsDegreeXLayerVectorSpacePresentation );
 
+
+##############################################################################################
+##
+#! @Section Attributes for DegreeXLayerVectorSpacePresentationMorphisms
+##
+##############################################################################################
+
 #! @Description
 #! The argument is a DegreeXLayerVectorSpacePresentationMorphism $a$. The output is its source.
 #! @Returns a DegreeXLayerVectorSpacePresentation
@@ -238,11 +252,11 @@ DeclareAttribute( "UnderlyingVectorSpacePresentationMorphism",
 
 
 
-################################################################################################################
+###############################
 ##
-#! @Section Convenient methods to display all information about vector space presentations and morphisms thereof
+#! @Section Convenience methods
 ##
-################################################################################################################
+###############################
 
 #! @Description
 #! The argument is a DegreeXLayerVectorSpacePresentation $p$. This method displays $p$ in great detail.

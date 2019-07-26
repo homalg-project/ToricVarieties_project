@@ -9,14 +9,9 @@
 #########################################################################################
 
 
-
-
-
-
-
 ##############################################################################################
 ##
-## Section GAP category of DegreeXLayerVectorSpaces(Morphisms)
+## Section GAP category of DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
 ##
 ##############################################################################################
 
@@ -72,7 +67,7 @@ BindGlobal( "TheTypeOfDegreeXLayerVectorSpacePresentationMorphism",
 
 ##############################################################################################
 ##
-#! @Section Constructors for DegreeXLayerVectorSpaces(Morphisms)
+#! @Section Constructors for DegreeXLayerVectorSpaces and DegreeXLayerVectorSpaceMorphisms
 ##
 ##############################################################################################
 
@@ -152,8 +147,7 @@ InstallMethod( DegreeXLayerVectorSpacePresentation,
                              UnderlyingVectorSpaceObject, CokernelObject( UnderlyingVectorSpaceMorphism( morphism ) ),
                              UnderlyingVectorSpaceMorphism, UnderlyingVectorSpaceMorphism( morphism ),
                              UnderlyingHomalgGradedRing, UnderlyingHomalgGradedRing( morphism ),
-                             UnderlyingVectorSpacePresentation, CAPPresentationCategoryObject( 
-                                                                          UnderlyingVectorSpaceMorphism( morphism ) )
+                             UnderlyingVectorSpacePresentation, FreydCategoryObject( UnderlyingVectorSpaceMorphism( morphism ) )
                              );
     return degreeXLayerVectorSpacePresentation;
 
@@ -195,10 +189,9 @@ InstallMethod( DegreeXLayerVectorSpacePresentationMorphism,
                              Range, range,
                              UnderlyingHomalgGradedRing, UnderlyingHomalgGradedRing( source ),
                              UnderlyingVectorSpacePresentationMorphism, 
-                                  CAPPresentationCategoryMorphism( UnderlyingVectorSpacePresentation( source ),
-                                                                   morphism,
-                                                                   UnderlyingVectorSpacePresentation( range )
-                                                                  )
+                             FreydCategoryMorphism( UnderlyingVectorSpacePresentation( source ),
+                                                    morphism,
+                                                    UnderlyingVectorSpacePresentation( range ) )
                              );
 
     return degreeXLayerVectorSpacePresentationMorphism;
