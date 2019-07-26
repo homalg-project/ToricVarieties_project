@@ -90,22 +90,21 @@ DXVSPresentation2 := DegreeXLayerVectorSpacePresentation( morDXVS2 );
 matrix := HomalgMatrix( [ [ 0, 0, 1, 0 ],
                           [ 0, 0, 0, 1 ] ], mQ );
 #! <A matrix over an internal ring>
-vector_space_morphism := VectorSpaceMorphism( 
-                         Range( UnderlyingVectorSpaceMorphism( DXVSPresentation2 ) ),
-                         matrix,
-                         Range( UnderlyingVectorSpaceMorphism( DXVSPresentation ) )
-                         );;
+source := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation2 ) );;
+range := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation ) );;
+vector_space_morphism := VectorSpaceMorphism( source, matrix, range );;
 IsWellDefined( vector_space_morphism );
 #! true
 DXVSPresentationMorphism := DegreeXLayerVectorSpacePresentationMorphism(
-                            DXVSPresentation2,
-                            vector_space_morphism,
-                            DXVSPresentation );
+                                      DXVSPresentation2,
+                                      vector_space_morphism,
+                                      DXVSPresentation );
 #! <A vector space presentation morphism of vector spaces embedded into
 #! (a suitable power of) Q[x_1,x_2] (with weights [ 1, 1 ]) and given as
 #! cokernels>
-UnderlyingVectorSpacePresentationMorphism( DXVSPresentationMorphism );
+uVSMor := UnderlyingVectorSpacePresentationMorphism
+                                      ( DXVSPresentationMorphism );
 #! <A morphism in Freyd( Category of matrices over Q )>
-IsWellDefined( UnderlyingVectorSpacePresentationMorphism( DXVSPresentationMorphism ) );
+IsWellDefined( uVSMor );
 #! true
 #! @EndExample
