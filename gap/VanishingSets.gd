@@ -107,10 +107,6 @@ DeclareProperty( "IsFull",
 #################################################
 
 #!
-DeclareOperation( "ContributingDenominators",
-                   [ IsToricVariety ] );
-
-#!
 DeclareOperation( "TurnDenominatorIntoShiftedSemigroup",
                    [ IsToricVariety, IsString ] );
 

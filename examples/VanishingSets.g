@@ -27,8 +27,8 @@ Display( v1.1 );
 #! Offset: [ -2 ]
 #! Hilbert basis: [ [ -1 ] ]
 P1xP1 := P1*P1;
-#! <A smooth toric variety of dimension 2 which is a product of
-#! 2 toric varieties>
+#! <A projective smooth toric variety of dimension
+#! 2 which is a product of 2 toric varieties>
 v2 := VanishingSets( P1xP1 );
 #! rec( 0 := <A non-full vanishing set in Z^2 for cohomological index 0>,
 #!      1 := <A non-full vanishing set in Z^2 for cohomological index 1>,
@@ -67,8 +67,8 @@ v3 := VanishingSets( P2 );
 #!      1 := <A full vanishing set in Z^1 for cohomological index 1>,
 #!      2 := <A non-full vanishing set in Z^1 for cohomological index 2> )
 P2xP1xP1 := P2*P1*P1;
-#! <A smooth toric variety of dimension 4 which is a product 
-#! of 3 toric varieties>
+#! <A projective smooth toric variety of dimension
+#! 4 which is a product of 3 toric varieties>
 v4 := VanishingSets( P2xP1xP1 );
 #! rec( 0 := <A non-full vanishing set in Z^3 for cohomological index 0>,
 #!      1 := <A non-full vanishing set in Z^3 for cohomological index 1>,
