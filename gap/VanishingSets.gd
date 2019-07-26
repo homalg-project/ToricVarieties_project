@@ -107,14 +107,6 @@ DeclareProperty( "IsFull",
 #################################################
 
 #!
-DeclareOperation( "SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
-                   [ IsToricVariety, IsList ] );
-
-#!
-DeclareOperation( "SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_COHOMCALG_COMMAND_STRING",
-                   [ IsToricVariety ] );
-
-#!
 DeclareOperation( "ContributingDenominators",
                    [ IsToricVariety ] );
 
