@@ -15,6 +15,12 @@
 ##
 ##############################################################################################
 
+DeclareOperation( "InputTest",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+
+DeclareOperation( "InputTest",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
+
 DeclareOperation( "ExtendedDegreeList",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
 
@@ -127,51 +133,100 @@ DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords",
 DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
-#!
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a list l,
+#! specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and identify
+#! its generators. We format each generator as list [ n, g ], where g denotes
+#! a generator of the n-th direct summand of M. We return the list of all
+#! these lists [ n, g ].
+#! @Returns a list
+#! @Arguments V, M, l
 DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
 
-#!
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a HomalgModuleElement
+#! m, specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and identify
+#! its generators. We format each generator as list [ n, g ], where g denotes
+#! a generator of the n-th direct summand of M. We return the list of all
+#! these lists [ n, g ].
+#! @Returns a list
+#! @Arguments V, M, m
 DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
 
-if false then
 ##############################################################################################
 ##
 #! @Section Truncations of graded row and column morphisms
 ##
 ##############################################################################################
 
+DeclareOperation( "FindVarsAndCoefficients",
+                  [ IsString, IsChar, IsFieldForHomalg ] );
+
+DeclareOperation( "NonTrivialMorphismTruncation",
+                  [ IsList, IsGradedRowOrColumnMorphism, IsFieldForHomalg, IsBool ] );
+
 #! @Description
-#! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
-#! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$. The latter can either be a list of integers or a HomalgModuleElement. Based on this input, 
-#! the method returns the truncation of $\varphi$ to the specified degree.
-#! We expect that $V$ is smooth and compact. Under these circumstances the truncation is a morphism of finite dimensional
-#! vector spaces. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+#! The arguments are a toric variety $V$, a morphism $m$ of graded rows or columns,
+#! a list $d$ specifying a degree in the class group of $V$, a field $F$ for homalg and a boolean $B$.
+#! We then truncate $m$ to the specified degree $d$. We express this result as morphism
+#! of vector spaces over the field $F$. We return this vector space morphism.
+#! If the boolean $B$ is true, we display additional output during the computation, otherwise this
+#! output is surpressed.
 #! @Returns a DegreeXLayerVectorSpaceMorphism
-#! @Arguments V, \varphi, degree_list
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList, IsHomalgRing, IsBool ] );
+#! @Arguments V, m, d
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                 [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement,
-                   IsHomalgRing, IsBool ] );
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                 [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList, IsBool ] );
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsBool ] );
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
+DeclareOperation( "TruncateGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal",
+#! @Description
+#! The arguments are a toric variety $V$, a morphism $m$ of graded rows or columns,
+#! a list $d$ specifying a degree in the class group of $V$, a field $F$ for homalg and a boolean $B$.
+#! We then truncate $m$ to the specified degree $d$. We express this result as morphism
+#! of vector spaces over the field $F$. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+#! If the boolean $B$ is true, we display additional output during the computation, otherwise this
+#! output is surpressed.
+#! @Returns a DegreeXLayerVectorSpaceMorphism
+#! @Arguments V, m, d
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ] );
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                 [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ] );
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ] );
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ] );
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ] );
+
+if false then
+
+DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphismMinimal",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList, IsList, IsHomalgRing, IsBool ] );
 
 

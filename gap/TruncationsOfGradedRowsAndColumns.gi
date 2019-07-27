@@ -17,55 +17,112 @@
 #########################################################################################
 
 # compute degree X layer of graded row or column
-InstallMethod( ExtendedDegreeList,
+InstallMethod( InputTest,
                " a toric variety, a projective graded module, a list",
                [ IsToricVariety, IsGradedRowOrColumn, IsList ],
   function( variety, projective_module, degree )
-    local left, degree_list, degrees, shifted_degree, extended_degree_list, i;
-
-    # (1) check for valid input
+    local left;
 
     left := IsGradedRow( projective_module );
 
     if not IsValidInputForCohomologyComputations( variety ) then
 
       Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
+      return false;
 
     fi;
 
-    if left and not IsIdenticalObj( CapCategory( projective_module ), 
+    if left and not IsIdenticalObj( CapCategory( projective_module ),
                                       CategoryOfGradedRows( CoxRing( variety ) ) ) then
 
       Error( "The module is not defined in the category of graded rows of the Cox ring of the variety" );
-      return;
+      return false;
 
     fi;
 
-    if ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
+    if ( not left ) and not IsIdenticalObj( CapCategory( projective_module ),
                                               CategoryOfGradedColumns( CoxRing( variety ) ) ) then
 
       Error( "The module is not defined in the category of graded columns of the Cox ring of the variety" );
-      return;
+      return false;
 
     fi;
 
     if not Rank( ClassGroup( variety ) ) = Length( degree ) then
 
       Error( "The given list does not specify an element of the class group of the variety" );
-      return;
+      return false;
 
     fi;
 
-    # (2) compute extended degree list
+    return true;
 
-    degree_list := DegreeList( projective_module );
-    extended_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-      shifted_degree := degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] );
-      extended_degree_list := Concatenation( extended_degree_list, 
+end );
+
+# compute degree X layer of graded row or column
+InstallMethod( InputTest,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ],
+  function( variety, graded_row_or_column_morphism, degree )
+    local left;
+
+    left := IsGradedRowMorphism( graded_row_or_column_morphism );
+
+    if not IsValidInputForCohomologyComputations( variety ) then
+
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
+      return false;
+
+    fi;
+
+    if left and not IsIdenticalObj( CapCategory( graded_row_or_column_morphism ),
+                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
+
+      Error( "The module is not defined in the category of graded rows of the Cox ring of the variety" );
+      return false;
+
+    fi;
+
+    if ( not left ) and not IsIdenticalObj( CapCategory( graded_row_or_column_morphism ),
+                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
+
+      Error( "The module is not defined in the category of graded columns of the Cox ring of the variety" );
+      return false;
+
+    fi;
+
+    if not Rank( ClassGroup( variety ) ) = Length( degree ) then
+
+      Error( "The given list does not specify an element of the class group of the variety" );
+      return false;
+
+    fi;
+
+    return true;
+
+end );
+
+# compute degree X layer of graded row or column
+InstallMethod( ExtendedDegreeList,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList ],
+  function( variety, projective_module, degree )
+    local degree_list, degrees, i, shifted_degree, extended_degree_list;
+
+    # initalise extended_degree_list
+    extended_degree_list := false;
+
+    if InputTest( variety, projective_module, degree ) then
+
+        degree_list := DegreeList( projective_module );
+        extended_degree_list := [];
+        for i in [ 1 .. Length( degree_list ) ] do
+            shifted_degree := degree + UnderlyingListOfRingElements( degree_list[ i ][ 1 ] );
+            extended_degree_list := Concatenation( extended_degree_list, 
                                              ListWithIdenticalEntries( degree_list[ i ][ 2 ], shifted_degree ) );
-    od;
+        od;
+
+    fi;
 
     return extended_degree_list;
 
@@ -269,180 +326,133 @@ end );
 
 
 
+##############################################################################################
+##
+#! @Section Truncations of graded row and column morphisms
+##
+##############################################################################################
 
+# Method to interpret image polynomial in above method in terms of the generators of the range module
+InstallMethod( FindVarsAndCoefficients,
+               " a string, a string and a ring",
+               [ IsString, IsChar, IsFieldForHomalg ],
+  function( poly, name_of_indeterminates, rationals )
+    local split_pos, poly_split, k, poly_split2, pos, coeff, l;
 
+    # poly is a linear combination of generators in the range, so first identify the positions of plus and minus
+    split_pos := [ 1 ];
+    Append( split_pos, Positions( poly, '-' ) );
+    Append( split_pos, Positions( poly, '+' ) );
+    split_pos := DuplicateFreeList( split_pos );
+    Sort( split_pos );
 
+    # identify all of the substrings
+    poly_split := List( [ 1 .. Length( split_pos ) ] );
+    for k in [ 1 .. Length( split_pos ) ] do
+       if k < Length( split_pos ) then
+          poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       else
+          poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       fi;
+    od;
 
-if false then
+    # next evaluate each of the substrings, thereby carefully tell apart the coefficient and the generator
+    poly_split2 := List( [ 1 .. Length( poly_split ) ] );
+    for k in [ 1 .. Length( poly_split ) ] do
 
-# compute degree X layer of projective graded S-module morphism
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsHomalgRing, IsBool ],
-  function( variety, projective_module_morphism, degree, rationals, display_messages )
-    local left, gens_source, gens_range, dim_range, matrix, mapping_matrix, counter, i, comparer, j, non_zero_rows,
-         poly, poly_split, poly_split2, k, pos, coeff, l, name_of_indeterminates, vector_space_morphism, split_pos;
+       # split strings start with indeterminate -> coefficient is 1
+       if poly_split[ k ][ 1 ] = name_of_indeterminates then
 
-    # check if we have to deal with a left or right module morphism
-    left := IsCategoryOfGradedRowsMorphism( projective_module_morphism );
+         poly_split2[ k ] := [ One( rationals ), poly_split[ k ] ];
 
-    # check that the input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
+       # else there is a non-trivial coefficient
+       elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
 
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
+         # find first occurance of name_of_indeterminates -> whatever is in front of it will be our coefficient
+         pos := Position( poly_split[ k ], name_of_indeterminates );
 
-    elif left and not IsIdenticalObj( CapCategory( projective_module_morphism ), 
-                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
+         # there indeed appear an indeterminate
+         if pos <> fail then
 
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
+           # at least one 'x' does appear in this string
+           coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
 
-    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module_morphism ), 
-                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
+           # massage the coefficient
+           if coeff[ Length( coeff ) ] = '*' then
+             Remove( coeff );
+           fi;
 
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
+           # check for degenerate case
+           if coeff = "-" then
+             coeff := "-1";
+           elif coeff = "+" then
+             coeff := "+1";
+           fi;
 
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
+           # remove the coefficient part from poly_split
+           for l in [ 1 .. pos-1 ] do
+              Remove( poly_split[ k ], 1 );
+           od;
 
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                            " of the Cox ring is a field" ) );
-      return;
+           # finally save the coefficient and the monom
+           poly_split2[ k ] := [ EvalString( coeff ) / rationals, poly_split[ k ] ];
 
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
+         # no indeterminate appears, so the entire string is the coefficient and the monom is just 1
+         else
 
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
+           poly_split2[ k ] := [ Int( poly_split[ k ] ) / rationals, "1" ];
 
+         fi;
+
+       fi;
+
+    od;
+
+    # and return the result
+    return poly_split2;
+
+end );
+
+# Method to perform truncation of morphism of graded rows/columns in non-trivial cases:
+InstallMethod( NonTrivialMorphismTruncation,
+               " a list, as list, a morphism of graded rows of columns, a list, a ring, a bool",
+               [ IsList, IsGradedRowOrColumnMorphism, IsFieldForHomalg, IsBool ],
+  function( input, projective_module_morphism, rationals, display_messages )
+    local gens_source, generators_range,
+          mapping_matrix, name_of_indeterminates, matrix, gens_range, counter, i, comparer, non_zero_rows, j,
+          coeffsAndVars, pos, k;
+
+    # extract generators
+    gens_source := input[ 1 ];
+    generators_range := input[ 2 ];
+
+    # extract the underlying matrix of the morphism
+    mapping_matrix := UnderlyingHomalgMatrix( projective_module_morphism );
+    if IsGradedRowMorphism( projective_module_morphism ) then
+      mapping_matrix := Involution( mapping_matrix );
     fi;
 
-    # extract source and range generators
-    gens_source := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices(
-                                                                           variety,
-                                                                           Source( projective_module_morphism ), 
-                                                                           degree
-                                                                         );
-    gens_range := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
-                                                                          variety,
-                                                                          Range( projective_module_morphism ),
-                                                                          degree
-                                                                         );
+    # identify the names of the indeterminates in the Cox ring (we later search for these)
+    name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
 
-    # compute the dimension of the range
-    dim_range := gens_range[ 1 ];
-    gens_range := gens_range[ 2 ];
+    # initialise the matrix as a sparse matrix
+    matrix := HomalgInitialMatrix( generators_range[ 1 ], Length( gens_source ), rationals );
 
-    # check for degenerate cases
-    if Length( gens_source ) = 0 then
+    # and identify the list of all generators of the range from the given input
+    gens_range := generators_range[ 2 ];
 
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
-      fi;
+    # initalise the counter
+    counter := 1;
 
-      matrix := HomalgZeroMatrix( dim_range,
-                                  0,
-                                  rationals
-                                 );
-
-      if display_messages then
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
-        Print( "matrix created... \n" );
-      fi;
-
-    elif dim_range = 0 then
-
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
-      fi;
-
-      matrix := HomalgZeroMatrix( 0,
-                                  Length( gens_source ),
-                                  rationals
-                                 );
-
-      if display_messages then
-        Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
-        Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
-        Print( "matrix created... \n" );
-      fi;
-
-    else;
-
-      # both vector spaces are of non-zero dimension
-      # -> so here is the non-trivial case
-
-      # This is the most crucial piece of the code in DegreeXLayer, and thus a few explaining words are appropriate:
-
-      # Note:
-      # gens_source and gens_range are lists. Each entry is a generator of the source/ range vector spaces.
-      # These generators themselves are lists, whose length matches the rank of source/range vector space respectively.
-      # The entries are elements of the underlying graded homalg_ring.
-      #
-      # Consequently, turning such a generator into a matrix means that we can for left presentations multiply the mapping
-      # matrix from the left with such a generator. For right presentations, we can multiply a generator_matrix from the right
-      # onto the mapping matrix.
-      #
-      # We turn the generators of the source into such matrices. We then compute products of the following type:
-      # AsMatrix( source_generator[ i ] ) * mapping_matrix         (for left modules)
-      # mapping_matrix * AsMatrix( source_generator[ i ] )         (for right modules)
-      #
-      # The results of these multiplications are elements of the vector space spanned by gens_range. So we should try to
-      # express the result in terms of these generators. Therefore we form a matrix M from the listlist gens_range such that:
-      #
-      # for left modules, each generator in gens_range is a row of that matrix
-      # for right modules, each generator in gens_range is a column of that matrix
-      #
-      # Expressing the elements in terms of the generators of the range is then the task to find a matrix B such that
-      #
-      # for left modules:   AsMatrix( source_generator[ i ] ) * mapping_matrix = B * M
-      #                     RightDivide( AsMatrix( source_generator[ i ] ) * mapping_matrix, M ) = B
-      # for right modules:  mapping_matrix * AsMatrix( source_generator[ i ] ) = M * B
-      #                     LeftDivide( M, mapping_matrix * AsMatrix( source_generator[ i ] ) ) = B
-      #
-      # for each i, B will be a row (for left modules)/ a column (for right modules)
-      # the union of these rows/columns then gives a morphism of left/right vector spaces
-      #
-      # MatrixCategory( ) in LinearAlgebraForCAP solemnly supports left vector spaces. Therefore we need to turn morphisms
-      # of right vector_spaces into morphisms of left_vector spaces at the end of the computation.
-
-      # extract the underlying matrix of the morphism
-      mapping_matrix := UnderlyingHomalgMatrix( projective_module_morphism );
-
-      # if a left module was provided we have to transpose the mapping matrix
-      if left then
-
-        # remember that the mapping_matrix should be used as transposed matrix for left modules
-        mapping_matrix := Involution( mapping_matrix );
-
-      fi;
-
-      # figure out what names are used for the variables in the Cox ring
-      # we will later look for appearences of this char in a string (that is way faster than e.g. left divide and so on)
-      # this works only if the underlying ring is a polynomial ring and the variable names are of the form 'x1 x2 ...' or 'w_1, w_2' but for
-      # example 'hans1 hans2 hans3...' will lead to problems
-      name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
-
-      # initialise the matrix as a sparse matrix
-      matrix := HomalgInitialMatrix( dim_range,
-                                     Length( gens_source ),
-                                     rationals
-                                    );
-
-      # print status of the computation
-      if display_messages then
-        Print( "Starting the matrix computation now... \n \n" );
+    # print status of the computation
+    if display_messages then
         Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
         Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
         Print( Concatenation( "Have to go until i = ", String( Length( gens_source ) ), "\n" ) );
-      fi;
+    fi;
 
-      counter := 1;
-
-      for i in [ 1 .. Length( gens_source ) ] do
+    # now iterate over all generators in the source
+    for i in [ 1 .. Length( gens_source ) ] do
 
         # information about the status
         if not ( Int( i / Length( gens_source ) * 100 ) < counter ) then
@@ -462,96 +472,24 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
 
         # compute image of the i-th source generator
         comparer := mapping_matrix * gens_source[ i ];
-
-        # extract the non_zero rows of this image-column
         non_zero_rows := NonZeroRows( comparer );
         comparer := EntriesOfHomalgMatrix( comparer );
 
-        # now work over each and every nontrivial entry of comparer
+        # express this image in terms of the range generators and set the matrix entries accordingly
         for j in [ 1 .. Length( non_zero_rows ) ] do
 
-          # consider the non_zero_rows[j]-th image as a string
-          poly := String( comparer[ non_zero_rows[ j ] ] );
+          # the following method identifies the appearing range generators and their coefficients
+          # (it is quicker than LeftDivide, which is why I use it)
+          coeffsAndVars := FindVarsAndCoefficients( String( comparer[ non_zero_rows[ j ] ] ),
+                                                    name_of_indeterminates,
+                                                    rationals
+                                                 );
 
-          # find positions of plus and minus
-          split_pos := [ 1 ];
-          Append( split_pos, Positions( poly, '-' ) );
-          Append( split_pos, Positions( poly, '+' ) );
-          split_pos := DuplicateFreeList( split_pos );
-          Sort( split_pos );
+          # set the entries of the matrix accordingly
+          for k in [ 1 .. Length( coeffsAndVars ) ] do
 
-          # initialise the split string
-          poly_split := List( [ 1 .. Length( split_pos ) ] );
-
-          # and extract the substrings
-          for k in [ 1 .. Length( poly_split ) ] do
-             if k <> Length( poly_split ) then
-               poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-             else
-               poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-             fi;
-          od;
-
-          # -> we have now split the string at each occurance of '+' and '-'
-          # note that SplitString would throw away the signs, but we need to keep track of them (mixed entries in a matrix give 
-          # different cokernel than say only positive ones)
-          # -> therefore we cannot use SplitString
-          # -> the above code is really necessary!
-
-          # now initialise poly_split2
-          poly_split2 := List( [ 1 .. Length( poly_split ) ] );
-
-          # now extract the coefficients of the individual monoms
-          for k in [ 1 .. Length( poly_split ) ] do
-            if poly_split[ k ][ 1 ] = name_of_indeterminates then
-
-              poly_split2[ k ] := [ One( rationals ), poly_split[ k ] ];
-
-            elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
-
-              # find first occurance of 'x' (or more generally the variables names used)
-              # -> whatever is in front of it will be our coefficient
-              pos := Position( poly_split[ k ], name_of_indeterminates );
-
-              if pos <> fail then
-                # at least one 'x' does appear in this string
-                coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
-
-                # massage the coefficient
-                if coeff[ Length( coeff ) ] = '*' then
-                  Remove( coeff );
-                fi;
-
-                # check for degenerate case
-                if coeff = "-" then
-                  coeff := "-1";
-                elif coeff = "+" then
-                  coeff := "+1";
-                fi;
-
-                # remove the coefficient part from poly_split
-                for l in [ 1 .. pos-1 ] do
-                  Remove( poly_split[ k ], 1 );
-                od;
-
-                # finally save the coefficient and the monom
-                poly_split2[ k ] := [ EvalString( coeff ) / rationals, poly_split[ k ] ];
-
-              else
-                # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient and the monom is just 1
-                poly_split2[ k ] := [ Int( poly_split[ k ] ) / rationals, "1" ];
-
-              fi;
-
-            fi;
-
-          od;
-
-          # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
-          for k in [ 1 .. Length( poly_split2 ) ] do
-
-            pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
-            SetMatElm( matrix, pos, i, poly_split2[ k ][ 1 ] );
+            pos := gens_range[ non_zero_rows[ j ] ].( coeffsAndVars[ k ][ 2 ] );
+            SetMatElm( matrix, pos, i, coeffsAndVars[ k ][ 1 ] );
 
           od;
 
@@ -564,81 +502,192 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
         Print( "matrix created... \n" );
       fi;
 
-    fi;
-
-    # and create the vector space morphism
-    # note that CAP only supports left vector spaces, but the above matrix is the mapping matrix of right vector spaces
-    # -> so we need 'Involution'
-    vector_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrColumns( matrix ), rationals ),
-                                                  Involution( matrix ),
-                                                  VectorSpaceObject( NrRows( matrix ), rationals )
-                                                 );
-
-    # finally return the result
-    return DegreeXLayerVectorSpaceMorphism( DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                                                              variety, Source( projective_module_morphism ), degree, rationals ),
-                                            vector_space_morphism,
-                                            DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                                                               variety, Range( projective_module_morphism ), degree, rationals )
-                                           );
+    # and return the matrix
+    return matrix;
 
 end );
 
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ],
+  function( variety, projective_module_morphism, degree, rationals, display_messages )
+    local gens_source, gens_range, matrix;
+
+    # input test
+    if not InputTest( variety, projective_module_morphism, degree ) then
+      return;
+    fi;
+
+    # extract source and range generators
+    gens_source := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices(
+                                                   variety, Source( projective_module_morphism ), degree );
+    gens_range := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(
+                                                   variety, Range( projective_module_morphism ), degree );
+
+    # signal start of the matrix computation
+    if display_messages then
+        Print( "Starting the matrix computation now... \n \n" );
+    fi;
+
+    # truncate the mapping matrix
+    if Length( gens_source ) = 0 then
+      matrix := HomalgZeroMatrix( gens_range[ 1 ], 0, rationals );
+    elif gens_range[ 1 ] = 0 then
+      matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
+    else;
+      matrix := NonTrivialMorphismTruncation( [ gens_source, gens_range ], projective_module_morphism, rationals, display_messages );
+    fi;
+
+    # signal end of matrix computation
+    if display_messages then
+      Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
+      Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
+      Print( "matrix created... \n" );
+    fi;
+
+    # and return the corresponding vector space morphism
+    # LinearAlgebraForCAP supports left vector spaces, but matrix is the mapping matrix of right vector spaces -> 'Involution'
+    return VectorSpaceMorphism( VectorSpaceObject( NrColumns( matrix ), rationals ),
+                                Involution( matrix ),
+                                VectorSpaceObject( NrRows( matrix ), rationals ) );
+
+end );
+
+
 # compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
+InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ],
   function( variety, projective_module_morphism, degree, rationals, display_messages )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+    return TruncateGradedRowOrColumnMorphism(
                    variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), rationals, display_messages );
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
+InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsBool ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ],
   function( variety, projective_module_morphism, degree, display_messages )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+    return TruncateGradedRowOrColumnMorphism(
                                        variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), display_messages );
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
+InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ],
   function( variety, projective_module_morphism, degree, display_messages )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+    return TruncateGradedRowOrColumnMorphism(
                variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ),
                display_messages 
            );
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
+InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ],
   function( variety, projective_module_morphism, degree )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+    return TruncateGradedRowOrColumnMorphism(
                                        variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), false );
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
+InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ],
   function( variety, projective_module_morphism, degree )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
+    return TruncateGradedRowOrColumnMorphism(
                variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ), false );
 
 end );
 
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ],
+  function( variety, projective_module_morphism, degree, rationals, display_messages )
+    local vector_space_morphism;
+
+    # identify the underlying vector space morphism
+    vector_space_morphism := TruncateGradedRowOrColumnMorphism(
+                                                     variety, projective_module_morphism, degree, rationals, display_messages );
+
+    # and dress it as DegreeXLayer presentation thereof
+    return DegreeXLayerVectorSpaceMorphism(
+                   DegreeXLayerOfGradedRowOrColumn( variety, Source( projective_module_morphism ), degree, rationals ),
+                   vector_space_morphism,
+                   DegreeXLayerOfGradedRowOrColumn( variety, Range( projective_module_morphism ), degree, rationals ) );
+
+end );
+
+# compute degree X layer of projective graded S-module
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ],
+  function( variety, projective_module_morphism, degree, rationals, display_messages )
+
+    return DegreeXLayerOfGradedRowOrColumnMorphism(
+                   variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), rationals, display_messages );
+
+end );
+
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ],
+  function( variety, projective_module_morphism, degree, display_messages )
+
+    return DegreeXLayerOfGradedRowOrColumnMorphism(
+                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), display_messages );
+
+end );
+
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ],
+  function( variety, projective_module_morphism, degree, display_messages )
+
+    return DegreeXLayerOfGradedRowOrColumnMorphism(
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ),
+               display_messages 
+           );
+
+end );
+
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ],
+  function( variety, projective_module_morphism, degree )
+
+    return DegreeXLayerOfGradedRowOrColumnMorphism(
+                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), false );
+
+end );
+
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ],
+  function( variety, projective_module_morphism, degree )
+
+    return DegreeXLayerOfGradedRowOrColumnMorphism(
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ), false );
+
+end );
+
+
+
+
+
+if false then
+
 # a minimal version to compute degree X layer of projective graded S-module morphism
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal,
+InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphismMinimal,
                " a toric variety, a projective graded module morphism, a list",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList, IsHomalgRing, IsBool ],
   function( variety, projective_module_morphism, gens_source, gens_range_original, rationals, display_messages )
@@ -803,6 +852,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal,
     return matrix;
 
 end );
+
 
 
 ######################################################################################################
