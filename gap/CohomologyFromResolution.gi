@@ -29,7 +29,7 @@ InstallMethod( CohomologiesList,
                " for a toric variety, two f.p. graded S-module, a boolean and an integer ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
-    local betti_table, coho_list, i, degrees, help_module;
+    local betti_table, coho_list, i, j, degrees, help_module;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -44,7 +44,14 @@ InstallMethod( CohomologiesList,
     # now compute the cohomologies list
     coho_list := [];
     for i in [ 1 .. Length( betti_table ) ] do
-      degrees := List( [ 1 .. Length( betti_table[ i ] ) ], k -> [ UnderlyingListOfRingElements( betti_table[ i ][ k ] ), 1 ] );
+      degrees := [];
+      for j in [ 1 .. Length( betti_table[ i ] ) ] do
+        if IsHomalgModuleElement( betti_table[ i ][ j ] ) then
+          Add( degrees, [ UnderlyingListOfRingElements( betti_table[ i ][ j ] ), 1 ] );
+        else
+          Add( degrees, [ betti_table[ i ][ j ], 1 ] );
+        fi;
+      od;
       coho_list[ i ] := AllHiByCohomCalg( variety, degrees );
     od;
 
