@@ -229,6 +229,11 @@ InstallMethod( Exponents,
     if not IsBounded( PolytopeOfDivisor( divisor ) ) then
         Error( "list is infinite, cannot compute basis because it is not finite\n" );
     fi;
+
+    if IsEmpty( PolytopeOfDivisor( divisor ) ) then
+      return [];
+    fi;
+
     points := LatticePoints( PolytopeOfDivisor( divisor ) );
     rays := RayGenerators( FanOfVariety( variety ) );
     divisor := UnderlyingListOfRingElements( UnderlyingGroupElement( divisor ) );
@@ -328,7 +333,7 @@ InstallMethod( DegreeXLayerVectorsAsColumnMatrices,
 
     fi;
 
-    # compute Q-Basis of its global sections
+    # compute Q-Basisof its global sections
     gens := MonomsOfCoxRingOfDegreeByNormaliz( variety, degree );
 
     # now represent these as matrices of length 'length' which contain nothing but at position 'index'
