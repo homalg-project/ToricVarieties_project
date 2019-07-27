@@ -16,14 +16,13 @@
 ##
 #########################################################################################
 
-# compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfGradedRowOrColumn,
-               " a toric variety, a projective graded module, a list specifying a degree ",
-               [ IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg ],
-  function( variety, projective_module, degree, rationals )
-    local left, degree_list, degrees, shifted_degree, extended_degree_list, i, generators, vectorSpace, ring;
+# compute degree X layer of graded row or column
+InstallMethod( ExtendedDegreeList,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList ],
+  function( variety, projective_module, degree )
+    local left, degree_list, degrees, shifted_degree, extended_degree_list, i;
 
-    # (1) check for valid input
     # (1) check for valid input
 
     left := IsGradedRow( projective_module );
@@ -58,11 +57,8 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumn,
 
     fi;
 
+    # (2) compute extended degree list
 
-    # (2) compute truncation
-    # (2) compute truncation
-
-    # (2.1) identify degrees
     degree_list := DegreeList( projective_module );
     extended_degree_list := [];
     for i in [ 1 .. Length( degree_list ) ] do
@@ -71,7 +67,21 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumn,
                                              ListWithIdenticalEntries( degree_list[ i ][ 2 ], shifted_degree ) );
     od;
 
-    # (2.2) identify the generators
+    return extended_degree_list;
+
+end );
+
+# compute degree X layer of graded row or column
+InstallMethod( DegreeXLayerOfGradedRowOrColumn,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg ],
+  function( variety, projective_module, degree, rationals )
+    local extended_degree_list, i, generators, vectorSpace, ring;
+
+    # (1) check for valid input and identify extended_degree_list
+    extended_degree_list := ExtendedDegreeList( variety, projective_module, degree );
+
+    # (2) find and format the generators accordingly
     generators := [];
     for i in [ 1 .. Rank( projective_module ) ] do
     generators := Concatenation( generators,
@@ -80,14 +90,13 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumn,
                                );
     od;
 
-    # (2.3) construct underlying vector space
+    # (3) construct underlying vector space
     vectorSpace := VectorSpaceObject( Length( generators ), rationals );
 
-    # (2.4) construct ring
+    # (4) construct ring
     ring := CoxRing( variety );
 
-    # (3) return the result
-    # (3) return the result
+    # (5) return the result
     return DegreeXLayerVectorSpace( generators, ring, vectorSpace, Rank( projective_module ) );
 
 end );
@@ -123,150 +132,76 @@ end );
 
 ##############################################################################################
 ##
-## Truncations of graded rows and columns with further formatting
+##  Generators of truncations of graded rows and columns
 ##
 ##############################################################################################
 
-# compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices,
-               " a toric variety, a projective graded module, a list specifying a degree ",
+# generators of degree X layer of graded row or column as list of column matrices
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices,
+               " a toric variety, a projective graded module, a list",
                [ IsToricVariety, IsGradedRowOrColumn, IsList ],
   function( variety, projective_module, degree )
-    local left, degree_list, degrees, extended_degree_list, i, generators;
 
-    # check if we have to deal with a left or right module morphism
-    left := IsGradedRow( projective_module );
-
-    # check that the input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    elif left and not IsIdenticalObj( CapCategory( projective_module ), 
-                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                                   " over the Coxring of the variety" ) );
-      return;
-
-    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
-                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
-
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                            " of the Cox ring is a field" ) );
-      return;
-
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
-
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
-
-    fi;
-
-    # compute the degree layers of S that need to be computed
-    degree_list := DegreeList( projective_module );
-
-    # 'unzip' the degree_list
-    extended_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-      extended_degree_list := Concatenation( extended_degree_list,
-                                        ListWithIdenticalEntries( degree_list[ i ][ 2 ],
-                                                                  degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] )
-                                                                 ) );
-    od;
-
-    # now extract the generators
-    generators := [];
-    for i in [ 1 .. Rank( projective_module ) ] do
-
-      generators := Concatenation( 
-                          generators, 
-                          DegreeXLayerVectorsAsColumnMatrices( variety, extended_degree_list[ i ], i, Rank( projective_module ) )
-                          );
-
-    od;
-
-    # then return the DegreeXLayerVectorSpace
-    return generators;
+    return Generators( DegreeXLayerOfGradedRowOrColumn( variety, projective_module, degree ) );
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices,
-               " a toric variety, a projective graded module, a homalg_module_element specifying a degree ",
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices,
+               " a toric variety, a projective graded module, a homalg_module_element",
                [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
   function( variety, projective_module, degree )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices( 
-                                               variety, projective_module, UnderlyingListOfRingElements( degree ) );
+    return Generators( DegreeXLayerOfGradedRowOrColumn( variety, projective_module, degree ) );
 
 end );
 
-# compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords,
-               " a toric variety, a projective graded module, a list specifying a degree ",
+
+# compute generators of degree X layer of graded row or column as union of column matrices
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices,
+               " a toric variety, a projective graded module, a list",
                [ IsToricVariety, IsGradedRowOrColumn, IsList ],
   function( variety, projective_module, degree )
-    local left, degree_list, extended_degree_list, i, j, record_entries_list, record_list, offset, buffer;
+    local generators, matrix, i, pos;
 
-    # check if we have to deal with a left or right module morphism
-    left := IsGradedRow( projective_module );
+    # (1) extract the generators
+    generators := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices( variety, projective_module, degree );
 
-    # check that the input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    elif left and not IsIdenticalObj( CapCategory( projective_module ), 
-                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                                   " over the Coxring of the variety" ) );
-      return;
-
-    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
-                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
-
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                            " of the Cox ring is a field" ) );
-      return;
-
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
-
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
-
-    fi;
-
-    # compute the degree layers of S that need to be computed
-    degree_list := DegreeList( projective_module );
-
-    # 'unzip' the degree_list
-    extended_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-      extended_degree_list := Concatenation( extended_degree_list,
-                                      ListWithIdenticalEntries( degree_list[ i ][ 2 ],
-                                                                degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] )
-                                                               ) );
+    # (2) construct the matrix
+    matrix := HomalgInitialMatrix( Rank( projective_module ), Length( generators ), CoxRing( variety ) );
+    for i in [ 1 .. Length( generators ) ] do
+      pos := NonZeroRows( generators[ i ] );
+      SetMatElm( matrix, pos[ 1 ], i, EntriesOfHomalgMatrix( CertainRows( generators[ i ], pos ) )[ 1 ] );
     od;
+
+    # (3) and return it
+    return matrix;
+
+end );
+
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices,
+               " a toric variety, a projective graded module, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
+  function( variety, projective_module, degree )
+
+    return GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices(
+                                    variety, projective_module, UnderlyingListOfRingElements( degree ) );
+
+end );
+
+
+# generators of degree X layer as list of records
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList ],
+  function( variety, projective_module, degree )
+    local extended_degree_list, record_entries_list, offset, record_list, i, j, buffer;
+
+    # (1) check for valid input and identify extended_degree_list
+    extended_degree_list := ExtendedDegreeList( variety, projective_module, degree );
 
     # now extract the generators
     record_entries_list := List( [ 1 .. Length( extended_degree_list ) ],
                   i -> List( MonomsOfCoxRingOfDegreeByNormaliz( variety, extended_degree_list[ i ] ), j -> String( j ) ) );
-
 
     # and create the list of records
     offset := 0;
@@ -285,160 +220,28 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsO
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords,
-               " a toric variety, a projective graded module, a homalg_module_element specifying a degree ",
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords,
+               " a toric variety, a projective graded module, a homalg_module_element",
                [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
   function( variety, projective_module, degree )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
+    return GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(
                                                variety, projective_module, UnderlyingListOfRingElements( degree ) );
 
 end );
 
-# compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices,
-               " a toric variety, a projective graded module, a list specifying a degree ",
+
+# compute generators of degree X layer of graded row or column as listlist
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList,
+               " a toric variety, a projective graded module, a list",
                [ IsToricVariety, IsGradedRowOrColumn, IsList ],
   function( variety, projective_module, degree )
-    local left, degree_list, degrees, extended_degree_list, i, generators, matrix, pos;
+    local extended_degree_list, i, generators, mons;
 
-    # check if we have to deal with a left or right module morphism
-    left := IsGradedRow( projective_module );
+    # (1) check for valid input and identify extended_degree_list
+    extended_degree_list := ExtendedDegreeList( variety, projective_module, degree );
 
-    # check that the input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    elif left and not IsIdenticalObj( CapCategory( projective_module ), 
-                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                                   " over the Coxring of the variety" ) );
-      return;
-
-    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
-                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
-
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                            " of the Cox ring is a field" ) );
-      return;
-
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
-
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
-
-    fi;
-
-    # compute the degree layers of S that need to be computed
-    degree_list := DegreeList( projective_module );
-
-    # 'unzip' the degree_list
-    extended_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-      extended_degree_list := Concatenation( extended_degree_list,
-                                        ListWithIdenticalEntries( degree_list[ i ][ 2 ],
-                                                                  degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] )
-                                                                 ) );
-    od;
-
-    # now extract the generators
-    generators := [];
-    for i in [ 1 .. Rank( projective_module ) ] do
-
-      generators := Concatenation(
-                          generators,
-                          DegreeXLayerVectorsAsColumnMatrices( variety, extended_degree_list[ i ], i, Rank( projective_module ) )
-                          );
-
-    od;
-
-    # construct the matrix
-    matrix := HomalgInitialMatrix( Rank( projective_module ), Length( generators ), CoxRing( variety ) );
-    for i in [ 1 .. Length( generators ) ] do
-      pos := NonZeroRows( generators[ i ] );
-      SetMatElm( matrix, pos[ 1 ], i, EntriesOfHomalgMatrix( CertainRows( generators[ i ], pos ) )[ 1 ] );
-    od;
-
-    # then return the DegreeXLayerVectorSpace
-    return matrix;
-
-end );
-
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices,
-               " a toric variety, a projective graded module, a homalg_module_element specifying a degree ",
-               [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
-  function( variety, projective_module, degree )
-
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices( 
-                                               variety, projective_module, UnderlyingListOfRingElements( degree ) );
-
-end );
-
-# compute degree X layer of projective graded S-module
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList,
-               " a toric variety, a projective graded module, a list specifying a degree ",
-               [ IsToricVariety, IsGradedRowOrColumn, IsList ],
-  function( variety, projective_module, degree )
-    local left, degree_list, extended_degree_list, i, generators, mons;
-
-    # check if we have to deal with a left or right module morphism
-    left := IsGradedRow( projective_module );
-
-    # check that the input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    elif left and not IsIdenticalObj( CapCategory( projective_module ), 
-                                      CategoryOfGradedRows( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                                   " over the Coxring of the variety" ) );
-      return;
-
-    elif ( not left ) and not IsIdenticalObj( CapCategory( projective_module ), 
-                                              CategoryOfGradedColumns( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "The module is not defined in the category of projective graded left-modules",
-                            " over the Coxring of the variety" ) );
-      return;
-
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                            " of the Cox ring is a field" ) );
-      return;
-
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
-
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
-
-    fi;
-
-    # compute the degree layers of S that need to be computed
-    degree_list := DegreeList( projective_module );
-
-    # 'unzip' the degree_list
-    extended_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-      extended_degree_list := Concatenation( extended_degree_list,
-                                        ListWithIdenticalEntries( degree_list[ i ][ 2 ],
-                                                                  degree - UnderlyingListOfRingElements( degree_list[ i ][ 1 ] )
-                                                                 ) );
-    od;
-
-    # now extract the generators
+    # (2) extract and format the generators
     generators := [];
     for i in [ 1 .. Rank( projective_module ) ] do
 
@@ -448,26 +251,33 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListLi
 
     od;
 
-    # return the result
+    # (3) return them
     return generators;
 
 end );
 
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList,
-               " a toric variety, a projective graded module, a homalg_module_element specifying a degree ",
+InstallMethod( GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList,
+               " a toric variety, a projective graded module, a homalg_module_element",
                [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
   function( variety, projective_module, degree )
 
-    return DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
-                                               variety, projective_module, UnderlyingListOfRingElements( degree ) );
+    return GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList(
+                                variety, projective_module, UnderlyingListOfRingElements( degree ) );
 
 end );
+
+
+
+
+
+
+
 
 if false then
 
 # compute degree X layer of projective graded S-module morphism
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a list specifying a degree ",
+               " a toric variety, a projective graded module morphism, a list",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsHomalgRing, IsBool ],
   function( variety, projective_module_morphism, degree, rationals, display_messages )
     local left, gens_source, gens_range, dim_range, matrix, mapping_matrix, counter, i, comparer, j, non_zero_rows,
@@ -776,7 +586,7 @@ end );
 
 # compute degree X layer of projective graded S-module
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a homalg_module_element specifying a degree ",
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ],
   function( variety, projective_module_morphism, degree, rationals, display_messages )
 
@@ -786,7 +596,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
 end );
 
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a homalg_module_element specifying a degree ",
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsBool ],
   function( variety, projective_module_morphism, degree, display_messages )
 
@@ -796,7 +606,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
 end );
 
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a homalg_module_element specifying a degree ",
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool ],
   function( variety, projective_module_morphism, degree, display_messages )
 
@@ -808,7 +618,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
 end );
 
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a homalg_module_element specifying a degree ",
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList ],
   function( variety, projective_module_morphism, degree )
 
@@ -818,7 +628,7 @@ InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
 end );
 
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism,
-               " a toric variety, a projective graded module morphism, a homalg_module_element specifying a degree ",
+               " a toric variety, a projective graded module morphism, a homalg_module_element",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsHomalgModuleElement ],
   function( variety, projective_module_morphism, degree )
 
@@ -829,7 +639,7 @@ end );
 
 # a minimal version to compute degree X layer of projective graded S-module morphism
 InstallMethod( DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimal,
-               " a toric variety, a projective graded module morphism, a list specifying a degree ",
+               " a toric variety, a projective graded module morphism, a list",
                [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsList, IsHomalgRing, IsBool ],
   function( variety, projective_module_morphism, gens_source, gens_range_original, rationals, display_messages )
     local left, dim_range, gens_range, matrix, mapping_matrix, name_of_indeterminates, counter, i, 

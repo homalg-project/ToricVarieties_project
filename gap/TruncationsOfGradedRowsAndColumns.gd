@@ -15,6 +15,9 @@
 ##
 ##############################################################################################
 
+DeclareOperation( "ExtendedDegreeList",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+
 #! @Description
 #! The arguments are a toric variety $V$, a graded row or column $M$ over the Cox ring of $V$
 #! and a <A>degree_list</A> specifying an element of the degree group of the toric variety $V$.
@@ -26,64 +29,112 @@
 #! representation of the obtained vector space as $F^n$. In case $F$ is specified, we use this
 #! particular field. Otherwise, HomalgFieldOfRationals() will be used.
 #! @Returns DegreeXLayerVectorSpace
-#! @Arguments V, M, degree_list
+#! @Arguments V, M, degree_list, field
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumn",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg ] );
 
-#!
+#! @Description
+#! As above, but with a HomalgModuleElement m specifying the degree.
+#! @Returns DegreeXLayerVectorSpace
+#! @Arguments V, M, m, field
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumn",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsFieldForHomalg ] );
 
-#!
+#! @Description
+#! As above, but the coefficient ring of the Cox ring will be used as field
+#! @Returns DegreeXLayerVectorSpace
+#! @Arguments V, M, degree
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumn",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
 
-#!
+#! @Description
+#! As above, but a HomalgModuleElement m specifies the degree
+#! and we use the coefficient ring of the Cox ring as field.
+#! @Returns DegreeXLayerVectorSpace
+#! @Arguments V, M, m
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumn",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
 
 ##############################################################################################
 ##
-#! @Section Truncations of graded rows and columns with further formatting
+#! @Section Formats for generators of truncations of graded rows and columns
 ##
 ##############################################################################################
 
 #! @Description
-#! The arguments and functionality are as described above.
-#! However, further formatting of the output will be applied.
-#! @Returns a formated DegreeXLayerVectorSpace
-#! @Arguments V, M, degree_list
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices",
+#! The arguments are a variety V, a graded row or column M and a list l,
+#! specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and return its
+#! generators as list of column matrices.
+#! @Returns a list
+#! @Arguments V, M, l
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
 
-#!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices",
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a
+#! HomalgModuleElement m, specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and return its
+#! generators as list of column matrices.
+#! @Returns a list
+#! @Arguments V, M, m
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
+
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a list l,
+#! specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and its
+#! generators as column matrices. The matrix formed from the union of these
+#! column matrices is returned.
+#! @Returns a list
+#! @Arguments V, M, m
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a
+#! HomalgModuleElement m, specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and its
+#! generators as column matrices. The matrix formed from the union of these column
+#! matrices is returned.
+#! @Returns a list
+#! @Arguments V, M, m
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
+
+#! @Description
+#! The arguments are a variety V, a graded row or column M and a list l,
+#! specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and return its
+#! generators as list [ n, rec_list ]. n specifies the number of generators.
+#! rec_list is a list of record. The i-th record contains the generators of the
+#! i-th direct summand of M.
+#! @Returns a list
+#! @Arguments V, M, l
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+
+#! The arguments are a variety V, a graded row or column M and a
+#! HomalgModuleElement m, specifying a degree in the class group of the Cox ring of $V$.
+#! We then compute the truncation of M to the specified degree and return its
+#! generators as list [ n, rec_list ]. n specifies the number of generators.
+#! rec_list is a list of record. The i-th record contains the generators of the
+#! i-th direct summand of M.
+#! @Returns a list
+#! @Arguments V, M, m
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
 #!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords",
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList",
                   [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
 
 #!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords",
+DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList",
                   [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
-#!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
-
-#!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsUnionOfColumnMatrices",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
-
-#!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
-
-#!
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
 
 if false then
 ##############################################################################################
