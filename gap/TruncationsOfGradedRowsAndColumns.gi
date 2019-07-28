@@ -905,7 +905,7 @@ InstallMethod( TruncationParallel,
                " a list, a  list, an integer, a positive integer, a boolean",
                [ IsList, IsList, IsInt, IsPosInt, IsBool ],
   function( input, gens_range, Nr_gens_source, NrJobs, display_messages )
-    local step_size, low_bound, up_bound, i, jobs, entries, res;
+    local step_size, jobs, i, low_bound, up_bound, input_data, entries, res;
 
     # determine the number of images for each child process
     if IsInt( Nr_gens_source / NrJobs ) then
@@ -928,7 +928,7 @@ InstallMethod( TruncationParallel,
               up_bound := i * step_size;
         elif i = NrJobs then
               low_bound := 1 + ( NrJobs - 1 ) * step_size;
-              up_bound := Length( gens_source );
+              up_bound := Nr_gens_source;
         fi;
 
         # prepare its input data
@@ -985,8 +985,8 @@ InstallMethod( TruncationParallel,
 
     od;
 
-    # build matrix from the results
-    matrix := CreateHomalgMatrixFromSparseString( String( entries ), Length( gens_source ), gens_range[ 1 ], rationals );
+    # return the result
+    return [ String( entries ), Nr_gens_source, gens_range[ 1 ] ];
 
 end );
 
@@ -1012,10 +1012,6 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     gens_range := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(
                                                    variety, Range( projective_module_morphism ), degree );
 
-    # process the generators of the source further by computing
-    # their images and preparing them to be handed over to child processes
-    input := ComputeInput( variety, projective_module_morphism, gens_source );
-
     # signal start of the matrix computation
     if display_messages then
         Print( "Starting the matrix computation now... \n \n" );
@@ -1027,7 +1023,14 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     elif gens_range[ 1 ] = 0 then
         matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
     else;
-        matrix := TruncationParallel( input, gens_range, Length( gens_source ), NrJobs, display_messages );
+
+        # to handle the non-trivial case, first compute the input
+        input := ComputeInput( variety, projective_module_morphism, gens_source );
+
+        # then process it to extract the matrix in question
+        entries := TruncationParallel( input, gens_range, Length( gens_source ), NrJobs, display_messages );
+        matrix := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+
     fi;
 
     # signal end of matrix computation

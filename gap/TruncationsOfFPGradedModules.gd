@@ -133,20 +133,20 @@ DeclareOperation( "TruncateFPGradedModuleMorphism",
 #! be useful for longer computations.
 #! @Returns a FreydCategoryMorphism
 #! @Arguments V, M, d, [ N1, N2, N3 ], B, F
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool, IsFieldForHomalg ] );
 
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList, IsBool, IsFieldForHomalg ] );
 
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool ] );
 
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList, IsBool ] );
 
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList ] );
 
-DeclareOperation( "TruncateFPGradedModuleMorphism",
+DeclareOperation( "TruncateFPGradedModuleMorphismInParallel",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList ] );

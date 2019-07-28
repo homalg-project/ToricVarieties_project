@@ -157,21 +157,22 @@ end );
 ##
 ##############################################################################################
 
+
 InstallMethod( TruncateFPGradedModuleMorphism,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool, IsFieldForHomalg ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool, IsFieldForHomalg ],
   function( variety, graded_module_morphism, degree, display_messages, rationals )
     local source, map, range;
 
     # truncate source, map and range
     source := FreydCategoryObject(
                 TruncateGradedRowOrColumnMorphism(
-                     variety, RelationMorphism( Source( graded_module_morphism ) ), degree, display_message, rationals ) );
-    map := TruncateGradedRowOrColumnMorphism( 
-                     variety, MorphismDatum( graded_module_morphism ), degree, display_message, rationals );
+                     variety, RelationMorphism( Source( graded_module_morphism ) ), degree, display_messages, rationals ) );
+    map := TruncateGradedRowOrColumnMorphism(
+                     variety, MorphismDatum( graded_module_morphism ), degree, display_messages, rationals );
     range := FreydCategoryObject(
                 TruncateGradedRowOrColumnMorphism(
-                     variety, RelationMorphism( Range( graded_module_morphism ) ), degree, display_message, rationals ) );
+                     variety, RelationMorphism( Range( graded_module_morphism ) ), degree, display_messages, rationals ) );
 
     # and return the result
     return FreydCategoryMorphism( source, map, range );
@@ -180,7 +181,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphism,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool, IsFieldForHomalg ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool, IsFieldForHomalg ],
   function( variety, graded_module_morphism, degree, display_messages, rationals )
 
       return TruncateFPGradedModuleMorphism( variety,
@@ -193,7 +194,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphism,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool ],
   function( variety, graded_module_morphism, degree, display_messages )
 
       return TruncateFPGradedModuleMorphism( variety,
@@ -206,12 +207,12 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphism,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool ],
   function( variety, graded_module_morphism, degree, display_messages )
 
       return TruncateFPGradedModuleMorphism( variety,
                                              graded_module_morphism,
-                                             UnderlylingListOfRingElements( degree ),
+                                             UnderlyingListOfRingElements( degree ),
                                              display_messages,
                                              CoefficientsRing( CoxRing( variety ) ) );
 
@@ -219,8 +220,8 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphism,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList ] );
-  function( variety, graded_module_morphism, degree, display_messages )
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList ],
+  function( variety, graded_module_morphism, degree )
 
       return TruncateFPGradedModuleMorphism( variety,
                                              graded_module_morphism,
@@ -252,9 +253,10 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphismInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool, IsFieldForHomalg ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool, IsFieldForHomalg ],
   function( variety, graded_module_morphism, degree, NrJobs, display_messages, rationals )
-    local source, map, range, gensOfSourceOfSource, gensOfRangeOfSource, matrix1;
+    local source, map, range, gensOfSource, gensOfRange, input, job1, job2, job3, entries,
+         matrix1, matrix2, matrix3, vec_space_source, vec_space_map, vec_space_range;
 
     # first check that the user specified meaningful NrJobs
     if not Length( NrJobs ) = 3 then
@@ -272,352 +274,215 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     map := MorphismDatum( graded_module_morphism );
     range := RelationMorphism( Range( graded_module_morphism ) );
 
-    # (2) truncate source and range of the morphism "source"
-    if display_messages then
-        Print( "truncate the source... \n" );
-    fi;
-    gensOfSourceOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( source ), degree );
-    gensOfRangeOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( source ), degree );
+    # ( 2 ) process range
+    gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( range ), degree );
+    gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( range ), degree );
 
+    # signal start of the matrix computation
     if display_messages then
-        Print( "analyse the source morphism... \n" );
+        Print( "Compute matrix for source...\n" );
     fi;
 
-    # (3) check for degenerate cases before we immediately set off to make a non-trivial computation
-    if Length( gensOfSourceOfSource ) = 0 then #its source is the zero vector space
-
-        matrix1 := HomalgZeroMatrix( 0, gensOfRangeOfSource[ 1 ], rationals );
-        if display_messages then
-          Print( "matrix 1 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
-        fi;
-
-    elif gensOfRangeOfSource[ 1 ] = 0 then #its range is the zero vector space
-
-        matrix1 := HomalgZeroMatrix( Length( gensOfSourceOfSource ), 0, rationals );
-        if display_messages then
-          Print( "matrix 1 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
-        fi;
-
+    # truncate the mapping matrix
+    if Length( gensOfSource ) = 0 then
+        matrix3 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+    elif gensOfRange[ 1 ] = 0 then
+        matrix3 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
     else
 
-        # (3.1) compute input
+        # start a background job with this input data to obtain entries
+        # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "-> compute images... \n" );
-        fi;
-        input := ComputeInput( variety, source, gensOfRangeOfSource );
-
-        # (3.2) start background jobs
-
-        compute_job1 := true;
-        if display_messages then
-          Print( "-> starting background job for this truncation... \n \n" );
+          Print( "Starting a background job...\n" );
         fi;
 
-        # start background job
-        job1 := BackgroundJobByFork( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally, 
-                              [ [ input[ 1 ], gens_range_1, input[ 2 ] ], false ], rec( TerminateImmediately := true ) );
+        # compute the input
+        input := ComputeInput( variety, range, gensOfSource );
 
-      fi;
+        # and start the background job
+        # remove rationals here - i.e. write method that merely returns the entries!
+        job3 := BackgroundJobByFork( TruncationParallel,
+                                     [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 3 ], false ],
+                                     rec( TerminateImmediately := true ) );
+    fi;
 
+    # ( 3 ) process map
+    gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( map ), degree );
+    gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( map ), degree );
 
-      # step5: truncate the map morphism
-      # step5: truncate the map morphism
+    # signal start of the matrix computation
+    if display_messages then
+        Print( "Compute matrix for source...\n" );
+    fi;
+
+    # truncate the mapping matrix
+    if Length( gensOfSource ) = 0 then
+        matrix2 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+    elif gensOfRange[ 1 ] = 0 then
+        matrix2 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
+    else
+
+        # start a background job with this input data to obtain entries
+        # this job calls a number of other jobs by itself
+        if display_messages then
+          Print( "Starting a background job...\n" );
+        fi;
+
+        # compute the input
+        input := ComputeInput( variety, map, gensOfSource );
+
+        # and start the background job
+        # remove rationals here - i.e. write method that merely returns the entries!
+        job2 := BackgroundJobByFork( TruncationParallel,
+                                     [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 2 ], false ],
+                                     rec( TerminateImmediately := true ) );
+    fi;
+
+    # ( 4 ) process source
+    gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( source ), degree );
+    gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( source ), degree );
+
+    # signal start of the matrix computation
+    if display_messages then
+        Print( "Compute matrix for source...\n" );
+    fi;
+
+    # truncate the mapping matrix
+    if Length( gensOfSource ) = 0 then
+        matrix1 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+    elif gensOfRange[ 1 ] = 0 then
+        matrix1 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
+    else
+
+        # start a background job with this input data to obtain entries
+        # this job calls a number of other jobs by itself
+        if display_messages then
+          Print( "Starting a background job...\n" );
+        fi;
+
+        # compute the input
+        input := ComputeInput( variety, source, gensOfSource );
+
+        # and start the background job
+        # remove rationals here - i.e. write method that merely returns the entries!
+        job1 := BackgroundJobByFork( TruncationParallel,
+                                     [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 1 ], false ],
+                                     rec( TerminateImmediately := true ) );
+    fi;
+
+    # ( 5 ) retrieve result of job 1
+    if display_messages then
+        Print( "Extract result of truncation of source: \n" );
+    fi;
+
+    # extract result
+    entries := Pickup( job1 );
+
+    # check if the job completed successfully
+    if entries = fail then
+      Error( "Job1 completed with message 'fail'" );
+    else
+
       if display_messages then
-        Print( "truncate the projective modules in the map... \n" );
+        Print( "(*) job1 completed successfully \n" );
       fi;
-      gens_source_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
-                                                       variety, Source( map ), zero );
-      gens_range_2 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListsOfRecords(
-                                                       variety, Range( map ), zero );
+
+      # create the corresponding matrix
+      matrix1 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
 
       if display_messages then
-        Print( "analyse the map morphism... \n" );
+        Print( "(*) result of job1 read \n" );
       fi;
 
-      # if its source is the zero vector space...
-      if Length( gens_source_2 ) = 0 then
-
-        matrix2 := HomalgZeroMatrix( 0, gens_range_2[ 1 ], rationals );
-        if display_messages then
-          Print( "matrix 2 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
-        fi;
-
-      # if its range is the zero vector space...
-      elif gens_range_2[ 1 ] = 0 then
-
-        matrix2 := HomalgZeroMatrix( Length( gens_source_2 ), 0, rationals );
-        if display_messages then
-          Print( "matrix 2 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
-        fi;
-
-      else
-
-        # compute input
-        if display_messages then
-          Print( "-> compute images... \n" );
-        fi;
-        input := ComputeInput( variety, map, gens_source_2 );
-        compute_job2 := true;
-        if display_messages then
-          Print( "-> starting background job for this truncation... \n \n" );
-        fi;
-
-        # start background job
-        job2 := BackgroundJobByFork( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
-                              [ [ input[ 1 ], gens_range_2, input[ 2 ] ], false ], rec( TerminateImmediately := true ) );
-
-      fi;
-
-
-      # step6: truncate the range morphism
-      # step6: truncate the range morphism
-      if display_messages then
-        Print( "truncate the projective modules in the range... \n" );
-      fi;
-      gens_source_3 := DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListList( 
-                                                       variety, Source( range ), zero );
-      gens_range_3 := gens_range_2;
+      # and kill this job
+      Kill( job1 );
 
       if display_messages then
-        Print( "analyse the range morphism... \n" );
+        Print( "(*) job1 killed \n\n" );
       fi;
 
-      # if its source is the zero vector space...
-      if Length( gens_source_3 ) = 0 then
+    fi;
 
-        matrix3 := HomalgZeroMatrix( 0, gens_range_3[ 1 ], rationals );
-        if display_messages then
-          Print( "matrix 3 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
-        fi;
+    # ( 6 ) retrieve result of job 2
+    if display_messages then
+        Print( "Extract result of truncation of map: \n" );
+    fi;
 
-      # if its range is the zero vector space...
-      elif gens_range_3[ 1 ] = 0 then
+    # extract result
+    entries := Pickup( job2 );
 
-        matrix3 := HomalgZeroMatrix( Length( gens_source_3 ), 0, rationals );
-        if display_messages then
-          Print( "matrix 3 computed... \n" );
-          Print( Concatenation( "NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
-          Print( Concatenation( "NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
-        fi;
+    # check if the job completed successfully
+    if entries = fail then
+      Error( "Job2 completed with message 'fail'" );
+    else
 
-      else
-
-        # compute input
-        if display_messages then
-          Print( "-> compute images... \n" );
-        fi;
-        input := ComputeInput( variety, range, gens_source_3 );
-        compute_job3 := true;
-        if display_messages then
-          Print( "-> starting 3 background jobs for this truncation...\n" );
-        fi;
-
-        # determine cutoff
-        if IsInt( Length( gens_source_3 ) /3 ) then
-          cutoff := Length( gens_source_3 ) / 3;
-        else
-          cutoff := Int( Length( gens_source_3 ) / 3 ) + 1;
-        fi;
-
-        # start background job1
-        job31 := BackgroundJobByFork( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
-                    [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, 1, cutoff ], rec( TerminateImmediately := true ) );
-        if display_messages then
-          Print( "-> job31 running... \n" );
-        fi;
-
-        # start background job2
-        job32 := BackgroundJobByFork( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
-                                              [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, cutoff + 1, 2 * cutoff ],
-                                                                                    rec( TerminateImmediately := true ) );
-        if display_messages then
-          Print( "-> job32 running... \n" );
-        fi;
-
-        # start background job3
-        job33 := BackgroundJobByFork( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
-                             [ [ input[ 1 ], gens_range_3, input[ 2 ] ], false, 2 * cutoff + 1, Length( gens_source_3 ) ],
-                                                                                    rec( TerminateImmediately := true ) );
-        if display_messages then
-          Print( "-> job33 running... \n \n" );
-        fi;
-
-      fi;
-
-
-      # step7: collect result of job1 and kill this job
-      # step7: collect result of job1 and kill this job
-      if compute_job1 then
-        if display_messages then
-          Print( "extract result of job 1: \n" );
-        fi;
-        res := Pickup( job1 );
-        if res = fail then
-          Error( "job 1 completed with message 'fail' " );
-        else
-          if display_messages then
-            Print( "(*) process completed... \n" );
-            Print( "(*) result read... \n" );
-          fi;
-          matrix1 := CreateHomalgMatrixFromSparseString( String( res ), 
-                                                         Length( gens_source_1 ), gens_range_1[ 1 ], rationals );
-          if display_messages then
-            Print( "(*) matrix values set... \n" );
-          fi;
-          Kill( job1 );
-          if display_messages then
-            Print( "(*) process killed \n \n" );
-            Print( "matrix 1 computed \n" );
-            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix1 ) ), "\n" ) );
-            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix1 ) ), "\n \n" ) );
-          fi;
-        fi;
-      fi;
-
-
-      # step8: collect result of job2
-      # step8: collect result of job2
-      if compute_job2 then
-        res := Pickup( job2 );
-        if display_messages then
-          Print( "extract result of job 2: \n" );
-        fi;
-        if res = fail then
-          Error( "job 2 completed with message 'fail' " );
-        else
-          if display_messages then
-            Print( "(*) process completed \n" );
-            Print( "(*) result read \n" );
-          fi;
-          matrix2 := CreateHomalgMatrixFromSparseString( String( res ), 
-                                                         Length( gens_source_2 ), gens_range_2[ 1 ], rationals );
-          if display_messages then
-            Print( "(*) matrix values set \n" );
-          fi;
-          Kill( job2 );
-          if display_messages then
-            Print( "(*) process killed \n \n" );
-            Print( "matrix 2 computed \n" );
-            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix2 ) ), "\n" ) );
-            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix2 ) ), "\n \n" ) );
-          fi;
-        fi;
-      fi;
-
-
-      # step9: collect result of job31 and job32 and kill them
-      # step9: collect result of job31 and job32 and kill them
-      if compute_job3 then
-
-        # extract result of job31 first
-        if display_messages then
-          Print( "extract result of job31: \n" );
-        fi;
-        res := Pickup( job31 );
-        if res = fail then
-          Error( "job31 completed with message 'fail' " );
-        else
-          if display_messages then
-            Print( "(*) process completed \n" );
-          fi;
-          helper := res;
-          if display_messages then
-            Print( "(*) result read \n" );
-          fi;
-          Kill( job31 );
-          if display_messages then
-            Print( "(*) process killed \n \n" );
-          fi;
-        fi;
-
-
-        # extract result of job32 next
-        if display_messages then
-          Print( "extract result of job32: \n" );
-        fi;
-        res := Pickup( job32 );
-        if res = fail then
-          Error( "job32 completed with message 'fail' " );
-        else
-          if display_messages then
-            Print( "(*) process completed \n" );
-          fi;
-          Append( helper, res );
-          if display_messages then
-            Print( "(*) result read \n" );
-          fi;
-          Kill( job32 );
-          if display_messages then
-            Print( "(*) process killed \n \n" );
-          fi;
-        fi;
-
-        # extract result of job33 next
-        if display_messages then
-          Print( "extract result of job33: \n" );
-        fi;
-        res := Pickup( job33 );
-        if res = fail then
-          Error( "job33 completed with message 'fail' " );
-        else
-          if display_messages then
-            Print( "(*) process completed \n" );
-          fi;
-          Append( helper, res );
-          if display_messages then
-            Print( "(*) result read \n" );
-          fi;
-          matrix3 := CreateHomalgMatrixFromSparseString( String( helper ), 
-                                                         Length( gens_source_3 ), gens_range_3[ 1 ], rationals );
-          if display_messages then
-            Print( "(*) matrix values set \n" );
-          fi;
-          Kill( job33 );
-          if display_messages then
-            Print( "(*) process killed \n \n" );
-            Print( "matrix3 computed \n" );
-            Print( Concatenation( "(*) NrRows: ", String( NrRows( matrix3 ) ), "\n" ) );
-            Print( Concatenation( "(*) NrColumns: ", String( NrColumns( matrix3 ) ), "\n \n" ) );
-          fi;
-        fi;
-
-      fi;
-
-      # step 10: compute syzygies and vec_space_morphism
-      # step 10: compute syzygies and vec_space_morphism
       if display_messages then
-        Print( "compute syzygies and vector space morphism \n" );
+        Print( "(*) job2 completed successfully \n" );
       fi;
 
-      new_mat := SyzygiesOfRows( SyzygiesOfRows( matrix2, matrix3 ), matrix1 );
-      vec_space_morphism := VectorSpaceMorphism( VectorSpaceObject( NrRows( new_mat ), rationals ),
-                                                 new_mat,
-                                                 VectorSpaceObject( NrColumns( new_mat ), rationals )
-                                                );
+      # create the corresponding matrix
+      matrix2 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
 
-      # and return the result
-      return vec_space_morphism;
+      if display_messages then
+        Print( "(*) result of job2 read \n" );
+      fi;
 
+      # and kill this job
+      Kill( job2 );
 
+      if display_messages then
+        Print( "(*) job2 killed \n\n" );
+      fi;
 
-    # (2) truncate
-    source_truncated :=
-                  TruncateGradedRowOrColumnMorphismInParallel( variety, source, degree, NrJobs[ 1 ], display_messages, rationals );
-    map_truncated := TruncateGradedRowOrColumnMorphismInParallel( variety, map, degree, NrJobs[ 2 ], display_messages, rationals );
-    range_truncated :=
-                   TruncateGradedRowOrColumnMorphismInParallel( variety, range, degree, NrJobs[ 3 ], display_messages, rationals );
+    fi;
 
-    # (3) return the result
-    return FreydCategoryMorphism( source_truncated, map_truncated, range_truncated );
+    # ( 7 ) retrieve result of job 3
+    if display_messages then
+        Print( "Extract result of truncation of range: \n" );
+    fi;
+
+    # extract result
+    entries := Pickup( job3 );
+
+    # check if the job completed successfully
+    if entries = fail then
+      Error( "Job3 completed with message 'fail'" );
+    else
+
+      if display_messages then
+        Print( "(*) job3 completed successfully \n" );
+      fi;
+
+      # create the corresponding matrix
+      matrix3 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+
+      if display_messages then
+        Print( "(*) result of job3 read \n" );
+      fi;
+
+      # and kill this job
+      Kill( job1 );
+
+      if display_messages then
+        Print( "(*) job3 killed \n\n" );
+      fi;
+
+    fi;
+
+    # ( 8 ) construct the morphism of vector space presentations
+    vec_space_source := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix1 ), rationals ),
+                                             matrix1,
+                                             VectorSpaceObject( NrColumns( matrix1 ), rationals ) );
+    vec_space_source := FreydCategoryObject( vec_space_source );
+    vec_space_map := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix2 ), rationals ),
+                                          matrix2,
+                                          VectorSpaceObject( NrColumns( matrix2 ), rationals ) );
+    vec_space_range := VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix3 ), rationals ),
+                                            matrix3,
+                                            VectorSpaceObject( NrColumns( matrix3 ), rationals ) );
+    vec_space_range := FreydCategoryObject( vec_space_range );
+
+    # ( 9 ) return the result
+    return FreydCategoryMorphism( vec_space_source, vec_space_map, vec_space_range );
 
 end );
