@@ -87,3 +87,20 @@ Display( UnderlyingMatrix( trunc_mor ) );
 #! 0,0,0,1,0,0 
 #! (over a graded ring)
 #! @EndExample
+
+#! @Example
+matrix2 := HomalgMatrix( [[ 1/2*vars[ 1 ] ]], cox_ring );
+#! <A 1 x 1 matrix over a graded ring>
+mor2 := GradedRowOrColumnMorphism( source, matrix2, range );
+#! <A morphism in Category of graded rows over
+#! Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
+IsWellDefined( mor2 );
+#! true
+trunc_mor2 := TruncateGradedRowOrColumnMorphism( P2, mor2, [ 2 ] );
+#! <A morphism in Category of matrices over Q (with weights [ 1 ])>
+Display( UnderlyingMatrix( trunc_mor2 ) );
+#! 1/2,0,0,0,0,0,
+#! 0,1/2,0,0,0,0,
+#! 0,0,0,1/2,0,0 
+#! (over a graded ring)
+#! @EndExample

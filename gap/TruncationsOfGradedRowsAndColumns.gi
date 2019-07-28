@@ -333,87 +333,6 @@ end );
 ##############################################################################################
 
 # Method to interpret image polynomial in above method in terms of the generators of the range module
-InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
-               " a string, a string",
-               [ IsString, IsChar ],
-  function( poly, name_of_indeterminates )
-    local split_pos, poly_split, k, poly_split2, pos, coeff, l;
-
-    # poly is a linear combination of generators in the range, so first identify the positions of plus and minus
-    split_pos := [ 1 ];
-    Append( split_pos, Positions( poly, '-' ) );
-    Append( split_pos, Positions( poly, '+' ) );
-    split_pos := DuplicateFreeList( split_pos );
-    Sort( split_pos );
-
-    # identify all of the substrings
-    poly_split := List( [ 1 .. Length( split_pos ) ] );
-    for k in [ 1 .. Length( split_pos ) ] do
-       if k < Length( split_pos ) then
-          poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-       else
-          poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-       fi;
-    od;
-
-    # next evaluate each of the substrings, thereby carefully tell apart the coefficient and the generator
-    poly_split2 := List( [ 1 .. Length( poly_split ) ] );
-    for k in [ 1 .. Length( poly_split ) ] do
-
-       # split strings start with indeterminate -> coefficient is 1
-       if poly_split[ k ][ 1 ] = name_of_indeterminates then
-
-         poly_split2[ k ] := [ "1", poly_split[ k ] ];
-
-       # else there is a non-trivial coefficient
-       elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
-
-         # find first occurance of name_of_indeterminates -> whatever is in front of it will be our coefficient
-         pos := Position( poly_split[ k ], name_of_indeterminates );
-
-         # there indeed appear an indeterminate
-         if pos <> fail then
-
-           # at least one 'x' does appear in this string
-           coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
-
-           # massage the coefficient
-           if coeff[ Length( coeff ) ] = '*' then
-             Remove( coeff );
-           fi;
-
-           # check for degenerate case
-           if coeff = "-" then
-             coeff := "-1";
-           elif coeff = "+" then
-             coeff := "+1";
-           fi;
-
-           # remove the coefficient part from poly_split
-           for l in [ 1 .. pos-1 ] do
-              Remove( poly_split[ k ], 1 );
-           od;
-
-           # finally save the coefficient and the monom
-           poly_split2[ k ] := [ coeff, poly_split[ k ] ];
-
-         # no indeterminate appears, so the entire string is the coefficient and the monom is just 1
-         else
-
-           poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
-
-         fi;
-
-       fi;
-
-    od;
-
-    # and return the result
-    return poly_split2;
-
-end );
-
-# Method to interpret image polynomial in above method in terms of the generators of the range module
 InstallMethod( FindVarsAndCoefficients,
                " a string, a string and a ring",
                [ IsString, IsChar, IsFieldForHomalg ],
@@ -476,12 +395,12 @@ InstallMethod( FindVarsAndCoefficients,
            od;
 
            # finally save the coefficient and the monom
-           poly_split2[ k ] := [ EvalString( coeff ) / rationals, poly_split[ k ] ];
+           poly_split2[ k ] := [ Rat( coeff ) / rationals, poly_split[ k ] ];
 
          # no indeterminate appears, so the entire string is the coefficient and the monom is just 1
          else
 
-           poly_split2[ k ] := [ Int( poly_split[ k ] ) / rationals, "1" ];
+           poly_split2[ k ] := [ Rat( poly_split[ k ] ) / rationals, "1" ];
 
          fi;
 
@@ -769,6 +688,93 @@ end );
 ##
 ######################################################################################################
 
+# Method to interpret image polynomial in above method in terms of the generators of the range module
+InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
+               " a string, a string",
+               [ IsString, IsChar ],
+  function( poly, name_of_indeterminates )
+    local split_pos, poly_split, k, poly_split2, pos, coeff, l;
+
+    # poly is a linear combination of generators in the range, so first identify the positions of plus and minus
+    split_pos := [ 1 ];
+    Append( split_pos, Positions( poly, '-' ) );
+    Append( split_pos, Positions( poly, '+' ) );
+    split_pos := DuplicateFreeList( split_pos );
+    Sort( split_pos );
+
+    # identify all of the substrings
+    poly_split := List( [ 1 .. Length( split_pos ) ] );
+    for k in [ 1 .. Length( split_pos ) ] do
+       if k < Length( split_pos ) then
+          poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       else
+          poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       fi;
+    od;
+
+    # next evaluate each of the substrings, thereby carefully tell apart the coefficient and the generator
+    poly_split2 := List( [ 1 .. Length( poly_split ) ] );
+    for k in [ 1 .. Length( poly_split ) ] do
+
+       # split strings start with indeterminate -> coefficient is 1
+       if poly_split[ k ][ 1 ] = name_of_indeterminates then
+
+         poly_split2[ k ] := [ "1", poly_split[ k ] ];
+
+       # else there is a non-trivial coefficient
+       elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
+
+         # find first occurance of name_of_indeterminates -> whatever is in front of it will be our coefficient
+         pos := Position( poly_split[ k ], name_of_indeterminates );
+
+         # there indeed appear an indeterminate
+         if pos <> fail then
+
+           # at least one 'x' does appear in this string
+           coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
+
+           # massage the coefficient
+           if coeff[ Length( coeff ) ] = '*' then
+             Remove( coeff );
+           fi;
+
+           # check for degenerate case
+           if coeff = "-" then
+             coeff := "-1";
+           elif coeff = "+" then
+             coeff := "+1";
+           fi;
+
+           # remove the coefficient part from poly_split
+           for l in [ 1 .. pos-1 ] do
+              Remove( poly_split[ k ], 1 );
+           od;
+
+           # finally save the coefficient and the monom
+           poly_split2[ k ] := [ coeff, poly_split[ k ] ];
+
+         # no indeterminate appears, so the entire string is the coefficient and the monom is just 1
+         else
+
+           poly_split2[ k ] := [ poly_split[ k ], "1" ];
+
+         fi;
+
+       fi;
+
+       # remove "+" from coefficient for easier processing
+       RemoveCharacters( poly_split2[ k ][ 1 ], "+" );
+
+    od;
+
+    # return the result
+    return poly_split2;
+
+end );
+
+
+
+
 # compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
 InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
                " a list of information and a string",
@@ -786,21 +792,28 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
                " a list of information and a string",
                [ IsList, IsBool, IsInt, IsInt ],
   function( infos, display_messages, starting_pos, ending_pos )
-    local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
-         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions,
-         coeffsAndVars;
+    local images, gens_range, name_of_indeterminates, dim_range, positions, counter, i,
+         comparer, non_zero_rows, j, l, pos, coeffsAndVars;
 
-    # extract the data
+    # check for valid input
+    if starting_pos < 0 then
+      Error( "the starting position must be non-negative" );
+    elif starting_pos > ending_pos then
+      Error( "the starting position must not be bigger than the ending position" );
+    elif ending_pos > Length( images ) then
+      Error( "the ending position must not be bigger than the number of images to translate" );
+    fi;
+
+    # extract data to perform calculation with
     images := infos[ 1 ];
     gens_range := infos[ 2 ];
     name_of_indeterminates := infos[ 3 ];
-
-    # compute the dimension of the range
     dim_range := gens_range[ 1 ];
     gens_range := gens_range[ 2 ];
 
-    # initialise positions
+    # initialise variables
     positions := [];
+    counter := 1;
 
     # print status of the computation
     if display_messages then
@@ -808,18 +821,6 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
       Print( Concatenation( "NrRows: ", String( Length( images ) ), "\n" ) );
       Print( Concatenation( "NrColumns: ", String( dim_range ), "\n" ) );
       Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
-    fi;
-
-    # set the counter
-    counter := 1;
-
-    # check that the ranges are meaningful
-    if starting_pos < 0 then
-      Error( "the starting position must be non-negative" );
-    elif starting_pos > ending_pos then
-      Error( "the starting position must not be bigger than the ending position" );
-    elif ending_pos > Length( images ) then
-      Error( "the ending position must not be bigger than the number of images to translate" );
     fi;
 
     # now perform the computation
@@ -856,16 +857,10 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
         coeffsAndVars := FindVarsAndCoefficientsWithoutEvaluation(
                                   String( comparer[ non_zero_rows[ j ] ] ), name_of_indeterminates );
 
-        # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
+        # next figure out which range monoms did appear
         for k in [ 1 .. Length( coeffsAndVars ) ] do
 
-          # identify the position
           pos := gens_range[ non_zero_rows[ j ] ].( coeffsAndVars[ k ][ 2 ] );
-
-          # remove '+' from coeffsAndVars
-          RemoveCharacters( coeffsAndVars[ k ][ 1 ], "+" );
-
-          # and append the evaluation to integer
           Append( positions, [ [ i, pos, Rat( coeffsAndVars[ k ][ 1 ] ) ] ] );
 
         od;
@@ -881,5 +876,53 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
 
     # return the result
     return positions;
+
+end );
+
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool, IsInt ],
+  function( variety, projective_module_morphism, degree, rationals, display_messages, NrJobs )
+    local gens_source, gens_range, matrix;
+
+    # input test
+    if not InputTest( variety, projective_module_morphism, degree ) then
+      return;
+    fi;
+
+    # extract source and range generators
+    gens_source := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices(
+                                                   variety, Source( projective_module_morphism ), degree );
+    gens_range := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(
+                                                   variety, Range( projective_module_morphism ), degree );
+
+    # signal start of the matrix computation
+    if display_messages then
+        Print( "Starting the matrix computation now... \n \n" );
+    fi;
+
+    # truncate the mapping matrix
+    if Length( gens_source ) = 0 then
+      matrix := HomalgZeroMatrix( gens_range[ 1 ], 0, rationals );
+    elif gens_range[ 1 ] = 0 then
+      matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
+    else;
+      matrix := NonTrivialMorphismTruncation( [ gens_source, gens_range ], projective_module_morphism, rationals, display_messages );
+    fi;
+
+    # signal end of matrix computation
+    if display_messages then
+      Print( Concatenation( "NrRows: ", String( NrRows( matrix ) ), "\n" ) );
+      Print( Concatenation( "NrColumns: ", String( NrColumns( matrix ) ), "\n" ) );
+      Print( "matrix created... \n" );
+    fi;
+
+    # and return the corresponding vector space morphism
+    # LinearAlgebraForCAP supports left vector spaces, but matrix is the mapping matrix of right vector spaces -> 'Involution'
+    return VectorSpaceMorphism( VectorSpaceObject( NrColumns( matrix ), rationals ),
+                                Involution( matrix ),
+                                VectorSpaceObject( NrRows( matrix ), rationals ) );
 
 end );

@@ -303,6 +303,9 @@ DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
 ##
 #############################################################################
 
+DeclareOperation( "FindVarsAndCoefficientsWithoutEvaluation",
+                  [ IsString, IsChar ] );
+
 #! @Description
 #! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
 #! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
@@ -311,8 +314,11 @@ DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
 #! gap.
 #! @Returns true or false
 #! @Arguments V, \varphi, degree_list, file_name
-DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally",
+DeclareOperation( "EntriesOfTruncatedMatrix",
                [ IsList, IsBool ] );
 
-DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally",
+DeclareOperation( "EntriesOfTruncatedMatrixInRange",
                [ IsList, IsBool, IsInt, IsInt ] );
+
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool, IsInt ] );
