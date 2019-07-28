@@ -683,10 +683,64 @@ end );
 
 ######################################################################################################
 ##
-## Section Truncation a PROJECTIVE graded module morphism and write the corresponding matrix to a file
-##         formated for use in gap
+## Section Truncations of morphisms of graded rows and columns in parallel
 ##
 ######################################################################################################
+
+# compute input for computation of (parts of) truncated matrix entries in a child process
+InstallMethod( ComputeInput,
+               " for a toric variety, a morphism of projective graded S-modules",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ],
+function( variety, morphism, gens_source )
+  local left, mapping_matrix, cols, non_zeros, images, i, buffer, j, col_index, image, non_zero_rows, 
+       name_of_indeterminates, rank_source;
+
+  # (1) compute images of gens_source
+
+  # identify the mapping matrix
+  left := IsGradedRowMorphism( morphism );
+  mapping_matrix := UnderlyingHomalgMatrix( morphism );
+  if left then
+    mapping_matrix := Involution( mapping_matrix );
+  fi;
+
+  # extract the cols and their zeros
+  cols := EntriesOfHomalgMatrixAsListList( Involution( mapping_matrix ) );
+  non_zeros := [];
+  for i in [ 1 .. Length( cols ) ] do
+    buffer := [];
+    for j in [ 1 .. Length( cols[ i ] ) ] do
+      if cols[ i ][ j ] <> 0 then
+        Append( buffer, [ j ] );
+      fi;
+    od;
+    Append( non_zeros, [ buffer ] );
+  od;
+
+  rank_source := Length( cols[ 1 ] );
+  images := [];
+  for i in [ 1 .. Length( gens_source ) ] do
+
+    # compute the image smartly by only multiplying non-zero entries
+    col_index := gens_source[ i ][ 1 ];
+    non_zero_rows := non_zeros[ col_index ];
+    image := ListWithIdenticalEntries( rank_source, "0" );
+    for j in [ 1 .. Length( non_zero_rows ) ] do
+      image[ non_zero_rows[ j ] ] := String( cols[ col_index ][ non_zero_rows[ j ] ] * gens_source[ i ][ 2 ] );
+    od;
+
+    Append( images, [ [ non_zero_rows, image ] ] );
+
+  od;
+
+  # (2) identify name of the indeterminates
+  name_of_indeterminates := String( IndeterminatesOfPolynomialRing( HomalgRing( mapping_matrix ) )[ 1 ] )[ 1 ];
+
+  # (3) return result
+  return [ images, name_of_indeterminates ];
+
+end );
+
 
 # Method to interpret image polynomial in above method in terms of the generators of the range module
 InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
@@ -773,34 +827,31 @@ InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
 end );
 
 
-
-
-# compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
+# compute the truncated matrix without reference to a field
+InstallMethod( EntriesOfTruncatedMatrix,
                " a list of information and a string",
-               [ IsList, IsBool ],
-  function( infos, display_messages )
+               [ IsList ],
+  function( infos )
 
-  return ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally( 
-  infos, display_messages, 1, Length( infos[ 1 ] ) );
+     return EntriesOfTruncatedMatrixInRange( infos, 1, Length( infos[ 1 ] ) );
 
 end );
 
 
-# compute degree X layer of projective graded S-module morphism and write the corresponding matrix to a file
-InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally,
+# compute part of the truncated matrix without reference to a field
+InstallMethod( EntriesOfTruncatedMatrixInRange,
                " a list of information and a string",
-               [ IsList, IsBool, IsInt, IsInt ],
-  function( infos, display_messages, starting_pos, ending_pos )
-    local images, gens_range, name_of_indeterminates, dim_range, positions, counter, i,
-         comparer, non_zero_rows, j, l, pos, coeffsAndVars;
+               [ IsList, IsInt, IsInt ],
+  function( infos, starting_pos, ending_pos )
+    local images, gens_range, name_of_indeterminates, dim_range, positions,
+         counter, i, j, k, comparer, non_zero_rows, poly, coeffsAndVars, pos;
 
     # check for valid input
     if starting_pos < 0 then
       Error( "the starting position must be non-negative" );
     elif starting_pos > ending_pos then
       Error( "the starting position must not be bigger than the ending position" );
-    elif ending_pos > Length( images ) then
+    elif ending_pos > Length( infos[ 1 ] ) then
       Error( "the ending position must not be bigger than the number of images to translate" );
     fi;
 
@@ -815,32 +866,8 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
     positions := [];
     counter := 1;
 
-    # print status of the computation
-    if display_messages then
-      Print( "starting the matrix computation... \n \n" );
-      Print( Concatenation( "NrRows: ", String( Length( images ) ), "\n" ) );
-      Print( Concatenation( "NrColumns: ", String( dim_range ), "\n" ) );
-      Print( Concatenation( "Have to go until i = ", String( Length( images ) ), "\n" ) );
-    fi;
-
     # now perform the computation
     for i in [ starting_pos .. ending_pos ] do
-
-      # information about the status
-      if not ( Int( i / Length( images ) * 100 ) < counter ) then
-
-        # express current status as multiply of 10%, so we compute this number first
-        counter := Int( i / Length( images ) * 10 ) * 10;
-
-        # then inform the user
-        if display_messages then
-          Print( Concatenation( String( counter ), "% done...\n" ) );
-        fi;
-
-        # and finally increase counter
-        counter := counter + 10;
-
-      fi;
 
       # read image of the i-th source generator and the non_zero rows of this image_column
       comparer := images[ i ][ 2 ];
@@ -869,11 +896,6 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
 
     od;
 
-    # signal end of computation
-    if display_messages then
-      Print( "matrix entries have been identified... \n \n" );
-    fi;
-
     # return the result
     return positions;
 
@@ -883,9 +905,9 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool, IsInt ],
-  function( variety, projective_module_morphism, degree, rationals, display_messages, NrJobs )
-    local gens_source, gens_range, matrix;
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool, IsFieldForHomalg ],
+  function( variety, projective_module_morphism, degree, NrJobs, display_messages, rationals )
+    local gens_source, gens_range, input, matrix, step_size, jobs, i, low_bound, up_bound, input_data, res, entries;
 
     # input test
     if not InputTest( variety, projective_module_morphism, degree ) then
@@ -893,10 +915,14 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     fi;
 
     # extract source and range generators
-    gens_source := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices(
+    gens_source := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList(
                                                    variety, Source( projective_module_morphism ), degree );
     gens_range := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(
                                                    variety, Range( projective_module_morphism ), degree );
+
+    # process the generators of the source further by computing
+    # their images and preparing them to be handed over to child processes
+    input := ComputeInput( variety, projective_module_morphism, gens_source );
 
     # signal start of the matrix computation
     if display_messages then
@@ -905,11 +931,95 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
 
     # truncate the mapping matrix
     if Length( gens_source ) = 0 then
-      matrix := HomalgZeroMatrix( gens_range[ 1 ], 0, rationals );
+        matrix := HomalgZeroMatrix( gens_range[ 1 ], 0, rationals );
     elif gens_range[ 1 ] = 0 then
-      matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
+        matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
     else;
-      matrix := NonTrivialMorphismTruncation( [ gens_source, gens_range ], projective_module_morphism, rationals, display_messages );
+        # non trivial truncation is required
+        # we slit this process into a number of child processes
+
+        # determine the number of images for each child process
+        if IsInt( Length( gens_source ) / NrJobs ) then
+           step_size := Length( gens_source ) / NrJobs;
+        else
+           step_size := Int( Length( gens_source ) / NrJobs ) + 1;
+        fi;
+
+        # start the child processes
+        if display_messages then
+          Print( "Start child processes: \n" );
+        fi;
+
+        jobs := List( [ 1 .. NrJobs ] );
+        for i in [ 1 .. NrJobs ] do
+
+            # identify range in which child process has to operate
+            if i < NrJobs then
+              low_bound := 1 + ( i - 1 ) * step_size;
+              up_bound := i * step_size;
+            elif i = NrJobs then
+              low_bound := 1 + ( NrJobs - 1 ) * step_size;
+              up_bound := Length( gens_source );
+            fi;
+
+            # prepare its input data
+            input_data := [ input[ 1 ], gens_range, input[ 2 ] ];
+
+            # and start the job
+            jobs[ i ] := BackgroundJobByFork( EntriesOfTruncatedMatrixInRange, [ input_data, low_bound, up_bound ],
+                                               rec( TerminateImmediately := true ) );
+
+            # inform about the status
+            if display_messages then
+              Print( Concatenation( "(*) child process ", String( i ), " started \n" ) );
+              if i = NrJobs then
+                Print( "\n" );
+              fi;
+            fi;
+
+        od;
+
+        # collect the results of the child processes and kill these
+        entries := [];
+        for i in [ 1 .. NrJobs ] do
+
+            if display_messages then
+              Print( Concatenation( "Extract result of job ", String( i ), ": \n" ) );
+            fi;
+
+            # extract result
+            res := Pickup( jobs[ i ] );
+
+            # check if the job completed successfully
+            if res = fail then
+              Error( Concatenation( "job", String( i ), " completed with message 'fail'" ) );
+            else
+
+              if display_messages then
+                Print( Concatenation( "(*) job ", String( i ), " completed successfully \n" ) );
+              fi;
+
+              # if so, then save the result
+              Append( entries, res );
+
+              if display_messages then
+                Print( Concatenation( "(*) result of job ", String( i ), " read \n" ) );
+              fi;
+
+              # and kill this job
+              Kill( jobs[ i ] );
+
+              if display_messages then
+                Print( Concatenation( "(*) job ", String( i ), " killed \n\n" ) );
+              fi;
+            fi;
+
+        od;
+
+        # build matrix from the results
+        matrix := CreateHomalgMatrixFromSparseString( String( entries ),
+                                                         Length( gens_source ), gens_range[ 1 ], rationals );
+
     fi;
 
     # signal end of matrix computation
@@ -920,9 +1030,65 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     fi;
 
     # and return the corresponding vector space morphism
-    # LinearAlgebraForCAP supports left vector spaces, but matrix is the mapping matrix of right vector spaces -> 'Involution'
-    return VectorSpaceMorphism( VectorSpaceObject( NrColumns( matrix ), rationals ),
-                                Involution( matrix ),
-                                VectorSpaceObject( NrRows( matrix ), rationals ) );
+    return VectorSpaceMorphism( VectorSpaceObject( NrRows( matrix ), rationals ),
+                                matrix,
+                                VectorSpaceObject( NrColumns( matrix ), rationals ) );
+
+end );
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ],
+  function( variety, projective_module_morphism, degree, NrJobs, display_messages, rationals )
+
+  return TruncateGradedRowOrColumnMorphismInParallel
+           ( variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), NrJobs, display_messages, rationals );
+
+end );
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool ],
+  function( variety, projective_module_morphism, degree, NrJobs, display_messages )
+
+  return TruncateGradedRowOrColumnMorphismInParallel
+           ( variety, projective_module_morphism, degree, NrJobs, display_messages, CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool ],
+  function( variety, projective_module_morphism, degree, NrJobs, display_messages )
+
+  return TruncateGradedRowOrColumnMorphismInParallel
+           ( variety, projective_module_morphism, UnderlyingListOfRingElements( degree ),
+             NrJobs, display_messages, CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt ],
+  function( variety, projective_module_morphism, degree, NrJobs )
+
+  return TruncateGradedRowOrColumnMorphismInParallel
+           ( variety, projective_module_morphism, degree, NrJobs, false, CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
+               " a toric variety, a projective graded module morphism, a list",
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt ],
+  function( variety, projective_module_morphism, degree, NrJobs )
+
+  return TruncateGradedRowOrColumnMorphismInParallel
+           ( variety, projective_module_morphism, UnderlyingListOfRingElements( degree ),
+             NrJobs, false, CoefficientsRing( CoxRing( variety ) ) );
 
 end );

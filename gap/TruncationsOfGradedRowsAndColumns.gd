@@ -164,6 +164,8 @@ DeclareOperation( "GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList",
 ##
 ##############################################################################################
 
+# The following two methods are used to organize the computation
+# of the truncations in parallel. They are not meant for the end-user.
 DeclareOperation( "FindVarsAndCoefficients",
                   [ IsString, IsChar, IsFieldForHomalg ] );
 
@@ -299,26 +301,80 @@ DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
 
 #############################################################################
 ##
-#! @Section Saving the truncation of graded row and column morphism to a file
+#! @Section Truncations of morphisms of graded rows and columns in parallel
 ##
 #############################################################################
+
+# The following four methods are used to organize the computation
+# of the truncations in parallel. They are not meant for the end-user.
+DeclareOperation( "ComputeInput",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
 
 DeclareOperation( "FindVarsAndCoefficientsWithoutEvaluation",
                   [ IsString, IsChar ] );
 
-#! @Description
-#! The arguments are a toric variety $V$, a projective graded $S$-module morphism $\varphi$ 
-#! ($S$ being the Cox ring of $V$) and a <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$ and string 'file_name'. This method then computes the matrix encoding the DegreeXLayer of the 
-#! given morphism of projective modules and saves it to the file 'file_name'. This file is prepared to be used with 
-#! gap.
-#! @Returns true or false
-#! @Arguments V, \varphi, degree_list, file_name
 DeclareOperation( "EntriesOfTruncatedMatrix",
-               [ IsList, IsBool ] );
+               [ IsList ] );
 
 DeclareOperation( "EntriesOfTruncatedMatrixInRange",
-               [ IsList, IsBool, IsInt, IsInt ] );
+               [ IsList, IsInt, IsInt ] );
 
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, N, B, F
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool, IsInt ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool, IsFieldForHomalg ] );
+
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, N, B, F
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ] );
+
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, N, B
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool ] );
+
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, N, B
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool ] );
+
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, N
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt ] );
+
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, as fourth argument an integer $N$ is to be specified.
+#! The computation of the truncation will then be performed in parallel
+#! in $N$ child processes.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, N
+DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt ] );
