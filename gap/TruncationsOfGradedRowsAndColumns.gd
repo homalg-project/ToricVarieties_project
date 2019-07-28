@@ -171,56 +171,128 @@ DeclareOperation( "NonTrivialMorphismTruncation",
                   [ IsList, IsGradedRowOrColumnMorphism, IsFieldForHomalg, IsBool ] );
 
 #! @Description
-#! The arguments are a toric variety $V$, a morphism $m$ of graded rows or columns,
+#! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
 #! a list $d$ specifying a degree in the class group of $V$, a field $F$ for homalg and a boolean $B$.
 #! We then truncate $m$ to the specified degree $d$. We express this result as morphism
 #! of vector spaces over the field $F$. We return this vector space morphism.
 #! If the boolean $B$ is true, we display additional output during the computation, otherwise this
 #! output is surpressed.
-#! @Returns a DegreeXLayerVectorSpaceMorphism
-#! @Arguments V, m, d
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, F, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ] );
 
+#! @Description
+#! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
+#! and a HomalgModuleElement $m$ specifying a degree in the class group of $V$,
+#! a field $F$ for homalg and a boolean $B$.
+#! We then truncate $m$ to the specified degree $d$. We express this result as morphism
+#! of vector spaces over the field $F$. We return this vector space morphism.
+#! If the boolean $B$ is true, we display additional output during the computation, 
+#! otherwise this output is surpressed.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, F, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ] );
 
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, here the field F is taken as the field of coefficients of
+#! the Cox ring of the variety $V$.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ] );
 
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, here the field F is taken as the field of coefficients of
+#! the Cox ring of the variety $V$.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ] );
 
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, here the field F is taken as the field of coefficients of
+#! the Cox ring of the variety $V$. Also, B is set to false, i.e. no
+#! additional information is being displayed.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
 
+#! @Description
+#! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+#! However, here the field F is taken as the field of coefficients of
+#! the Cox ring of the variety $V$. Also, B is set to false, i.e. no
+#! additional information is being displayed.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ] );
 
 #! @Description
-#! The arguments are a toric variety $V$, a morphism $m$ of graded rows or columns,
+#! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
 #! a list $d$ specifying a degree in the class group of $V$, a field $F$ for homalg and a boolean $B$.
 #! We then truncate $m$ to the specified degree $d$. We express this result as morphism
 #! of vector spaces over the field $F$. We return the corresponding DegreeXLayerVectorSpaceMorphism.
 #! If the boolean $B$ is true, we display additional output during the computation, otherwise this
 #! output is surpressed.
 #! @Returns a DegreeXLayerVectorSpaceMorphism
-#! @Arguments V, m, d
+#! @Arguments V, a, d, F, B
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ] );
 
+#! @Description
+#! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
+#! a HomalgModuleElement $m$ specifying a degree in the class group of $V$,
+#! a field $F$ for homalg and a boolean $B$. We then truncate $m$ to the specified
+#! degree $d$. We express this result as morphism of vector spaces over the field
+#! $F$. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+#! If the boolean $B$ is true, we display additional output during the computation,
+#! otherwise this output is surpressed.
+#! @Returns a DegreeXLayerVectorSpaceMorphism
+#! @Arguments V, a, m, F, B
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ] );
 
+#! @Description
+#! This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+#! above. However, here the field F is taken as the field of coefficients
+#! of the Cox ring of the variety $V$.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d, B
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool ] );
 
+#! @Description
+#! This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+#! above. However, here the field F is taken as the field of coefficients
+#! of the Cox ring of the variety $V$.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m, B
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool ] );
 
+#! @Description
+#! This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+#! above. However, here the field F is taken as the field of coefficients
+#! of the Cox ring of the variety $V$. Also, B is set to false, i.e. no
+#! additional information is being displayed.
+#! @Returns a vector space morphism
+#! @Arguments V, a, d
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList ] );
 
+#! @Description
+#! This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+#! above. However, here the field F is taken as the field of coefficients
+#! of the Cox ring of the variety $V$. Also, B is set to false, i.e. no
+#! additional information is being displayed.
+#! @Returns a vector space morphism
+#! @Arguments V, a, m
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ] );
 
