@@ -319,6 +319,9 @@ DeclareOperation( "EntriesOfTruncatedMatrix",
 DeclareOperation( "EntriesOfTruncatedMatrixInRange",
                [ IsList, IsInt, IsInt ] );
 
+DeclareOperation( "TruncationParallel",
+               [ IsList, IsList, IsInt, IsPosInt, IsBool ] );
+
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
 #! However, as fourth argument an integer $N$ is to be specified.

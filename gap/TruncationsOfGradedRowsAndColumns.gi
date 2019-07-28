@@ -901,7 +901,95 @@ InstallMethod( EntriesOfTruncatedMatrixInRange,
 
 end );
 
-# compute degree X layer of morphism of graded rows or columns
+InstallMethod( TruncationParallel,
+               " a list, a  list, an integer, a positive integer, a boolean",
+               [ IsList, IsList, IsInt, IsPosInt, IsBool ],
+  function( input, gens_range, Nr_gens_source, NrJobs, display_messages )
+    local step_size, low_bound, up_bound, i, jobs, entries, res;
+
+    # determine the number of images for each child process
+    if IsInt( Nr_gens_source / NrJobs ) then
+           step_size := Nr_gens_source / NrJobs;
+    else
+           step_size := Int( Nr_gens_source / NrJobs ) + 1;
+    fi;
+
+    # start the child processes
+    if display_messages then
+          Print( "Start child processes: \n" );
+    fi;
+
+    jobs := List( [ 1 .. NrJobs ] );
+    for i in [ 1 .. NrJobs ] do
+
+        # identify range in which child process has to operate
+        if i < NrJobs then
+              low_bound := 1 + ( i - 1 ) * step_size;
+              up_bound := i * step_size;
+        elif i = NrJobs then
+              low_bound := 1 + ( NrJobs - 1 ) * step_size;
+              up_bound := Length( gens_source );
+        fi;
+
+        # prepare its input data
+        input_data := [ input[ 1 ], gens_range, input[ 2 ] ];
+
+        # and start the job
+        jobs[ i ] := BackgroundJobByFork( EntriesOfTruncatedMatrixInRange, [ input_data, low_bound, up_bound ],
+                                               rec( TerminateImmediately := true ) );
+
+        # inform about the status
+        if display_messages then
+            Print( Concatenation( "(*) child process ", String( i ), " started \n" ) );
+            if i = NrJobs then
+                Print( "\n" );
+            fi;
+        fi;
+
+    od;
+
+    # collect the results of the child processes and kill these
+    entries := [];
+    for i in [ 1 .. NrJobs ] do
+
+        if display_messages then
+              Print( Concatenation( "Extract result of job ", String( i ), ": \n" ) );
+        fi;
+
+        # extract result
+        res := Pickup( jobs[ i ] );
+
+        # check if the job completed successfully
+        if res = fail then
+              Error( Concatenation( "job", String( i ), " completed with message 'fail'" ) );
+        else
+
+            if display_messages then
+                Print( Concatenation( "(*) job ", String( i ), " completed successfully \n" ) );
+            fi;
+
+            # if so, then save the result
+            Append( entries, res );
+
+            if display_messages then
+                Print( Concatenation( "(*) result of job ", String( i ), " read \n" ) );
+            fi;
+
+            # and kill this job
+            Kill( jobs[ i ] );
+
+            if display_messages then
+                Print( Concatenation( "(*) job ", String( i ), " killed \n\n" ) );
+            fi;
+        fi;
+
+    od;
+
+    # build matrix from the results
+    matrix := CreateHomalgMatrixFromSparseString( String( entries ), Length( gens_source ), gens_range[ 1 ], rationals );
+
+end );
+
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
                [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool, IsFieldForHomalg ],
@@ -939,91 +1027,7 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     elif gens_range[ 1 ] = 0 then
         matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
     else;
-        # non trivial truncation is required
-        # we slit this process into a number of child processes
-
-        # determine the number of images for each child process
-        if IsInt( Length( gens_source ) / NrJobs ) then
-           step_size := Length( gens_source ) / NrJobs;
-        else
-           step_size := Int( Length( gens_source ) / NrJobs ) + 1;
-        fi;
-
-        # start the child processes
-        if display_messages then
-          Print( "Start child processes: \n" );
-        fi;
-
-        jobs := List( [ 1 .. NrJobs ] );
-        for i in [ 1 .. NrJobs ] do
-
-            # identify range in which child process has to operate
-            if i < NrJobs then
-              low_bound := 1 + ( i - 1 ) * step_size;
-              up_bound := i * step_size;
-            elif i = NrJobs then
-              low_bound := 1 + ( NrJobs - 1 ) * step_size;
-              up_bound := Length( gens_source );
-            fi;
-
-            # prepare its input data
-            input_data := [ input[ 1 ], gens_range, input[ 2 ] ];
-
-            # and start the job
-            jobs[ i ] := BackgroundJobByFork( EntriesOfTruncatedMatrixInRange, [ input_data, low_bound, up_bound ],
-                                               rec( TerminateImmediately := true ) );
-
-            # inform about the status
-            if display_messages then
-              Print( Concatenation( "(*) child process ", String( i ), " started \n" ) );
-              if i = NrJobs then
-                Print( "\n" );
-              fi;
-            fi;
-
-        od;
-
-        # collect the results of the child processes and kill these
-        entries := [];
-        for i in [ 1 .. NrJobs ] do
-
-            if display_messages then
-              Print( Concatenation( "Extract result of job ", String( i ), ": \n" ) );
-            fi;
-
-            # extract result
-            res := Pickup( jobs[ i ] );
-
-            # check if the job completed successfully
-            if res = fail then
-              Error( Concatenation( "job", String( i ), " completed with message 'fail'" ) );
-            else
-
-              if display_messages then
-                Print( Concatenation( "(*) job ", String( i ), " completed successfully \n" ) );
-              fi;
-
-              # if so, then save the result
-              Append( entries, res );
-
-              if display_messages then
-                Print( Concatenation( "(*) result of job ", String( i ), " read \n" ) );
-              fi;
-
-              # and kill this job
-              Kill( jobs[ i ] );
-
-              if display_messages then
-                Print( Concatenation( "(*) job ", String( i ), " killed \n\n" ) );
-              fi;
-            fi;
-
-        od;
-
-        # build matrix from the results
-        matrix := CreateHomalgMatrixFromSparseString( String( entries ),
-                                                         Length( gens_source ), gens_range[ 1 ], rationals );
-
+        matrix := TruncationParallel( input, gens_range, Length( gens_source ), NrJobs, display_messages );
     fi;
 
     # signal end of matrix computation
