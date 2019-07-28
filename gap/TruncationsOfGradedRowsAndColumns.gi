@@ -901,7 +901,6 @@ InstallMethod( EntriesOfTruncatedMatrixInRange,
 
 end );
 
-
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
@@ -912,6 +911,17 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
     # input test
     if not InputTest( variety, projective_module_morphism, degree ) then
       return;
+    fi;
+
+    # check also that NrJobs is positive
+    if not ( NrJobs > 0 ) then
+      Error( "The number of jobs must be positive" );
+      return;
+    fi;
+
+    # check for degenerate case NrJobs = 1
+    if NrJobs = 1 then
+      return TruncateGradedRowOrColumnMorphism( variety, projective_module_morphism, degree, display_messages, rationals );
     fi;
 
     # extract source and range generators
