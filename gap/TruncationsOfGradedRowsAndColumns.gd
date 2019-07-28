@@ -296,11 +296,6 @@ DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
 DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement ] );
 
-if false then
-
-DeclareOperation( "DegreeXLayerOfGradedRowOrColumnMorphismMinimal",
-                  [ IsToricVariety, IsGradedRowOrColumn, IsList, IsList, IsHomalgRing, IsBool ] );
-
 
 #############################################################################
 ##
@@ -321,5 +316,3 @@ DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphis
 
 DeclareOperation( "ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally",
                [ IsList, IsBool, IsInt, IsInt ] );
-
-fi;
