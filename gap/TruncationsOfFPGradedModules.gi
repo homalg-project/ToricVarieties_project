@@ -11,168 +11,254 @@
 
 ##############################################################################################
 ##
-#! @Section Truncations of graded module presentations (as defined in CAP) to a single degree
+#! @Section Truncations of fp graded modules
 ##
 ##############################################################################################
 
-# compute degree X layer of graded module presentation
-InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentation,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList, IsBool ],
-  function( variety, graded_module_presentation, degree, display_messages )
-    local proj_category, left, degree_list, degrees, extended_degree_list, i, j, generators, homalg_graded_ring, vectorSpace;
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList ],
+  function( variety, graded_module, degree )
 
-    # check first that the overall input is valid to work with
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
-
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
-                                   " of the Cox ring is a field" ) );
-      return;
-
-    elif not Rank( ClassGroup( variety ) ) = Length( degree ) then
-
-      Error( "The given list does not specify an element of the class group of the variety in question" );
-      return;
-
-    fi;
-
-    # then make more detailed check to decide if we are really dealing with a graded_module_presentation
-    proj_category := CapCategory( UnderlyingMorphism( graded_module_presentation ) );
-    if not IsIdenticalObj( UnderlyingHomalgGradedRing( ZeroObject( proj_category ) ), CoxRing( variety ) ) then
-
-      Error( "The module is not defined over the Cox ring of the variety" );
-      return;
-
-    fi;
-
-    # then return the DegreeXLayerVectorSpacePresentation
-    return DegreeXLayerVectorSpacePresentation(
-                            DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
-                                                               variety,
-                                                               UnderlyingMorphism( graded_module_presentation ), 
-                                                               degree,
-                                                               display_messages
-                                                               )
-                            );
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism( variety, RelationMorphism( graded_module ), degree ) );
 
 end );
 
-InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentation,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList ],
-  function( variety, graded_module_presentation, degree )
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement ],
+  function( variety, graded_module, degree )
 
-    return DegreeXLayerOfGradedLeftOrRightModulePresentation( variety, graded_module_presentation, degree, false );
-
-end );
-
-InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentation,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement, IsBool ],
-  function( variety, graded_module_presentation, degree, display_messages )
- 
-    return DegreeXLayerOfGradedLeftOrRightModulePresentation( 
-                                      variety, graded_module_presentation, UnderlyingListOfRingElements( degree ), display_messages );
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism( variety, RelationMorphism( graded_module ), degree ) );
 
 end );
 
-InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentation,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement ],
-  function( variety, graded_module_presentation, degree )
- 
-    return DegreeXLayerOfGradedLeftOrRightModulePresentation( 
-                                      variety, graded_module_presentation, UnderlyingListOfRingElements( degree ), false );
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ],
+  function( variety, graded_module, degree, display_messages )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism( variety, RelationMorphism( graded_module ), degree, display_messages ) );
 
 end );
 
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList, IsBool ],
-  function( variety, graded_module_presentation, degree, display_messages )
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsBool ],
+  function( variety, graded_module, degree, display_messages )
 
-    return CAPPresentationCategoryObject(
-                 UnderlyingVectorSpaceMorphism(
-                        DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism(
-                                                               variety, 
-                                                               UnderlyingMorphism( graded_module_presentation ), 
-                                                               degree,
-                                                               display_messages
-                                                               )
-                        ) 
-                 );
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism( variety, RelationMorphism( graded_module ), degree, display_messages ) );
 
 end );
 
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList ],
-  function( variety, graded_module_presentation, degree )
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ],
+  function( variety, graded_module, degree, display_messages, rationals )
 
-    return DegreeXLayer( variety, graded_module_presentation, degree, false );
-
-end );
-
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement, IsBool ],
-  function( variety, graded_module_presentation, degree, display_messages )
-
-    return DegreeXLayer( variety, graded_module_presentation, UnderlyingListOfRingElements( degree ), display_messages );
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism(
+                                          variety, RelationMorphism( graded_module ), degree, display_messages, rationals ) );
 
 end );
 
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement ],
-  function( variety, graded_module_presentation, degree )
+InstallMethod( TruncateFPGradedModule,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsBool, IsFieldForHomalg ],
+  function( variety, graded_module, degree, display_messages, rationals )
 
-    return DegreeXLayer( variety, graded_module_presentation, degree, false );
-
-end );
-
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightSubmoduleForCAP, IsList, IsBool ],
-  function( variety, graded_submodule, degree, display_messages )
-
-    return DegreeXLayer( variety, UnderlyingMorphism( PresentationForCAP( graded_submodule ) ), degree, display_messages );
-
-end );
-
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightSubmoduleForCAP, IsList ],
-  function( variety, graded_submodule, degree )
-
-    return DegreeXLayer( variety, graded_submodule, degree, false );
-
-end );
-
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightSubmoduleForCAP, IsHomalgModuleElement, IsBool ],
-  function( variety, graded_submodule, degree, display_messages )
-
-    return DegreeXLayer( variety, graded_submodule, UnderlyingListOfRingElements( degree ), display_messages );
-
-end );
-
-InstallMethod( DegreeXLayer,
-               " a toric variety, a graded module presentation, a list specifying a degree ",
-               [ IsToricVariety, IsGradedLeftOrRightSubmoduleForCAP, IsHomalgModuleElement ],
-  function( variety, graded_submodule, degree )
-
-    return DegreeXLayer( variety, graded_submodule, UnderlyingListOfRingElements( degree ), false );
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism(
+                                          variety, RelationMorphism( graded_module ), degree, display_messages, rationals ) );
 
 end );
 
 
+
+##############################################################################################
+##
+#! @Section Truncations of fp graded modules in parallel
+##
+##############################################################################################
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt ],
+  function( variety, graded_module, degree, NrJobs )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel( variety, RelationMorphism( graded_module ), degree, NrJobs ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt ],
+  function( variety, graded_module, degree, NrJobs )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel( variety, RelationMorphism( graded_module ), degree, NrJobs ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool ],
+  function( variety, graded_module, degree, NrJobs, display_messages )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel(
+                                              variety, RelationMorphism( graded_module ), degree, NrJobs, display_messages ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool ],
+  function( variety, graded_module, degree, NrJobs, display_messages )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel(
+                                             variety, RelationMorphism( graded_module ), degree, NrJobs, display_messages ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool, IsFieldForHomalg ],
+  function( variety, graded_module, degree, NrJobs, display_messages, rationals )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel(
+                                   variety, RelationMorphism( graded_module ), degree, NrJobs, display_messages, rationals ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ],
+  function( variety, graded_module, degree, NrJobs, display_messages, rationals )
+
+      return FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphismInParallel(
+                                  variety, RelationMorphism( graded_module ), degree, NrJobs, display_messages, rationals ) );
+
+end );
+
+
+
+##############################################################################################
+##
+#! @Section Truncations of fp graded module morphisms
+##
+##############################################################################################
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool, IsFieldForHomalg ] );
+  function( variety, graded_module_morphism, degree, display_messages, rationals )
+    local source, map, range;
+
+    # truncate source, map and range
+    source := FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism(
+                     variety, RelationMorphism( Source( graded_module_morphism ) ), degree, display_message, rationals ) );
+    map := TruncateGradedRowOrColumnMorphism( 
+                     variety, MorphismDatum( graded_module_morphism ), degree, display_message, rationals );
+    range := FreydCategoryObject(
+                TruncateGradedRowOrColumnMorphism(
+                     variety, RelationMorphism( Range( graded_module_morphism ) ), degree, display_message, rationals ) );
+
+    # and return the result
+    return FreydCategoryMorphism( source, map, range );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool, IsFieldForHomalg ] );
+  function( variety, graded_module_morphism, degree, display_messages, rationals )
+
+      return TruncateFPGradedModuleMorphism( variety,
+                                             graded_module_morphism,
+                                             UnderlyingListOfRingElements( degree ),
+                                             display_messages,
+                                             rationals );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool ] );
+  function( variety, graded_module_morphism, degree, display_messages )
+
+      return TruncateFPGradedModuleMorphism( variety,
+                                             graded_module_morphism,
+                                             degree,
+                                             display_messages,
+                                             CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsBool ] );
+  function( variety, graded_module_morphism, degree, display_messages )
+
+      return TruncateFPGradedModuleMorphism( variety,
+                                             graded_module_morphism,
+                                             UnderlylingListOfRingElements( degree ),
+                                             display_messages,
+                                             CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList ] );
+  function( variety, graded_module_morphism, degree, display_messages )
+
+      return TruncateFPGradedModuleMorphism( variety,
+                                             graded_module_morphism,
+                                             degree,
+                                             false,
+                                             CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphism,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement ],
+  function( variety, graded_module_morphism, degree )
+
+    return TruncateFPGradedModuleMorphism( variety,
+                                           graded_module_morphism,
+                                           UnderlyingListOfRingElements( degree ),
+                                           false,
+                                           CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if false then
 
 # compute degree X layer of graded module presentation morphism
 InstallMethod( DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism,
@@ -425,3 +511,5 @@ InstallMethod( DegreeXLayer,
       return DegreeXLayer( variety, graded_module_presentation_morphism, degree, false );
 
 end );
+
+fi;

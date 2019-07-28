@@ -19,7 +19,7 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/ICTCurves.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayerVectorSpace.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfGradedRowsAndColumns.gi" );
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfFPGradedModules.gi" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfFPGradedModules.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsFunctors.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
