@@ -61,22 +61,22 @@ DeclareOperation( "TruncateFPGradedModule",
 #! @Returns a FreydCategoryObject
 #! @Arguments V, M, d, N, B. F
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool, IsFieldForHomalg ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt, IsBool, IsFieldForHomalg ] );
 
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt, IsBool, IsFieldForHomalg ] );
 
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt, IsBool ] );
 
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt, IsBool ] );
 
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt ] );
 
 DeclareOperation( "TruncateFPGradedModuleInParallel",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt ] );
 
 
 ##############################################################################################

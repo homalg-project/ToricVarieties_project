@@ -327,7 +327,7 @@ DeclareOperation( "EntriesOfTruncatedMatrixInRange",
 #! @Returns a vector space morphism
 #! @Arguments V, a, d, N, B, F
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool, IsFieldForHomalg ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool, IsFieldForHomalg ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
@@ -337,7 +337,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
 #! @Returns a vector space morphism
 #! @Arguments V, a, m, N, B, F
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool, IsFieldForHomalg ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
@@ -347,7 +347,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
 #! @Returns a vector space morphism
 #! @Arguments V, a, d, N, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
@@ -357,7 +357,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
 #! @Returns a vector space morphism
 #! @Arguments V, a, m, N, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
@@ -367,7 +367,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
 #! @Returns a vector space morphism
 #! @Arguments V, a, d, N
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
@@ -377,4 +377,4 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
 #! @Returns a vector space morphism
 #! @Arguments V, a, m, N
 DeclareOperation( "TruncateGradedRowOrColumnMorphismInParallel",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt ] );

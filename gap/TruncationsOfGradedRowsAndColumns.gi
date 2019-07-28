@@ -904,18 +904,12 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool, IsFieldForHomalg ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool, IsFieldForHomalg ],
   function( variety, projective_module_morphism, degree, NrJobs, display_messages, rationals )
     local gens_source, gens_range, input, matrix, step_size, jobs, i, low_bound, up_bound, input_data, res, entries;
 
     # input test
     if not InputTest( variety, projective_module_morphism, degree ) then
-      return;
-    fi;
-
-    # check also that NrJobs is positive
-    if not ( NrJobs > 0 ) then
-      Error( "The number of jobs must be positive" );
       return;
     fi;
 
@@ -1049,7 +1043,7 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool, IsFieldForHomalg ],
   function( variety, projective_module_morphism, degree, NrJobs, display_messages, rationals )
 
   return TruncateGradedRowOrColumnMorphismInParallel
@@ -1060,7 +1054,7 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt, IsBool ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool ],
   function( variety, projective_module_morphism, degree, NrJobs, display_messages )
 
   return TruncateGradedRowOrColumnMorphismInParallel
@@ -1071,7 +1065,7 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt, IsBool ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool ],
   function( variety, projective_module_morphism, degree, NrJobs, display_messages )
 
   return TruncateGradedRowOrColumnMorphismInParallel
@@ -1083,7 +1077,7 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsInt ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt ],
   function( variety, projective_module_morphism, degree, NrJobs )
 
   return TruncateGradedRowOrColumnMorphismInParallel
@@ -1094,7 +1088,7 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsInt ],
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt ],
   function( variety, projective_module_morphism, degree, NrJobs )
 
   return TruncateGradedRowOrColumnMorphismInParallel

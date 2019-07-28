@@ -87,7 +87,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt ],
   function( variety, graded_module, degree, NrJobs )
 
       return FreydCategoryObject(
@@ -97,7 +97,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt ],
   function( variety, graded_module, degree, NrJobs )
 
       return FreydCategoryObject(
@@ -107,7 +107,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt, IsBool ],
   function( variety, graded_module, degree, NrJobs, display_messages )
 
       return FreydCategoryObject(
@@ -118,7 +118,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt, IsBool ],
   function( variety, graded_module, degree, NrJobs, display_messages )
 
       return FreydCategoryObject(
@@ -129,7 +129,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsInt, IsBool, IsFieldForHomalg ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsList, IsPosInt, IsBool, IsFieldForHomalg ],
   function( variety, graded_module, degree, NrJobs, display_messages, rationals )
 
       return FreydCategoryObject(
@@ -140,7 +140,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsInt, IsBool, IsFieldForHomalg ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsHomalgModuleElement, IsPosInt, IsBool, IsFieldForHomalg ],
   function( variety, graded_module, degree, NrJobs, display_messages, rationals )
 
       return FreydCategoryObject(
