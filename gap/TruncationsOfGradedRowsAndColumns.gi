@@ -142,7 +142,7 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumn,
     generators := [];
     for i in [ 1 .. Rank( projective_module ) ] do
     generators := Concatenation( generators,
-                                 DegreeXLayerVectorsAsColumnMatrices(
+                                 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices(
                                              variety, extended_degree_list[ i ], i, Rank( projective_module ) )
                                );
     od;

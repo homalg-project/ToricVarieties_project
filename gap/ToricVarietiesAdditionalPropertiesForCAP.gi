@@ -295,22 +295,8 @@ InstallMethod( MonomsOfCoxRingOfDegreeByNormaliz,
 
 end );
 
-
-# Compute basis of the degree X layer of the Coxring of a toric variety (smooth and compact will be assumed)
-# probably not needed
-InstallMethod( DegreeXLayer,
-               " for toric varieties, a list specifying a degree ",
-               [ IsToricVariety, IsList ],
-  function( variety, degree )
-
-    # return the result
-    return MonomsOfCoxRingOfDegreeByNormaliz( variety, degree );
-
-end );
-
-
 # represent the degree X layer of a line bundle as lists of length 'length' and the corresponding monoms at position 'index'
-InstallMethod( DegreeXLayerVectorsAsColumnMatrices,
+InstallMethod( MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices,
                " for toric varieties",
                [ IsToricVariety, IsList, IsPosInt, IsPosInt ],
   function( variety, degree, index, length )

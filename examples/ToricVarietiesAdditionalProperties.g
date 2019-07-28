@@ -45,10 +45,8 @@ MonomsOfCoxRingOfDegreeByNormaliz( var, [1,2] );
 #! x_1*x_3*x_4, x_2*x_4^2, x_3*x_4^2 ]
 MonomsOfCoxRingOfDegreeByNormaliz( var, [-1,-1] );
 #! []
-DegreeXLayer( var, [1,2] );
-#! [ x_1^2*x_2, x_1^2*x_3, x_1*x_2*x_4,
-#! x_1*x_3*x_4, x_2*x_4^2, x_3*x_4^2 ]
-l := DegreeXLayerVectorsAsColumnMatrices( var, [1,2], 2, 3 );;
+l := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+     ( var, [1,2], 2, 3 );;
 Display( l[ 1 ] );
 #! 0,
 #! x_1^2*x_2,

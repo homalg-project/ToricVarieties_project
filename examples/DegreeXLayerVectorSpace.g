@@ -14,7 +14,8 @@ P1 := ProjectiveSpace( 1 );
 cox_ring := CoxRing( P1 );
 #! Q[x_1,x_2]
 #! (weights: [ 1, 1 ])
-mons := DegreeXLayerVectorsAsColumnMatrices( P1, [1], 1, 1 );;
+mons := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+        ( P1, [1], 1, 1 );;
 vector_space := VectorSpaceObject( Length( mons ), mQ );
 #! <A vector space object over Q of dimension 2>
 DXVS := DegreeXLayerVectorSpace( mons, cox_ring, vector_space, 1 );
@@ -30,8 +31,10 @@ Generators( DXVS );
 
 #! @Example
 mons2 := Concatenation(
-         DegreeXLayerVectorsAsColumnMatrices( P1, [1], 1, 2 ),
-         DegreeXLayerVectorsAsColumnMatrices( P1, [1], 2, 2 ) );;
+         MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+         ( P1, [1], 1, 2 ),
+         MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+         ( P1, [1], 2, 2 ) );;
 vector_space2 := VectorSpaceObject( Length( mons2 ), mQ );
 #! <A vector space object over Q of dimension 4>
 DXVS2 := DegreeXLayerVectorSpace( mons2, cox_ring, vector_space2, 2 );
