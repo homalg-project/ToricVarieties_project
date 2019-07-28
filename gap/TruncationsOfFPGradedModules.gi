@@ -486,3 +486,56 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     return FreydCategoryMorphism( vec_space_source, vec_space_map, vec_space_range );
 
 end );
+
+InstallMethod( TruncateFPGradedModuleMorphismInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList, IsBool, IsFieldForHomalg ],
+  function( variety, graded_module_morphism, degree, NrJobs, display_messages, rationals )
+
+     return TruncateFPGradedModuleMorphismInParallel( 
+                  variety, graded_module_morphism, UnderlyingListOfRingElements( degree ), NrJobs, display_messages, rationals );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphismInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool ],
+  function( variety, graded_module_morphism, degree, NrJobs, display_messages )
+
+     return TruncateFPGradedModuleMorphismInParallel(
+                  variety, graded_module_morphism, degree, NrJobs, display_messages, 
+                  CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphismInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList, IsBool ],
+  function( variety, graded_module_morphism, degree, NrJobs, display_messages )
+
+     return TruncateFPGradedModuleMorphismInParallel(
+                  variety, graded_module_morphism, UnderlyingListOfRingElements( degree ), NrJobs, display_messages, 
+                  CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphismInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList ],
+  function( variety, graded_module_morphism, degree, NrJobs )
+
+     return TruncateFPGradedModuleMorphismInParallel(
+                  variety, graded_module_morphism, degree, NrJobs, false, CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateFPGradedModuleMorphismInParallel,
+               " a toric variety, an f.p. graded module, a list specifying a degree ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsHomalgModuleElement, IsList ],
+  function( variety, graded_module_morphism, degree, NrJobs )
+
+     return TruncateFPGradedModuleMorphismInParallel(
+                  variety, graded_module_morphism, UnderlyingListOfRingElements( degree ), NrJobs, false,
+                  CoefficientsRing( CoxRing( variety ) ) );
+
+end );
