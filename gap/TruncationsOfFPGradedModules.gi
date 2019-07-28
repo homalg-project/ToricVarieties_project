@@ -293,7 +293,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting a background job...\n" );
+          Print( "Starting background jobs...\n\n" );
         fi;
 
         # compute the input
@@ -325,7 +325,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting a background job...\n" );
+          Print( "Starting background jobs...\n\n" );
         fi;
 
         # compute the input
@@ -357,7 +357,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting a background job...\n" );
+          Print( "Starting background jobs...\n\n" );
         fi;
 
         # compute the input

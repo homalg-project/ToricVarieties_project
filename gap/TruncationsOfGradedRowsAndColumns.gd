@@ -170,7 +170,7 @@ DeclareOperation( "FindVarsAndCoefficients",
                   [ IsString, IsChar, IsFieldForHomalg ] );
 
 DeclareOperation( "NonTrivialMorphismTruncation",
-                  [ IsList, IsGradedRowOrColumnMorphism, IsFieldForHomalg, IsBool ] );
+                  [ IsList, IsGradedRowOrColumnMorphism, IsBool, IsFieldForHomalg ] );
 
 #! @Description
 #! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
@@ -182,7 +182,7 @@ DeclareOperation( "NonTrivialMorphismTruncation",
 #! @Returns a vector space morphism
 #! @Arguments V, a, d, F, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
-                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ] );
+                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool, IsFieldForHomalg ] );
 
 #! @Description
 #! The arguments are a toric variety $V$, a morphism $a$ of graded rows or columns,
@@ -195,7 +195,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphism",
 #! @Returns a vector space morphism
 #! @Arguments V, a, m, F, B
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
-                 [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ] );
+                 [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool, IsHomalgRing ] );
 
 #! @Description
 #! This method operates just as 'TruncateGradedRowOrColumnMorphism' above.

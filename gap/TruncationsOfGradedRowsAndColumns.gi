@@ -416,8 +416,8 @@ end );
 # Method to perform truncation of morphism of graded rows/columns in non-trivial cases:
 InstallMethod( NonTrivialMorphismTruncation,
                " a list, as list, a morphism of graded rows of columns, a list, a ring, a bool",
-               [ IsList, IsGradedRowOrColumnMorphism, IsFieldForHomalg, IsBool ],
-  function( input, projective_module_morphism, rationals, display_messages )
+               [ IsList, IsGradedRowOrColumnMorphism, IsBool, IsFieldForHomalg ],
+  function( input, projective_module_morphism, display_messages, rationals )
     local gens_source, generators_range,
           mapping_matrix, name_of_indeterminates, matrix, gens_range, counter, i, comparer, non_zero_rows, j,
           coeffsAndVars, pos, k;
@@ -510,8 +510,8 @@ end );
 # compute degree X layer of morphism of graded rows or columns
 InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a list",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool ],
-  function( variety, projective_module_morphism, degree, rationals, display_messages )
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool, IsFieldForHomalg ],
+  function( variety, projective_module_morphism, degree, display_messages, rationals )
     local gens_source, gens_range, matrix;
 
     # input test
@@ -536,7 +536,7 @@ InstallMethod( TruncateGradedRowOrColumnMorphism,
     elif gens_range[ 1 ] = 0 then
       matrix := HomalgZeroMatrix( 0, Length( gens_source ), rationals );
     else;
-      matrix := NonTrivialMorphismTruncation( [ gens_source, gens_range ], projective_module_morphism, rationals, display_messages );
+      matrix := NonTrivialMorphismTruncation( [ gens_source, gens_range ], projective_module_morphism, display_messages, rationals );
     fi;
 
     # signal end of matrix computation
@@ -558,11 +558,11 @@ end );
 # compute degree X layer of projective graded S-module
 InstallMethod( TruncateGradedRowOrColumnMorphism,
                " a toric variety, a projective graded module morphism, a homalg_module_element",
-               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool ],
-  function( variety, projective_module_morphism, degree, rationals, display_messages )
+               [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool, IsHomalgRing ],
+  function( variety, projective_module_morphism, degree, display_messages, rationals )
 
     return TruncateGradedRowOrColumnMorphism(
-                   variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), rationals, display_messages );
+                   variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), display_messages, rationals );
 
 end );
 
@@ -572,7 +572,8 @@ InstallMethod( TruncateGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree, display_messages )
 
     return TruncateGradedRowOrColumnMorphism(
-                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), display_messages );
+                                       variety, projective_module_morphism, degree, display_messages,
+                                       CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
@@ -582,8 +583,8 @@ InstallMethod( TruncateGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree, display_messages )
 
     return TruncateGradedRowOrColumnMorphism(
-               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ),
-               display_messages 
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), display_messages,
+               CoefficientsRing( CoxRing( variety ) )
            );
 
 end );
@@ -594,7 +595,7 @@ InstallMethod( TruncateGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree )
 
     return TruncateGradedRowOrColumnMorphism(
-                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), false );
+                                       variety, projective_module_morphism, degree, false, CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
@@ -604,7 +605,8 @@ InstallMethod( TruncateGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree )
 
     return TruncateGradedRowOrColumnMorphism(
-               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ), false );
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), false, 
+               CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
@@ -617,7 +619,7 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
 
     # identify the underlying vector space morphism
     vector_space_morphism := TruncateGradedRowOrColumnMorphism(
-                                                     variety, projective_module_morphism, degree, rationals, display_messages );
+                                                     variety, projective_module_morphism, degree, display_messages, rationals );
 
     # and dress it as DegreeXLayer presentation thereof
     return DegreeXLayerVectorSpaceMorphism(
@@ -634,7 +636,7 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree, rationals, display_messages )
 
     return DegreeXLayerOfGradedRowOrColumnMorphism(
-                   variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), rationals, display_messages );
+                   variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), display_messages, rationals );
 
 end );
 
@@ -644,7 +646,8 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree, display_messages )
 
     return DegreeXLayerOfGradedRowOrColumnMorphism(
-                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), display_messages );
+                                       variety, projective_module_morphism, degree, display_messages,
+                                       CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
@@ -654,8 +657,8 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree, display_messages )
 
     return DegreeXLayerOfGradedRowOrColumnMorphism(
-               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ),
-               display_messages 
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), display_messages, 
+               CoefficientsRing( CoxRing( variety ) )
            );
 
 end );
@@ -666,7 +669,7 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree )
 
     return DegreeXLayerOfGradedRowOrColumnMorphism(
-                                       variety, projective_module_morphism, degree, CoefficientsRing( CoxRing( variety ) ), false );
+                                       variety, projective_module_morphism, degree, false, CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
@@ -676,7 +679,8 @@ InstallMethod( DegreeXLayerOfGradedRowOrColumnMorphism,
   function( variety, projective_module_morphism, degree )
 
     return DegreeXLayerOfGradedRowOrColumnMorphism(
-               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ), false );
+               variety, projective_module_morphism, UnderlyingListOfRingElements( degree ), false,
+               CoefficientsRing( CoxRing( variety ) ) );
 
 end );
 
