@@ -333,6 +333,87 @@ end );
 ##############################################################################################
 
 # Method to interpret image polynomial in above method in terms of the generators of the range module
+InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
+               " a string, a string",
+               [ IsString, IsChar ],
+  function( poly, name_of_indeterminates )
+    local split_pos, poly_split, k, poly_split2, pos, coeff, l;
+
+    # poly is a linear combination of generators in the range, so first identify the positions of plus and minus
+    split_pos := [ 1 ];
+    Append( split_pos, Positions( poly, '-' ) );
+    Append( split_pos, Positions( poly, '+' ) );
+    split_pos := DuplicateFreeList( split_pos );
+    Sort( split_pos );
+
+    # identify all of the substrings
+    poly_split := List( [ 1 .. Length( split_pos ) ] );
+    for k in [ 1 .. Length( split_pos ) ] do
+       if k < Length( split_pos ) then
+          poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       else
+          poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
+       fi;
+    od;
+
+    # next evaluate each of the substrings, thereby carefully tell apart the coefficient and the generator
+    poly_split2 := List( [ 1 .. Length( poly_split ) ] );
+    for k in [ 1 .. Length( poly_split ) ] do
+
+       # split strings start with indeterminate -> coefficient is 1
+       if poly_split[ k ][ 1 ] = name_of_indeterminates then
+
+         poly_split2[ k ] := [ "1", poly_split[ k ] ];
+
+       # else there is a non-trivial coefficient
+       elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
+
+         # find first occurance of name_of_indeterminates -> whatever is in front of it will be our coefficient
+         pos := Position( poly_split[ k ], name_of_indeterminates );
+
+         # there indeed appear an indeterminate
+         if pos <> fail then
+
+           # at least one 'x' does appear in this string
+           coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
+
+           # massage the coefficient
+           if coeff[ Length( coeff ) ] = '*' then
+             Remove( coeff );
+           fi;
+
+           # check for degenerate case
+           if coeff = "-" then
+             coeff := "-1";
+           elif coeff = "+" then
+             coeff := "+1";
+           fi;
+
+           # remove the coefficient part from poly_split
+           for l in [ 1 .. pos-1 ] do
+              Remove( poly_split[ k ], 1 );
+           od;
+
+           # finally save the coefficient and the monom
+           poly_split2[ k ] := [ coeff, poly_split[ k ] ];
+
+         # no indeterminate appears, so the entire string is the coefficient and the monom is just 1
+         else
+
+           poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
+
+         fi;
+
+       fi;
+
+    od;
+
+    # and return the result
+    return poly_split2;
+
+end );
+
+# Method to interpret image polynomial in above method in terms of the generators of the range module
 InstallMethod( FindVarsAndCoefficients,
                " a string, a string and a ring",
                [ IsString, IsChar, IsFieldForHomalg ],
@@ -706,7 +787,8 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
                [ IsList, IsBool, IsInt, IsInt ],
   function( infos, display_messages, starting_pos, ending_pos )
     local images, gens_range, name_of_indeterminates, dim_range, path, file, stream, counter, i,
-         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions;
+         comparer, non_zero_rows, j, poly, poly_split, poly_split2, k, pos, coeff, l, split_pos, positions,
+         coeffsAndVars;
 
     # extract the data
     images := infos[ 1 ];
@@ -769,86 +851,22 @@ InstallMethod( ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMin
         # consider the non_zero_rows[j]-th image as a string
         poly := String( comparer[ non_zero_rows[ j ] ] );
 
-        # find positions of plus and minus
-        split_pos := [ 1 ];
-        Append( split_pos, Positions( poly, '-' ) );
-        Append( split_pos, Positions( poly, '+' ) );
-        split_pos := DuplicateFreeList( split_pos );
-        Sort( split_pos );
-
-        # initialise the split string
-        poly_split := List( [ 1 .. Length( split_pos ) ] );
-
-        # and extract the substrings
-        for k in [ 1 .. Length( poly_split ) ] do
-          if k <> Length( poly_split ) then
-            poly_split[ k ] := List( [ 1 .. split_pos[ k+1 ] - split_pos[ k ] ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          else
-            poly_split[ k ] := List( [ 1 .. Length( poly ) - split_pos[ k ] + 1 ], l -> poly[ split_pos[ k ] - 1 + l ] );
-          fi;
-        od;
-
-        # now initialise poly_split2
-        poly_split2 := List( [ 1 .. Length( poly_split ) ] );
-
-        # now extract the coefficients of the individual monoms
-        for k in [ 1 .. Length( poly_split ) ] do
-          if poly_split[ k ][ 1 ] = name_of_indeterminates then
-
-            poly_split2[ k ] := [ "1", poly_split[ k ] ];
-
-          elif poly_split[ k ][ 1 ] <> name_of_indeterminates then
-
-            # find first occurance of 'x' (or more generally the variables names used) 
-            # -> whatever is in front of it will be our coefficient
-            pos := Position( poly_split[ k ], name_of_indeterminates );
-
-            if pos <> fail then
-              # at least one 'x' does appear in this string
-              coeff := List( [ 1 .. pos-1 ], l -> poly_split[ k ][ l ] );
-
-              # massage the coefficient
-              if coeff[ Length( coeff ) ] = '*' then
-                Remove( coeff );
-              fi;
-
-              # check for degenerate case
-              if coeff = "-" then
-                coeff := "-1";
-              elif coeff = "+" then
-                coeff := "+1";
-              fi;
-
-              # remove the coefficient part from poly_split
-              for l in [ 1 .. pos-1 ] do
-                Remove( poly_split[ k ], 1 );
-              od;
-
-              # finally save the coefficient and the monom
-              poly_split2[ k ] := [ coeff, poly_split[ k ] ];
-
-            else
-              # no 'x' (or more generally, variable name) appears, so the entire string is the coefficient 
-              # and the monom is just 1
-              poly_split2[ k ] := [ String( poly_split[ k ] ), "1" ];
-
-            fi;
-
-          fi;
-
-        od;
+        # the following method identifies the appearing range generators and their coefficients
+        # (it is quicker than LeftDivide, which is why I use it)
+        coeffsAndVars := FindVarsAndCoefficientsWithoutEvaluation(
+                                  String( comparer[ non_zero_rows[ j ] ] ), name_of_indeterminates );
 
         # next figure out which range monoms did appear from gens_range[ non_zero_rows ]
-        for k in [ 1 .. Length( poly_split2 ) ] do
+        for k in [ 1 .. Length( coeffsAndVars ) ] do
 
           # identify the position
-          pos := gens_range[ non_zero_rows[ j ] ].( poly_split2[ k ][ 2 ] );
+          pos := gens_range[ non_zero_rows[ j ] ].( coeffsAndVars[ k ][ 2 ] );
 
-          # remove '+' from poly_split2
-          RemoveCharacters( poly_split2[ k ][ 1 ], "+" );
+          # remove '+' from coeffsAndVars
+          RemoveCharacters( coeffsAndVars[ k ][ 1 ], "+" );
 
           # and append the evaluation to integer
-          Append( positions, [ [ i, pos, Rat( poly_split2[ k ][ 1 ] ) ] ] );
+          Append( positions, [ [ i, pos, Rat( coeffsAndVars[ k ][ 1 ] ) ] ] );
 
         od;
 
