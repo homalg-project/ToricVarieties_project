@@ -11,62 +11,83 @@
 
 #############################################################
 ##
-#! @Section Specialised InternalHomOnObjects methods
+#! @Section Truncations of InternalHoms of FpGradedModules
+##
+#############################################################
+
+# FIXME: IMPLEMENT THE FOLLOWING METHODS
+# FIXME: RIGHT NOW NOT ALL ARE IMPLEMENTED
+# FIXME: ALSO - CONTINUE TO WORK OVER THIS FILE AFTER GRADED_EXT
+#!
+DeclareOperation( "TruncateInternalHom",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomToZero",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomInParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomToZeroInParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbedding",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbeddingToZero",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbeddingInParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbeddingToZeroInParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHom",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomToZero",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsFpGradedLeftOrRightModulesMorphism, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbeddingInParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsFpGradedLeftOrRightModulesMorphism, IsList, IsBool ] );
+
+#!
+DeclareOperation( "TruncateInternalHomEmbeddingToZero InParallel",
+                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsFpGradedLeftOrRightModulesMorphism, IsBool ] );
+
+
+#############################################################
+##
+## Section Truncations of GradedExt of FpGradedModules
 ##
 #############################################################
 
 #!
-DeclareOperation( "InternalHomDegreeZeroOnObjects",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "TruncateGradedExt",
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
 
 #!
-DeclareOperation( "ComputeInput",
-               [ IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList ] );
+DeclareOperation( "TruncateGradedExtToZero",
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 
 #!
-DeclareOperation( "InternalHomDegreeZeroOnObjectsParallel",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "TruncateGradedExtInParallel",
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool ] );
 
 #!
-DeclareOperation( "InternalHomEmbeddingDegreeZeroOnObjectsParallel",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                  IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsHomalgRing ] );
-
-
-#############################################################
-##
-#! @Section Specialised InternalHomOnMorphisms methods
-##
-#############################################################
-
-#!
-DeclareOperation( "InternalHomDegreeZeroOnMorphisms",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
-                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool ] );
-
-#!
-DeclareOperation( "InternalHomDegreeZeroOnMorphismsParallel",
-                [ IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, 
-                                  IsGradedLeftOrRightModulePresentationMorphismForCAP, IsBool, IsHomalgRing ] );
-
-
-#############################################################
-##
-## Section Specialised GradedExt methods
-##
-#############################################################
-
-#!
-DeclareOperation( "GradedExtDegreeZeroOnObjects",
-                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                         IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
-
-#!
-DeclareOperation( "GradedExtDegreeZeroOnObjectsParallel",
-                [ IsInt, IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, 
-                                         IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+DeclareOperation( "TruncateGradedExtToZeroInParallel",
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 
 
 #############################################################
