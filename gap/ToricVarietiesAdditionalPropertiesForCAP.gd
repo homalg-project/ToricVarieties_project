@@ -63,20 +63,20 @@ DeclareAttribute( "SRRightIdealForCAP",
 
 #! @Description
 #!  Given a toric variety <A>variety</A> one can consider the Cox ring $S$ of this variety, which is graded over the
-#!  class group of <A>variety</A>. Subsequently one can consider the category of f.p. graded left $S$-modules. 
+#!  class group of <A>variety</A>. Subsequently one can consider the category of f.p. graded left $S$-modules.
 #!  This attribute captures the corresponding CapCategory.
 #! @Returns a CapCategory
 #! @Arguments variety
-DeclareAttribute( "SfpgrmodLeft",
+DeclareAttribute( "FpGradedLeftModules",
                  IsToricVariety );
 
 #! @Description
 #!  Given a toric variety <A>variety</A> one can consider the Cox ring $S$ of this variety, which is graded over the
-#!  class group of <A>variety</A>. Subsequently one can consider the category of f.p. graded right $S$-modules. 
+#!  class group of <A>variety</A>. Subsequently one can consider the category of f.p. graded right $S$-modules.
 #!  This attribute captures the corresponding CapCategory.
 #! @Returns a CapCategory
 #! @Arguments variety
-DeclareAttribute( "SfpgrmodRight",
+DeclareAttribute( "FpGradedRightModules",
                  IsToricVariety );
 
 

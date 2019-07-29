@@ -106,21 +106,24 @@ Display( UnderlyingMatrix( trunc_mor2 ) );
 #! @Subsection Truncatons of morphisms of graded rows and columns in parallel
 
 #! @Example
-trunc_mor_parallel := TruncateGradedRowOrColumnMorphismInParallel( P2, mor, [ 2 ], 2 );
+trunc_mor_parallel := TruncateGradedRowOrColumnMorphismInParallel
+                                              ( P2, mor, [ 2 ], 2 );
 #! <A morphism in Category of matrices over Q (with weights [ 1 ])>
 Display( UnderlyingMatrix( trunc_mor_parallel ) );
 #! 1,0,0,0,0,0,
 #! 0,1,0,0,0,0,
 #! 0,0,0,1,0,0
 #! (over a graded ring)
-trunc_mor2_parallel := TruncateGradedRowOrColumnMorphismInParallel( P2, mor2, [ 2 ], 2 );
+trunc_mor2_parallel := TruncateGradedRowOrColumnMorphismInParallel
+                                              ( P2, mor2, [ 2 ], 2 );
 #! <A morphism in Category of matrices over Q (with weights [ 1 ])>
 Display( UnderlyingMatrix( trunc_mor2_parallel ) );
 #! 1/2,0,0,0,0,0,
 #! 0,1/2,0,0,0,0,
 #! 0,0,0,1/2,0,0
 #! (over a graded ring)
-trunc_mor2_parallel2 := TruncateGradedRowOrColumnMorphismInParallel( P2, mor2, [ 10 ], 3 );;
+trunc_mor2_parallel2 := TruncateGradedRowOrColumnMorphismInParallel
+                                              ( P2, mor2, [ 10 ], 3 );;
 IsWellDefined( trunc_mor2_parallel2 );
 #! true
 NrRows( UnderlyingMatrix( trunc_mor2_parallel2 ) );

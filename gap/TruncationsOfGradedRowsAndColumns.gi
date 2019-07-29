@@ -128,6 +128,57 @@ InstallMethod( ExtendedDegreeList,
 
 end );
 
+InstallMethod( TruncateGradedRowOrColumn,
+               " a toric variety, a projective graded module, a list",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg ],
+  function( variety, projective_module, degree, rationals )
+    local extended_degree_list, i, generators;
+
+    # (1) check for valid input and identify extended_degree_list
+    extended_degree_list := ExtendedDegreeList( variety, projective_module, degree );
+
+    # (2) find and format the generators accordingly
+    generators := [];
+    for i in [ 1 .. Rank( projective_module ) ] do
+    generators := Concatenation( generators,
+                                 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices(
+                                             variety, extended_degree_list[ i ], i, Rank( projective_module ) )
+                               );
+    od;
+
+    # (3) return the corresponding vector space
+    return VectorSpaceObject( Length( generators ), rationals );
+
+end );
+
+InstallMethod( TruncateGradedRowOrColumn,
+               " a toric variety, a graded row or column, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsFieldForHomalg ],
+  function( variety, projective_module, degree, rationals )
+
+    return TruncateGradedRowOrColumn( variety, projective_module, UnderlyingListOfRingElements( degree ), rationals );
+
+end );
+
+InstallMethod( TruncateGradedRowOrColumn,
+               " a toric variety, a graded row or column, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumn, IsList ],
+  function( variety, projective_module, degree )
+
+    return TruncateGradedRowOrColumn( variety, projective_module, degree, CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
+InstallMethod( TruncateGradedRowOrColumn,
+               " a toric variety, a graded row or column, a homalg_module_element",
+               [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ],
+  function( variety, projective_module, degree )
+
+    return TruncateGradedRowOrColumn( 
+                variety, projective_module, UnderlyingListOfRingElements( degree ), CoefficientsRing( CoxRing( variety ) ) );
+
+end );
+
 # compute degree X layer of graded row or column
 InstallMethod( DegreeXLayerOfGradedRowOrColumn,
                " a toric variety, a projective graded module, a list",

@@ -20,7 +20,7 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/NefAndMoriCone.gd" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/DegreeXLayerVectorSpace.gd" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfGradedRowsAndColumns.gd" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfFPGradedModules.gd" );
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsFunctors.gd" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationFunctors.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gd" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyOnPn.gd" );

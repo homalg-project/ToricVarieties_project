@@ -56,7 +56,8 @@ source := GradedRow( [[[-1],1]], cox_ring );
 #! <A graded row of rank 1>
 range := GradedRow( [[[1],2]], cox_ring );
 #! <A graded row of rank 2>
-matrix := HomalgMatrix( [[ vars[ 1 ] * vars[ 2 ], vars[ 1 ] * vars[ 3 ] ]], cox_ring );
+matrix := HomalgMatrix( [[ vars[ 1 ] * vars[ 2 ],
+                           vars[ 1 ] * vars[ 3 ] ]], cox_ring );
 #! <A 1 x 2 matrix over a graded ring>
 obj2 := FreydCategoryObject(
          GradedRowOrColumnMorphism( source, matrix, range ) );
@@ -83,11 +84,10 @@ trunc_pres_mor1 := TruncateFPGradedModuleMorphism( P2, pres_mor, [ 2 ] );
 #! matrices over Q (with weights [ 1 ]) )>
 IsWellDefined( trunc_pres_mor1 );
 #! true
-trunc_pres_mor2 := TruncateFPGradedModuleMorphismInParallel( P2, pres_mor, [ 2 ], [ 2, 2, 2 ] );
+trunc_pres_mor2 := TruncateFPGradedModuleMorphismInParallel
+                            ( P2, pres_mor, [ 2 ], [ 2, 2, 2 ] );
 #! <A morphism in Freyd( Category of
 #! matrices over Q (with weights [ 1 ]))>
 IsWellDefined( trunc_pres_mor2 );
 #! true
 #! @EndExample
-
-#trunc_pres_mor2 := TruncateFPGradedModuleMorphismInParallel( P2, pres_mor, [ 3 ], [ 2, 2, 2 ], true );

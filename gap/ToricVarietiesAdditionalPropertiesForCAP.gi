@@ -175,7 +175,7 @@ InstallMethod( SRRightIdealForCAP,
 end );
 
 # f.p. graded left S-modules category
-InstallMethod( SfpgrmodLeft,
+InstallMethod( FpGradedLeftModules,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
@@ -185,7 +185,7 @@ InstallMethod( SfpgrmodLeft,
 end );
 
 # f.p. graded right S-modules category
-InstallMethod( SfpgrmodRight,
+InstallMethod( FpGradedRightModules,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )

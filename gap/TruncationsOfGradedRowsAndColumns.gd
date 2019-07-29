@@ -29,6 +29,41 @@ DeclareOperation( "ExtendedDegreeList",
 #! and a <A>degree_list</A> specifying an element of the degree group of the toric variety $V$.
 #! The latter can either be specified by a list of integers or as a HomalgModuleElement.
 #! Based on this input, the method computes the truncation of $M$ to the specified degree.
+#! We return this finite dimensional vector space. Optionally, we allow for a field $F$ as
+#! fourth input. This field is then used to construct the vector space. Otherwise, we use the
+#! coefficient field of the Cox ring of $V$.
+#! @Returns Vector space
+#! @Arguments V, M, degree_list, field
+DeclareOperation( "TruncateGradedRowOrColumn",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg ] );
+
+#! @Description
+#! As above, but with a HomalgModuleElement m specifying the degree.
+#! @Returns Vector space
+#! @Arguments V, M, m, field
+DeclareOperation( "TruncateGradedRowOrColumn",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsFieldForHomalg ] );
+
+#! @Description
+#! As above, but the coefficient ring of the Cox ring will be used as field
+#! @Returns Vector space
+#! @Arguments V, M, degree
+DeclareOperation( "TruncateGradedRowOrColumn",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsList ] );
+
+#! @Description
+#! As above, but a HomalgModuleElement m specifies the degree
+#! and we use the coefficient ring of the Cox ring as field.
+#! @Returns Vector space
+#! @Arguments V, M, m
+DeclareOperation( "TruncateGradedRowOrColumn",
+                  [ IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement ] );
+
+#! @Description
+#! The arguments are a toric variety $V$, a graded row or column $M$ over the Cox ring of $V$
+#! and a <A>degree_list</A> specifying an element of the degree group of the toric variety $V$.
+#! The latter can either be specified by a list of integers or as a HomalgModuleElement.
+#! Based on this input, the method computes the truncation of $M$ to the specified degree.
 #! This is a finite dimensional vector space. We return the corresponding DegreeXLayerVectorSpace.
 #! Optionally, we allow for a field $F$ as fourth input. This field is used to construct
 #! the DegreeXLayerVectorSpace. Namely, the wrapper DegreeXLayerVectorSpace contains a

@@ -1,6 +1,6 @@
 ##########################################################################################
 ##
-##  TruncationsFunctors.gd             SheafCohomologyOnToricVarieties package
+##  TruncationFunctors.gd             SheafCohomologyOnToricVarieties package
 ##
 ##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
@@ -11,88 +11,75 @@
 
 ##################################################################################################
 ##
-#! @Section Truncation functor of projective graded modules (as defined in CAP) to a single degree
+#! @Section Truncation functor for graded rows and columns
 ##
 ##################################################################################################
 
 # a function that computes the truncation functor to single degrees for both projective left and right modules
-DeclareGlobalFunction( "DegreeXLayerOfProjectiveGradedModulesFunctor" );
+DeclareOperation( "TruncationFunctorForGradedRowsAndColumns",
+                  [ IsToricVariety, IsList, IsBool ] );
 
 #! @Description
-#! The arguments are a toric variety $V$ and <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$. The latter can either be a list of integers or a HomalgModuleElement. 
-#! Based on this input, the method returns the functor for the truncation of projective graded left-$S$-modules
-#! to <A>degree_list</A>.
+#! The arguments are a toric variety $V$ and degree_list $d$ specifying an element of the
+#! degree group of the toric variety $V$. The latter can either be a list of integers or
+#! a HomalgModuleElement. Based on this input, this method returns the functor for the
+#! truncation of graded rows over the Cox ring of $V$ to degree $d$.
 #! @Returns a functor
-#! @Arguments V, degree_list
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftModulesFunctor",
+#! @Arguments V, d
+DeclareOperation( "TruncationFunctorForGradedRows",
                   [ IsToricVariety, IsList ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedLeftModulesFunctor",
+DeclareOperation( "TruncationFunctorForGradedRows",
                   [ IsToricVariety, IsHomalgModuleElement ] );
 
 #! @Description
-#! The arguments are a toric variety $V$ and <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$. The latter can either be a list of integers or a HomalgModuleElement. 
-#! Based on this input, the method returns the functor for the truncation of projective graded right-$S$-modules 
-#! to <A>degree_list</A>.
+#! The arguments are a toric variety $V$ and degree_list $d$ specifying an element of the
+#! degree group of the toric variety $V$. The latter can either be a list of integers or
+#! a HomalgModuleElement. Based on this input, this method returns the functor for the
+#! truncation of graded columns over the Cox ring of $V$ to degree $d$.
 #! @Returns a functor
-#! @Arguments V, degree_list
-DeclareOperation( "DegreeXLayerOfProjectiveGradedRightModulesFunctor",
+#! @Arguments V, d
+DeclareOperation( "TruncationFunctorForGradedColumns",
                   [ IsToricVariety, IsList ] );
 
-DeclareOperation( "DegreeXLayerOfProjectiveGradedRightModulesFunctor",
+DeclareOperation( "TruncationFunctorForGradedColumns",
                   [ IsToricVariety, IsHomalgModuleElement ] );
 
 
 ##################################################################################################
 ##
-#! @Section Truncation functor of projective graded modules (as defined in CAP) to a single degree
+#! @Section Truncation functor for f.p. graded modules
 ##
 ##################################################################################################
 
-# a function that computes the truncation functor to single degrees for both left and right graded module presentations
-DeclareGlobalFunction( "DegreeXLayerOfGradedModulePresentationFunctor" );
-
-#! @Description
-#! The arguments are a toric variety $V$ and <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$. 
-#! The latter can either be a list of integers or a HomalgModuleElement.
-#! Based on this input, the method returns the functor for the truncation of 
-#! graded left-$S$-module presentations to <A>degree_list</A>.
-#! Optionally, a boolean $b$ can be provided as fourth argument. It will display/suppress information on the status of the computation.
-#! $b = true$ will print information on the status of the computation, which might be useful in case the calculation takes several hours
-#! and the user wants to stay informed on the status of the computation. $b = false$ will suppress this output. The defaul value is false.
-#! @Returns a functor
-#! @Arguments V, degree_list
-DeclareOperation( "DegreeXLayerOfGradedLeftModulePresentationFunctor",
+# a function that computes the truncation functor for f.p. graded modules
+DeclareOperation( "TruncationFunctorForFPGradedModules",
                   [ IsToricVariety, IsList, IsBool ] );
 
-DeclareOperation( "DegreeXLayerOfGradedLeftModulePresentationFunctor",
+#! @Description
+#! The arguments are a toric variety $V$ and degree list $d$, which 
+#! specifies an element of the degree group of the toric variety $V$.
+#! $d$ can either be a list of integers or a HomalgModuleElement.
+#! Based on this input, this method returns the functor for the
+#! truncation of f.p. graded right modules to degree $d$.
+#! @Returns a functor
+#! @Arguments V, d
+DeclareOperation( "TruncationFunctorForFpGradedLeftModules",
                   [ IsToricVariety, IsList ] );
 
-DeclareOperation( "DegreeXLayerOfGradedLeftModulePresentationFunctor",
-                  [ IsToricVariety, IsHomalgModuleElement, IsBool ] );
-
-DeclareOperation( "DegreeXLayerOfGradedLeftModulePresentationFunctor",
+DeclareOperation( "TruncationFunctorForFpGradedLeftModules",
                   [ IsToricVariety, IsHomalgModuleElement ] );
 
 #! @Description
-#! The arguments are a toric variety $V$ and <A>degree_list</A> specifying an element of the degree group of the 
-#! toric variety $V$. 
-#! The latter can either be a list of integers or a HomalgModuleElement.
-#! Based on this input, the method returns the functor for the truncation of 
-#! graded right-$S$-module presentations to <A>degree_list</A>.
+#! The arguments are a toric variety $V$ and degree list $d$, which 
+#! specifies an element of the degree group of the toric variety $V$.
+#! $d$ can either be a list of integers or a HomalgModuleElement.
+#! Based on this input, this method returns the functor for the
+#! truncation of f.p. graded right modules to degree $d$.
 #! @Returns a functor
-#! @Arguments V, degree_list
-DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
-                  [ IsToricVariety, IsList, IsBool ] );
-
-DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
+#! @Arguments V, d
+DeclareOperation( "TruncationFunctorForFpGradedRightModules",
                   [ IsToricVariety, IsList ] );
 
-DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
-                  [ IsToricVariety, IsHomalgModuleElement, IsBool ] );
-
-DeclareOperation( "DegreeXLayerOfGradedRightModulePresentationFunctor",
+DeclareOperation( "TruncationFunctorForFpGradedRightModules",
                   [ IsToricVariety, IsHomalgModuleElement ] );

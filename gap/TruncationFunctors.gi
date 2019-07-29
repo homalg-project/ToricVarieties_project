@@ -1,24 +1,23 @@
 ##########################################################################################
 ##
-##  TruncationsFunctors.gi             SheafCohomologyOnToricVarieties package
+##  TruncationFunctors.gi             SheafCohomologyOnToricVarieties package
 ##
 ##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
-#! @Chapter Truncation functors for f.p. graded modules
+##  Truncation functors for f.p. graded modules
 ##
 #########################################################################################
 
 
 ######################################################################################################
 ##
-## Section Truncations functor of PROJECTIVE graded modules (as defined in the CAP Proj-Category) to 
-##         a single degree
+## Section Truncation functor for graded rows and columns
 ##
 ######################################################################################################
 
-# this function computes the DegreeXLayer functor to single degrees for both left and right presentations
-InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
-  function( variety, degree, left )
+InstallMethod( TruncationFunctorForGradedRowsAndColumns,
+               [ IsToricVariety, IsList, IsBool ],
+  function( variety, degree, graded_row )
     local source_category, range_category, functor;
 
     # check if the input is valid to work with
@@ -29,7 +28,7 @@ InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
 
     elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
 
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
+      Error( Concatenation( "TruncationFunctor is currently only supported if the coefficient ring",
                             " of the Cox ring is a field" ) );
       return;
 
@@ -41,10 +40,10 @@ InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
     fi;
 
     # determine the category under consideration
-    if left = true then    
-      source_category := CAPCategoryOfProjectiveGradedLeftModules( CoxRing( variety ) );
+    if graded_row = true then
+      source_category := CategoryOfGradedRows( CoxRing( variety ) );
     else
-      source_category := CAPCategoryOfProjectiveGradedRightModules( CoxRing( variety ) );
+      source_category := CategoryOfGradedColumns( CoxRing( variety ) );
     fi;
 
     # determine the target category
@@ -52,8 +51,8 @@ InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
 
     # then initialise the functor
     functor := CapFunctor(
-                      Concatenation( "DegreeXLayer functor for ", Name( source_category ), 
-                                     " to the degree ", String( degree ) ), 
+                      Concatenation( "Trunction functor for ", Name( source_category ),
+                                     " to the degree ", String( degree ) ),
                       source_category,
                       range_category
                       );
@@ -62,57 +61,52 @@ InstallGlobalFunction( DegreeXLayerOfProjectiveGradedModulesFunctor,
     AddObjectFunction( functor,
       function( object )
 
-          return UnderlyingVectorSpaceObject( DegreeXLayerOfProjectiveGradedLeftOrRightModule( variety, object, degree ) );
+          return TruncateGradedRowOrColumn( variety, object, degree );
 
       end );
 
-    # and its operation on morphisms
+    # its operation on morphisms
     AddMorphismFunction( functor,
       function( new_source, morphism, new_range )
 
-          return UnderlyingVectorSpaceMorphism( 
-                                    DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( variety, morphism, degree ) );
+          return TruncateGradedRowOrColumnMorphism( variety, morphism, degree );
 
       end );
 
-    # and finally return the functor
+    # and return this functor
     return functor;
 
 end );
 
-# functor to compute the truncation to single degrees of projective left-modules
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftModulesFunctor,
+InstallMethod( TruncationFunctorForGradedRows,
                [ IsToricVariety, IsList ],
       function( variety, degree )
 
-        return DegreeXLayerOfProjectiveGradedModulesFunctor( variety, degree, true );
+        return TruncationFunctorForGradedRowsAndColumns( variety, degree, true );
 
 end );
 
-# functor to compute the truncation to single degrees of projective left-modules
-InstallMethod( DegreeXLayerOfProjectiveGradedLeftModulesFunctor,
+InstallMethod( TruncationFunctorForGradedRows,
                [ IsToricVariety, IsHomalgModuleElement ],
       function( variety, degree )
 
-        return DegreeXLayerOfProjectiveGradedModulesFunctor( variety, UnderlyingListOfRingElements( degree ), true );
+        return TruncationFunctorForGradedRowsAndColumns( variety, UnderlyingListOfRingElements( degree ), true );
 
 end );
 
-# functor to compute the truncation to single degrees of projective right-modules
-InstallMethod( DegreeXLayerOfProjectiveGradedRightModulesFunctor,
+InstallMethod( TruncationFunctorForGradedColumns,
                [ IsToricVariety, IsList ],
       function( variety, degree )
 
-        return DegreeXLayerOfProjectiveGradedModulesFunctor( variety, degree, false );
+        return TruncationFunctorForGradedRowsAndColumns( variety, degree, false );
 
 end );
 
-# functor to compute the truncation to single degrees of projective right-modules
-InstallMethod( DegreeXLayerOfProjectiveGradedRightModulesFunctor,
+InstallMethod( TruncationFunctorForGradedColumns,
                [ IsToricVariety, IsHomalgModuleElement ],
       function( variety, degree )
 
-        return DegreeXLayerOfProjectiveGradedModulesFunctor( variety, UnderlyingListOfRingElements( degree ), false );
+        return TruncationFunctorForGradedRowsAndColumns( variety, UnderlyingListOfRingElements( degree ), false );
 
 end );
 
@@ -125,8 +119,9 @@ end );
 ######################################################################################################
 
 # this function computes the truncation functor to single degrees for both left and right graded module presentations
-InstallGlobalFunction( DegreeXLayerOfGradedModulePresentationFunctor,
-  function( variety, degree, left, display_messages )
+InstallMethod( TruncationFunctorForFPGradedModules,
+               [ IsToricVariety, IsList, IsBool ],
+  function( variety, degree, left )
     local source_category, range_category, functor;
 
     # check if the input is valid to work with
@@ -137,7 +132,7 @@ InstallGlobalFunction( DegreeXLayerOfGradedModulePresentationFunctor,
 
     elif not IsFieldForHomalg( CoefficientsRing( CoxRing( variety ) ) ) then
 
-      Error( Concatenation( "DegreeXLayer operations are currently only supported if the coefficient ring",
+      Error( Concatenation( "TruncationFunctorForFPGradedModules is currently only supported if the coefficient ring",
                             " of the Cox ring is a field" ) );
       return;
 
@@ -147,21 +142,21 @@ InstallGlobalFunction( DegreeXLayerOfGradedModulePresentationFunctor,
       return;
 
     fi;
-    
+
     # determine the category under consideration
-    if left = true then    
-      source_category := SfpgrmodLeft( CoxRing( variety ) );
+    if left = true then
+      source_category := FpGradedLeftModules( CoxRing( variety ) );
     else
-      source_category := SfpgrmodLeft( CoxRing( variety ) );
+      source_category := FpGradedRightModules( CoxRing( variety ) );
     fi;
-    
+
     # determine the target category
-    range_category := PresentationCategory( MatrixCategory( CoefficientsRing( CoxRing( variety ) ) ) );
+    range_category := FreydCategory( MatrixCategory( CoefficientsRing( CoxRing( variety ) ) ) );
 
     # then initialise the functor
     functor := CapFunctor(
-                      Concatenation( "DegreeXLayer functor for ", Name( source_category ), 
-                                     " to the degree ", String( degree ) ), 
+                      Concatenation( "Truncation functor for ", Name( source_category ),
+                                     " to the degree ", String( degree ) ),
                       source_category,
                       range_category
                       );
@@ -170,87 +165,51 @@ InstallGlobalFunction( DegreeXLayerOfGradedModulePresentationFunctor,
     AddObjectFunction( functor,
       function( object )
 
-        return UnderlyingVectorSpacePresentation( 
-                                DegreeXLayerOfGradedLeftOrRightModulePresentation( variety, object, degree, display_messages ) );
+        return TruncateFPGradedModule( variety, object, degree );
 
       end );
 
-    # and its operation on morphisms
+    # its operation on morphisms
     AddMorphismFunction( functor,
       function( new_source, morphism, new_range )
 
-        return DegreeXLayerOfGradedLeftOrRightModulePresentationMorphismWithGivenSourceAndRange( 
-                                                            variety, morphism, degree, new_source, new_range, display_messages );
+        return TruncateFPGradedModuleMorphism( variety, morphism, degree );
 
       end );
 
-    # and finally return the functor
+    # and return this functor
     return functor;
 
 end );
 
-# functor to compute the truncation to single degrees of projective left-modules
-InstallMethod( DegreeXLayerOfGradedLeftModulePresentationFunctor,
-               [ IsToricVariety, IsList, IsBool ],
-      function( variety, degree, display_messages )
-
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, degree, true, display_messages );
-
-end );
-
-InstallMethod( DegreeXLayerOfGradedLeftModulePresentationFunctor,
+InstallMethod( TruncationFunctorForFpGradedLeftModules,
                [ IsToricVariety, IsList ],
       function( variety, degree )
 
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, degree, true, false );
+        return TruncationFunctorForFPGradedModules( variety, degree, true );
 
 end );
 
-InstallMethod( DegreeXLayerOfGradedLeftModulePresentationFunctor,
-               [ IsToricVariety, IsHomalgModuleElement, IsBool ],
-      function( variety, degree, display_messages )
-
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, UnderlyingListOfRingElements( degree ), true, display_messages );
-
-end );
-
-InstallMethod( DegreeXLayerOfGradedLeftModulePresentationFunctor,
+InstallMethod( TruncationFunctorForFpGradedLeftModules,
                [ IsToricVariety, IsHomalgModuleElement ],
       function( variety, degree )
 
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, UnderlyingListOfRingElements( degree ), true, false );
+        return TruncationFunctorForFPGradedModules( variety, UnderlyingListOfRingElements( degree ), true );
 
 end );
 
-# functor to compute the truncation to single degrees of projective right-modules
-InstallMethod( DegreeXLayerOfGradedRightModulePresentationFunctor,
-               [ IsToricVariety, IsList, IsBool ],
-      function( variety, degree, display_messages )
-
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, degree, false, display_messages );
-
-end );
-
-InstallMethod( DegreeXLayerOfGradedRightModulePresentationFunctor,
+InstallMethod( TruncationFunctorForFpGradedRightModules,
                [ IsToricVariety, IsList ],
       function( variety, degree )
 
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, degree, false, false );
+        return TruncationFunctorForFPGradedModules( variety, degree, false );
 
 end );
 
-InstallMethod( DegreeXLayerOfGradedRightModulePresentationFunctor,
-               [ IsToricVariety, IsHomalgModuleElement, IsBool ],
-      function( variety, degree, display_messages )
-
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, UnderlyingListOfRingElements( degree ), false, display_messages );
-
-end );
-
-InstallMethod( DegreeXLayerOfGradedRightModulePresentationFunctor,
+InstallMethod( TruncationFunctorForFpGradedRightModules,
                [ IsToricVariety, IsHomalgModuleElement ],
       function( variety, degree )
 
-        return DegreeXLayerOfGradedModulePresentationFunctor( variety, UnderlyingListOfRingElements( degree ), false, false );
+        return TruncationFunctorForFPGradedModules( variety, UnderlyingListOfRingElements( degree ), false );
 
 end );
