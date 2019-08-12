@@ -27,13 +27,12 @@ InstallMethod( TruncateInternalHom,
       fi;
 
       # determine morphism whose kernel is the InternalHom in question
-      range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( RelationMorphism( a ) ) ) ),
-                                         RelationMorphism( b ) );
-      source := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Range( RelationMorphism( a ) ) ) ),
-                                          RelationMorphism( b ) );
-      map := TensorProductOnMorphisms( DualOnMorphisms( RelationMorphism( a ) ),
-                                       IdentityMorphism( Range( RelationMorphism( b ) ) ) );
-      mor := FreydCategoryMorphism( range, map, source );
+      source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      source:= FreydCategoryObject( source );
+      range := InternalHomOnMorphisms( IdentityMorphism( Source( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      range := FreydCategoryObject( range );
+      map := InternalHomOnMorphisms( RelationMorphism( a ), IdentityMorphism( Range( RelationMorphism( b ) ) ) );
+      mor := FreydCategoryMorphism( source, map, range );
 
       # inform about status again
       if display_messages then
@@ -94,7 +93,7 @@ InstallMethod( TruncateInternalHom,
         map := TensorProductOnMorphisms( DualOnMorphisms( MorphismDatum( mor1 ) ), MorphismDatum( mor2 ) );
         map := TruncateGradedRowOrColumnMorphism( variety, map, degree, display_messages, rationals );
       fi;
-      bridge := FreydCategoryMorphism( Range( ker1 ), map_vec_space_pres, Range( ker2 ) );
+      bridge := FreydCategoryMorphism( Range( ker1 ), map, Range( ker2 ) );
 
       if display_messages then
         Print( "Compute lift...\n" );
@@ -112,7 +111,7 @@ end );
 
 InstallMethod( TruncateInternalHomToZero,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool, IsField ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool, IsFieldForHomalg ],
   function( variety, a, b, display_messages, rationals )
 
     return TruncateInternalHom( variety, a, b,
@@ -162,13 +161,12 @@ InstallMethod( TruncateInternalHomInParallel,
       fi;
 
       # determine morphism whose kernel is the InternalHom in question
-      range := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Source( RelationMorphism( a ) ) ) ),
-                                         RelationMorphism( b ) );
-      source := TensorProductOnMorphisms( IdentityMorphism( DualOnObjects( Range( RelationMorphism( a ) ) ) ),
-                                          RelationMorphism( b ) );
-      map := TensorProductOnMorphisms( DualOnMorphisms( RelationMorphism( a ) ),
-                                       IdentityMorphism( Range( RelationMorphism( b ) ) ) );
-      mor := FreydCategoryMorphism( range, map, source );
+      source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      source:= FreydCategoryObject( source );
+      range := InternalHomOnMorphisms( IdentityMorphism( Source( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      range := FreydCategoryObject( range );
+      map := InternalHomOnMorphisms( RelationMorphism( a ), IdentityMorphism( Range( RelationMorphism( b ) ) ) );
+      mor := FreydCategoryMorphism( source, map, range );
 
       # inform about status again
       if display_messages then
@@ -233,7 +231,7 @@ InstallMethod( TruncateInternalHomInParallel,
         map := TensorProductOnMorphisms( DualOnMorphisms( MorphismDatum( mor1 ) ), MorphismDatum( mor2 ) );
         map := TruncateGradedRowOrColumnMorphismInParallel( variety, map, degree, 3, display_messages, rationals );
       fi;
-      bridge := FreydCategoryMorphism( Range( ker1 ), map_vec_space_pres, Range( ker2 ) );
+      bridge := FreydCategoryMorphism( Range( ker1 ), map, Range( ker2 ) );
 
       # finally compute the lift
       if display_messages then
@@ -277,8 +275,8 @@ InstallMethod( TruncateInternalHomToZeroInParallel,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsFpGradedLeftOrRightModulesMorphism, IsBool, IsFieldForHomalg ],
   function( variety, mor1, mor2, display_messages, rationals )
 
-    return TruncateInternalHomEmbeddingInParallel( variety, mor1, mor2,
-                                                UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), display_messages, rationals );
+    return TruncateInternalHomInParallel( variety, mor1, mor2,
+                                          UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), display_messages, rationals );
 
 end );
 
@@ -291,9 +289,13 @@ end );
 
 InstallMethod( TruncateGradedExt,
                " for an integer, a toric variety, two f.p. graded modules and a bool ",
-               [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, Islist, IsBool, IsFieldForHomalg ],
-  function( i, variety, module1, module2, degree, display_messages, rationals )
-    local mu, graded_hom_mapping;
+               [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsList ],
+  function( i, variety, module1, module2, degree, options )
+    local display_messages, rationals, mu, graded_hom_mapping;
+
+    # extract options
+    display_messages := options[ 1 ];
+    rationals := options[ 2 ];
 
     # check input
     if i < 0 then
@@ -336,16 +338,20 @@ InstallMethod( TruncateGradedExtToZero,
                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool, IsFieldForHomalg ],
   function( i, variety, module1, module2, display_messages, rationals )
 
-    TruncateDgradedExt( i, variety, module1, module2,
-                        UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), 
-                        display_messages, rationals );
+    return TruncateGradedExt( i, variety, module1, module2,
+                              UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), 
+                              [ display_messages, rationals ] );
 end );
 
 InstallMethod( TruncateGradedExtInParallel,
                " for an integer, a toric variety, two f.p. graded modules and a bool ",
-               [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ],
-  function( i, variety, module1, module2, degree, display_messages, rationals )
-    local mu, graded_hom_mapping;
+               [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsList ],
+  function( i, variety, module1, module2, degree, options )
+    local display_messages, rationals, mu, graded_hom_mapping;
+
+    # extract options
+    display_messages := options[ 1 ];
+    rationals := options[ 2 ];
 
     # check input
     if i < 0 then
@@ -388,7 +394,7 @@ InstallMethod( TruncateGradedExtToZeroInParallel,
                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsBool, IsFieldForHomalg ],
   function( i, variety, module1, module2, display_messages, rationals )
 
-    TruncateDgradedExtInParallel( i, variety, module1, module2,
-                                  UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), 
-                                  display_messages, rationals );
+    return TruncateGradedExtInParallel( i, variety, module1, module2,
+                                        UnderlyingListOfRingElements( TheZeroElement( DegreeGroup( CoxRing( variety ) ) ) ), 
+                                        [ display_messages, rationals ] );
 end );

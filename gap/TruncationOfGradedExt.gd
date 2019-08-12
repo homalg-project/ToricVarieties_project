@@ -93,7 +93,7 @@ DeclareOperation( "TruncateInternalHomToZeroInParallel",
 
 #!
 DeclareOperation( "TruncateGradedExt",
-                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ] );
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsList ] );
 
 #!
 DeclareOperation( "TruncateGradedExtToZero",
@@ -101,7 +101,7 @@ DeclareOperation( "TruncateGradedExtToZero",
 
 #!
 DeclareOperation( "TruncateGradedExtInParallel",
-                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ] );
+                [ IsInt, IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsList ] );
 
 #!
 DeclareOperation( "TruncateGradedExtToZeroInParallel",

@@ -896,17 +896,18 @@ end );
 # compute part of the truncated matrix without reference to a field
 InstallMethod( EntriesOfTruncatedMatrixInRange,
                " a list of information and a string",
-               [ IsList, IsInt, IsInt ],
+               [ IsList, IsPosInt, IsInt ],
   function( infos, starting_pos, ending_pos )
     local images, gens_range, name_of_indeterminates, dim_range, positions,
          counter, i, j, k, comparer, non_zero_rows, poly, coeffsAndVars, pos;
 
-    # check for valid input
-    if starting_pos < 0 then
-      Error( "the starting position must be non-negative" );
-    elif starting_pos > ending_pos then
+    # starting_pos too big
+    if starting_pos > ending_pos then
       Error( "the starting position must not be bigger than the ending position" );
-    elif ending_pos > Length( infos[ 1 ] ) then
+    fi;
+
+    # ending position exceeds length of images
+    if ending_pos > Length( infos[ 1 ] ) then
       Error( "the ending position must not be bigger than the number of images to translate" );
     fi;
 
@@ -962,6 +963,14 @@ InstallMethod( TruncationParallel,
   function( input, gens_range, Nr_gens_source, NrJobs, display_messages )
     local step_size, jobs, i, low_bound, up_bound, input_data, entries, res;
 
+    # extract input data
+    input_data := [ input[ 1 ], gens_range, input[ 2 ] ];
+
+    # check for degenerate case
+    if Nr_gens_source < 2 * NrJobs then
+      return [ String( EntriesOfTruncatedMatrix( input_data ) ), Nr_gens_source, gens_range[ 1 ] ];
+    fi;
+
     # determine the number of images for each child process
     if IsInt( Nr_gens_source / NrJobs ) then
            step_size := Nr_gens_source / NrJobs;
@@ -985,9 +994,6 @@ InstallMethod( TruncationParallel,
               low_bound := 1 + ( NrJobs - 1 ) * step_size;
               up_bound := Nr_gens_source;
         fi;
-
-        # prepare its input data
-        input_data := [ input[ 1 ], gens_range, input[ 2 ] ];
 
         # and start the job
         jobs[ i ] := BackgroundJobByFork( EntriesOfTruncatedMatrixInRange, [ input_data, low_bound, up_bound ],
@@ -1056,12 +1062,7 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
       return;
     fi;
 
-    # check for degenerate case NrJobs = 1
-    if NrJobs = 1 then
-      return TruncateGradedRowOrColumnMorphism( variety, projective_module_morphism, degree, display_messages, rationals );
-    fi;
-
-    # extract source and range generators
+    # compute generators of source and range
     gens_source := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList(
                                                    variety, Source( projective_module_morphism ), degree );
     gens_range := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords(

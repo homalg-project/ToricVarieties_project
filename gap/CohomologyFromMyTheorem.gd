@@ -16,7 +16,7 @@
 #############################################################
 
 #! @Description
-#! Computation of sheaf cohomology from my own theorem
+#! Computation of sheaf cohomology from my theorem
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "H0",

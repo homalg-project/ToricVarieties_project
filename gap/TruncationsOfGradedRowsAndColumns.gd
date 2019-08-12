@@ -352,7 +352,7 @@ DeclareOperation( "EntriesOfTruncatedMatrix",
                [ IsList ] );
 
 DeclareOperation( "EntriesOfTruncatedMatrixInRange",
-               [ IsList, IsInt, IsInt ] );
+               [ IsList, IsPosInt, IsInt ] );
 
 DeclareOperation( "TruncationParallel",
                [ IsList, IsList, IsInt, IsPosInt, IsBool ] );

@@ -255,7 +255,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsList, IsList, IsBool, IsFieldForHomalg ],
   function( variety, graded_module_morphism, degree, NrJobs, display_messages, rationals )
-    local source, map, range, gensOfSource, gensOfRange, input, job1, job2, job3, entries,
+    local source, map, range, gensOfSource, gensOfRange, input, job1, job2, job3, run1, run2, run3, entries,
          matrix1, matrix2, matrix3, vec_space_source, vec_space_map, vec_space_range;
 
     # first check that the user specified meaningful NrJobs
@@ -283,11 +283,14 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Compute matrix for source...\n" );
     fi;
 
+    # initialise run3
+    run3 := false;
+
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
-        matrix3 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+        matrix3 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
     elif gensOfRange[ 1 ] = 0 then
-        matrix3 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
+        matrix3 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
     else
 
         # start a background job with this input data to obtain entries
@@ -304,6 +307,10 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         job3 := BackgroundJobByFork( TruncationParallel,
                                      [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 3 ], false ],
                                      rec( TerminateImmediately := true ) );
+
+        # remember that this job is running
+        run3 := true;
+
     fi;
 
     # ( 3 ) process map
@@ -315,11 +322,14 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Compute matrix for source...\n" );
     fi;
 
+    # initalise run2
+    run2 := false;
+
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
-        matrix2 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+        matrix2 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
     elif gensOfRange[ 1 ] = 0 then
-        matrix2 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
+        matrix2 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
     else
 
         # start a background job with this input data to obtain entries
@@ -336,6 +346,10 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         job2 := BackgroundJobByFork( TruncationParallel,
                                      [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 2 ], false ],
                                      rec( TerminateImmediately := true ) );
+
+        # remember that this job is running
+        run2 := true;
+
     fi;
 
     # ( 4 ) process source
@@ -347,11 +361,14 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Compute matrix for source...\n" );
     fi;
 
+    # initialise run1
+    run1 := false;
+
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
-        matrix1 := HomalgZeroMatrix( gensOfRange[ 1 ], 0, rationals );
+        matrix1 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
     elif gensOfRange[ 1 ] = 0 then
-        matrix1 := HomalgZeroMatrix( 0, Length( gensOfSource ), rationals );
+        matrix1 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
     else
 
         # start a background job with this input data to obtain entries
@@ -368,6 +385,10 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         job1 := BackgroundJobByFork( TruncationParallel,
                                      [ input, gensOfRange, Length( gensOfSource ), NrJobs[ 1 ], false ],
                                      rec( TerminateImmediately := true ) );
+
+        # remember that this job is running
+        run1 := true;
+
     fi;
 
     # ( 5 ) retrieve result of job 1
@@ -375,31 +396,36 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Extract result of truncation of source: \n" );
     fi;
 
-    # extract result
-    entries := Pickup( job1 );
+    # only perform actions with job1 if it is running
+    if run1 then
 
-    # check if the job completed successfully
-    if entries = fail then
-      Error( "Job1 completed with message 'fail'" );
-    else
+        # extract result
+        entries := Pickup( job1 );
 
-      if display_messages then
-        Print( "(*) job1 completed successfully \n" );
-      fi;
+        # check if the job completed successfully
+        if entries = fail then
+            Error( "Job1 completed with message 'fail'" );
+        else
 
-      # create the corresponding matrix
-      matrix1 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            if display_messages then
+                Print( "(*) job1 completed successfully \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) result of job1 read \n" );
-      fi;
+            # create the corresponding matrix
+            matrix1 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
 
-      # and kill this job
-      Kill( job1 );
+            if display_messages then
+                Print( "(*) result of job1 read \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) job1 killed \n\n" );
-      fi;
+            # and kill this job
+            Kill( job1 );
+
+            if display_messages then
+                Print( "(*) job1 killed \n\n" );
+            fi;
+
+        fi;
 
     fi;
 
@@ -408,31 +434,36 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Extract result of truncation of map: \n" );
     fi;
 
-    # extract result
-    entries := Pickup( job2 );
+    # only perform actions with job2 if it is running
+    if run2 then
 
-    # check if the job completed successfully
-    if entries = fail then
-      Error( "Job2 completed with message 'fail'" );
-    else
+        # extract result
+        entries := Pickup( job2 );
 
-      if display_messages then
-        Print( "(*) job2 completed successfully \n" );
-      fi;
+        # check if the job completed successfully
+        if entries = fail then
+            Error( "Job2 completed with message 'fail'" );
+        else
 
-      # create the corresponding matrix
-      matrix2 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            if display_messages then
+                Print( "(*) job2 completed successfully \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) result of job2 read \n" );
-      fi;
+            # create the corresponding matrix
+            matrix2 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
 
-      # and kill this job
-      Kill( job2 );
+            if display_messages then
+                Print( "(*) result of job2 read \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) job2 killed \n\n" );
-      fi;
+            # and kill this job
+            Kill( job2 );
+
+            if display_messages then
+                Print( "(*) job2 killed \n\n" );
+            fi;
+
+        fi;
 
     fi;
 
@@ -441,31 +472,36 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         Print( "Extract result of truncation of range: \n" );
     fi;
 
-    # extract result
-    entries := Pickup( job3 );
+    # only perform actions with job1 if it is running
+    if run3 then
 
-    # check if the job completed successfully
-    if entries = fail then
-      Error( "Job3 completed with message 'fail'" );
-    else
+        # extract result
+        entries := Pickup( job3 );
 
-      if display_messages then
-        Print( "(*) job3 completed successfully \n" );
-      fi;
+        # check if the job completed successfully
+        if entries = fail then
+            Error( "Job3 completed with message 'fail'" );
+        else
 
-      # create the corresponding matrix
-      matrix3 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            if display_messages then
+                Print( "(*) job3 completed successfully \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) result of job3 read \n" );
-      fi;
+            # create the corresponding matrix
+            matrix3 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
 
-      # and kill this job
-      Kill( job1 );
+            if display_messages then
+                Print( "(*) result of job3 read \n" );
+            fi;
 
-      if display_messages then
-        Print( "(*) job3 killed \n\n" );
-      fi;
+            # and kill this job
+            Kill( job3 );
+
+            if display_messages then
+                Print( "(*) job3 killed \n\n" );
+            fi;
+
+        fi;
 
     fi;
 
