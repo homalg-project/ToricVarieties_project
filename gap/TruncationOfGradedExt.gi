@@ -40,7 +40,7 @@ InstallMethod( TruncateInternalHom,
       fi;
 
       # and return the truncation
-      return TruncateFPGradedModuleMorphism( variety, mor, degree, display_messages, rationals );
+      return KernelObject( TruncateFPGradedModuleMorphism( variety, mor, degree, display_messages, rationals ) );
 
 end );
 
@@ -48,15 +48,28 @@ InstallMethod( TruncateInternalHomEmbedding,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ],
   function( variety, a, b, degree, display_messages, rationals )
-      local vector_space_pres_morphism;
+      local range, source, map, mor;
 
-      vector_space_pres_morphism := TruncateInternalHom( variety, a, b, degree, display_messages, rationals );
-
+      # inform about status
       if display_messages then
-        Print( "Compute kernel embedding... \n" );
+        Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
       fi;
 
-      return KernelEmbedding( vector_space_pres_morphism );
+      # determine morphism whose kernel is the InternalHom in question
+      source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      source:= FreydCategoryObject( source );
+      range := InternalHomOnMorphisms( IdentityMorphism( Source( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      range := FreydCategoryObject( range );
+      map := InternalHomOnMorphisms( RelationMorphism( a ), IdentityMorphism( Range( RelationMorphism( b ) ) ) );
+      mor := FreydCategoryMorphism( source, map, range );
+
+      # inform about status again
+      if display_messages then
+        Print( "Truncate it now... \n" );
+      fi;
+
+      # and return the truncation
+      return KernelEmbedding( TruncateFPGradedModuleMorphism( variety, mor, degree, display_messages, rationals ) );
 
 end );
 
@@ -174,7 +187,7 @@ InstallMethod( TruncateInternalHomInParallel,
       fi;
 
       # and return the truncation
-      return TruncateFPGradedModuleMorphismInParallel( variety, mor, degree, [ 2, 2, 3 ], display_messages, rationals );
+      return KernelObject( TruncateFPGradedModuleMorphismInParallel( variety, mor, degree, [ 2, 2, 3 ], display_messages, rationals ) );
 
 end );
 
@@ -182,15 +195,28 @@ InstallMethod( TruncateInternalHomEmbeddingInParallel,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsList, IsBool, IsFieldForHomalg ],
   function( variety, a, b, degree, display_messages, rationals )
-      local vector_space_pres_morphism;
+      local range, source, map, mor;
 
-      vector_space_pres_morphism := TruncateInternalHomInParallel( variety, a, b, degree, display_messages, rationals );
-
+      # inform about status
       if display_messages then
-        Print( "Compute kernel embedding... \n" );
+        Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
       fi;
 
-      return KernelEmbedding( vector_space_pres_morphism );
+      # determine morphism whose kernel is the InternalHom in question
+      source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      source:= FreydCategoryObject( source );
+      range := InternalHomOnMorphisms( IdentityMorphism( Source( RelationMorphism( a ) ) ), RelationMorphism( b ) );
+      range := FreydCategoryObject( range );
+      map := InternalHomOnMorphisms( RelationMorphism( a ), IdentityMorphism( Range( RelationMorphism( b ) ) ) );
+      mor := FreydCategoryMorphism( source, map, range );
+
+      # inform about status again
+      if display_messages then
+        Print( "Truncate it now... \n" );
+      fi;
+
+      # and return the truncation
+      return KernelEmbedding( TruncateFPGradedModuleMorphismInParallel( variety, mor, degree, [ 2, 2, 3 ], display_messages, rationals ) );
 
 end );
 

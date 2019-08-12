@@ -215,7 +215,7 @@ DeclareOperation( "NonTrivialMorphismTruncation",
 #! If the boolean $B$ is true, we display additional output during the computation, otherwise this
 #! output is surpressed.
 #! @Returns a vector space morphism
-#! @Arguments V, a, d, F, B
+#! @Arguments V, a, d, B, F
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                   [ IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool, IsFieldForHomalg ] );
 
@@ -228,7 +228,7 @@ DeclareOperation( "TruncateGradedRowOrColumnMorphism",
 #! If the boolean $B$ is true, we display additional output during the computation, 
 #! otherwise this output is surpressed.
 #! @Returns a vector space morphism
-#! @Arguments V, a, m, F, B
+#! @Arguments V, a, m, B, F
 DeclareOperation( "TruncateGradedRowOrColumnMorphism",
                  [ IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool, IsHomalgRing ] );
 

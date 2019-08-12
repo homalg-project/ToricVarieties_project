@@ -280,7 +280,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
 
     # signal start of the matrix computation
     if display_messages then
-        Print( "Compute matrix for source...\n" );
+        Print( "Compute matrix for range...\n" );
     fi;
 
     # initialise run3
@@ -319,7 +319,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
 
     # signal start of the matrix computation
     if display_messages then
-        Print( "Compute matrix for source...\n" );
+        Print( "Compute matrix for map...\n" );
     fi;
 
     # initalise run2

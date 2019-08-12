@@ -19,8 +19,9 @@ SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD := HomalgFieldOfRationalsInSingular();
 ##
 #############################################################
 
-# this methods checks if the conditions in my theorem as satisfied
-BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
+# compute H^0 by applying my theorem
+InstallMethod( ParameterCheck,
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, ideal, module, Index )
     local betti_ideal, betti_module, L_ideal, L_module, u, j, k, l, diff, tester;
 
@@ -32,9 +33,11 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 
     fi;
 
-    # compute resolutions of both modules
-    betti_ideal := BettiTableForCAP( ideal );
-    betti_module := BettiTableForCAP( module );
+    # compute Betti tables of both modules
+    # during the development process of this package (and in particular the underlying
+    # module presentations), an additional factor of (-1) has emerged here
+    betti_ideal := -1 * BettiTableForCAP( ideal );
+    betti_module := -1 * BettiTableForCAP( module );
 
     # extract the 'lengths' of the two ideals
     L_ideal := Length( betti_ideal ) - 1; # resolution indexed from F0 to F( L_ideal )
@@ -163,7 +166,8 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK",
 end );
 
 # this method finds an ideal to which my theorem applies
-BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL",
+InstallMethod( FindIdeal,
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, index )
     local deg, e_list, i, ideal_generators, e, ideal_generators_power, B_power, best, chosen_degree;
 
@@ -175,21 +179,20 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL",
     for i in [ 1 .. Length( deg ) ] do
 
       # find the ideal generators for these degrees
-      ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg[ i ] ) );
+      ideal_generators := DuplicateFreeList( MonomsOfCoxRingOfDegreeByNormaliz( variety, deg[ i ] ) );
 
       # initialise the ideal to the power 0
       e := 0;
       ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
-      B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-      B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+      B_power := LeftIdealForCAP( ideal_generators_power, CoxRing( variety ) );
 
       # and start the search
-      while not SHEAF_COHOMOLOGY_INTERNAL_PARAMETER_CHECK( variety, B_power, module_presentation, index ) do
+      while not ParameterCheck( variety, B_power, module_presentation, index ) do
 
         e := e + 1;
         ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
-        B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-        B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+        B_power := LeftIdealForCAP( ideal_generators_power, CoxRing( variety ) );
+
       od;
 
       # save result
@@ -200,11 +203,10 @@ BindGlobal( "SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL",
     # now compute the 'best' ideal
     best := Position( e_list, Minimum( e_list ) );
     chosen_degree := deg[ best ];
-    ideal_generators := DuplicateFreeList( DegreeXLayer( variety, deg[ best ] ) );
+    ideal_generators := DuplicateFreeList( MonomsOfCoxRingOfDegreeByNormaliz( variety, deg[ best ] ) );
     ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], 
                                       k -> ideal_generators[ k ]^e_list[ best ] ) );
-    B_power := GradedLeftSubmoduleForCAP( TransposedMat( [ ideal_generators_power ] ), CoxRing( variety ) );
-    B_power := ByASmallerPresentation( PresentationForCAP( B_power ) );
+    B_power := LeftIdealForCAP( ideal_generators_power, CoxRing( variety ) );
 
     # and return the result
     return [ e_list[ best ], chosen_degree, B_power ];
@@ -221,9 +223,9 @@ end );
 # compute H^0 by applying my theorem
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
-  function( variety, module, display_messages, very_detailed_output, timings )
-    local module_presentation, zero, ideal_infos, B_power, vec_space_morphism;
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool, IsBool ],
+  function( variety, module_presentation, display_messages, very_detailed_output, timings )
+    local zero, ideal_infos, B_power, vec_space_morphism;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -233,30 +235,15 @@ InstallMethod( H0,
 
     fi;
 
-    # unzip the module
-    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
-      module_presentation := PresentationForCAP( module );
-    else
-      module_presentation := module;
-    fi;
-
     # we have a specialised algorithm for H0 of vector bundles
     zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
-    if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
+    if IsZeroForObjects( Source( RelationMorphism( module_presentation ) ) ) then
       if timings then
-        return [ 0, 0, UnderlyingVectorSpaceObject(
-                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( module_presentation ) ),
-                               zero
-                       ) ) ];
+        return [ 0, 0, TruncateGradedRowOrColumn( variety, Range( RelationMorphism( module_presentation ) ), zero,
+                 SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD ) ];
       else
-        return [ 0, UnderlyingVectorSpaceObject(
-                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( module_presentation ) ),
-                               zero
-                       ) ) ];
+        return [ 0, TruncateGradedRowOrColumn( variety, Range( RelationMorphism( module_presentation ) ), zero,
+                 SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD ) ];
       fi;
     fi;
 
@@ -303,7 +290,7 @@ InstallMethod( H0,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, 0 );
+    ideal_infos := FindIdeal( variety, module_presentation, 0 );
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -316,11 +303,12 @@ InstallMethod( H0,
     # step 3: compute GradedHom
     # step 3: compute GradedHom
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
-                                  InternalHomDegreeZeroOnObjects,
+                                            TruncateInternalHomToZero,
                                             variety,
                                             B_power,
                                             module_presentation,
-                                            very_detailed_output
+                                            very_detailed_output,
+                                            SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD
                                   );
 
     # signal end of computation
@@ -333,15 +321,15 @@ InstallMethod( H0,
         Print( "Computation finished. Summary: \n" );
       fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
-      Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
+      Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ) ),
                             "\n \n" ) );
     fi;
 
     # return the cokernel object of this presentation
     if timings then
-      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     else
-      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     fi;
 
 end );
@@ -349,7 +337,7 @@ end );
 # convenience method
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ],
   function( variety, module, display_messages, very_detailed_output )
 
     # by default never show very detailed output
@@ -361,7 +349,7 @@ end );
 # convenience method
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, display_messages )
 
     # by default never show very detailed output
@@ -372,7 +360,7 @@ end );
 # convenience method
 InstallMethod( H0,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
 
     # by default show messages but not the very detailed output
@@ -383,9 +371,9 @@ end );
 # compute H^0 by applying my theorem
 InstallMethod( H0Parallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ],
-  function( variety, module, display_messages, very_detailed_output, timings )
-    local module_presentation, zero, ideal_infos, B_power, vec_space_morphism;
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool, IsBool ],
+  function( variety, module_presentation, display_messages, very_detailed_output, timings )
+    local zero, ideal_infos, B_power, vec_space_morphism;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -395,30 +383,15 @@ InstallMethod( H0Parallel,
 
     fi;
 
-    # unzip the module
-    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
-      module_presentation := PresentationForCAP( module );
-    else
-      module_presentation := module;
-    fi;
-
     # we have a specialised algorithm for H0 of vector bundles
     zero := List( [ 1 .. Rank( ClassGroup( variety ) ) ], x -> 0 );
-    if IsZeroForObjects( Source( UnderlyingMorphism( module_presentation ) ) ) then
+    if IsZeroForObjects( Source( RelationMorphism( module_presentation ) ) ) then
       if timings then
-        return [ 0, 0, UnderlyingVectorSpaceObject(
-                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( module_presentation ) ),
-                               zero
-                       ) ) ];
+        return [ 0, 0, TruncateGradedRowOrColumn( variety, Range( RelationMorphism( module_presentation ) ), zero,
+                 SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD ) ];
       else
-        return [ 0, UnderlyingVectorSpaceObject(
-                       DegreeXLayerOfProjectiveGradedLeftOrRightModule(
-                               variety,
-                               Range( UnderlyingMorphism( module_presentation ) ),
-                               zero
-                       ) ) ];
+        return [ 0, TruncateGradedRowOrColumn( variety, Range( RelationMorphism( module_presentation ) ), zero,
+                 SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD ) ];
       fi;
     fi;
 
@@ -465,7 +438,7 @@ InstallMethod( H0Parallel,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, 0 );
+    ideal_infos := FindIdeal( variety, module_presentation, 0 );
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -478,11 +451,12 @@ InstallMethod( H0Parallel,
     # step 3: compute GradedHom
     # step 3: compute GradedHom
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
-                                  InternalHomDegreeZeroOnObjectsParallel,
+                                            TruncateInternalHomToZeroInParallel,
                                             variety,
                                             B_power,
                                             module_presentation,
-                                            very_detailed_output
+                                            very_detailed_output,
+                                            SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD
                                   );
 
     # signal end of computation
@@ -495,15 +469,15 @@ InstallMethod( H0Parallel,
         Print( "Computation finished. Summary: \n" );
       fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
-      Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
+      Print( Concatenation( "(*) h^0 = ", String( Dimension( CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ) ),
                             "\n \n" ) );
     fi;
 
     # return the cokernel object of this presentation
     if timings then
-      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     else
-      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];    
+      return [ ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     fi;
 
 end );
@@ -511,7 +485,7 @@ end );
 # convenience method
 InstallMethod( H0Parallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ],
   function( variety, module, display_messages, very_detailed_output )
 
     # by default never show very detailed output
@@ -523,7 +497,7 @@ end );
 # convenience method
 InstallMethod( H0Parallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, display_messages )
 
     # by default never show very detailed output
@@ -534,7 +508,7 @@ end );
 # convenience method
 InstallMethod( H0Parallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
 
     # by default show messages but not the very detailed output
@@ -553,9 +527,9 @@ end );
 # compute H^i by applying my theorem
 InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ],
-  function( variety, module, index, display_messages, very_detailed_output, timings )
-    local module_presentation, ideal_infos, B_power, zero, vec_space_morphism;
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool, IsBool ],
+  function( variety, module_presentation, index, display_messages, very_detailed_output, timings )
+    local ideal_infos, B_power, zero, vec_space_morphism;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -575,14 +549,7 @@ InstallMethod( Hi,
 
     # if we compute H0 hand it over to that method
     if index = 0 then
-      return H0( variety, module, display_messages, very_detailed_output, timings );
-    fi;
-
-    # unzip the module
-    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
-      module_presentation := PresentationForCAP( module );
-    else
-      module_presentation := module;
+      return H0( variety, module_presentation, display_messages, very_detailed_output, timings );
     fi;
 
 
@@ -627,7 +594,7 @@ InstallMethod( Hi,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, index );
+    ideal_infos := FindIdeal( variety, module_presentation, index );
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -641,12 +608,13 @@ InstallMethod( Hi,
     # step 3: compute GradedExt
     # step 3: compute GradedExt
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
-                                  GradedExtDegreeZeroOnObjects,
+                                            TruncateGradedExtToZero,
                                             index,
                                             variety,
                                             B_power,
                                             module_presentation,
-                                            very_detailed_output
+                                            very_detailed_output,
+                                            SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD
                                   );
 
     # signal end of computation
@@ -660,25 +628,25 @@ InstallMethod( Hi,
         Print( "Computation finished. Summary: \n" );
       fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
-      Print( Concatenation( "(*) h^", String( index ), " = ", 
-                            String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
-                            "\n \n" ) 
+      Print( Concatenation( "(*) h^", String( index ), " = ",
+                            String( Dimension( CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ) ),
+                            "\n \n" )
                            );
 
     fi;
 
     # and return the result
     if timings then
-      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     else
-      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     fi;
 
 end );
 
 InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
   function( variety, module, index, display_messages, very_detailed_output )
 
     # by default never show very detailed output
@@ -688,7 +656,7 @@ end );
 
 InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
   function( variety, module, index, display_messages )
 
     # by default never show very detailed output
@@ -698,7 +666,7 @@ end );
 
 InstallMethod( Hi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module, index )
 
     # by default display messages but suppress the very detailed output
@@ -710,9 +678,9 @@ end );
 # compute H^i by applying my theorem, but use parallelisation for speedup
 InstallMethod( HiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ],
-  function( variety, module, index, display_messages, very_detailed_output, timings )
-    local module_presentation, ideal_infos, B_power, zero, vec_space_morphism;
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool, IsBool ],
+  function( variety, module_presentation, index, display_messages, very_detailed_output, timings )
+    local ideal_infos, B_power, zero, vec_space_morphism;
 
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -732,14 +700,7 @@ InstallMethod( HiParallel,
 
     # if we compute H0 hand it over to that method
     if index = 0 then
-      return H0Parallel( variety, module, display_messages, very_detailed_output, timings );
-    fi;
-
-    # unzip the module
-    if IsGradedLeftOrRightSubmoduleForCAP( module ) then
-      module_presentation := PresentationForCAP( module );
-    else
-      module_presentation := module;
+      return H0Parallel( variety, module_presentation, display_messages, very_detailed_output, timings );
     fi;
 
 
@@ -784,7 +745,7 @@ InstallMethod( HiParallel,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := SHEAF_COHOMOLOGY_INTERNAL_FIND_IDEAL( variety, module_presentation, index );
+    ideal_infos := FindIdeal( variety, module_presentation, index );
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -798,12 +759,13 @@ InstallMethod( HiParallel,
     # step 3: compute GradedExt
     # step 3: compute GradedExt
     vec_space_morphism := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
-                                  GradedExtDegreeZeroOnObjectsParallel,
+                                            TruncateGradedExtToZeroInParallel,
                                             index,
                                             variety,
                                             B_power,
                                             module_presentation,
-                                            very_detailed_output
+                                            very_detailed_output,
+                                            SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD
                                   );
 
     # signal end of computation
@@ -817,25 +779,25 @@ InstallMethod( HiParallel,
         Print( "Computation finished. Summary: \n" );
       fi;
       Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
-      Print( Concatenation( "(*) h^", String( index ), " = ", 
-                            String( Dimension( CokernelObject( vec_space_morphism[ 2 ] ) ) ), 
-                            "\n \n" ) 
+      Print( Concatenation( "(*) h^", String( index ), " = ",
+                            String( Dimension( CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ) ),
+                            "\n \n" )
                            );
 
     fi;
 
     # and return the result
     if timings then
-      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ vec_space_morphism[ 1 ], ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     else
-      return [ ideal_infos[ 1 ], CokernelObject( vec_space_morphism[ 2 ] ) ];
+      return [ ideal_infos[ 1 ], CokernelObject( RelationMorphism( vec_space_morphism[ 2 ] ) ) ];
     fi;
 
 end );
 
 InstallMethod( HiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
   function( variety, module, index, display_messages, very_detailed_output )
 
     # by default never show very detailed output
@@ -845,7 +807,7 @@ end );
 
 InstallMethod( HiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
   function( variety, module, index, display_messages )
 
     # by default never show very detailed output
@@ -855,7 +817,7 @@ end );
 
 InstallMethod( HiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module, index )
 
     # by default display messages but suppress the very detailed output
@@ -873,7 +835,7 @@ end );
 # compute all cohomology classes by my theorem
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ],
   function( variety, module, display_messages, timings )
     local cohoms, i, total_time;
 
@@ -934,7 +896,7 @@ end );
 
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, display_messages )
 
     return AllHi( variety, module, display_messages, true );
@@ -943,7 +905,7 @@ end );
 
 InstallMethod( AllHi,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
 
     return AllHi( variety, module, true, true );
@@ -954,7 +916,7 @@ end );
 # compute all cohomology classes by my theorem
 InstallMethod( AllHiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ],
   function( variety, module, display_messages, timings )
     local cohoms, i, total_time;
 
@@ -1015,7 +977,7 @@ end );
 
 InstallMethod( AllHiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ],
   function( variety, module, display_messages )
 
     return AllHiParallel( variety, module, display_messages, true );
@@ -1024,7 +986,7 @@ end );
 
 InstallMethod( AllHiParallel,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
 
     return AllHiParallel( variety, module, true, true );

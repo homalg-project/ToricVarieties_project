@@ -58,7 +58,7 @@ IsWellDefined( pres_mor );
 Q := HomalgFieldOfRationalsInSingular();
 #! Q
 m1 := TruncateInternalHom( P2, obj1, obj2, [ 4 ], false, Q );
-#! <A morphism in Freyd( Category of matrices over Q )>
+#! <An object in Freyd( Category of matrices over Q )>
 IsWellDefined( m1 );
 #! true
 m2 := TruncateInternalHomEmbedding( P2, obj1, obj2, [ 4 ], false, Q );
@@ -76,7 +76,7 @@ IsWellDefined( m3 );
 
 #! @Example
 m4 := TruncateInternalHomToZero( P2, obj1, obj2, false, Q );
-#! <A morphism in Freyd( Category of matrices over Q )>
+#! <An object in Freyd( Category of matrices over Q )>
 IsWellDefined( m4 );
 #! true
 m5 := TruncateInternalHomEmbeddingToZero( P2, obj1, obj2, false, Q );
@@ -94,7 +94,7 @@ IsWellDefined( m6 );
 
 #! @Example
 m7 := TruncateInternalHomInParallel( P2, obj1, obj2, [ 4 ], false, Q );
-#! <A morphism in Freyd( Category of matrices over Q )>
+#! <An object in Freyd( Category of matrices over Q )>
 m1 = m7;
 #! true
 m8 := TruncateInternalHomEmbeddingInParallel( P2, obj1, obj2, [ 4 ], false, Q );
@@ -112,7 +112,7 @@ m9 = m3;
 
 #! @Example
 m10 := TruncateInternalHomToZeroInParallel( P2, obj1, obj2, false, Q );
-#! <A morphism in Freyd( Category of matrices over Q )>
+#! <An object in Freyd( Category of matrices over Q )>
 m10 = m4;
 #! true
 m11 := TruncateInternalHomEmbeddingToZeroInParallel( P2, obj1, obj2, false, Q );

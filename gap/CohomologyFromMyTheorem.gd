@@ -11,6 +11,22 @@
 
 #############################################################
 ##
+#! @Section Preliminaries
+##
+#############################################################
+
+#!
+DeclareOperation( "ParameterCheck",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+
+#!
+DeclareOperation( "FindIdeal",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+
+
+
+#############################################################
+##
 #! @Section Computation of H0 by my theorem
 ##
 #############################################################
@@ -20,26 +36,26 @@
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "H0",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool, IsBool ] );
 DeclareOperation( "H0",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ] );
 DeclareOperation( "H0",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 DeclareOperation( "H0",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! Computation of sheaf cohomology from my own theorem, but in parallel (by forking).
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "H0Parallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool, IsBool ] );
 DeclareOperation( "H0Parallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ] );
 DeclareOperation( "H0Parallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 DeclareOperation( "H0Parallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 
 #############################################################
@@ -53,26 +69,26 @@ DeclareOperation( "H0Parallel",
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M, i
 DeclareOperation( "Hi",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool, IsBool ] );
 DeclareOperation( "Hi",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ] );
 DeclareOperation( "Hi",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
 DeclareOperation( "Hi",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
 #! @Description
 #! Computation of sheaf cohomology from my own theorem, but in parallel (by forking).
 #! @Returns a list consisting of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "HiParallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool, IsBool ] );
 DeclareOperation( "HiParallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ] );
 DeclareOperation( "HiParallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
 DeclareOperation( "HiParallel",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
 
 ###################################################################################
@@ -86,22 +102,22 @@ DeclareOperation( "HiParallel",
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ] );
 DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 DeclareOperation( "AllHi",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! Computation of all sheaf cohomology classes from my theorem, but by use of parallelisation.
 #! @Returns a list of lists, which in turn consist each of an integer and a vector space
 #! @Arguments vari, M
 DeclareOperation( "AllHiParallel",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ] );
 DeclareOperation( "AllHiParallel",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 DeclareOperation( "AllHiParallel",
-               [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 
 #######################################################################
@@ -112,7 +128,7 @@ DeclareOperation( "AllHiParallel",
 
 #!
 DeclareOperation( "H0ByGSWritingMatricesUsedByFastInternalHomToFilesForCAP",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 
 DeclareOperation( "H0ByGSWritingMatricesUsedByFastInternalHomToFilesForCAP",
-                  [ IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
