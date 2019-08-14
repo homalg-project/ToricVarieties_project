@@ -1,10 +1,10 @@
 ################################################################################################
 ##
-##  Tools.gi          SheafCohomologyOnToricVarieties package
+##  CohomologyTools.gi          SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2017                     Martin Bies,       ULB Brussels
+##  Copyright 2019              Martin Bies,       ULB Brussels
 ##
-#! @Chapter Tools
+#! @Chapter Tools for cohomology computations
 ##
 ################################################################################################
 
@@ -18,25 +18,25 @@
 # compute the maps in a minimal free resolution of a f.p. graded module presentation
 InstallMethod( TurnIntoOldGradedModule,
                "a f.p. graded S-module",
-               [ IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsFpGradedLeftOrRightModulesObject ],
   function( module )
     local ring, gens, old_gens, i, matrix, old_graded_module;
 
     # extract the underlying ring
-    ring := UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) );
+    ring := UnderlyingHomalgGradedRing( RelationMorphism( module ) );
 
     # then the degrees of the generators
-    gens := DegreeList( Range( UnderlyingMorphism( module ) ) );
+    gens := DegreeList( Range( RelationMorphism( module ) ) );
     old_gens := [];
     for i in [ 1 .. Length( gens ) ] do
       Append( old_gens, ListWithIdenticalEntries( gens[ i ][ 2 ], UnderlyingListOfRingElements( gens[ i ][ 1 ] ) ) );
     od;
 
     # and the underlying matrix
-    matrix := UnderlyingHomalgMatrix( UnderlyingMorphism( module ) );
+    matrix := UnderlyingHomalgMatrix( RelationMorphism( module ) );
 
     # and create the graded module
-    if IsGradedLeftModulePresentationForCAP( module ) then
+    if IsFpGradedLeftModulesObject( module ) then
       old_graded_module := LeftPresentationWithDegrees( matrix, old_gens );
     else
       old_graded_module := RightPresentationWithDegrees( matrix, old_gens );
@@ -51,7 +51,7 @@ InstallMethod( TurnIntoCAPGradedModule,
                " a f.p. graded S-module",
                [ IsGradedModuleOrGradedSubmoduleRep ],
   function( module )
-    local left, ring, mor, generators_degrees, generators, relations_degrees, relations, matrix, CAP_mor, CAP_module;
+    local left, ring, mor, generators_degrees, generators, relations_degrees, relations, matrix;
 
     # check if this is a left or right module
     left := HasLeftActingDomain( module );
@@ -68,11 +68,11 @@ InstallMethod( TurnIntoCAPGradedModule,
 
     # set up the generators
     generators_degrees := List( DegreesOfGenerators( Range( mor ) ), k -> [ k, 1 ] );
-    generators := CAPCategoryOfProjectiveGradedLeftModulesObject( generators_degrees, ring );
+    generators := GradedRow( generators_degrees, ring );
 
     # set up the relations
     relations_degrees := List( DegreesOfGenerators( Source( mor ) ), k -> [ k, 1 ] );
-    relations := CAPCategoryOfProjectiveGradedLeftModulesObject( relations_degrees, ring );
+    relations := GradedRow( relations_degrees, ring );
 
     # extract the underlying matrix
     matrix := MatrixOfMap( mor );
@@ -81,11 +81,7 @@ InstallMethod( TurnIntoCAPGradedModule,
     fi;
 
     # form the CAP_module
-    CAP_mor := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( relations, matrix, generators );
-    CAP_module := CAPPresentationCategoryObject( CAP_mor );
-
-    # and return the module
-    return CAP_module;
+    return FreydCategoryObject( GradedRowOrColumnMorphism( relations, matrix, generators ) );
 
 end );
 
@@ -99,7 +95,7 @@ end );
 
 InstallMethod( SaveToFileAsOldGradedModule,
                "a f.p. graded S-module",
-               [ IsString, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsString, IsFpGradedLeftOrRightModulesObject ],
   function( filename, module )
     local name, output, ring, vars, weights, degree_group, generator_degrees, new_gens, s, matrix_entries, i, help_list;
 
@@ -184,7 +180,7 @@ end );
 
 InstallMethod( SaveToFileAsCAPGradedModule,
                "a f.p. graded S-module",
-               [ IsString, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsString, IsFpGradedLeftOrRightModulesObject ],
   function( filename, module )
     local name, output, generator_degrees, s, relations_degrees, matrix_entries, i, help_list;
 
@@ -302,7 +298,7 @@ end );
 
 InstallMethod( ApproxH0,
                "a toric variety, a non-negative integer",
-               [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, e, module )
     local left, vec_space_morphism;
 
@@ -323,7 +319,7 @@ end );
 
 InstallMethod( ApproxH0Parallel,
                "a toric variety, a non-negative integer",
-               [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, e, module )
     local left, vec_space_morphism;
 
@@ -344,7 +340,7 @@ end );
 
 InstallMethod( ApproxHi,
                "a toric variety, a non-negative integer",
-               [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, index, e, module )
     local left, vec_space_morphism;
 
@@ -374,7 +370,7 @@ end );
 
 InstallMethod( ApproxHiParallel,
                "a toric variety, a non-negative integer",
-               [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ],
+               [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, index, e, module )
     local left, vec_space_morphism;
 

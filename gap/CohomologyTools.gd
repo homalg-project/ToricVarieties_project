@@ -1,10 +1,10 @@
 ################################################################################################
 ##
-##  Tools.gd          SheafCohomologyOnToricVarieties package
+##  CohomologyTools.gd          SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2017                     Martin Bies,       ULB Brussels
+##  Copyright 2019              Martin Bies,       ULB Brussels
 ##
-#! @Chapter Tools
+#! @Chapter Tools for cohomology computations
 ##
 ################################################################################################
 
@@ -21,7 +21,7 @@
 #! @Returns the corresponding graded modules in terms of the 'old' packages GradedModules
 #! @Arguments M
 DeclareOperation( "TurnIntoOldGradedModule",
-                  [ IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsFpGradedLeftOrRightModulesObject ] );
 
 DeclareOperation( "TurnIntoCAPGradedModule",
                   [ IsGradedModuleOrGradedSubmoduleRep ] );
@@ -40,7 +40,7 @@ DeclareOperation( "TurnIntoCAPGradedModule",
 #! @Returns true (in case of success) or raises error in case the file could not be written
 #! @Arguments M
 DeclareOperation( "SaveToFileAsOldGradedModule",
-                  [ IsString, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsString, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! The argument is a graded left or right module presentation M for CAP and saves this module 
@@ -49,7 +49,7 @@ DeclareOperation( "SaveToFileAsOldGradedModule",
 #! @Returns true (in case of success) or raises error in case the file could not be written
 #! @Arguments M
 DeclareOperation( "SaveToFileAsCAPGradedModule",
-                  [ IsString, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsString, IsFpGradedLeftOrRightModulesObject ] );
 
 
 ##############################################################################################
@@ -81,7 +81,7 @@ DeclareOperation( "BPowerRight",
 #! @Returns a non-negative integer
 #! @Arguments V, e, M
 DeclareOperation( "ApproxH0",
-                  [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! The argument is a toric variety V, a non-negative integer e and a graded CAP module M. 
@@ -90,7 +90,7 @@ DeclareOperation( "ApproxH0",
 #! @Returns a non-negative integer
 #! @Arguments V, e, M
 DeclareOperation( "ApproxH0Parallel",
-                  [ IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! The argument is a toric variety V, non-negative integers i, e and a graded CAP module M.
@@ -99,7 +99,7 @@ DeclareOperation( "ApproxH0Parallel",
 #! @Returns a non-negative integer
 #! @Arguments V, e, M
 DeclareOperation( "ApproxHi",
-                  [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ] );
 
 #! @Description
 #! The argument is a toric variety V, non-negative integer i, e and a graded CAP module M.
@@ -108,4 +108,4 @@ DeclareOperation( "ApproxHi",
 #! @Returns a non-negative integer
 #! @Arguments V, e, M
 DeclareOperation( "ApproxHiParallel",
-                  [ IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP ] );
+                  [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ] );

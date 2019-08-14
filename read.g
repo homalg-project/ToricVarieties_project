@@ -23,5 +23,5 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationsOfFPGradedModule
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationFunctors.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/TruncationOfGradedExt.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
-#ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyOnPn.gi" );
