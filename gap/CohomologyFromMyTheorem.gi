@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2019                     Martin Bies,       ULB Brussels
 ##
-#! @Chapter Sheaf cohomology via my cohomology theorem
+##  Chapter Sheaf cohomology by use of https://arxiv.org/abs/1802.08860
 ##
 #########################################################################################
 
