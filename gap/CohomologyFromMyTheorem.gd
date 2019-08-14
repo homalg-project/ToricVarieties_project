@@ -158,17 +158,3 @@ DeclareOperation( "AllHiParallel",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 DeclareOperation( "AllHiParallel",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool, IsBool ] );
-
-
-#######################################################################
-##
-#! @Section Write matrices to be used for H0 computation via GS to files
-##
-#######################################################################
-
-#!
-DeclareOperation( "H0ByGSWritingMatricesUsedByFastInternalHomToFilesForCAP",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool ] );
-
-DeclareOperation( "H0ByGSWritingMatricesUsedByFastInternalHomToFilesForCAP",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
