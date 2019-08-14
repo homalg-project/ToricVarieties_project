@@ -36,7 +36,7 @@ InstallMethod( cohomCalgBinary,
     
     arch := Concatenation( "cohomCalg/", arch );
     
-    dir := DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", arch )[ 1 ];
+    dir := DirectoriesPackageLibrary( "cohomCalgInterface", arch )[ 1 ];
     
     cohomcalg := Filename( dir, "cohomcalg" );
     
