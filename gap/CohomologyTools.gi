@@ -51,13 +51,10 @@ InstallMethod( TurnIntoCAPGradedModule,
                " a f.p. graded S-module",
                [ IsGradedModuleOrGradedSubmoduleRep ],
   function( module )
-    local left, ring, mor, generators_degrees, generators, relations_degrees, relations, matrix;
-
-    # check if this is a left or right module
-    left := HasLeftActingDomain( module );
+    local ring, mor, generators_degrees, generators, matrix;
 
     # then extract the underlying ring
-    if left then
+    if HasLeftActingDomain( module ) then
       ring := LeftActingDomain( module );
     else
       ring := RightActingDomain( module );
@@ -70,18 +67,14 @@ InstallMethod( TurnIntoCAPGradedModule,
     generators_degrees := List( DegreesOfGenerators( Range( mor ) ), k -> [ k, 1 ] );
     generators := GradedRow( generators_degrees, ring );
 
-    # set up the relations
-    relations_degrees := List( DegreesOfGenerators( Source( mor ) ), k -> [ k, 1 ] );
-    relations := GradedRow( relations_degrees, ring );
-
     # extract the underlying matrix
     matrix := MatrixOfMap( mor );
-    if not left then
+    if not HasLeftActingDomain( module ) then
       matrix := Involution( matrix );
     fi;
 
     # form the CAP_module
-    return FreydCategoryObject( GradedRowOrColumnMorphism( relations, matrix, generators ) );
+    return FreydCategoryObject( DeduceMapFromMatrixAndRangeForGradedRows( matrix, generators ) );
 
 end );
 
@@ -266,7 +259,7 @@ InstallMethod( BPowerLeft,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt ],
   function( variety, power )
-    local ideal_generators, ideal_generators_power, B_power;
+    local generators, generators_power;
 
     # check input
     if power < 0 then
@@ -274,8 +267,10 @@ InstallMethod( BPowerLeft,
       return;
     fi;
 
-    # return the result
-    return FrobeniusPower( PresentationForCAP( IrrelevantLeftIdealForCAP( variety ) ), power );
+    # compute the power-th Frobenius power of the irrelevant left ideal
+    generators := GeneratorsOfIrrelevantIdeal( variety );
+    generators_power := List( [ 1 .. Length( generators ) ], i -> generators[ i ]^power );
+    return LeftIdealForCAP( generators_power, CoxRing( variety ) );
 
 end );
 
@@ -283,7 +278,7 @@ InstallMethod( BPowerRight,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt ],
   function( variety, power )
-    local ideal_generators, ideal_generators_power, B_power;
+    local generators, generators_power;
 
     # check input
     if power < 0 then
@@ -291,8 +286,33 @@ InstallMethod( BPowerRight,
       return;
     fi;
 
-    # return the result
-    return FrobeniusPower( PresentationForCAP( IrrelevantRightIdealForCAP( variety ) ), power );
+    # compute the power-th Frobenius power of the irrelevant left ideal
+    generators := GeneratorsOfIrrelevantIdeal( variety );
+    generators_power := List( [ 1 .. Length( generators ) ], i -> generators[ i ]^power );
+    return RightIdealForCAP( generators_power, CoxRing( variety ) );
+
+end );
+
+InstallMethod( ApproxH0,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ],
+  function( variety, e, module, display_messages )
+    local left, vec_space_morphism;
+
+    # check if we are computing for a left-module
+    left := IsFpGradedLeftModulesObject( module );
+
+    # compute vec_space_morphism
+    if left then
+      vec_space_morphism := TruncateInternalHomToZero( variety, BPowerLeft( variety, e ), module, display_messages, 
+                                                         SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
+    else
+      vec_space_morphism := TruncateInternalHomToZero( variety, BPowerRight( variety, e ), module, display_messages, 
+                                                         SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
+    fi;
+
+    # return the cokernel object
+    return CokernelObject( RelationMorphism( vec_space_morphism ) );
 
 end );
 
@@ -300,20 +320,29 @@ InstallMethod( ApproxH0,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, e, module )
+
+    return ApproxH0( variety, e, module, false );
+end );
+
+InstallMethod( ApproxH0Parallel,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ],
+  function( variety, e, module, display_messages )
     local left, vec_space_morphism;
 
     # check if we are computing for a left-module
-    left := IsGradedLeftModulePresentationForCAP( module );
+    left := IsFpGradedLeftModulesObject( module );
 
     # compute vec_space_morphism
     if left then
-      vec_space_morphism := InternalHomDegreeZeroOnObjects( variety, BPowerLeft( variety, e ), module, true );
+      vec_space_morphism := TruncateInternalHomToZeroInParallel( variety, BPowerLeft( variety, e ), module, display_messages,
+      SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     else
-      vec_space_morphism := InternalHomDegreeZeroOnObjects( variety, BPowerRight( variety, e ), module, true );
+      vec_space_morphism := TruncateInternalHomToZeroInParallel( variety, BPowerRight( variety, e ), module, display_messages, SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     fi;
 
     # return the cokernel object
-    return CokernelObject( vec_space_morphism );
+    return CokernelObject( RelationMorphism( vec_space_morphism ) );
 
 end );
 
@@ -321,20 +350,38 @@ InstallMethod( ApproxH0Parallel,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, e, module )
+
+    return ApproxH0Parallel( variety, e, module, false );
+end );
+
+
+InstallMethod( ApproxHi,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ],
+  function( variety, index, e, module, display_messages )
     local left, vec_space_morphism;
 
+    # check if the index is in the correct range
+    if index < 0 then
+      Error( "The cohomology index must not be negative" );
+      return;
+    elif index > Dimension( variety ) then
+      Error( "The cohomology index must not be larger than the dimension of the variety" );
+      return;
+    fi;
+
     # check if we are computing for a left-module
-    left := IsGradedLeftModulePresentationForCAP( module );
+    left := IsFpGradedLeftModulesObject( module );
 
     # compute vec_space_morphism
     if left then
-      vec_space_morphism := InternalHomDegreeZeroOnObjectsParallel( variety, BPowerLeft( variety, e ), module, true );
+      vec_space_morphism := TruncateGradedExtToZero( index, variety, BPowerLeft( variety, e ), module, display_messages, SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     else
-      vec_space_morphism := InternalHomDegreeZeroOnObjectsParallel( variety, BPowerRight( variety, e ), module, true );
+      vec_space_morphism := TruncateGradedExtToZero( index, variety, BPowerRight( variety, e ), module, display_messages, SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     fi;
 
     # return the cokernel object
-    return CokernelObject( vec_space_morphism );
+    return CokernelObject( RelationMorphism( vec_space_morphism ) );
 
 end );
 
@@ -342,6 +389,15 @@ InstallMethod( ApproxHi,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, index, e, module )
+
+    return ApproxHi( variety, index, e, module, false );
+
+end );
+
+InstallMethod( ApproxHiParallel,
+               "a toric variety, a non-negative integer",
+               [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ],
+  function( variety, index, e, module, display_messages )
     local left, vec_space_morphism;
 
     # check if the index is in the correct range
@@ -354,17 +410,17 @@ InstallMethod( ApproxHi,
     fi;
 
     # check if we are computing for a left-module
-    left := IsGradedLeftModulePresentationForCAP( module );
+    left := IsFpGradedLeftModulesObject( module );
 
     # compute vec_space_morphism
     if left then
-      vec_space_morphism := GradedExtDegreeZeroOnObjects( index, variety, BPowerLeft( variety, e ), module, true );
+      vec_space_morphism := TruncateGradedExtToZeroInParallel( index, variety, BPowerLeft( variety, e ), module, display_messages, SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     else
-      vec_space_morphism := GradedExtDegreeZeroOnObjects( index, variety, BPowerRight( variety, e ), module, true );
+      vec_space_morphism := TruncateGradedExtToZeroInParallel( index, variety, BPowerRight( variety, e ), module, display_messages, SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
     fi;
 
     # return the cokernel object
-    return CokernelObject( vec_space_morphism );
+    return CokernelObject( RelationMorphism( vec_space_morphism ) );
 
 end );
 
@@ -372,28 +428,7 @@ InstallMethod( ApproxHiParallel,
                "a toric variety, a non-negative integer",
                [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ],
   function( variety, index, e, module )
-    local left, vec_space_morphism;
 
-    # check if the index is in the correct range
-    if index < 0 then
-      Error( "The cohomology index must not be negative" );
-      return;
-    elif index > Dimension( variety ) then
-      Error( "The cohomology index must not be larger than the dimension of the variety" );
-      return;
-    fi;
-
-    # check if we are computing for a left-module
-    left := IsGradedLeftModulePresentationForCAP( module );
-
-    # compute vec_space_morphism
-    if left then
-      vec_space_morphism := GradedExtDegreeZeroOnObjectsParallel( index, variety, BPowerLeft( variety, e ), module, true );
-    else
-      vec_space_morphism := GradedExtDegreeZeroOnObjectsParallel( index, variety, BPowerRight( variety, e ), module, true );
-    fi;
-
-    # return the cokernel object
-    return CokernelObject( vec_space_morphism );
+    return ApproxHiParallel( variety, index, e, module, false );
 
 end );

@@ -28,7 +28,7 @@ InstallMethod( TruncateInternalHom,
 
       # determine morphism whose kernel is the InternalHom in question
       source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
-      source:= FreydCategoryObject( source );
+      source := FreydCategoryObject( source );
       range := InternalHomOnMorphisms( IdentityMorphism( Source( RelationMorphism( a ) ) ), RelationMorphism( b ) );
       range := FreydCategoryObject( range );
       map := InternalHomOnMorphisms( RelationMorphism( a ), IdentityMorphism( Range( RelationMorphism( b ) ) ) );

@@ -83,6 +83,9 @@ DeclareOperation( "BPowerRight",
 DeclareOperation( "ApproxH0",
                   [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ] );
 
+DeclareOperation( "ApproxH0",
+                  [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
 #! @Description
 #! The argument is a toric variety V, a non-negative integer e and a graded CAP module M. 
 #! The method computes the degree zero layer of Hom( B(e), M ) by use of parallelisation and 
@@ -92,20 +95,29 @@ DeclareOperation( "ApproxH0",
 DeclareOperation( "ApproxH0Parallel",
                   [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject ] );
 
+DeclareOperation( "ApproxH0Parallel",
+                  [ IsToricVariety, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ] );
+
 #! @Description
 #! The argument is a toric variety V, non-negative integers i, e and a graded CAP module M.
 #! The method computes the degree zero layer of Ext^i( B(e), M ) and returns its vector
 #! space dimension.
 #! @Returns a non-negative integer
-#! @Arguments V, e, M
+#! @Arguments V, i, e, M
 DeclareOperation( "ApproxHi",
                   [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ] );
+
+DeclareOperation( "ApproxHi",
+                  [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ] );
 
 #! @Description
 #! The argument is a toric variety V, non-negative integer i, e and a graded CAP module M.
 #! The method computes the degree zero layer of Ext^i( B(e), M ) by use of parallelisation and
 #! returns its vector space dimension.
 #! @Returns a non-negative integer
-#! @Arguments V, e, M
+#! @Arguments V, i, e, M
 DeclareOperation( "ApproxHiParallel",
                   [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject ] );
+
+DeclareOperation( "ApproxHiParallel",
+                  [ IsToricVariety, IsInt, IsInt, IsFpGradedLeftOrRightModulesObject, IsBool ] );

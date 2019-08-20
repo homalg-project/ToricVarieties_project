@@ -34,6 +34,13 @@ DeclareProperty( "IsValidInputForCohomologyComputations",
 ####################################################################
 
 #! @Description
+#! Returns the lift of generators of the irrelevant ideal of the variety <A>vari</A>.
+#! @Returns a list
+#! @Arguments vari
+DeclareAttribute( "GeneratorsOfIrrelevantIdeal",
+                  IsToricVariety );
+
+#! @Description
 #! Returns the irrelevant left ideal of the Cox ring of the variety <A>vari</A>, using the language of CAP.
 #! @Returns a graded left ideal for CAP
 #! @Arguments vari
@@ -45,6 +52,13 @@ DeclareAttribute( "IrrelevantLeftIdealForCAP",
 #! @Returns a graded right ideal for CAP
 #! @Arguments vari
 DeclareAttribute( "IrrelevantRightIdealForCAP",
+                  IsToricVariety );
+
+#! @Description
+#! Returns the lift of generators of the Stanley-Reisner-ideal of the variety <A>vari</A>.
+#! @Returns a list
+#! @Arguments vari
+DeclareAttribute( "GeneratorsOfSRIdeal",
                   IsToricVariety );
 
 #! @Description
