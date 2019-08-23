@@ -440,6 +440,9 @@ InstallMethod( FindVarsAndCoefficients,
              coeff := "+1";
            fi;
 
+           # remove "+" from the string
+           RemoveCharacters( coeff, "+" );
+
            # remove the coefficient part from poly_split
            for l in [ 1 .. pos-1 ] do
               Remove( poly_split[ k ], 1 );
@@ -853,6 +856,9 @@ InstallMethod( FindVarsAndCoefficientsWithoutEvaluation,
            elif coeff = "+" then
              coeff := "+1";
            fi;
+
+           # remove "+" from the string
+           RemoveCharacters( coeff, "+" );
 
            # remove the coefficient part from poly_split
            for l in [ 1 .. pos-1 ] do
