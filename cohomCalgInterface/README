@@ -1,0 +1,25 @@
+#############################################################################
+##
+##  PackageInfo.g       cohomCalgInterface package
+##                      Martin Bies
+##
+##  Copyright 2019      ULB Brussels
+##
+##  A package to communicate with the software Topcom
+##
+#############################################################################
+
+README file for the `cohomCalgInterface' GAP4 package
+        
+To get the latest version of this GAP 4 package pull the corresponding branch from github. 
+
+This package requires a working installation of cohomCalg on your computer. You can download the latest version from https://github.com/BenjaminJurke/cohomCalg. Alternatively, you can find a version at 
+https://github.com/HereAround/cohomCalg in the branch martindevel, which reduces the amount of output to the terminal, and therefore leads to a more integrated experience in gap.
+
+Once cohomCalg is sucessfully installed, you need to place the binary file into the binary folder of this package. This completes the installation of this package.
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+This work is funded by the Wiener – Anspach Foundation.
