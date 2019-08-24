@@ -1053,7 +1053,7 @@ InstallMethod( TruncationParallel,
     od;
 
     # return the result
-    return [ String( entries ), Nr_gens_source, gens_range[ 1 ] ];
+    return [ entries, Nr_gens_source, gens_range[ 1 ] ];
 
 end );
 
@@ -1091,7 +1091,7 @@ InstallMethod( TruncateGradedRowOrColumnMorphismInParallel,
 
         # then process it to extract the matrix in question
         entries := TruncationParallel( input, gens_range, Length( gens_source ), NrJobs, display_messages );
-        matrix := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+        matrix := CreateHomalgMatrixFromSparseString( String( entries[ 1 ] ), entries[ 2 ], entries[ 3 ], rationals );
 
     fi;
 

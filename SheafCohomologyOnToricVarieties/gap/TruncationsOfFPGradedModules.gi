@@ -412,7 +412,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
             fi;
 
             # create the corresponding matrix
-            matrix1 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            matrix1 := CreateHomalgMatrixFromSparseString( String( entries[ 1 ] ), entries[ 2 ], entries[ 3 ], rationals );
 
             if display_messages then
                 Print( "(*) result of job1 read \n" );
@@ -450,7 +450,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
             fi;
 
             # create the corresponding matrix
-            matrix2 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            matrix2 := CreateHomalgMatrixFromSparseString( String( entries[ 1 ] ), entries[ 2 ], entries[ 3 ], rationals );
 
             if display_messages then
                 Print( "(*) result of job2 read \n" );
@@ -488,7 +488,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
             fi;
 
             # create the corresponding matrix
-            matrix3 := CreateHomalgMatrixFromSparseString( entries[ 1 ], entries[ 2 ], entries[ 3 ], rationals );
+            matrix3 := CreateHomalgMatrixFromSparseString( String( entries[ 1 ] ), entries[ 2 ], entries[ 3 ], rationals );
 
             if display_messages then
                 Print( "(*) result of job3 read \n" );
