@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (SheafCohomologyOnToricVarieties) - Chapter 3: Additional methods and properties for toric varieties</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3.html">[MathJax off]</a></p>
+<p><a id="X7A66C08A8698D99B" name="X7A66C08A8698D99B"></a></p>
+<div class="ChapSects"><a href="chap3_mj.html#X7A66C08A8698D99B">3 <span class="Heading">Additional methods and properties for toric varieties</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7FD321947CF8A4A6">3.1 <span class="Heading">Input check for cohomology computations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8528A8937EB0BB37">3.1-1 IsValidInputForCohomologyComputations</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X865CD75C7B927C6F">3.2 <span class="Heading">Stanley-Reisner and irrelevant ideal via FpGradedModules</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B22B95F83A49431">3.2-1 GeneratorsOfIrrelevantIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79ACE3F77FE30422">3.2-2 IrrelevantLeftIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86F9A54682C69DBD">3.2-3 IrrelevantRightIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78362D807A6E7334">3.2-4 GeneratorsOfSRIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80CA39B87FE8012B">3.2-5 SRLeftIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7D5DC0FC86BF1246">3.2-6 SRRightIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X835E617380BF3A64">3.2-7 FpGradedLeftModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X823D261B85C1284D">3.2-8 FpGradedRightModules</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X87B26F0680686270">3.3 <span class="Heading">Monoms of given degree in the Cox ring</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X868B1B6681613E2A">3.3-1 Exponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87C90D267B9462DF">3.3-2 MonomsOfCoxRingOfDegreeByNormaliz</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F90985F79409480">3.3-3 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7D8E966785BA84AA">3.4 <span class="Heading">Example: Stanley-Reisner ideal for CAP</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7897E1B678B1BD24">3.5 <span class="Heading">Example: Irrelevant ideal for CAP</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X86BBA5BF8112A591">3.6 <span class="Heading">Example: Monomials of given degree</span></a>
+</span>
+</div>
+</div>
+
+<h3>3 <span class="Heading">Additional methods and properties for toric varieties</span></h3>
+
+<p><a id="X7FD321947CF8A4A6" name="X7FD321947CF8A4A6"></a></p>
+
+<h4>3.1 <span class="Heading">Input check for cohomology computations</span></h4>
+
+<p><a id="X8528A8937EB0BB37" name="X8528A8937EB0BB37"></a></p>
+
+<h5>3.1-1 IsValidInputForCohomologyComputations</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsValidInputForCohomologyComputations</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Returns if the given variety V is a valid input for cohomology computations. If the variable SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY is set to false (default), then we just check if the variety is smooth, complete. In case of success we return true and false otherwise. If however SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY is set to true, then we will check if the variety is smooth, complete or simplicial, projective. In case of success we return true and false other.</p>
+
+<p><a id="X865CD75C7B927C6F" name="X865CD75C7B927C6F"></a></p>
+
+<h4>3.2 <span class="Heading">Stanley-Reisner and irrelevant ideal via FpGradedModules</span></h4>
+
+<p><a id="X7B22B95F83A49431" name="X7B22B95F83A49431"></a></p>
+
+<h5>3.2-1 GeneratorsOfIrrelevantIdeal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfIrrelevantIdeal</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>Returns the lift of generators of the irrelevant ideal of the variety <var class="Arg">vari</var>.</p>
+
+<p><a id="X79ACE3F77FE30422" name="X79ACE3F77FE30422"></a></p>
+
+<h5>3.2-2 IrrelevantLeftIdealForCAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IrrelevantLeftIdealForCAP</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a graded left ideal for CAP</p>
+
+<p>Returns the irrelevant left ideal of the Cox ring of the variety <var class="Arg">vari</var>, using the language of CAP.</p>
+
+<p><a id="X86F9A54682C69DBD" name="X86F9A54682C69DBD"></a></p>
+
+<h5>3.2-3 IrrelevantRightIdealForCAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IrrelevantRightIdealForCAP</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a graded right ideal for CAP</p>
+
+<p>Returns the irrelevant right ideal of the Cox ring of the variety <var class="Arg">vari</var>, using the language of CAP.</p>
+
+<p><a id="X78362D807A6E7334" name="X78362D807A6E7334"></a></p>
+
+<h5>3.2-4 GeneratorsOfSRIdeal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfSRIdeal</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>Returns the lift of generators of the Stanley-Reisner-ideal of the variety <var class="Arg">vari</var>.</p>
+
+<p><a id="X80CA39B87FE8012B" name="X80CA39B87FE8012B"></a></p>
+
+<h5>3.2-5 SRLeftIdealForCAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SRLeftIdealForCAP</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a graded left ideal for CAP</p>
+
+<p>Returns the Stanley-Reißner left ideal of the Cox ring of the variety <var class="Arg">vari</var>, using the langauge of CAP.</p>
+
+<p><a id="X7D5DC0FC86BF1246" name="X7D5DC0FC86BF1246"></a></p>
+
+<h5>3.2-6 SRRightIdealForCAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SRRightIdealForCAP</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a graded right ideal for CAP</p>
+
+<p>Returns the Stanley-Reißner right ideal of the Cox ring of the variety <var class="Arg">vari</var>, using the langauge of CAP.</p>
+
+<p><a id="X835E617380BF3A64" name="X835E617380BF3A64"></a></p>
+
+<h5>3.2-7 FpGradedLeftModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpGradedLeftModules</code>( <var class="Arg">variety</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CapCategory</p>
+
+<p>Given a toric variety <var class="Arg">variety</var> one can consider the Cox ring <span class="SimpleMath">\(S\)</span> of this variety, which is graded over the class group of <var class="Arg">variety</var>. Subsequently one can consider the category of f.p. graded left <span class="SimpleMath">\(S\)</span>-modules. This attribute captures the corresponding CapCategory.</p>
+
+<p><a id="X823D261B85C1284D" name="X823D261B85C1284D"></a></p>
+
+<h5>3.2-8 FpGradedRightModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpGradedRightModules</code>( <var class="Arg">variety</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CapCategory</p>
+
+<p>Given a toric variety <var class="Arg">variety</var> one can consider the Cox ring <span class="SimpleMath">\(S\)</span> of this variety, which is graded over the class group of <var class="Arg">variety</var>. Subsequently one can consider the category of f.p. graded right <span class="SimpleMath">\(S\)</span>-modules. This attribute captures the corresponding CapCategory.</p>
+
+<p><a id="X87B26F0680686270" name="X87B26F0680686270"></a></p>
+
+<h4>3.3 <span class="Heading">Monoms of given degree in the Cox ring</span></h4>
+
+<p><a id="X868B1B6681613E2A" name="X868B1B6681613E2A"></a></p>
+
+<h5>3.3-1 Exponents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Exponents</code>( <var class="Arg">vari</var>, <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists of integers</p>
+
+<p>Given a smooth and complete toric variety and a list of integers (= degree) corresponding to an element of the class group of the variety, this method return a list of integer valued lists. These lists correspond to the exponents of the monomials of degree in the Cox ring of this toric variety.</p>
+
+<p><a id="X87C90D267B9462DF" name="X87C90D267B9462DF"></a></p>
+
+<h5>3.3-2 MonomsOfCoxRingOfDegreeByNormaliz</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomsOfCoxRingOfDegreeByNormaliz</code>( <var class="Arg">vari</var>, <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>Given a smooth and complete toric variety and a list of integers (= degree) corresponding to an element of the class group of the variety, this method returns the list of all monomials in the Cox ring of the given degree. This method uses NormalizInterface.</p>
+
+<p><a id="X7F90985F79409480" name="X7F90985F79409480"></a></p>
+
+<h5>3.3-3 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices</code>( <var class="Arg">vari</var>, <var class="Arg">degree</var>, <var class="Arg">i</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of matrices</p>
+
+<p>Given a smooth and complete toric variety, a list of integers (= degree) corresponding to an element of the class group of the variety and two non-negative integers i and l, this method returns a list of column matrices. The columns are of length l and have at position i the monoms of the Coxring of degree 'degree'.</p>
+
+<p><a id="X7D8E966785BA84AA" name="X7D8E966785BA84AA"></a></p>
+
+<h4>3.4 <span class="Heading">Example: Stanley-Reisner ideal for CAP</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2 := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SR1 := SRLeftIdealForCAP( P2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( SR1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SR2 := SRRightIdealForCAP( P2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( SR2 );</span>
+true
+</pre></div>
+
+<p><a id="X7897E1B678B1BD24" name="X7897E1B678B1BD24"></a></p>
+
+<h4>3.5 <span class="Heading">Example: Irrelevant ideal for CAP</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2 := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IR1 := IrrelevantLeftIdealForCAP( P2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( IR1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IR2 := IrrelevantRightIdealForCAP( P2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( IR2 );</span>
+true
+</pre></div>
+
+<p><a id="X86BBA5BF8112A591" name="X86BBA5BF8112A591"></a></p>
+
+<h4>3.6 <span class="Heading">Example: Monomials of given degree</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1 := ProjectiveSpace( 1 );</span>
+&lt;A projective toric variety of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">var := P1*P1;</span>
+&lt;A projective toric variety of dimension 2
+which is a product of 2 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Exponents( var, [ 1,1 ] );</span>
+[ [ 1, 1, 0, 0 ], [ 1, 0, 1, 0 ],
+[ 0, 1, 0, 1 ], [ 0, 0, 1, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MonomsOfCoxRingOfDegreeByNormaliz( var, [1,2] );</span>
+[ x_1^2*x_2, x_1^2*x_3, x_1*x_2*x_4,
+x_1*x_3*x_4, x_2*x_4^2, x_3*x_4^2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MonomsOfCoxRingOfDegreeByNormaliz( var, [-1,-1] );</span>
+[]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     ( var, [1,2], 2, 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( l[ 1 ] );</span>
+0,
+x_1^2*x_2,
+0
+(over a graded ring)
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

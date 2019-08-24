@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Cohomology_of_vector_bundles_on_smooth_and_compact_toric_varieties_from_cohomCalg">
+<Heading>Cohomology of vector bundles on (smooth and compact) toric varieties from cohomCalg</Heading>
+
+<Section Label="Chapter_Cohomology_of_vector_bundles_on_smooth_and_compact_toric_varieties_from_cohomCalg_Section_All_sheaf_cohomologies_of_vector_bundles_from_cohomCalg">
+<Heading>All sheaf cohomologies of vector bundles from cohomCalg</Heading>
+
+<ManSection>
+  <Oper Arg="V, M, B" Name="AllCohomologiesFromCohomCalg" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsBool"/>
+ <Returns>a list of vector spaces
+</Returns>
+ <Description>
+The arguments are a toric variety <A>V</A> with Coxring <A>S</A> and a f.p. graded S-module <A>M</A>. Given that <A>M</A> is
+free, i.e. <A>\tilde{M}</A> is a vector bundle on <A>V</A>, then this method computes all cohomology classes of this vector
+bundle. A boolean <A>B</A> can be specified as third argument. If <A>B</A> equals true, then a list of vector spaces is
+produced, otherwise only the dimensions of these vector spaces are returned. The default value is false.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

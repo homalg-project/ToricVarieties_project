@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Cohomology_of_coherent_sheaves_from_resolution">
+<Heading>Cohomology of coherent sheaves from resolution</Heading>
+
+<Section Label="Chapter_Cohomology_of_coherent_sheaves_from_resolution_Section_Deductions_On_Sheaf_Cohomology_From_Cohomology_Of_projective_modules_in_a_minimal_free_resolution">
+<Heading>Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution</Heading>
+
+<ManSection>
+  <Oper Arg="vari, M" Name="CohomologiesList" Label="for IsToricVariety, IsFpGradedLeftOrRightModulesObject"/>
+ <Returns>a list of lists of integers
+</Returns>
+ <Description>
+Given a smooth and projective toric variety <M>vari</M> with Coxring <M>S</M> and a f. p.
+graded S-modules <M>M</M>, this method computes a minimal free resolution of <M>M</M> and then the dimension of the cohomology
+classes of the projective modules in this minimal free resolution.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, M" Name="DeductionOfSheafCohomologyFromResolution" Label="for IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsBool"/>
+ <Returns>a list
+</Returns>
+ <Description>
+Given a smooth and projective toric variety <M>vari</M> with Coxring <M>S</M> and a f. p.
+graded S-modules <M>M</M>, this method computes a minimal free resolution of <M>M</M> and then the dimension of the cohomology
+classes of the projective modules in this minimal free resolution. From this information we draw conclusions on the sheaf
+cohomologies of the sheaf <M>\tilde{M}</M>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Cohomology_of_coherent_sheaves_from_resolution_Section_Example_Pullback_line_bundle">
+<Heading>Example: Pullback line bundle</Heading>
+
+<Example><![CDATA[
+gap> var := ProjectiveSpace( 2 );
+<A projective toric variety of dimension 2>
+gap> cox_ring := CoxRing( var );
+Q[x_1,x_2,x_3]
+(weights: [ 1, 1, 1 ])
+gap> vars := IndeterminatesOfPolynomialRing( cox_ring );
+[ x_1, x_2, x_3 ]
+gap> range := GradedRow( [[[2],1]], cox_ring );
+<A graded row of rank 1>
+gap> source := GradedRow( [[[1],1]], cox_ring );
+<A graded row of rank 1>
+gap> matrix := HomalgMatrix( [[vars[1]] ], cox_ring );
+<A 1 x 1 matrix over a graded ring>
+gap> mor := GradedRowOrColumnMorphism( source, matrix, range );
+<A morphism in Category of graded rows over
+Q[x_1,x_2,x_3]
+(with weights [ 1,1,1 ])>
+gap> IsWellDefined( mor );
+true
+gap> pullback_line_bundle := FreydCategoryObject( mor );
+<An object in Category of f.p. graded left modules over
+Q[x_1,x_2,x_3] (with weights
+[ 1, 1, 1 ])>
+gap> coh := DeductionOfSheafCohomologyFromResolution( var, pullback_line_bundle );
+[ 3, 0, 0 ]
+]]></Example>
+
+
+<Example><![CDATA[
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> P2 := ProjectiveSpace( 2 );
+<A projective toric variety of dimension 2>
+gap> var2 := P1 * P1 * P2;
+<A projective toric variety of dimension 4 
+which is a product of 3 toric varieties>
+gap> cox_ring2 := CoxRing( var2 );
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7]
+(weights: [ ( 0, 0, 1 ), ( 0, 1, 0 ), ( 1, 0, 0 ),
+( 1, 0, 0 ), ( 1, 0, 0 ), ( 0, 1, 0 ), ( 0, 0, 1 ) ])
+gap> vars2 := IndeterminatesOfPolynomialRing( cox_ring2 );
+[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ]
+gap> range2 := GradedRow( [[[1,1,2],1]], cox_ring2 );
+<A graded row of rank 1>
+gap> source2 := GradedRow( [[[0,1,2],2]], cox_ring2 );
+<A graded row of rank 2>
+gap> matrix2 := HomalgMatrix( [[vars2[3]],[vars2[4]]], cox_ring2 );
+<A 2 x 1 matrix over a graded ring>
+gap> mor2 := GradedRowOrColumnMorphism( source2, matrix2, range2 );
+<A morphism in Category of graded rows over
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7]
+(with weights [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ],
+[ 1, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])>
+gap> IsWellDefined( mor2 );
+true
+gap> pullback_line_bundle2 := FreydCategoryObject( mor2 );
+<An object in Category of f.p. graded left modules over
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7] (with weights
+[ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0 ],
+[ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])>
+gap> coh2 := DeductionOfSheafCohomologyFromResolution( var2, pullback_line_bundle2 );
+[ 6, 0, 0, 0, 0 ]
+]]></Example>
+
+
+<Example><![CDATA[
+gap> P2 := ProjectiveSpace( 2 );
+<A projective toric variety of dimension 2>
+gap> var3 := P2 * P2;
+<A projective toric variety of dimension 4 
+which is a product of 2 toric varieties>
+gap> cox_ring3 := CoxRing( var3 );
+Q[x_1,x_2,x_3,x_4,x_5,x_6]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), 
+( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])
+gap> range3 := GradedRow( [[[1,1],4]], cox_ring3 );
+<A graded row of rank 4>
+gap> source3 := ZeroObject( CapCategory( range3 ) );
+<A graded row of rank 0>
+gap> matrix3 := HomalgZeroMatrix( 0, 4, cox_ring3 );
+<An unevaluated 0 x 4 zero matrix over a graded ring>
+gap> mor3 := GradedRowOrColumnMorphism( source3, matrix3, range3 );
+<A morphism in Category of graded rows over
+Q[x_1,x_2,x_3,x_4,x_5,x_6] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+gap> line_bundle3 := FreydCategoryObject( mor3 );
+<An object in Category of f.p. graded left modules over 
+Q[x_1,x_2,x_3,x_4,x_5,x_6] (with weights 
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [0, 1 ], [ 0, 1 ] ])>
+gap> IsWellDefined( line_bundle3 );
+true
+gap> coh3 := DeductionOfSheafCohomologyFromResolution( var3, line_bundle3 );
+[ 36, 0, 0, 0, 0 ]
+]]></Example>
+
+
+</Section>
+
+
+</Chapter>
+

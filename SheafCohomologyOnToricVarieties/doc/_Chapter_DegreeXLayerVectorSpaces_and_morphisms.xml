@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms">
+<Heading>DegreeXLayerVectorSpaces and morphisms</Heading>
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_GAP_category_of_DegreeXLayerVectorSpaces">
+<Heading>GAP category of DegreeXLayerVectorSpaces</Heading>
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpace" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpaceMorphism" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for morphisms between vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpacePresentation" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for (left) presentations of vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpacePresentationMorphism" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for (left) presentation morphisms of vector spaces that represent a degree layer of a
+f.p. graded module
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Constructors_for_DegreeXLayerVectorSpaces">
+<Heading>Constructors for DegreeXLayerVectorSpaces</Heading>
+
+<ManSection>
+  <Oper Arg="L, S, V, n" Name="DegreeXLayerVectorSpace" Label="for IsList, IsHomalgGradedRing, IsVectorSpaceObject, IsInt"/>
+ <Returns>a CAPCategoryObject
+</Returns>
+ <Description>
+The arguments are a list of monomials <Math>L</Math>, a homalg graded ring <Math>S</Math> (the Coxring of the
+variety in question), a vector space <Math>V</Math> and a non-negative integer <Math>n</Math>. <Math>V</Math> is to be
+given as a vector space defined in the package 'LinearAlgebraForCAP'.
+This method then returns the corresponding DegreeXLayerVectorSpace.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="L, S, V" Name="DegreeXLayerVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpace, IsVectorSpaceMorphism, IsDegreeXLayerVectorSpace"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments are a DegreeXLayerVectorSpace <A>source</A>, a vector space morphism <Math>\varphi</Math> (as defined in
+'LinearAlgebraForCAP') and a DegreeXLayerVectorSpace <A>range</A>. If <Math>\varphi</Math> is a vector space
+morphism between the underlying vector spaces of <A>source</A> and <A>range</A> this method returns
+the corresponding DegreeXLayerVectorSpaceMorphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="a" Name="DegreeXLayerVectorSpacePresentation" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments is a DegreeXLayerVectorSpaceMorphism <A>a</A>. This method treats this morphism as a
+presentation, i.e. we are interested in the cokernel of the underlying morphism of vector spaces. The corresponding
+DegreeXLayerVectorSpacePresentation is returned.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="source, \varphi, range" Name="DegreeXLayerVectorSpacePresentationMorphism" Label="for IsDegreeXLayerVectorSpacePresentation, IsVectorSpaceMorphism, IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a DegreeXLayerVectorSpacePresentationMorphism
+</Returns>
+ <Description>
+The arguments is a DegreeXLayerVectorSpacePresentation <A>source</A>, a vector space morphism <Math>\varphi</Math> and a
+DegreeXLayerVectorSpacePresentation <A>range</A>. The corresponding DegreeXLayerVectorSpacePresentationMorphism
+is returned.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Attributes_for_DegreeXLayerVectorSpaces">
+<Heading>Attributes for DegreeXLayerVectorSpaces</Heading>
+
+<ManSection>
+  <Attr Arg="V" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the Coxring, in which this
+vector space is embedded via the generators (specified when installing <Math>V</Math>).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="Generators" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the list of generators, that
+embed <Math>V</Math> into the Coxring in question.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="UnderlyingVectorSpaceObject" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the underlying vectorspace object
+(as defined in 'LinearAlgebraForCAP').
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="EmbeddingDimension" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. For <Math>S</Math> its 'UnderlyingHomalgGradedRing' this vector space
+is embedded (via its generators) into <Math>S^n</Math>. The integer <Math>n</Math> is the embedding dimension.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Attributes_for_DegreeXLayerVectorSpaceMorphisms">
+<Heading>Attributes for DegreeXLayerVectorSpaceMorphisms</Heading>
+
+<ManSection>
+  <Attr Arg="a" Name="Source" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Range" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is the Coxring, in which the source and range of this
+is morphism are embedded.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Attributes_for_DegreeXLayerVectorSpacePresentations">
+<Heading>Attributes for DegreeXLayerVectorSpacePresentations</Heading>
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingDegreeXLayerVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the underlying
+DegreeXLayerVectorSpaceMorphism
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceObject" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the vector space object
+which is the cokernel of the underlying vector space morphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a VectorSpaceMorphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the vector space morphism
+which defines the underlying morphism of DegreeXLayerVectorSpaces.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the Coxring,
+in which the source and range of the underlying morphism of DegreeXLayerVectorSpaces are embedded.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpacePresentation" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a CAP presentation category object
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the underlying
+vector space presentation.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Attributes_for_DegreeXLayerVectorSpacePresentationMorphisms">
+<Heading>Attributes for DegreeXLayerVectorSpacePresentationMorphisms</Heading>
+
+<ManSection>
+  <Attr Arg="a" Name="Source" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a DegreeXLayerVectorSpacePresentation
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is its source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Range" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a DegreeXLayerVectorSpacePresentation
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is the underlying graded ring of its
+source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpacePresentationMorphism" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a CAP presentation category morphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is the underlying vector space
+presentation morphism.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Convenience_methods">
+<Heading>Convenience methods</Heading>
+
+<ManSection>
+  <Oper Arg="p" Name="FullInformation" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>detailed information about p
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>p</Math>. This method displays <Math>p</Math> in great detail.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="p" Name="FullInformation" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>detailed information about p
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>p</Math>. This method displays <Math>p</Math> in great detail.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Examples">
+<Heading>Examples</Heading>
+
+<Subsection Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Examples_Subsection_DegreeXLayerVectorSpaces">
+<Heading>DegreeXLayerVectorSpaces</Heading>
+
+<Example><![CDATA[
+gap> mQ := HomalgFieldOfRationals();
+Q
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> cox_ring := CoxRing( P1 );
+Q[x_1,x_2]
+(weights: [ 1, 1 ])
+gap> mons := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+>         ( P1, [1], 1, 1 );;
+gap> vector_space := VectorSpaceObject( Length( mons ), mQ );
+<A vector space object over Q of dimension 2>
+gap> DXVS := DegreeXLayerVectorSpace( mons, cox_ring, vector_space, 1 );
+<A vector space embedded into (Q[x_1,x_2] (with weights [ 1, 1 ]))^1>
+gap> EmbeddingDimension( DXVS );
+1
+gap> Generators( DXVS );
+[ <A 1 x 1 matrix over a graded ring>, <A 1 x 1 matrix over a graded ring> ]
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Examples_Subsection_Morphisms_of_DegreeXLayerVectorSpaces">
+<Heading>Morphisms of DegreeXLayerVectorSpaces</Heading>
+
+<Example><![CDATA[
+gap> mons2 := Concatenation(
+>          MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+>          ( P1, [1], 1, 2 ),
+>          MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices
+>          ( P1, [1], 2, 2 ) );;
+gap> vector_space2 := VectorSpaceObject( Length( mons2 ), mQ );
+<A vector space object over Q of dimension 4>
+gap> DXVS2 := DegreeXLayerVectorSpace( mons2, cox_ring, vector_space2, 2 );
+<A vector space embedded into (Q[x_1,x_2] (with weights [ 1, 1 ]))^2>
+gap> matrix := HomalgMatrix( [ [ 1, 0, 0, 0 ],
+>                           [ 0, 1, 0, 0 ] ], mQ );
+<A matrix over an internal ring>
+gap> vector_space_morphism := VectorSpaceMorphism( vector_space,
+>                                               matrix,
+>                                               vector_space2 );;
+gap> IsWellDefined( vector_space_morphism );
+true
+gap> morDXVS := DegreeXLayerVectorSpaceMorphism( 
+>            DXVS, vector_space_morphism, DXVS2 );
+<A morphism of two vector spaces embedded into
+(suitable powers of) Q[x_1,x_2] (with weights [ 1, 1 ])>
+gap> UnderlyingVectorSpaceMorphism( morDXVS );
+<A morphism in Category of matrices over Q>
+gap> UnderlyingHomalgGradedRing( morDXVS );
+Q[x_1,x_2]
+(weights: [ 1, 1 ])
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Examples_Subsection_DegreeXLayerVectorSpacePresentations">
+<Heading>DegreeXLayerVectorSpacePresentations</Heading>
+
+<Example><![CDATA[
+gap> DXVSPresentation := DegreeXLayerVectorSpacePresentation( morDXVS );
+<A vector space embedded into (a suitable power of)
+Q[x_1,x_2] (with weights [ 1, 1 ]) given as the
+cokernel of a vector space morphism>
+gap> UnderlyingVectorSpaceObject( DXVSPresentation );
+<A vector space object over Q of dimension 2>
+gap> relation := RelationMorphism( 
+>             UnderlyingVectorSpacePresentation( DXVSPresentation ) );
+<A morphism in Category of matrices over Q>
+gap> m := UnderlyingMatrix( relation );
+<A 2 x 4 matrix over an internal ring>
+gap> m = matrix;
+true
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_DegreeXLayerVectorSpaces_and_morphisms_Section_Examples_Subsection_Morphisms_of_DegreeXLayerVectorSpacePresentations">
+<Heading>Morphisms of DegreeXLayerVectorSpacePresentations</Heading>
+
+<Example><![CDATA[
+gap> zero_space := ZeroObject( CapCategory( vector_space ) );;
+gap> source := DegreeXLayerVectorSpace( [], cox_ring, zero_space, 1 );;
+gap> vector_space_morphism := ZeroMorphism( zero_space, vector_space );;
+gap> morDXVS2 := DegreeXLayerVectorSpaceMorphism(
+>             source, vector_space_morphism, DXVS );;
+gap> DXVSPresentation2 := DegreeXLayerVectorSpacePresentation( morDXVS2 );
+<A vector space embedded into (a suitable power of)
+Q[x_1,x_2] (with weights [ 1, 1 ]) given as the
+cokernel of a vector space morphism>
+gap> matrix := HomalgMatrix( [ [ 0, 0, 1, 0 ],
+>                           [ 0, 0, 0, 1 ] ], mQ );
+<A matrix over an internal ring>
+gap> source := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation2 ) );;
+gap> range := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation ) );;
+gap> vector_space_morphism := VectorSpaceMorphism( source, matrix, range );;
+gap> IsWellDefined( vector_space_morphism );
+true
+gap> DXVSPresentationMorphism := DegreeXLayerVectorSpacePresentationMorphism(
+>                                       DXVSPresentation2,
+>                                       vector_space_morphism,
+>                                       DXVSPresentation );
+<A vector space presentation morphism of vector spaces embedded into
+(a suitable power of) Q[x_1,x_2] (with weights [ 1, 1 ]) and given as
+cokernels>
+gap> uVSMor := UnderlyingVectorSpacePresentationMorphism
+>                                       ( DXVSPresentationMorphism );
+<A morphism in Freyd( Category of matrices over Q )>
+gap> IsWellDefined( uVSMor );
+true
+]]></Example>
+
+
+</Subsection>
+
+
+</Section>
+
+
+</Chapter>
+

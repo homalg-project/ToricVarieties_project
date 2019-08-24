@@ -1,0 +1,493 @@
+  
+  [1X10 [33X[0;0YTruncations of graded rows and columns[133X[101X
+  
+  
+  [1X10.1 [33X[0;0YTruncations of graded rows and columns[133X[101X
+  
+  [1X10.1-1 TruncateGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xdegree_list[103X, [3Xfield[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YVector space[133X
+  
+  [33X[0;0YThe  arguments  are a toric variety [23XV[123X, a graded row or column [23XM[123X over the Cox
+  ring of [23XV[123X and a [3Xdegree_list[103X specifying an element of the degree group of the
+  toric variety [23XV[123X. The latter can either be specified by a list of integers or
+  as  a  HomalgModuleElement.  Based  on  this  input, the method computes the
+  truncation  of  [23XM[123X to the specified degree. We return this finite dimensional
+  vector space. Optionally, we allow for a field [23XF[123X as fourth input. This field
+  is  then  used  to  construct  the  vector  space.  Otherwise,  we  use  the
+  coefficient field of the Cox ring of [23XV[123X.[133X
+  
+  [1X10.1-2 TruncateGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xm[103X, [3Xfield[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YVector space[133X
+  
+  [33X[0;0YAs above, but with a HomalgModuleElement m specifying the degree.[133X
+  
+  [1X10.1-3 TruncateGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xdegree[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YVector space[133X
+  
+  [33X[0;0YAs above, but the coefficient ring of the Cox ring will be used as field[133X
+  
+  [1X10.1-4 TruncateGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YVector space[133X
+  
+  [33X[0;0YAs  above,  but  a HomalgModuleElement m specifies the degree and we use the
+  coefficient ring of the Cox ring as field.[133X
+  
+  [1X10.1-5 DegreeXLayerOfGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xdegree_list[103X, [3Xfield[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YDegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YThe  arguments  are a toric variety [23XV[123X, a graded row or column [23XM[123X over the Cox
+  ring of [23XV[123X and a [3Xdegree_list[103X specifying an element of the degree group of the
+  toric variety [23XV[123X. The latter can either be specified by a list of integers or
+  as  a  HomalgModuleElement.  Based  on  this  input, the method computes the
+  truncation of [23XM[123X to the specified degree. This is a finite dimensional vector
+  space.  We  return the corresponding DegreeXLayerVectorSpace. Optionally, we
+  allow  for  a  field  [23XF[123X as fourth input. This field is used to construct the
+  DegreeXLayerVectorSpace.   Namely,   the   wrapper   DegreeXLayerVectorSpace
+  contains  a representation of the obtained vector space as [23XF^n[123X. In case [23XF[123X is
+  specified, we use this particular field. Otherwise, HomalgFieldOfRationals()
+  will be used.[133X
+  
+  [1X10.1-6 DegreeXLayerOfGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xm[103X, [3Xfield[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YDegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YAs above, but with a HomalgModuleElement m specifying the degree.[133X
+  
+  [1X10.1-7 DegreeXLayerOfGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xdegree[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YDegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YAs above, but the coefficient ring of the Cox ring will be used as field[133X
+  
+  [1X10.1-8 DegreeXLayerOfGradedRowOrColumn[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumn[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YDegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YAs  above,  but  a HomalgModuleElement m specifies the degree and we use the
+  coefficient ring of the Cox ring as field.[133X
+  
+  
+  [1X10.2 [33X[0;0YFormats for generators of truncations of graded rows and columns[133X[101X
+  
+  [1X10.2-1 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices[102X( [3XV[103X, [3XM[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  arguments  are  a  variety  V,  a  graded row or column M and a list l,
+  specifying a degree in the class group of the Cox ring of [23XV[123X. We then compute
+  the  truncation  of  M  to the specified degree and return its generators as
+  list of column matrices.[133X
+  
+  [1X10.2-2 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe   arguments   are  a  variety  V,  a  graded  row  or  column  M  and  a
+  HomalgModuleElement  m,  specifying  a  degree in the class group of the Cox
+  ring  of  [23XV[123X. We then compute the truncation of M to the specified degree and
+  return its generators as list of column matrices.[133X
+  
+  [1X10.2-3 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  arguments  are  a  variety  V,  a  graded row or column M and a list l,
+  specifying a degree in the class group of the Cox ring of [23XV[123X. We then compute
+  the  truncation  of  M  to the specified degree and its generators as column
+  matrices.  The  matrix  formed  from  the  union of these column matrices is
+  returned.[133X
+  
+  [1X10.2-4 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe   arguments   are  a  variety  V,  a  graded  row  or  column  M  and  a
+  HomalgModuleElement  m,  specifying  a  degree in the class group of the Cox
+  ring  of  [23XV[123X. We then compute the truncation of M to the specified degree and
+  its generators as column matrices. The matrix formed from the union of these
+  column matrices is returned.[133X
+  
+  [1X10.2-5 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[102X( [3XV[103X, [3XM[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  arguments  are  a  variety  V,  a  graded row or column M and a list l,
+  specifying a degree in the class group of the Cox ring of [23XV[123X. We then compute
+  the  truncation  of  M  to the specified degree and return its generators as
+  list  [  n,  rec_list ]. n specifies the number of generators. rec_list is a
+  list  of  record. The i-th record contains the generators of the i-th direct
+  summand of M.[133X
+  
+  [33X[0;0YThe   arguments   are  a  variety  V,  a  graded  row  or  column  M  and  a
+  HomalgModuleElement  m,  specifying  a  degree in the class group of the Cox
+  ring  of  [23XV[123X. We then compute the truncation of M to the specified degree and
+  return  its  generators  as  list [ n, rec_list ]. n specifies the number of
+  generators.  rec_list  is  a  list  of  record. The i-th record contains the
+  generators of the i-th direct summand of M.[133X
+  
+  [1X10.2-6 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [1X10.2-7 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList[102X( [3XV[103X, [3XM[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  arguments  are  a  variety  V,  a  graded row or column M and a list l,
+  specifying a degree in the class group of the Cox ring of [23XV[123X. We then compute
+  the  truncation of M to the specified degree and identify its generators. We
+  format  each  generator as list [ n, g ], where g denotes a generator of the
+  n-th direct summand of M. We return the list of all these lists [ n, g ].[133X
+  
+  [1X10.2-8 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList[102X( [3XV[103X, [3XM[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe   arguments   are  a  variety  V,  a  graded  row  or  column  M  and  a
+  HomalgModuleElement  m,  specifying  a  degree in the class group of the Cox
+  ring  of  [23XV[123X. We then compute the truncation of M to the specified degree and
+  identify  its generators. We format each generator as list [ n, g ], where g
+  denotes  a  generator of the n-th direct summand of M. We return the list of
+  all these lists [ n, g ].[133X
+  
+  
+  [1X10.3 [33X[0;0YTruncations of graded row and column morphisms[133X[101X
+  
+  [1X10.3-1 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThe arguments are a toric variety [23XV[123X, a morphism [23Xa[123X of graded rows or columns,
+  a  list  [23Xd[123X specifying a degree in the class group of [23XV[123X, a field [23XF[123X for homalg
+  and  a  boolean  [23XB[123X. We then truncate [23Xm[123X to the specified degree [23Xd[123X. We express
+  this  result  as  morphism of vector spaces over the field [23XF[123X. We return this
+  vector  space  morphism.  If  the  boolean  [23XB[123X is true, we display additional
+  output during the computation, otherwise this output is surpressed.[133X
+  
+  [1X10.3-2 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThe arguments are a toric variety [23XV[123X, a morphism [23Xa[123X of graded rows or columns,
+  and  a  HomalgModuleElement [23Xm[123X specifying a degree in the class group of [23XV[123X, a
+  field  [23XF[123X  for  homalg  and  a boolean [23XB[123X. We then truncate [23Xm[123X to the specified
+  degree [23Xd[123X. We express this result as morphism of vector spaces over the field
+  [23XF[123X.  We  return  this  vector  space  morphism.  If the boolean [23XB[123X is true, we
+  display  additional  output during the computation, otherwise this output is
+  surpressed.[133X
+  
+  [1X10.3-3 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However,  here  the field F is taken as the field of coefficients of the Cox
+  ring of the variety [23XV[123X.[133X
+  
+  [1X10.3-4 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However,  here  the field F is taken as the field of coefficients of the Cox
+  ring of the variety [23XV[123X.[133X
+  
+  [1X10.3-5 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However,  here  the field F is taken as the field of coefficients of the Cox
+  ring  of  the  variety  [23XV[123X.  Also,  B  is  set  to  false, i.e. no additional
+  information is being displayed.[133X
+  
+  [1X10.3-6 TruncateGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However,  here  the field F is taken as the field of coefficients of the Cox
+  ring  of  the  variety  [23XV[123X.  Also,  B  is  set  to  false, i.e. no additional
+  information is being displayed.[133X
+  
+  [1X10.3-7 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XF[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpaceMorphism[133X
+  
+  [33X[0;0YThe arguments are a toric variety [23XV[123X, a morphism [23Xa[123X of graded rows or columns,
+  a  list  [23Xd[123X specifying a degree in the class group of [23XV[123X, a field [23XF[123X for homalg
+  and  a  boolean  [23XB[123X. We then truncate [23Xm[123X to the specified degree [23Xd[123X. We express
+  this  result  as  morphism  of vector spaces over the field [23XF[123X. We return the
+  corresponding  DegreeXLayerVectorSpaceMorphism. If the boolean [23XB[123X is true, we
+  display  additional  output during the computation, otherwise this output is
+  surpressed.[133X
+  
+  [1X10.3-8 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XF[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpaceMorphism[133X
+  
+  [33X[0;0YThe arguments are a toric variety [23XV[123X, a morphism [23Xa[123X of graded rows or columns,
+  a HomalgModuleElement [23Xm[123X specifying a degree in the class group of [23XV[123X, a field
+  [23XF[123X  for homalg and a boolean [23XB[123X. We then truncate [23Xm[123X to the specified degree [23Xd[123X.
+  We  express  this  result  as morphism of vector spaces over the field [23XF[123X. We
+  return  the  corresponding DegreeXLayerVectorSpaceMorphism. If the boolean [23XB[123X
+  is true, we display additional output during the computation, otherwise this
+  output is surpressed.[133X
+  
+  [1X10.3-9 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis   method  operates  just  as  'DegreeXLayerOfGradedRowOrColumnMorphism'
+  above.  However,  here  the field F is taken as the field of coefficients of
+  the Cox ring of the variety [23XV[123X.[133X
+  
+  [1X10.3-10 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis   method  operates  just  as  'DegreeXLayerOfGradedRowOrColumnMorphism'
+  above.  However,  here  the field F is taken as the field of coefficients of
+  the Cox ring of the variety [23XV[123X.[133X
+  
+  [1X10.3-11 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xd[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis   method  operates  just  as  'DegreeXLayerOfGradedRowOrColumnMorphism'
+  above.  However,  here  the field F is taken as the field of coefficients of
+  the  Cox  ring of the variety [23XV[123X. Also, B is set to false, i.e. no additional
+  information is being displayed.[133X
+  
+  [1X10.3-12 DegreeXLayerOfGradedRowOrColumnMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerOfGradedRowOrColumnMorphism[102X( [3XV[103X, [3Xa[103X, [3Xm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis   method  operates  just  as  'DegreeXLayerOfGradedRowOrColumnMorphism'
+  above.  However,  here  the field F is taken as the field of coefficients of
+  the  Cox  ring of the variety [23XV[123X. Also, B is set to false, i.e. no additional
+  information is being displayed.[133X
+  
+  
+  [1X10.4 [33X[0;0YTruncations of morphisms of graded rows and columns in parallel[133X[101X
+  
+  [1X10.4-1 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XN[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  [1X10.4-2 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XN[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  [1X10.4-3 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XN[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  [1X10.4-4 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XN[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  [1X10.4-5 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xd[103X, [3XN[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  [1X10.4-6 TruncateGradedRowOrColumnMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateGradedRowOrColumnMorphismInParallel[102X( [3XV[103X, [3Xa[103X, [3Xm[103X, [3XN[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space morphism[133X
+  
+  [33X[0;0YThis  method  operates  just  as  'TruncateGradedRowOrColumnMorphism' above.
+  However, as fourth argument an integer [23XN[123X is to be specified. The computation
+  of the truncation will then be performed in parallel in [23XN[123X child processes.[133X
+  
+  
+  [1X10.5 [33X[0;0YExamples[133X[101X
+  
+  
+  [1X10.5-1 [33X[0;0YTruncations of graded rows and columns[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring := CoxRing( P2 );[127X[104X
+    [4X[28XQ[x_1,x_2,x_3][128X[104X
+    [4X[28X(weights: [ 1, 1, 1 ])[128X[104X
+    [4X[25Xgap>[125X [27Xrow := GradedRow( [[[2],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc1 := DegreeXLayerOfGradedRowOrColumn( P2, row, [ -3 ] );[127X[104X
+    [4X[28X<A vector space embedded into (Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ]))^1>[128X[104X
+    [4X[25Xgap>[125X [27XLength( Generators( trunc1 ) );[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc2 := DegreeXLayerOfGradedRowOrColumn( P2, row, [ -1 ] );[127X[104X
+    [4X[28X<A vector space embedded into (Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ]))^1>[128X[104X
+    [4X[25Xgap>[125X [27XLength( Generators( trunc2 ) );[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5-2 [33X[0;0YFormats for generators of truncations of graded rows and columns[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xrow2 := GradedRow( [[[2],2]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27Xgens1 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices[127X[104X
+    [4X[25X>[125X [27X            (P2, row2, [ -1 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XLength( gens1 );[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27Xgens1[ 1 ];[127X[104X
+    [4X[28X<A 2 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( gens1[ 1 ] );[127X[104X
+    [4X[28Xx_1,[128X[104X
+    [4X[28X0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( gens1[ 4 ] );[127X[104X
+    [4X[28X0,[128X[104X
+    [4X[28Xx_1[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xgens2 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[127X[104X
+    [4X[25X>[125X [27X            (P2, row2, [ -1 ] );[127X[104X
+    [4X[28X[ 6, [ rec( x_1 := 1, x_2 := 2, x_3 := 3 ),[128X[104X
+    [4X[28X       rec( x_1 := 4, x_2 := 5, x_3 := 6 ) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgens3 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices[127X[104X
+    [4X[25X>[125X [27X            (P2, row2, [ -1 ] );[127X[104X
+    [4X[28X<A 2 x 6 mutable matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( gens3 );[127X[104X
+    [4X[28Xx_1,x_2,x_3,0,  0,  0, [128X[104X
+    [4X[28X0,  0,  0,  x_1,x_2,x_3[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xgens4 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList[127X[104X
+    [4X[25X>[125X [27X            (P2, row2, [ -1 ] );[127X[104X
+    [4X[28X[ [ 1, x_1 ], [ 1, x_2 ], [ 1, x_3 ], [ 2, x_1 ], [ 2, x_2 ], [ 2, x_3 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5-3 [33X[0;0YTruncatons of morphisms of graded rows and columns[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xsource := GradedRow( [[[-1],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xrange := GradedRow( [[[0],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_generators := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords[127X[104X
+    [4X[25X>[125X [27X                     (P2, range, [ 2 ] );[127X[104X
+    [4X[28X[ 6, [ rec( ("x_1*x_2") := 2, ("x_1*x_3") := 4, ("x_1^2") := 1,[128X[104X
+    [4X[28X            ("x_2*x_3") := 5, ("x_2^2") := 3, ("x_3^2") := 6 ) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xvars := IndeterminatesOfPolynomialRing( cox_ring );;[127X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [[ vars[ 1 ] ]], cox_ring );[127X[104X
+    [4X[28X<A 1 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor := GradedRowOrColumnMorphism( source, matrix, range );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( mor );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_mor := TruncateGradedRowOrColumnMorphism( P2, mor, [ 2 ] );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q (with weights [ 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( trunc_mor ) );[127X[104X
+    [4X[28X1,0,0,0,0,0,[128X[104X
+    [4X[28X0,1,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1,0,0 [128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix2 := HomalgMatrix( [[ 1/2*vars[ 1 ] ]], cox_ring );[127X[104X
+    [4X[28X<A 1 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor2 := GradedRowOrColumnMorphism( source, matrix2, range );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( mor2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_mor2 := TruncateGradedRowOrColumnMorphism( P2, mor2, [ 2 ] );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q (with weights [ 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( trunc_mor2 ) );[127X[104X
+    [4X[28X1/2,0,0,0,0,0,[128X[104X
+    [4X[28X0,1/2,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1/2,0,0 [128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5-4 [33X[0;0YTruncatons of morphisms of graded rows and columns in parallel[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xtrunc_mor_parallel := TruncateGradedRowOrColumnMorphismInParallel[127X[104X
+    [4X[25X>[125X [27X                                              ( P2, mor, [ 2 ], 2 );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q (with weights [ 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( trunc_mor_parallel ) );[127X[104X
+    [4X[28X1,0,0,0,0,0,[128X[104X
+    [4X[28X0,1,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1,0,0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_mor2_parallel := TruncateGradedRowOrColumnMorphismInParallel[127X[104X
+    [4X[25X>[125X [27X                                              ( P2, mor2, [ 2 ], 2 );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q (with weights [ 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( trunc_mor2_parallel ) );[127X[104X
+    [4X[28X1/2,0,0,0,0,0,[128X[104X
+    [4X[28X0,1/2,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1/2,0,0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_mor2_parallel2 := TruncateGradedRowOrColumnMorphismInParallel[127X[104X
+    [4X[25X>[125X [27X                                              ( P2, mor2, [ 10 ], 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( trunc_mor2_parallel2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNrRows( UnderlyingMatrix( trunc_mor2_parallel2 ) );[127X[104X
+    [4X[28X55[128X[104X
+    [4X[25Xgap>[125X [27XNrColumns( UnderlyingMatrix( trunc_mor2_parallel2 ) );[127X[104X
+    [4X[28X66[128X[104X
+  [4X[32X[104X
+  

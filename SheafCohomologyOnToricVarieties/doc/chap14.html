@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (SheafCohomologyOnToricVarieties) - Chapter 14: Sheaf cohomology by use of https://arxiv.org/abs/1802.08860</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap14"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
+<p><a id="X83B465EC7B2050EA" name="X83B465EC7B2050EA"></a></p>
+<div class="ChapSects"><a href="chap14.html#X83B465EC7B2050EA">14 <span class="Heading">Sheaf cohomology by use of https://arxiv.org/abs/1802.08860</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X8749E1888244CC3D">14.1 <span class="Heading">Preliminaries</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85E7494381B5C3A8">14.1-1 ParameterCheck</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7C916ADD876A18A8">14.1-2 FindIdeal</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7F66EA1B863A9AD9">14.2 <span class="Heading">Computation of global sections</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X806638F97CECBC02">14.2-1 H0</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X82239D1584CC5169">14.2-2 H0Parallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7E0A3B137BCC127F">14.3 <span class="Heading">Computation of the i-th sheaf cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7B9CBB888756B239">14.3-1 Hi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X80DB4FBD869C8030">14.3-2 HiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7ED9C2657DDABA20">14.4 <span class="Heading">Computation of all sheaf cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8252E52187CBF1C7">14.4-1 AllHi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7CC947D1784AC28A">14.4-2 AllHiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7A489A5D79DA9E5C">14.5 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85DC50617ED0EBF9">14.5-1 <span class="Heading">Sheaf cohomology of toric vector bundles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8161BC5279B1F45E">14.5-2 <span class="Heading">Sheaf cohomologies of the irrelevant ideal of P1xP1</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>14 <span class="Heading">Sheaf cohomology by use of https://arxiv.org/abs/1802.08860</span></h3>
+
+<p><a id="X8749E1888244CC3D" name="X8749E1888244CC3D"></a></p>
+
+<h4>14.1 <span class="Heading">Preliminaries</span></h4>
+
+<p><a id="X85E7494381B5C3A8" name="X85E7494381B5C3A8"></a></p>
+
+<h5>14.1-1 ParameterCheck</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParameterCheck</code>( <var class="Arg">V</var>, <var class="Arg">M1</var>, <var class="Arg">M2</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>Given a toric variety <span class="Math">V</span>, we eventually wish to compute the i-th sheaf cohomology of the sheafification of the f.p. graded S-module <span class="Math">M_2</span> (S being the Cox ring of vari). To this end we use modules <span class="Math">M_1</span> which sheafify to the structure sheaf of vari. This method tests if the truncation to degree zero of <span class="Math">Ext^i_S( M_1, M_2 )</span> is isomorphic to <span class="Math">H^i( V, \widetilde{M_2} )</span>.</p>
+
+<p><a id="X7C916ADD876A18A8" name="X7C916ADD876A18A8"></a></p>
+
+<h5>14.1-2 FindIdeal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FindIdeal</code>( <var class="Arg">V</var>, <var class="Arg">M</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>Given a toric variety <span class="Math">V</span> and an f.p. graded S-module <span class="Math">M</span> (S being the Cox ring of vari), we wish to compute the i-th sheaf cohomology of <span class="Math">\tilde{M}</span>. To this end, this method identifies an ideal <span class="Math">I</span> of <span class="Math">S</span> such that <span class="Math">\tilde{I}</span> is the structure sheaf of <span class="Math">V</span> and such that <span class="Math">Ext^i_S( I, M )</span> is isomorphic to <span class="Math">H^i( V, \tilde{M} )</span>. We identify <span class="Math">I</span> by determining an ample degree <span class="Math">d \in \mathrm{Cl} ( V )</span>. Then, for a suitable non-negative integer <span class="Math">e</span>, the generators of <span class="Math">I</span> are the <span class="Math">e</span>-th power of all monomials of degree <span class="Math">d</span> in the Cox ring of <span class="Math">S</span>. We return the list [ e, d, I ].</p>
+
+<p><a id="X7F66EA1B863A9AD9" name="X7F66EA1B863A9AD9"></a></p>
+
+<h4>14.2 <span class="Heading">Computation of global sections</span></h4>
+
+<p><a id="X806638F97CECBC02" name="X806638F97CECBC02"></a></p>
+
+<h5>14.2-1 H0</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; H0</code>( <var class="Arg">V</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a vector space</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes <span class="Math">H^0( V, \tilde{M} )</span>.</p>
+
+<p><a id="X82239D1584CC5169" name="X82239D1584CC5169"></a></p>
+
+<h5>14.2-2 H0Parallel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; H0Parallel</code>( <var class="Arg">V</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a vector space</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes <span class="Math">H^0( V, \tilde{M} )</span>. This method is parallelized and is thus best suited for long and complicated computations.</p>
+
+<p><a id="X7E0A3B137BCC127F" name="X7E0A3B137BCC127F"></a></p>
+
+<h4>14.3 <span class="Heading">Computation of the i-th sheaf cohomologies</span></h4>
+
+<p><a id="X7B9CBB888756B239" name="X7B9CBB888756B239"></a></p>
+
+<h5>14.3-1 Hi</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Hi</code>( <var class="Arg">V</var>, <var class="Arg">M</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a vector space</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes <span class="Math">H^i( V, \tilde{M} )</span>.</p>
+
+<p><a id="X80DB4FBD869C8030" name="X80DB4FBD869C8030"></a></p>
+
+<h5>14.3-2 HiParallel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HiParallel</code>( <var class="Arg">V</var>, <var class="Arg">M</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a vector space</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes <span class="Math">H^i( V, \tilde{M} )</span>. This method is parallelized and is thus best suited for long and complicated computations.</p>
+
+<p><a id="X7ED9C2657DDABA20" name="X7ED9C2657DDABA20"></a></p>
+
+<h4>14.4 <span class="Heading">Computation of all sheaf cohomologies</span></h4>
+
+<p><a id="X8252E52187CBF1C7" name="X8252E52187CBF1C7"></a></p>
+
+<h5>14.4-1 AllHi</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllHi</code>( <var class="Arg">V</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of vector spaces</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes all sheaf cohomologies <span class="Math">H^\ast( V, \tilde{M} )</span>.</p>
+
+<p><a id="X7CC947D1784AC28A" name="X7CC947D1784AC28A"></a></p>
+
+<h5>14.4-2 AllHiParallel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllHiParallel</code>( <var class="Arg">V</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of vector spaces</p>
+
+<p>Given a variety <span class="Math">V</span> and an f.p. graded <span class="Math">S</span>-module <span class="Math">M</span> (<span class="Math">S</span> being the Cox ring of <span class="Math">V</span>), this method computes all sheaf cohomologies <span class="Math">H^\ast( V, \tilde{M} )</span>. This method is parallelized and is thus best suited for long and complicated computations.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>14.5 <span class="Heading">Examples</span></h4>
+
+<p><a id="X85DC50617ED0EBF9" name="X85DC50617ED0EBF9"></a></p>
+
+<h5>14.5-1 <span class="Heading">Sheaf cohomology of toric vector bundles</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F1 := Fan( [[1],[-1]],[[1],[2]] );</span>
+&lt;A fan in |R^1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1 := ToricVariety( F1 );</span>
+&lt;A toric variety of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1xP1 := P1 * P1;</span>
+&lt;A toric variety of dimension 2 which is a product of 2 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">VForCAP := AsFreydCategoryObject( GradedRow( [[[1,1],1],[[-2,0],1]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                                         CoxRing( P1xP1 ) ) );</span>
+&lt;A projective object in Category of f.p. graded
+left modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V2ForCAP := AsFreydCategoryObject( GradedRow( [[[-2,0],1]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                                         CoxRing( P1xP1 ) ) );</span>
+&lt;A projective object in Category of f.p. graded
+left modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHi( P1xP1, VForCAP, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 0, &lt;A vector space object over Q of dimension 4&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHiParallel( P1xP1, VForCAP, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 0, &lt;A vector space object over Q of dimension 4&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHi( P1xP1, V2ForCAP, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 0, &lt;A vector space object over Q of dimension 0&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHiParallel( P1xP1, V2ForCAP, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 0, &lt;A vector space object over Q of dimension 0&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ] ]
+</pre></div>
+
+<p><a id="X8161BC5279B1F45E" name="X8161BC5279B1F45E"></a></p>
+
+<h5>14.5-2 <span class="Heading">Sheaf cohomologies of the irrelevant ideal of P1xP1</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">irP1xP1 := IrrelevantLeftIdealForCAP( P1xP1 );</span>
+&lt;An object in Category of f.p. graded left
+modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHi( P1xP1, irP1xP1, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ],
+  [ 0, &lt;A vector space object over Q of dimension 0&gt; ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHiParallel( P1xP1, irP1xP1, false, false );</span>
+Computing h^0
+----------------------------------------------
+
+Computing h^1
+----------------------------------------------
+
+Computing h^2
+----------------------------------------------
+
+[ [ 1, &lt;A vector space object over Q of dimension 1&gt; ],
+  [ 1, &lt;A vector space object over Q of dimension 0&gt; ],
+  [ 0, &lt;A vector space object over Q of dimension 0&gt; ] ]
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

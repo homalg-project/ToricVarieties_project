@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Tools">
+<Heading>Tools</Heading>
+
+<Section Label="Chapter_Tools_Section_Turn_CAP_Graded_Modules_into_old_graded_modules_and_vice_versa">
+<Heading>Turn CAP Graded Modules into old graded modules and vice versa</Heading>
+
+<ManSection>
+  <Oper Arg="M" Name="TurnIntoOldGradedModule" Label="for IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>the corresponding graded modules in terms of the 'old' packages GradedModules
+</Returns>
+ <Description>
+The argument is a graded left or right module presentation M for CAP
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Tools_Section_Save_CAP_fp_graded_module_to_file">
+<Heading>Save CAP f.p. graded module to file</Heading>
+
+<ManSection>
+  <Oper Arg="M" Name="SaveToFileAsOldGradedModule" Label="for IsString, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>true (in case of success) or raises error in case the file could not be written
+</Returns>
+ <Description>
+The argument is a graded left or right module presentation M for CAP and saves this module
+to file as 'old' graded module presentation. By default, the files are saved in the main
+directory of the package 'SheafCohomologyOnToricVarieties'.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="M" Name="SaveToFileAsCAPGradedModule" Label="for IsString, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>true (in case of success) or raises error in case the file could not be written
+</Returns>
+ <Description>
+The argument is a graded left or right module presentation M for CAP and saves this module
+to file as CAP graded module presentation. By default, the files are saved in the main
+directory of the package 'SheafCohomologyOnToricVarieties'.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Tools_Section_Approximation_Of_Sheaf_Cohomologies">
+<Heading>Approximation Of Sheaf Cohomologies</Heading>
+
+<ManSection>
+  <Oper Arg="V, e" Name="BPowerLeft" Label="for IsToricVariety, IsInt"/>
+ <Returns>a CAP graded left module
+</Returns>
+ <Description>
+The argument is a toric variety V and a non-negative integer e. The method computes the e-th
+Frobenius power of the irrelevant left ideal of V.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, e" Name="BPowerRight" Label="for IsToricVariety, IsInt"/>
+ <Returns>a CAP graded right module
+</Returns>
+ <Description>
+The argument is a toric variety V and a non-negative integer e. The method computes the e-th
+Frobenius power of the irrelevant right ideal of V.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, e, M" Name="ApproxH0" Label="for IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>a non-negative integer
+</Returns>
+ <Description>
+The argument is a toric variety V, a non-negative integer e and a graded CAP module M.
+The method computes the degree zero layer of Hom( B(e), M ) and returns its vector
+space dimension.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, e, M" Name="ApproxH0Parallel" Label="for IsToricVariety, IsInt, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>a non-negative integer
+</Returns>
+ <Description>
+The argument is a toric variety V, a non-negative integer e and a graded CAP module M.
+The method computes the degree zero layer of Hom( B(e), M ) by use of parallelisation and
+returns its vector space dimension.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, e, M" Name="ApproxHi" Label="for IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>a non-negative integer
+</Returns>
+ <Description>
+The argument is a toric variety V, non-negative integers i, e and a graded CAP module M.
+The method computes the degree zero layer of Ext^i( B(e), M ) and returns its vector
+space dimension.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, e, M" Name="ApproxHiParallel" Label="for IsToricVariety, IsInt, IsInt, IsGradedLeftOrRightModulePresentationForCAP"/>
+ <Returns>a non-negative integer
+</Returns>
+ <Description>
+The argument is a toric variety V, non-negative integer i, e and a graded CAP module M.
+The method computes the degree zero layer of Ext^i( B(e), M ) by use of parallelisation and
+returns its vector space dimension.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

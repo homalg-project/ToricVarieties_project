@@ -1,0 +1,125 @@
+  
+  [1X4 [33X[0;0YCohomology of coherent sheaves from resolution[133X[101X
+  
+  
+  [1X4.1  [33X[0;0YDeductions On Sheaf Cohomology From Cohomology Of projective modules in[101X
+  [1Xa minimal free resolution[133X[101X
+  
+  [1X4.1-1 CohomologiesList[101X
+  
+  [33X[1;0Y[29X[2XCohomologiesList[102X( [3Xvari[103X, [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists of integers[133X
+  
+  [33X[0;0YGiven  a smooth and projective toric variety [22Xvari[122X with Coxring [22XS[122X and a f. p.
+  graded  S-modules [22XM[122X, this method computes a minimal free resolution of [22XM[122X and
+  then  the  dimension  of the cohomology classes of the projective modules in
+  this minimal free resolution.[133X
+  
+  [1X4.1-2 DeductionOfSheafCohomologyFromResolution[101X
+  
+  [33X[1;0Y[29X[2XDeductionOfSheafCohomologyFromResolution[102X( [3Xvari[103X, [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YGiven  a smooth and projective toric variety [22Xvari[122X with Coxring [22XS[122X and a f. p.
+  graded  S-modules [22XM[122X, this method computes a minimal free resolution of [22XM[122X and
+  then  the  dimension  of the cohomology classes of the projective modules in
+  this  minimal  free resolution. From this information we draw conclusions on
+  the sheaf cohomologies of the sheaf [22XtildeM[122X.[133X
+  
+  
+  [1X4.2 [33X[0;0YExample: Pullback line bundle[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xvar := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring := CoxRing( var );[127X[104X
+    [4X[28XQ[x_1,x_2,x_3][128X[104X
+    [4X[28X(weights: [ 1, 1, 1 ])[128X[104X
+    [4X[25Xgap>[125X [27Xvars := IndeterminatesOfPolynomialRing( cox_ring );[127X[104X
+    [4X[28X[ x_1, x_2, x_3 ][128X[104X
+    [4X[25Xgap>[125X [27Xrange := GradedRow( [[[2],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xsource := GradedRow( [[[1],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [[vars[1]] ], cox_ring );[127X[104X
+    [4X[28X<A 1 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor := GradedRowOrColumnMorphism( source, matrix, range );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3][128X[104X
+    [4X[28X(with weights [ 1,1,1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( mor );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpullback_line_bundle := FreydCategoryObject( mor );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3] (with weights[128X[104X
+    [4X[28X[ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xcoh := DeductionOfSheafCohomologyFromResolution( var, pullback_line_bundle );[127X[104X
+    [4X[28X[ 3, 0, 0 ][128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP1 := ProjectiveSpace( 1 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 1>[128X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xvar2 := P1 * P1 * P2;[127X[104X
+    [4X[28X<A projective toric variety of dimension 4 [128X[104X
+    [4X[28Xwhich is a product of 3 toric varieties>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring2 := CoxRing( var2 );[127X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6,x_7][128X[104X
+    [4X[28X(weights: [ ( 0, 0, 1 ), ( 0, 1, 0 ), ( 1, 0, 0 ),[128X[104X
+    [4X[28X( 1, 0, 0 ), ( 1, 0, 0 ), ( 0, 1, 0 ), ( 0, 0, 1 ) ])[128X[104X
+    [4X[25Xgap>[125X [27Xvars2 := IndeterminatesOfPolynomialRing( cox_ring2 );[127X[104X
+    [4X[28X[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ][128X[104X
+    [4X[25Xgap>[125X [27Xrange2 := GradedRow( [[[1,1,2],1]], cox_ring2 );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xsource2 := GradedRow( [[[0,1,2],2]], cox_ring2 );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix2 := HomalgMatrix( [[vars2[3]],[vars2[4]]], cox_ring2 );[127X[104X
+    [4X[28X<A 2 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor2 := GradedRowOrColumnMorphism( source2, matrix2, range2 );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6,x_7][128X[104X
+    [4X[28X(with weights [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ],[128X[104X
+    [4X[28X[ 1, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( mor2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpullback_line_bundle2 := FreydCategoryObject( mor2 );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6,x_7] (with weights[128X[104X
+    [4X[28X[ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0 ],[128X[104X
+    [4X[28X[ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])>[128X[104X
+    [4X[25Xgap>[125X [27Xcoh2 := DeductionOfSheafCohomologyFromResolution( var2, pullback_line_bundle2 );[127X[104X
+    [4X[28X[ 6, 0, 0, 0, 0 ][128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xvar3 := P2 * P2;[127X[104X
+    [4X[28X<A projective toric variety of dimension 4 [128X[104X
+    [4X[28Xwhich is a product of 2 toric varieties>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring3 := CoxRing( var3 );[127X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6][128X[104X
+    [4X[28X(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), [128X[104X
+    [4X[28X( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])[128X[104X
+    [4X[25Xgap>[125X [27Xrange3 := GradedRow( [[[1,1],4]], cox_ring3 );[127X[104X
+    [4X[28X<A graded row of rank 4>[128X[104X
+    [4X[25Xgap>[125X [27Xsource3 := ZeroObject( CapCategory( range3 ) );[127X[104X
+    [4X[28X<A graded row of rank 0>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix3 := HomalgZeroMatrix( 0, 4, cox_ring3 );[127X[104X
+    [4X[28X<An unevaluated 0 x 4 zero matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor3 := GradedRowOrColumnMorphism( source3, matrix3, range3 );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over[128X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6] (with weights[128X[104X
+    [4X[28X[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>[128X[104X
+    [4X[25Xgap>[125X [27Xline_bundle3 := FreydCategoryObject( mor3 );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over [128X[104X
+    [4X[28XQ[x_1,x_2,x_3,x_4,x_5,x_6] (with weights [128X[104X
+    [4X[28X[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [0, 1 ], [ 0, 1 ] ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( line_bundle3 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xcoh3 := DeductionOfSheafCohomologyFromResolution( var3, line_bundle3 );[127X[104X
+    [4X[28X[ 36, 0, 0, 0, 0 ][128X[104X
+  [4X[32X[104X
+  

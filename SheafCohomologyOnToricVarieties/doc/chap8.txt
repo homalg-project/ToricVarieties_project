@@ -1,0 +1,130 @@
+  
+  [1X8 [33X[0;0YNef and Mori Cone[133X[101X
+  
+  
+  [1X8.1 [33X[0;0YNew Properties For Toric Divisors[133X[101X
+  
+  [1X8.1-1 IsNef[101X
+  
+  [33X[1;0Y[29X[2XIsNef[102X( [3Xdivi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YChecks if the torus invariant Weil divisor [3Xdivi[103X is nef.[133X
+  
+  [1X8.1-2 IsAmpleViaNefCone[101X
+  
+  [33X[1;0Y[29X[2XIsAmpleViaNefCone[102X( [3Xdivi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YChecks  if  the  class  of the torus invariant Weil divisor [3Xdivi[103X lies in the
+  interior of the nef cone. Given that the ambient toric variety is projective
+  this implies that [3Xdivi[103X is ample.[133X
+  
+  
+  [1X8.2 [33X[0;0YAttributes[133X[101X
+  
+  [1X8.2-1 CartierDataGroup[101X
+  
+  [33X[1;0Y[29X[2XCartierDataGroup[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YGiven  a  toric variety [3Xvari[103X, we compute the integral vectors in [22XZ^n | Σ_max
+  |[122X,  [22Xn[122X  is  the  rank  of the character lattice which encodes a toric Cartier
+  divisor  according  to theorem 4.2.8. in Cox-Schenk-Little. We return a list
+  of  lists. When interpreting this list of lists as a matrix, then the kernel
+  of this matrix is the set of these vectors.[133X
+  
+  [1X8.2-2 NefConeInCartierDataGroup[101X
+  
+  [33X[1;0Y[29X[2XNefConeInCartierDataGroup[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YGiven  a  smooth  and  complete  toric variety [3Xvari[103X, we compute the nef cone
+  within  the  proper  Cartier  data  in  [22XZ^n  | Σ_max |[122X, [22Xn[122X is the rank of the
+  character lattice. We return a list of ray generators of this cone.[133X
+  
+  [1X8.2-3 NefConeInTorusInvariantWeilDivisorGroup[101X
+  
+  [33X[1;0Y[29X[2XNefConeInTorusInvariantWeilDivisorGroup[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YGiven  a  smooth  and complete toric variety, we compute the nef cone within
+  [22XDiv_T ( X_Σ )[122X. We return a list of ray generators of this cone.[133X
+  
+  [1X8.2-4 NefConeInClassGroup[101X
+  
+  [33X[1;0Y[29X[2XNefConeInClassGroup[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YGiven a smooth and complete toric variety, we compute the nef cone within [22XCl
+  ( X_Σ )[122X. We return a list of ray generators of this cone.[133X
+  
+  [1X8.2-5 NefCone[101X
+  
+  [33X[1;0Y[29X[2XNefCone[102X( [3Xarg[103X ) [32X attribute[133X
+  
+  [1X8.2-6 ClassesOfSmallestAmpleDivisors[101X
+  
+  [33X[1;0Y[29X[2XClassesOfSmallestAmpleDivisors[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of integers[133X
+  
+  [33X[0;0YGiven  a  smooth and complete toric variety, we compute the smallest divisor
+  class,  such  that the associated divisor is ample. This is based on theorem
+  6.3.22  in  Cox-Schenk-Little, which implies that this task is equivalent to
+  finding  the  smallest lattice point within the nef cone (in [22XCl ( X_Σ )[122X). We
+  return a list of integers encoding this lattice point.[133X
+  
+  [1X8.2-7 GroupOfProper1Cycles[101X
+  
+  [33X[1;0Y[29X[2XGroupOfProper1Cycles[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya kernel submodule[133X
+  
+  [33X[0;0YGiven  a  simplicial and complete toric variety, we use proposition 6.4.1 of
+  Cox-Schenk-Litte  to  compute  the  group  of proper 1-cycles. We return the
+  corresponding kernel submodule.[133X
+  
+  [1X8.2-8 MoriCone[101X
+  
+  [33X[1;0Y[29X[2XMoriCone[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan NmzCone6[133X
+  
+  [33X[0;0YGiven  a  smooth  and  complete  toric  variety,  we  can  compute  both the
+  intersection form and the Nef cone in the class group. Then the Mori cone is
+  the  dual  cone of the Nef cone with respect to the intersection product. We
+  compute  an H-presentation of this dual cone and use those to produce a cone
+  with the normaliz interface.[133X
+  
+  
+  [1X8.3 [33X[0;0YNef and Mori Cone: Examples[133X[101X
+  
+  
+  [1X8.3-1 [33X[0;0YProjective Space[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27XP2xP2 := P2*P2;[127X[104X
+    [4X[28X<A projective toric variety of dimension 4[128X[104X
+    [4X[28Xwhich is a product of 2 toric varieties>[128X[104X
+    [4X[25Xgap>[125X [27XNefCone( P2 );[127X[104X
+    [4X[28X[ [ 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNefCone( P2xP2 );[127X[104X
+    [4X[28X[ [ 0, 1 ], [ 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XMoriCone( P2 );[127X[104X
+    [4X[28X[ [ 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XMoriCone( P2xP2 );[127X[104X
+    [4X[28X[ [ 0, 1 ], [ 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XD1 := DivisorOfGivenClass( P2, [ -1 ] );[127X[104X
+    [4X[28X<A Cartier divisor of a toric variety with coordinates ( -1, 0, 0 )>[128X[104X
+    [4X[25Xgap>[125X [27XIsAmpleViaNefCone( D1 );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XD2 := DivisorOfGivenClass( P2, [ 1 ] );[127X[104X
+    [4X[28X<A Cartier divisor of a toric variety with coordinates ( 1, 0, 0 )>[128X[104X
+    [4X[25Xgap>[125X [27XIsAmpleViaNefCone( D2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XClassesOfSmallestAmpleDivisors( P2 );[127X[104X
+    [4X[28X[ [ 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XClassesOfSmallestAmpleDivisors( P2xP2 );[127X[104X
+    [4X[28X[ [ 1, 1 ] ][128X[104X
+  [4X[32X[104X
+  

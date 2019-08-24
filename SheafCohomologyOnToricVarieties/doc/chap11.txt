@@ -1,0 +1,154 @@
+  
+  [1X11 [33X[0;0YTruncations of f.p. graded modules[133X[101X
+  
+  
+  [1X11.1 [33X[0;0YTruncations of fp graded modules[133X[101X
+  
+  [1X11.1-1 TruncateFPGradedModule[101X
+  
+  [33X[1;0Y[29X[2XTruncateFPGradedModule[102X( [3XV[103X, [3XM[103X, [3Xd[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya FreydCategoryObject[133X
+  
+  [33X[0;0YThe  arguments  are  a  toric  variety  [23XV[123X, an f.p. graded module [23XM[123X, a list [23Xd[123X
+  (specifying a element of the class group of [23XV[123X) a boolean [23XB[123X and a field [23XF[123X. We
+  then   compute  the  truncation  of  [23XM[123X  to  the  degree  [23Xd[123X  and  return  the
+  corresponding  vector  space  presentation as a FreydCategoryObject. If [23XB[123X is
+  true,  we  display additional information during the computation. The latter
+  may be useful for longer computations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring := CoxRing( P2 );[127X[104X
+    [4X[28XQ[x_1,x_2,x_3][128X[104X
+    [4X[28X(weights: [ 1, 1, 1 ])[128X[104X
+    [4X[25Xgap>[125X [27Xsource := GradedRow( [[[-1],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xrange := GradedRow( [[[0],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xvars := IndeterminatesOfPolynomialRing( cox_ring );;[127X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [[ vars[ 1 ] ]], cox_ring );[127X[104X
+    [4X[28X<A 1 x 1 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xobj1 := FreydCategoryObject([127X[104X
+    [4X[25X>[125X [27X         GradedRowOrColumnMorphism( source, matrix, range ) );[127X[104X
+    [4X[28X<An object in Category of f.p. graded[128X[104X
+    [4X[28Xleft modules over Q[x_1,x_2,x_3][128X[104X
+    [4X[28X(with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( obj1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_obj1 := TruncateFPGradedModule( P2, obj1, [ 2 ] );[127X[104X
+    [4X[28X<An object in Freyd( Category of matrices[128X[104X
+    [4X[28Xover Q (with weights [ 1 ]) )>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( trunc_obj1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( RelationMorphism( trunc_obj1 ) ) );[127X[104X
+    [4X[28X1,0,0,0,0,0,[128X[104X
+    [4X[28X0,1,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1,0,0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_obj2 := TruncateFPGradedModuleInParallel( P2, obj1, [ 2 ], 2 );[127X[104X
+    [4X[28X<An object in Freyd( Category of matrices[128X[104X
+    [4X[28Xover Q (with weights [ 1 ]) )>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( trunc_obj2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( UnderlyingMatrix( RelationMorphism( trunc_obj2 ) ) );[127X[104X
+    [4X[28X1,0,0,0,0,0,[128X[104X
+    [4X[28X0,1,0,0,0,0,[128X[104X
+    [4X[28X0,0,0,1,0,0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.2 [33X[0;0YTruncations of fp graded modules in parallel[133X[101X
+  
+  [1X11.2-1 TruncateFPGradedModuleInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateFPGradedModuleInParallel[102X( [3XV[103X, [3XM[103X, [3Xd[103X, [3XN[103X, [3XB.[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya FreydCategoryObject[133X
+  
+  [33X[0;0YThe  arguments  are  a  toric  variety  [23XV[123X, an f.p. graded module [23XM[123X, a list [23Xd[123X
+  (specifying  a  element  of the class group of [23XV[123X), an integer [23XN[123X, a boolean [23XB[123X
+  and  a  field  [23XF[123X.  We  then  compute the truncation of [23XM[123X to the degree [23Xd[123X and
+  return   the   corresponding   vector   space   presentation  encoded  as  a
+  FreydCategoryObject.  This is performed in [23XN[123X child processes in parallel. If
+  [23XB[123X  is  true,  we  display additional information during the computation. The
+  latter may be useful for longer computations.[133X
+  
+  
+  [1X11.3 [33X[0;0YTruncations of fp graded modules morphisms[133X[101X
+  
+  [1X11.3-1 TruncateFPGradedModuleMorphism[101X
+  
+  [33X[1;0Y[29X[2XTruncateFPGradedModuleMorphism[102X( [3XV[103X, [3XM[103X, [3Xd[103X, [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya FreydCategoryMorphism[133X
+  
+  [33X[0;0YThe  arguments  are  a  toric variety [23XV[123X, an f.p. graded module morphism [23XM[123X, a
+  list  [23Xd[123X  (specifying  a  element of the class group of [23XV[123X), a boolean [23XB[123X and a
+  field  F. We then compute the truncation of [23XM[123X to the degree [23Xd[123X and return the
+  corresponding   morphism   of   vector  space  presentations  encoded  as  a
+  FreydCategoryMorphism.  If  [23XB[123X  is  true,  we  display additional information
+  during the computation. The latter may be useful for longer computations.[133X
+  
+  
+  [1X11.4 [33X[0;0YTruncations of fp graded modules morphisms in parallel[133X[101X
+  
+  [1X11.4-1 TruncateFPGradedModuleMorphismInParallel[101X
+  
+  [33X[1;0Y[29X[2XTruncateFPGradedModuleMorphismInParallel[102X( [3XV[103X, [3XM[103X, [3Xd[103X[, [3XN1[103X, [3XN2[103X, [3XN3[103X], [3XB[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya FreydCategoryMorphism[133X
+  
+  [33X[0;0YThe  arguments  are  a  toric variety [23XV[123X, an f.p. graded module morphism [23XM[123X, a
+  list  [23Xd[123X  (specifying  a  element  of  the  class  group  of  [23XV[123X), a list of 3
+  non-negative  integers [ [23XN_1[123X, [23XN_2[123X, [23XN_3[123X ], a boolean [23XB[123X and a field F. We then
+  compute  the  truncation  of  [23XM[123X to the degree [23Xd[123X and return the corresponding
+  morphism  of  vector space presentations encoded as a FreydCategoryMorphism.
+  This  is done in parallel: the truncation of the source is done by [23XN_1[123X child
+  processes  in  parallel, the truncation of the morphism datum is done by [23XN_2[123X
+  child  processes  and  the truncation of the range of [23XM[123X by [23XN_3[123X processes. If
+  the  boolean  [23XB[123X is set to true, we display additional information during the
+  computation. The latter may be useful for longer computations.[133X
+  
+  
+  [1X11.5 [33X[0;0YTruncations of f.p. graded module morphisms[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xsource := GradedRow( [[[-1],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xrange := GradedRow( [[[1],2]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [[ vars[ 1 ] * vars[ 2 ],[127X[104X
+    [4X[25X>[125X [27X                           vars[ 1 ] * vars[ 3 ] ]], cox_ring );[127X[104X
+    [4X[28X<A 1 x 2 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xobj2 := FreydCategoryObject([127X[104X
+    [4X[25X>[125X [27X         GradedRowOrColumnMorphism( source, matrix, range ) );[127X[104X
+    [4X[28X<An object in Category of f.p. graded[128X[104X
+    [4X[28Xleft modules over Q[x_1,x_2,x_3][128X[104X
+    [4X[28X(with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xsource := GradedRow( [[[0],1]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 1>[128X[104X
+    [4X[25Xgap>[125X [27Xrange := GradedRow( [[[1],2]], cox_ring );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [[ vars[ 2 ], vars[ 3 ] ]], cox_ring );[127X[104X
+    [4X[28X<A 1 x 2 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmor := GradedRowOrColumnMorphism( source, matrix, range );[127X[104X
+    [4X[28X<A morphism in Category of graded rows[128X[104X
+    [4X[28Xover Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpres_mor := FreydCategoryMorphism( obj1, mor, obj2 );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded[128X[104X
+    [4X[28Xleft modules over Q[x_1,x_2,x_3][128X[104X
+    [4X[28X(with weights [ 1, 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( pres_mor );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_pres_mor1 := TruncateFPGradedModuleMorphism( P2, pres_mor, [ 2 ] );[127X[104X
+    [4X[28X<A morphism in Freyd( Category of[128X[104X
+    [4X[28Xmatrices over Q (with weights [ 1 ]) )>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( trunc_pres_mor1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtrunc_pres_mor2 := TruncateFPGradedModuleMorphismInParallel[127X[104X
+    [4X[25X>[125X [27X                            ( P2, pres_mor, [ 2 ], [ 2, 2, 2 ] );[127X[104X
+    [4X[28X<A morphism in Freyd( Category of[128X[104X
+    [4X[28Xmatrices over Q (with weights [ 1 ]))>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( trunc_pres_mor2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  

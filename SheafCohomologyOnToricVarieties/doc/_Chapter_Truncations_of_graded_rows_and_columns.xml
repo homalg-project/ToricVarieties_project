@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Truncations_of_graded_rows_and_columns">
+<Heading>Truncations of graded rows and columns</Heading>
+
+<Section Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Truncations_of_graded_rows_and_columns">
+<Heading>Truncations of graded rows and columns</Heading>
+
+<ManSection>
+  <Oper Arg="V, M, degree_list, field" Name="TruncateGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg"/>
+ <Returns>Vector space
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a graded row or column <Math>M</Math> over the Cox ring of <Math>V</Math>
+and a <A>degree_list</A> specifying an element of the degree group of the toric variety <Math>V</Math>.
+The latter can either be specified by a list of integers or as a HomalgModuleElement.
+Based on this input, the method computes the truncation of <Math>M</Math> to the specified degree.
+We return this finite dimensional vector space. Optionally, we allow for a field <Math>F</Math> as
+fourth input. This field is then used to construct the vector space. Otherwise, we use the
+coefficient field of the Cox ring of <Math>V</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m, field" Name="TruncateGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsFieldForHomalg"/>
+ <Returns>Vector space
+</Returns>
+ <Description>
+As above, but with a HomalgModuleElement m specifying the degree.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, degree" Name="TruncateGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>Vector space
+</Returns>
+ <Description>
+As above, but the coefficient ring of the Cox ring will be used as field
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="TruncateGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>Vector space
+</Returns>
+ <Description>
+As above, but a HomalgModuleElement m specifies the degree
+and we use the coefficient ring of the Cox ring as field.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, degree_list, field" Name="DegreeXLayerOfGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsList, IsFieldForHomalg"/>
+ <Returns>DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a graded row or column <Math>M</Math> over the Cox ring of <Math>V</Math>
+and a <A>degree_list</A> specifying an element of the degree group of the toric variety <Math>V</Math>.
+The latter can either be specified by a list of integers or as a HomalgModuleElement.
+Based on this input, the method computes the truncation of <Math>M</Math> to the specified degree.
+This is a finite dimensional vector space. We return the corresponding DegreeXLayerVectorSpace.
+Optionally, we allow for a field <Math>F</Math> as fourth input. This field is used to construct
+the DegreeXLayerVectorSpace. Namely, the wrapper DegreeXLayerVectorSpace contains a
+representation of the obtained vector space as <Math>F^n</Math>. In case <Math>F</Math> is specified, we use this
+particular field. Otherwise, HomalgFieldOfRationals() will be used.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m, field" Name="DegreeXLayerOfGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement, IsFieldForHomalg"/>
+ <Returns>DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+As above, but with a HomalgModuleElement m specifying the degree.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, degree" Name="DegreeXLayerOfGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+As above, but the coefficient ring of the Cox ring will be used as field
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="DegreeXLayerOfGradedRowOrColumn" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+As above, but a HomalgModuleElement m specifies the degree
+and we use the coefficient ring of the Cox ring as field.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Formats_for_generators_of_truncations_of_graded_rows_and_columns">
+<Heading>Formats for generators of truncations of graded rows and columns</Heading>
+
+<ManSection>
+  <Oper Arg="V, M, l" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a list l,
+specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and return its
+generators as list of column matrices.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a
+HomalgModuleElement m, specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and return its
+generators as list of column matrices.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a list l,
+specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and its
+generators as column matrices. The matrix formed from the union of these
+column matrices is returned.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a
+HomalgModuleElement m, specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and its
+generators as column matrices. The matrix formed from the union of these column
+matrices is returned.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, l" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a list l,
+specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and return its
+generators as list [ n, rec_list ]. n specifies the number of generators.
+rec_list is a list of record. The i-th record contains the generators of the
+i-th direct summand of M.
+ </Description>
+</ManSection>
+
+
+The arguments are a variety V, a graded row or column M and a
+HomalgModuleElement m, specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and return its
+generators as list [ n, rec_list ]. n specifies the number of generators.
+rec_list is a list of record. The i-th record contains the generators of the
+i-th direct summand of M.
+<ManSection>
+  <Oper Arg="V, M, m" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>a list
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, l" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList" Label="for IsToricVariety, IsGradedRowOrColumn, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a list l,
+specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and identify
+its generators. We format each generator as list [ n, g ], where g denotes
+a generator of the n-th direct summand of M. We return the list of all
+these lists [ n, g ].
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, m" Name="GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList" Label="for IsToricVariety, IsGradedRowOrColumn, IsHomalgModuleElement"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The arguments are a variety V, a graded row or column M and a HomalgModuleElement
+m, specifying a degree in the class group of the Cox ring of <Math>V</Math>.
+We then compute the truncation of M to the specified degree and identify
+its generators. We format each generator as list [ n, g ], where g denotes
+a generator of the n-th direct summand of M. We return the list of all
+these lists [ n, g ].
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Truncations_of_graded_row_and_column_morphisms">
+<Heading>Truncations of graded row and column morphisms</Heading>
+
+<ManSection>
+  <Oper Arg="V, a, d, B, F" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool, IsFieldForHomalg"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a morphism <Math>a</Math> of graded rows or columns,
+a list <Math>d</Math> specifying a degree in the class group of <Math>V</Math>, a field <Math>F</Math> for homalg and a boolean <Math>B</Math>.
+We then truncate <Math>m</Math> to the specified degree <Math>d</Math>. We express this result as morphism
+of vector spaces over the field <Math>F</Math>. We return this vector space morphism.
+If the boolean <Math>B</Math> is true, we display additional output during the computation, otherwise this
+output is surpressed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, B, F" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool, IsHomalgRing"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a morphism <Math>a</Math> of graded rows or columns,
+and a HomalgModuleElement <Math>m</Math> specifying a degree in the class group of <Math>V</Math>,
+a field <Math>F</Math> for homalg and a boolean <Math>B</Math>.
+We then truncate <Math>m</Math> to the specified degree <Math>d</Math>. We express this result as morphism
+of vector spaces over the field <Math>F</Math>. We return this vector space morphism.
+If the boolean <Math>B</Math> is true, we display additional output during the computation,
+otherwise this output is surpressed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d, B" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, here the field F is taken as the field of coefficients of
+the Cox ring of the variety <Math>V</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, B" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, here the field F is taken as the field of coefficients of
+the Cox ring of the variety <Math>V</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, here the field F is taken as the field of coefficients of
+the Cox ring of the variety <Math>V</Math>. Also, B is set to false, i.e. no
+additional information is being displayed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m" Name="TruncateGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, here the field F is taken as the field of coefficients of
+the Cox ring of the variety <Math>V</Math>. Also, B is set to false, i.e. no
+additional information is being displayed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d, F, B" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsFieldForHomalg, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a morphism <Math>a</Math> of graded rows or columns,
+a list <Math>d</Math> specifying a degree in the class group of <Math>V</Math>, a field <Math>F</Math> for homalg and a boolean <Math>B</Math>.
+We then truncate <Math>m</Math> to the specified degree <Math>d</Math>. We express this result as morphism
+of vector spaces over the field <Math>F</Math>. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+If the boolean <Math>B</Math> is true, we display additional output during the computation, otherwise this
+output is surpressed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, F, B" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsHomalgRing, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a morphism <Math>a</Math> of graded rows or columns,
+a HomalgModuleElement <Math>m</Math> specifying a degree in the class group of <Math>V</Math>,
+a field <Math>F</Math> for homalg and a boolean <Math>B</Math>. We then truncate <Math>m</Math> to the specified
+degree <Math>d</Math>. We express this result as morphism of vector spaces over the field
+<Math>F</Math>. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+If the boolean <Math>B</Math> is true, we display additional output during the computation,
+otherwise this output is surpressed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d, B" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+above. However, here the field F is taken as the field of coefficients
+of the Cox ring of the variety <Math>V</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, B" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+above. However, here the field F is taken as the field of coefficients
+of the Cox ring of the variety <Math>V</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+above. However, here the field F is taken as the field of coefficients
+of the Cox ring of the variety <Math>V</Math>. Also, B is set to false, i.e. no
+additional information is being displayed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m" Name="DegreeXLayerOfGradedRowOrColumnMorphism" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'DegreeXLayerOfGradedRowOrColumnMorphism'
+above. However, here the field F is taken as the field of coefficients
+of the Cox ring of the variety <Math>V</Math>. Also, B is set to false, i.e. no
+additional information is being displayed.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Truncations_of_morphisms_of_graded_rows_and_columns_in_parallel">
+<Heading>Truncations of morphisms of graded rows and columns in parallel</Heading>
+
+<ManSection>
+  <Oper Arg="V, a, d, N, B, F" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool, IsFieldForHomalg"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, N, B, F" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool, IsFieldForHomalg"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d, N, B" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, N, B" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt, IsBool"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, d, N" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsList, IsPosInt"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, a, m, N" Name="TruncateGradedRowOrColumnMorphismInParallel" Label="for IsToricVariety, IsGradedRowOrColumnMorphism, IsHomalgModuleElement, IsPosInt"/>
+ <Returns>a vector space morphism
+</Returns>
+ <Description>
+This method operates just as 'TruncateGradedRowOrColumnMorphism' above.
+However, as fourth argument an integer <Math>N</Math> is to be specified.
+The computation of the truncation will then be performed in parallel
+in <Math>N</Math> child processes.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Examples">
+<Heading>Examples</Heading>
+
+<Subsection Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Examples_Subsection_Truncations_of_graded_rows_and_columns">
+<Heading>Truncations of graded rows and columns</Heading>
+
+<Example><![CDATA[
+gap> P2 := ProjectiveSpace( 2 );
+<A projective toric variety of dimension 2>
+gap> cox_ring := CoxRing( P2 );
+Q[x_1,x_2,x_3]
+(weights: [ 1, 1, 1 ])
+gap> row := GradedRow( [[[2],1]], cox_ring );
+<A graded row of rank 1>
+gap> trunc1 := DegreeXLayerOfGradedRowOrColumn( P2, row, [ -3 ] );
+<A vector space embedded into (Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ]))^1>
+gap> Length( Generators( trunc1 ) );
+0
+gap> trunc2 := DegreeXLayerOfGradedRowOrColumn( P2, row, [ -1 ] );
+<A vector space embedded into (Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ]))^1>
+gap> Length( Generators( trunc2 ) );
+3
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Examples_Subsection_Formats_for_generators_of_truncations_of_graded_rows_and_columns">
+<Heading>Formats for generators of truncations of graded rows and columns</Heading>
+
+<Example><![CDATA[
+gap> row2 := GradedRow( [[[2],2]], cox_ring );
+<A graded row of rank 2>
+gap> gens1 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices
+>             (P2, row2, [ -1 ] );;
+gap> Length( gens1 );
+6
+gap> gens1[ 1 ];
+<A 2 x 1 matrix over a graded ring>
+gap> Display( gens1[ 1 ] );
+x_1,
+0
+(over a graded ring)
+gap> Display( gens1[ 4 ] );
+0,
+x_1
+(over a graded ring)
+gap> gens2 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords
+>             (P2, row2, [ -1 ] );
+[ 6, [ rec( x_1 := 1, x_2 := 2, x_3 := 3 ),
+       rec( x_1 := 4, x_2 := 5, x_3 := 6 ) ] ]
+gap> gens3 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices
+>             (P2, row2, [ -1 ] );
+<A 2 x 6 mutable matrix over a graded ring>
+gap> Display( gens3 );
+x_1,x_2,x_3,0,  0,  0, 
+0,  0,  0,  x_1,x_2,x_3
+(over a graded ring)
+gap> gens4 := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList
+>             (P2, row2, [ -1 ] );
+[ [ 1, x_1 ], [ 1, x_2 ], [ 1, x_3 ], [ 2, x_1 ], [ 2, x_2 ], [ 2, x_3 ] ]
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Examples_Subsection_Truncatons_of_morphisms_of_graded_rows_and_columns">
+<Heading>Truncatons of morphisms of graded rows and columns</Heading>
+
+<Example><![CDATA[
+gap> source := GradedRow( [[[-1],1]], cox_ring );
+<A graded row of rank 1>
+gap> range := GradedRow( [[[0],1]], cox_ring );
+<A graded row of rank 1>
+gap> trunc_generators := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords
+>                      (P2, range, [ 2 ] );
+[ 6, [ rec( ("x_1*x_2") := 2, ("x_1*x_3") := 4, ("x_1^2") := 1,
+            ("x_2*x_3") := 5, ("x_2^2") := 3, ("x_3^2") := 6 ) ] ]
+gap> vars := IndeterminatesOfPolynomialRing( cox_ring );;
+gap> matrix := HomalgMatrix( [[ vars[ 1 ] ]], cox_ring );
+<A 1 x 1 matrix over a graded ring>
+gap> mor := GradedRowOrColumnMorphism( source, matrix, range );
+<A morphism in Category of graded rows over
+Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
+gap> IsWellDefined( mor );
+true
+gap> trunc_mor := TruncateGradedRowOrColumnMorphism( P2, mor, [ 2 ] );
+<A morphism in Category of matrices over Q (with weights [ 1 ])>
+gap> Display( UnderlyingMatrix( trunc_mor ) );
+1,0,0,0,0,0,
+0,1,0,0,0,0,
+0,0,0,1,0,0 
+(over a graded ring)
+gap> matrix2 := HomalgMatrix( [[ 1/2*vars[ 1 ] ]], cox_ring );
+<A 1 x 1 matrix over a graded ring>
+gap> mor2 := GradedRowOrColumnMorphism( source, matrix2, range );
+<A morphism in Category of graded rows over
+Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
+gap> IsWellDefined( mor2 );
+true
+gap> trunc_mor2 := TruncateGradedRowOrColumnMorphism( P2, mor2, [ 2 ] );
+<A morphism in Category of matrices over Q (with weights [ 1 ])>
+gap> Display( UnderlyingMatrix( trunc_mor2 ) );
+1/2,0,0,0,0,0,
+0,1/2,0,0,0,0,
+0,0,0,1/2,0,0 
+(over a graded ring)
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_Truncations_of_graded_rows_and_columns_Section_Examples_Subsection_Truncatons_of_morphisms_of_graded_rows_and_columns_in_parallel">
+<Heading>Truncatons of morphisms of graded rows and columns in parallel</Heading>
+
+<Example><![CDATA[
+gap> trunc_mor_parallel := TruncateGradedRowOrColumnMorphismInParallel
+>                                               ( P2, mor, [ 2 ], 2 );
+<A morphism in Category of matrices over Q (with weights [ 1 ])>
+gap> Display( UnderlyingMatrix( trunc_mor_parallel ) );
+1,0,0,0,0,0,
+0,1,0,0,0,0,
+0,0,0,1,0,0
+(over a graded ring)
+gap> trunc_mor2_parallel := TruncateGradedRowOrColumnMorphismInParallel
+>                                               ( P2, mor2, [ 2 ], 2 );
+<A morphism in Category of matrices over Q (with weights [ 1 ])>
+gap> Display( UnderlyingMatrix( trunc_mor2_parallel ) );
+1/2,0,0,0,0,0,
+0,1/2,0,0,0,0,
+0,0,0,1/2,0,0
+(over a graded ring)
+gap> trunc_mor2_parallel2 := TruncateGradedRowOrColumnMorphismInParallel
+>                                               ( P2, mor2, [ 10 ], 3 );;
+gap> IsWellDefined( trunc_mor2_parallel2 );
+true
+gap> NrRows( UnderlyingMatrix( trunc_mor2_parallel2 ) );
+55
+gap> NrColumns( UnderlyingMatrix( trunc_mor2_parallel2 ) );
+66
+]]></Example>
+
+
+</Subsection>
+
+
+</Section>
+
+
+</Chapter>
+

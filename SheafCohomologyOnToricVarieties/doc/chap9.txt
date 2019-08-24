@@ -1,0 +1,366 @@
+  
+  [1X9 [33X[0;0YDegreeXLayerVectorSpaces and morphisms[133X[101X
+  
+  
+  [1X9.1 [33X[0;0YGAP category of DegreeXLayerVectorSpaces[133X[101X
+  
+  [1X9.1-1 IsDegreeXLayerVectorSpace[101X
+  
+  [33X[1;0Y[29X[2XIsDegreeXLayerVectorSpace[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  GAP  category for vector spaces that represent a degree layer of a f.p.
+  graded module[133X
+  
+  [1X9.1-2 IsDegreeXLayerVectorSpaceMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsDegreeXLayerVectorSpaceMorphism[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe GAP category for morphisms between vector spaces that represent a degree
+  layer of a f.p. graded module[133X
+  
+  [1X9.1-3 IsDegreeXLayerVectorSpacePresentation[101X
+  
+  [33X[1;0Y[29X[2XIsDegreeXLayerVectorSpacePresentation[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  GAP category for (left) presentations of vector spaces that represent a
+  degree layer of a f.p. graded module[133X
+  
+  [1X9.1-4 IsDegreeXLayerVectorSpacePresentationMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsDegreeXLayerVectorSpacePresentationMorphism[102X( [3Xobject[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  GAP  category  for  (left) presentation morphisms of vector spaces that
+  represent a degree layer of a f.p. graded module[133X
+  
+  
+  [1X9.2 [33X[0;0YConstructors for DegreeXLayerVectorSpaces[133X[101X
+  
+  [1X9.2-1 DegreeXLayerVectorSpace[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerVectorSpace[102X( [3XL[103X, [3XS[103X, [3XV[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya CAPCategoryObject[133X
+  
+  [33X[0;0YThe arguments are a list of monomials [23XL[123X, a homalg graded ring [23XS[123X (the Coxring
+  of  the variety in question), a vector space [23XV[123X and a non-negative integer [23Xn[123X.
+  [23XV[123X   is   to   be   given   as   a   vector  space  defined  in  the  package
+  'LinearAlgebraForCAP'.   This   method   then   returns   the  corresponding
+  DegreeXLayerVectorSpace.[133X
+  
+  [1X9.2-2 DegreeXLayerVectorSpaceMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerVectorSpaceMorphism[102X( [3XL[103X, [3XS[103X, [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpaceMorphism[133X
+  
+  [33X[0;0YThe  arguments are a DegreeXLayerVectorSpace [3Xsource[103X, a vector space morphism
+  [23X\varphi[123X  (as defined in 'LinearAlgebraForCAP') and a DegreeXLayerVectorSpace
+  [3Xrange[103X.  If  [23X\varphi[123X is a vector space morphism between the underlying vector
+  spaces   of   [3Xsource[103X   and  [3Xrange[103X  this  method  returns  the  corresponding
+  DegreeXLayerVectorSpaceMorphism.[133X
+  
+  [1X9.2-3 DegreeXLayerVectorSpacePresentation[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerVectorSpacePresentation[102X( [3Xa[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpaceMorphism[133X
+  
+  [33X[0;0YThe  arguments  is  a  DegreeXLayerVectorSpaceMorphism [3Xa[103X. This method treats
+  this  morphism  as a presentation, i.e. we are interested in the cokernel of
+  the    underlying    morphism    of   vector   spaces.   The   corresponding
+  DegreeXLayerVectorSpacePresentation is returned.[133X
+  
+  [1X9.2-4 DegreeXLayerVectorSpacePresentationMorphism[101X
+  
+  [33X[1;0Y[29X[2XDegreeXLayerVectorSpacePresentationMorphism[102X( [3Xsource[103X, [3X\varphi[103X, [3Xrange[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpacePresentationMorphism[133X
+  
+  [33X[0;0YThe  arguments  is  a  DegreeXLayerVectorSpacePresentation  [3Xsource[103X, a vector
+  space  morphism [23X\varphi[123X and a DegreeXLayerVectorSpacePresentation [3Xrange[103X. The
+  corresponding DegreeXLayerVectorSpacePresentationMorphism is returned.[133X
+  
+  
+  [1X9.3 [33X[0;0YAttributes for DegreeXLayerVectorSpaces[133X[101X
+  
+  [1X9.3-1 UnderlyingHomalgGradedRing[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingHomalgGradedRing[102X( [3XV[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya homalg graded ring[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpace [23XV[123X. The output is the Coxring, in
+  which  this  vector  space  is  embedded  via the generators (specified when
+  installing [23XV[123X).[133X
+  
+  [1X9.3-2 Generators[101X
+  
+  [33X[1;0Y[29X[2XGenerators[102X( [3XV[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  argument  is  a  DegreeXLayerVectorSpace  [23XV[123X.  The output is the list of
+  generators, that embed [23XV[123X into the Coxring in question.[133X
+  
+  [1X9.3-3 UnderlyingVectorSpaceObject[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpaceObject[102X( [3XV[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya VectorSpaceObject[133X
+  
+  [33X[0;0YThe  argument  is  a DegreeXLayerVectorSpace [23XV[123X. The output is the underlying
+  vectorspace object (as defined in 'LinearAlgebraForCAP').[133X
+  
+  [1X9.3-4 EmbeddingDimension[101X
+  
+  [33X[1;0Y[29X[2XEmbeddingDimension[102X( [3XV[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya VectorSpaceObject[133X
+  
+  [33X[0;0YThe    argument    is    a    DegreeXLayerVectorSpace    [23XV[123X.    For   [23XS[123X   its
+  'UnderlyingHomalgGradedRing'   this   vector  space  is  embedded  (via  its
+  generators) into [23XS^n[123X. The integer [23Xn[123X is the embedding dimension.[133X
+  
+  
+  [1X9.4 [33X[0;0YAttributes for DegreeXLayerVectorSpaceMorphisms[133X[101X
+  
+  [1X9.4-1 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YThe  argument  is  a  DegreeXLayerVectorSpaceMorphism  [23Xa[123X.  The output is its
+  source.[133X
+  
+  [1X9.4-2 Range[101X
+  
+  [33X[1;0Y[29X[2XRange[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YThe  argument  is  a  DegreeXLayerVectorSpaceMorphism  [23Xa[123X.  The output is its
+  range.[133X
+  
+  [1X9.4-3 UnderlyingVectorSpaceMorphism[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpaceMorphism[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpace[133X
+  
+  [33X[0;0YThe  argument  is  a  DegreeXLayerVectorSpaceMorphism  [23Xa[123X.  The output is its
+  range.[133X
+  
+  [1X9.4-4 UnderlyingHomalgGradedRing[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingHomalgGradedRing[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya homalg graded ring[133X
+  
+  [33X[0;0YThe  argument  is  a  DegreeXLayerVectorSpaceMorphism  [23Xa[123X.  The output is the
+  Coxring, in which the source and range of this is morphism are embedded.[133X
+  
+  
+  [1X9.5 [33X[0;0YAttributes for DegreeXLayerVectorSpacePresentations[133X[101X
+  
+  [1X9.5-1 UnderlyingDegreeXLayerVectorSpaceMorphism[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingDegreeXLayerVectorSpaceMorphism[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpaceMorphism[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpacePresentation [23Xa[123X. The output is the
+  underlying DegreeXLayerVectorSpaceMorphism[133X
+  
+  [1X9.5-2 UnderlyingVectorSpaceObject[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpaceObject[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya VectorSpaceObject[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpacePresentation [23Xa[123X. The output is the
+  vector  space  object  which  is the cokernel of the underlying vector space
+  morphism.[133X
+  
+  [1X9.5-3 UnderlyingVectorSpaceMorphism[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpaceMorphism[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya VectorSpaceMorphism[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpacePresentation [23Xa[123X. The output is the
+  vector   space   morphism   which   defines   the   underlying  morphism  of
+  DegreeXLayerVectorSpaces.[133X
+  
+  [1X9.5-4 UnderlyingHomalgGradedRing[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingHomalgGradedRing[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya homalg graded ring[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpacePresentation [23Xa[123X. The output is the
+  Coxring,  in  which  the  source  and  range  of  the underlying morphism of
+  DegreeXLayerVectorSpaces are embedded.[133X
+  
+  [1X9.5-5 UnderlyingVectorSpacePresentation[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpacePresentation[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP presentation category object[133X
+  
+  [33X[0;0YThe  argument  is a DegreeXLayerVectorSpacePresentation [23Xa[123X. The output is the
+  underlying vector space presentation.[133X
+  
+  
+  [1X9.6 [33X[0;0YAttributes for DegreeXLayerVectorSpacePresentationMorphisms[133X[101X
+  
+  [1X9.6-1 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpacePresentation[133X
+  
+  [33X[0;0YThe  argument is a DegreeXLayerVectorSpacePresentationMorphism [23Xa[123X. The output
+  is its source.[133X
+  
+  [1X9.6-2 Range[101X
+  
+  [33X[1;0Y[29X[2XRange[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya DegreeXLayerVectorSpacePresentation[133X
+  
+  [33X[0;0YThe  argument is a DegreeXLayerVectorSpacePresentationMorphism [23Xa[123X. The output
+  is its range.[133X
+  
+  [1X9.6-3 UnderlyingHomalgGradedRing[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingHomalgGradedRing[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya homalg graded ring[133X
+  
+  [33X[0;0YThe  argument is a DegreeXLayerVectorSpacePresentationMorphism [23Xa[123X. The output
+  is the underlying graded ring of its source.[133X
+  
+  [1X9.6-4 UnderlyingVectorSpacePresentationMorphism[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpacePresentationMorphism[102X( [3Xa[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP presentation category morphism[133X
+  
+  [33X[0;0YThe  argument is a DegreeXLayerVectorSpacePresentationMorphism [23Xa[123X. The output
+  is the underlying vector space presentation morphism.[133X
+  
+  
+  [1X9.7 [33X[0;0YConvenience methods[133X[101X
+  
+  [1X9.7-1 FullInformation[101X
+  
+  [33X[1;0Y[29X[2XFullInformation[102X( [3Xp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ydetailed information about p[133X
+  
+  [33X[0;0YThe   argument  is  a  DegreeXLayerVectorSpacePresentation  [23Xp[123X.  This  method
+  displays [23Xp[123X in great detail.[133X
+  
+  [1X9.7-2 FullInformation[101X
+  
+  [33X[1;0Y[29X[2XFullInformation[102X( [3Xp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ydetailed information about p[133X
+  
+  [33X[0;0YThe argument is a DegreeXLayerVectorSpacePresentationMorphism [23Xp[123X. This method
+  displays [23Xp[123X in great detail.[133X
+  
+  
+  [1X9.8 [33X[0;0YExamples[133X[101X
+  
+  
+  [1X9.8-1 [33X[0;0YDegreeXLayerVectorSpaces[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XmQ := HomalgFieldOfRationals();[127X[104X
+    [4X[28XQ[128X[104X
+    [4X[25Xgap>[125X [27XP1 := ProjectiveSpace( 1 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 1>[128X[104X
+    [4X[25Xgap>[125X [27Xcox_ring := CoxRing( P1 );[127X[104X
+    [4X[28XQ[x_1,x_2][128X[104X
+    [4X[28X(weights: [ 1, 1 ])[128X[104X
+    [4X[25Xgap>[125X [27Xmons := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[127X[104X
+    [4X[25X>[125X [27X        ( P1, [1], 1, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xvector_space := VectorSpaceObject( Length( mons ), mQ );[127X[104X
+    [4X[28X<A vector space object over Q of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27XDXVS := DegreeXLayerVectorSpace( mons, cox_ring, vector_space, 1 );[127X[104X
+    [4X[28X<A vector space embedded into (Q[x_1,x_2] (with weights [ 1, 1 ]))^1>[128X[104X
+    [4X[25Xgap>[125X [27XEmbeddingDimension( DXVS );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XGenerators( DXVS );[127X[104X
+    [4X[28X[ <A 1 x 1 matrix over a graded ring>, <A 1 x 1 matrix over a graded ring> ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.8-2 [33X[0;0YMorphisms of DegreeXLayerVectorSpaces[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmons2 := Concatenation([127X[104X
+    [4X[25X>[125X [27X         MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[127X[104X
+    [4X[25X>[125X [27X         ( P1, [1], 1, 2 ),[127X[104X
+    [4X[25X>[125X [27X         MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[127X[104X
+    [4X[25X>[125X [27X         ( P1, [1], 2, 2 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xvector_space2 := VectorSpaceObject( Length( mons2 ), mQ );[127X[104X
+    [4X[28X<A vector space object over Q of dimension 4>[128X[104X
+    [4X[25Xgap>[125X [27XDXVS2 := DegreeXLayerVectorSpace( mons2, cox_ring, vector_space2, 2 );[127X[104X
+    [4X[28X<A vector space embedded into (Q[x_1,x_2] (with weights [ 1, 1 ]))^2>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [ [ 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X                          [ 0, 1, 0, 0 ] ], mQ );[127X[104X
+    [4X[28X<A matrix over an internal ring>[128X[104X
+    [4X[25Xgap>[125X [27Xvector_space_morphism := VectorSpaceMorphism( vector_space,[127X[104X
+    [4X[25X>[125X [27X                                              matrix,[127X[104X
+    [4X[25X>[125X [27X                                              vector_space2 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( vector_space_morphism );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XmorDXVS := DegreeXLayerVectorSpaceMorphism( [127X[104X
+    [4X[25X>[125X [27X           DXVS, vector_space_morphism, DXVS2 );[127X[104X
+    [4X[28X<A morphism of two vector spaces embedded into[128X[104X
+    [4X[28X(suitable powers of) Q[x_1,x_2] (with weights [ 1, 1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpaceMorphism( morDXVS );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingHomalgGradedRing( morDXVS );[127X[104X
+    [4X[28XQ[x_1,x_2][128X[104X
+    [4X[28X(weights: [ 1, 1 ])[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.8-3 [33X[0;0YDegreeXLayerVectorSpacePresentations[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDXVSPresentation := DegreeXLayerVectorSpacePresentation( morDXVS );[127X[104X
+    [4X[28X<A vector space embedded into (a suitable power of)[128X[104X
+    [4X[28XQ[x_1,x_2] (with weights [ 1, 1 ]) given as the[128X[104X
+    [4X[28Xcokernel of a vector space morphism>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpaceObject( DXVSPresentation );[127X[104X
+    [4X[28X<A vector space object over Q of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27Xrelation := RelationMorphism( [127X[104X
+    [4X[25X>[125X [27X            UnderlyingVectorSpacePresentation( DXVSPresentation ) );[127X[104X
+    [4X[28X<A morphism in Category of matrices over Q>[128X[104X
+    [4X[25Xgap>[125X [27Xm := UnderlyingMatrix( relation );[127X[104X
+    [4X[28X<A 2 x 4 matrix over an internal ring>[128X[104X
+    [4X[25Xgap>[125X [27Xm = matrix;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.8-4 [33X[0;0YMorphisms of DegreeXLayerVectorSpacePresentations[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xzero_space := ZeroObject( CapCategory( vector_space ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xsource := DegreeXLayerVectorSpace( [], cox_ring, zero_space, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xvector_space_morphism := ZeroMorphism( zero_space, vector_space );;[127X[104X
+    [4X[25Xgap>[125X [27XmorDXVS2 := DegreeXLayerVectorSpaceMorphism([127X[104X
+    [4X[25X>[125X [27X            source, vector_space_morphism, DXVS );;[127X[104X
+    [4X[25Xgap>[125X [27XDXVSPresentation2 := DegreeXLayerVectorSpacePresentation( morDXVS2 );[127X[104X
+    [4X[28X<A vector space embedded into (a suitable power of)[128X[104X
+    [4X[28XQ[x_1,x_2] (with weights [ 1, 1 ]) given as the[128X[104X
+    [4X[28Xcokernel of a vector space morphism>[128X[104X
+    [4X[25Xgap>[125X [27Xmatrix := HomalgMatrix( [ [ 0, 0, 1, 0 ],[127X[104X
+    [4X[25X>[125X [27X                          [ 0, 0, 0, 1 ] ], mQ );[127X[104X
+    [4X[28X<A matrix over an internal ring>[128X[104X
+    [4X[25Xgap>[125X [27Xsource := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation2 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xrange := Range( UnderlyingVectorSpaceMorphism( DXVSPresentation ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xvector_space_morphism := VectorSpaceMorphism( source, matrix, range );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( vector_space_morphism );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDXVSPresentationMorphism := DegreeXLayerVectorSpacePresentationMorphism([127X[104X
+    [4X[25X>[125X [27X                                      DXVSPresentation2,[127X[104X
+    [4X[25X>[125X [27X                                      vector_space_morphism,[127X[104X
+    [4X[25X>[125X [27X                                      DXVSPresentation );[127X[104X
+    [4X[28X<A vector space presentation morphism of vector spaces embedded into[128X[104X
+    [4X[28X(a suitable power of) Q[x_1,x_2] (with weights [ 1, 1 ]) and given as[128X[104X
+    [4X[28Xcokernels>[128X[104X
+    [4X[25Xgap>[125X [27XuVSMor := UnderlyingVectorSpacePresentationMorphism[127X[104X
+    [4X[25X>[125X [27X                                      ( DXVSPresentationMorphism );[127X[104X
+    [4X[28X<A morphism in Freyd( Category of matrices over Q )>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( uVSMor );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (SheafCohomologyOnToricVarieties) - Chapter 4: Cohomology of coherent sheaves from resolution</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap4"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap4.html">[MathJax off]</a></p>
+<p><a id="X8223BB1C7A235BD3" name="X8223BB1C7A235BD3"></a></p>
+<div class="ChapSects"><a href="chap4_mj.html#X8223BB1C7A235BD3">4 <span class="Heading">Cohomology of coherent sheaves from resolution</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X80480F098054EA3B">4.1 <span class="Heading">Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7EE2EBD87859666A">4.1-1 CohomologiesList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8318355A7A5ED933">4.1-2 DeductionOfSheafCohomologyFromResolution</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X84092AAF7F8D1BAB">4.2 <span class="Heading">Example: Pullback line bundle</span></a>
+</span>
+</div>
+</div>
+
+<h3>4 <span class="Heading">Cohomology of coherent sheaves from resolution</span></h3>
+
+<p><a id="X80480F098054EA3B" name="X80480F098054EA3B"></a></p>
+
+<h4>4.1 <span class="Heading">Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution</span></h4>
+
+<p><a id="X7EE2EBD87859666A" name="X7EE2EBD87859666A"></a></p>
+
+<h5>4.1-1 CohomologiesList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologiesList</code>( <var class="Arg">vari</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists of integers</p>
+
+<p>Given a smooth and projective toric variety <span class="SimpleMath">\(vari\)</span> with Coxring <span class="SimpleMath">\(S\)</span> and a f. p. graded S-modules <span class="SimpleMath">\(M\)</span>, this method computes a minimal free resolution of <span class="SimpleMath">\(M\)</span> and then the dimension of the cohomology classes of the projective modules in this minimal free resolution.</p>
+
+<p><a id="X8318355A7A5ED933" name="X8318355A7A5ED933"></a></p>
+
+<h5>4.1-2 DeductionOfSheafCohomologyFromResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeductionOfSheafCohomologyFromResolution</code>( <var class="Arg">vari</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>Given a smooth and projective toric variety <span class="SimpleMath">\(vari\)</span> with Coxring <span class="SimpleMath">\(S\)</span> and a f. p. graded S-modules <span class="SimpleMath">\(M\)</span>, this method computes a minimal free resolution of <span class="SimpleMath">\(M\)</span> and then the dimension of the cohomology classes of the projective modules in this minimal free resolution. From this information we draw conclusions on the sheaf cohomologies of the sheaf <span class="SimpleMath">\(\tilde{M}\)</span>.</p>
+
+<p><a id="X84092AAF7F8D1BAB" name="X84092AAF7F8D1BAB"></a></p>
+
+<h4>4.2 <span class="Heading">Example: Pullback line bundle</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">var := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cox_ring := CoxRing( var );</span>
+Q[x_1,x_2,x_3]
+(weights: [ 1, 1, 1 ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars := IndeterminatesOfPolynomialRing( cox_ring );</span>
+[ x_1, x_2, x_3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">range := GradedRow( [[[2],1]], cox_ring );</span>
+&lt;A graded row of rank 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">source := GradedRow( [[[1],1]], cox_ring );</span>
+&lt;A graded row of rank 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">matrix := HomalgMatrix( [[vars[1]] ], cox_ring );</span>
+&lt;A 1 x 1 matrix over a graded ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor := GradedRowOrColumnMorphism( source, matrix, range );</span>
+&lt;A morphism in Category of graded rows over
+Q[x_1,x_2,x_3]
+(with weights [ 1,1,1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( mor );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pullback_line_bundle := FreydCategoryObject( mor );</span>
+&lt;An object in Category of f.p. graded left modules over
+Q[x_1,x_2,x_3] (with weights
+[ 1, 1, 1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coh := DeductionOfSheafCohomologyFromResolution( var, pullback_line_bundle );</span>
+[ 3, 0, 0 ]
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1 := ProjectiveSpace( 1 );</span>
+&lt;A projective toric variety of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2 := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">var2 := P1 * P1 * P2;</span>
+&lt;A projective toric variety of dimension 4 
+which is a product of 3 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cox_ring2 := CoxRing( var2 );</span>
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7]
+(weights: [ ( 0, 0, 1 ), ( 0, 1, 0 ), ( 1, 0, 0 ),
+( 1, 0, 0 ), ( 1, 0, 0 ), ( 0, 1, 0 ), ( 0, 0, 1 ) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars2 := IndeterminatesOfPolynomialRing( cox_ring2 );</span>
+[ x_1, x_2, x_3, x_4, x_5, x_6, x_7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">range2 := GradedRow( [[[1,1,2],1]], cox_ring2 );</span>
+&lt;A graded row of rank 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">source2 := GradedRow( [[[0,1,2],2]], cox_ring2 );</span>
+&lt;A graded row of rank 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">matrix2 := HomalgMatrix( [[vars2[3]],[vars2[4]]], cox_ring2 );</span>
+&lt;A 2 x 1 matrix over a graded ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor2 := GradedRowOrColumnMorphism( source2, matrix2, range2 );</span>
+&lt;A morphism in Category of graded rows over
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7]
+(with weights [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ],
+[ 1, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( mor2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pullback_line_bundle2 := FreydCategoryObject( mor2 );</span>
+&lt;An object in Category of f.p. graded left modules over
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7] (with weights
+[ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0 ],
+[ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coh2 := DeductionOfSheafCohomologyFromResolution( var2, pullback_line_bundle2 );</span>
+[ 6, 0, 0, 0, 0 ]
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2 := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">var3 := P2 * P2;</span>
+&lt;A projective toric variety of dimension 4 
+which is a product of 2 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cox_ring3 := CoxRing( var3 );</span>
+Q[x_1,x_2,x_3,x_4,x_5,x_6]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), 
+( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">range3 := GradedRow( [[[1,1],4]], cox_ring3 );</span>
+&lt;A graded row of rank 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">source3 := ZeroObject( CapCategory( range3 ) );</span>
+&lt;A graded row of rank 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">matrix3 := HomalgZeroMatrix( 0, 4, cox_ring3 );</span>
+&lt;An unevaluated 0 x 4 zero matrix over a graded ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor3 := GradedRowOrColumnMorphism( source3, matrix3, range3 );</span>
+&lt;A morphism in Category of graded rows over
+Q[x_1,x_2,x_3,x_4,x_5,x_6] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">line_bundle3 := FreydCategoryObject( mor3 );</span>
+&lt;An object in Category of f.p. graded left modules over 
+Q[x_1,x_2,x_3,x_4,x_5,x_6] (with weights 
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [0, 1 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( line_bundle3 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coh3 := DeductionOfSheafCohomologyFromResolution( var3, line_bundle3 );</span>
+[ 36, 0, 0, 0, 0 ]
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

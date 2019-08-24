@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    SheafCohomologyOnToricVarieties
+  </Title>
+  <Subtitle>
+    A package to compute sheaf cohomology on toric varieties
+  </Subtitle>
+  <Version>
+    2019.01.11
+  </Version>
+  <Author>
+    Martin Bies<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Physique Théorique et Mathématique <Br/>
+Université Libre de Bruxelles <Br/>
+Campus Plaine - CP 231 <Br/>
+Building NO - Level 6 - Office O.6.111 <Br/>
+1050 Brussels <Br/>
+Belgium<Br/>
+</Address>
+<Email>martin.bies@alumni.uni-heidelberg.de</Email>
+<Homepage>https://www.ulb.ac.be/sciences/ptm/pmif/people.html</Homepage>
+
+  </Author>
+  <Date>
+    11 January 2019
+  </Date>
+  </TitlePage>

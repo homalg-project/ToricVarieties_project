@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Truncation_functors_for_fp_graded_modules">
+<Heading>Truncation functors for f.p. graded modules</Heading>
+
+<Section Label="Chapter_Truncation_functors_for_fp_graded_modules_Section_Truncation_functor_for_graded_rows_and_columns">
+<Heading>Truncation functor for graded rows and columns</Heading>
+
+<ManSection>
+  <Oper Arg="V, d" Name="TruncationFunctorForGradedRows" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and degree_list <Math>d</Math> specifying an element of the
+degree group of the toric variety <Math>V</Math>. The latter can either be a list of integers or
+a HomalgModuleElement. Based on this input, this method returns the functor for the
+truncation of graded rows over the Cox ring of <Math>V</Math> to degree <Math>d</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, d" Name="TruncationFunctorForGradedColumns" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and degree_list <Math>d</Math> specifying an element of the
+degree group of the toric variety <Math>V</Math>. The latter can either be a list of integers or
+a HomalgModuleElement. Based on this input, this method returns the functor for the
+truncation of graded columns over the Cox ring of <Math>V</Math> to degree <Math>d</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncation_functors_for_fp_graded_modules_Section_Truncation_functor_for_fp_graded_modules">
+<Heading>Truncation functor for f.p. graded modules</Heading>
+
+<ManSection>
+  <Oper Arg="V, d" Name="TruncationFunctorForFpGradedLeftModules" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and degree list <Math>d</Math>, which
+specifies an element of the degree group of the toric variety <Math>V</Math>.
+<Math>d</Math> can either be a list of integers or a HomalgModuleElement.
+Based on this input, this method returns the functor for the
+truncation of f.p. graded right modules to degree <Math>d</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, d" Name="TruncationFunctorForFpGradedRightModules" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and degree list <Math>d</Math>, which
+specifies an element of the degree group of the toric variety <Math>V</Math>.
+<Math>d</Math> can either be a list of integers or a HomalgModuleElement.
+Based on this input, this method returns the functor for the
+truncation of f.p. graded right modules to degree <Math>d</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncation_functors_for_fp_graded_modules_Section_Examples">
+<Heading>Examples</Heading>
+
+<Example><![CDATA[
+gap> P2 := ProjectiveSpace( 2 );
+<A projective toric variety of dimension 2>
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> tor := P2 * P1;
+<A projective toric variety of dimension 3
+which is a product of 2 toric varieties>
+gap> TruncationFunctorForGradedRows( tor, [ 2, 3 ] );
+Trunction functor for Category of graded rows
+over Q[x_1,x_2,x_3,x_4,x_5] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ],
+[ 0, 1 ], [ 0, 1 ] ] ) to the degree [ 2, 3 ]
+gap> TruncationFunctorForFpGradedLeftModules( tor, [ 4, 5 ] );
+Truncation functor for Category of f.p.
+graded left modules over Q[x_1,x_2,x_3,x_4,x_5]
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ],
+[ 0, 1 ], [ 0, 1 ] ]) to the degree [ 4, 5 ]
+]]></Example>
+
+
+</Section>
+
+
+</Chapter>
+

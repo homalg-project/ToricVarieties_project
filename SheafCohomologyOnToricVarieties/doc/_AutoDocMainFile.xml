@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Introduction.xml">
+<#Include SYSTEM "_Chapter_Tools_for_FPGradedModules.xml">
+<#Include SYSTEM "_Chapter_Additional_methods_and_properties_for_toric_varieties.xml">
+<#Include SYSTEM "_Chapter_Cohomology_of_coherent_sheaves_from_resolution.xml">
+<#Include SYSTEM "_Chapter_Wrapper_for_generators_of_semigroups_and_hyperplane_constraints_of_cones.xml">
+<#Include SYSTEM "_Chapter_Vanishing_sets_on_toric_varieties.xml">
+<#Include SYSTEM "_Chapter_Irreducible_complete_torus-invariant_curves_and_proper_1-cycles_in_a_toric_variety.xml">
+<#Include SYSTEM "_Chapter_Nef_and_Mori_Cone.xml">
+<#Include SYSTEM "_Chapter_DegreeXLayerVectorSpaces_and_morphisms.xml">
+<#Include SYSTEM "_Chapter_Truncations_of_graded_rows_and_columns.xml">
+<#Include SYSTEM "_Chapter_Truncations_of_fp_graded_modules.xml">
+<#Include SYSTEM "_Chapter_Truncation_functors_for_fp_graded_modules.xml">
+<#Include SYSTEM "_Chapter_Truncations_of_GradedExt_for_fp_graded_modules.xml">
+<#Include SYSTEM "_Chapter_Sheaf_cohomology_by_use_of_httpsarxivorgabs180208860.xml">
+<#Include SYSTEM "_Chapter_Tools_for_cohomology_computations.xml">

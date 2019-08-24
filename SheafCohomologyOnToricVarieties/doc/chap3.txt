@@ -1,0 +1,177 @@
+  
+  [1X3 [33X[0;0YAdditional methods and properties for toric varieties[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YInput check for cohomology computations[133X[101X
+  
+  [1X3.1-1 IsValidInputForCohomologyComputations[101X
+  
+  [33X[1;0Y[29X[2XIsValidInputForCohomologyComputations[102X( [3XV[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YReturns if the given variety V is a valid input for cohomology computations.
+  If  the variable SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY is set to
+  false  (default),  then we just check if the variety is smooth, complete. In
+  case   of   success   we   return  true  and  false  otherwise.  If  however
+  SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_INTERNAL_LAZY  is  set  to true, then we
+  will  check if the variety is smooth, complete or simplicial, projective. In
+  case of success we return true and false other.[133X
+  
+  
+  [1X3.2 [33X[0;0YStanley-Reisner and irrelevant ideal via FpGradedModules[133X[101X
+  
+  [1X3.2-1 GeneratorsOfIrrelevantIdeal[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfIrrelevantIdeal[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YReturns the lift of generators of the irrelevant ideal of the variety [3Xvari[103X.[133X
+  
+  [1X3.2-2 IrrelevantLeftIdealForCAP[101X
+  
+  [33X[1;0Y[29X[2XIrrelevantLeftIdealForCAP[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya graded left ideal for CAP[133X
+  
+  [33X[0;0YReturns the irrelevant left ideal of the Cox ring of the variety [3Xvari[103X, using
+  the language of CAP.[133X
+  
+  [1X3.2-3 IrrelevantRightIdealForCAP[101X
+  
+  [33X[1;0Y[29X[2XIrrelevantRightIdealForCAP[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya graded right ideal for CAP[133X
+  
+  [33X[0;0YReturns  the  irrelevant  right  ideal  of the Cox ring of the variety [3Xvari[103X,
+  using the language of CAP.[133X
+  
+  [1X3.2-4 GeneratorsOfSRIdeal[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfSRIdeal[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YReturns  the  lift of generators of the Stanley-Reisner-ideal of the variety
+  [3Xvari[103X.[133X
+  
+  [1X3.2-5 SRLeftIdealForCAP[101X
+  
+  [33X[1;0Y[29X[2XSRLeftIdealForCAP[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya graded left ideal for CAP[133X
+  
+  [33X[0;0YReturns  the Stanley-Reißner left ideal of the Cox ring of the variety [3Xvari[103X,
+  using the langauge of CAP.[133X
+  
+  [1X3.2-6 SRRightIdealForCAP[101X
+  
+  [33X[1;0Y[29X[2XSRRightIdealForCAP[102X( [3Xvari[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya graded right ideal for CAP[133X
+  
+  [33X[0;0YReturns the Stanley-Reißner right ideal of the Cox ring of the variety [3Xvari[103X,
+  using the langauge of CAP.[133X
+  
+  [1X3.2-7 FpGradedLeftModules[101X
+  
+  [33X[1;0Y[29X[2XFpGradedLeftModules[102X( [3Xvariety[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CapCategory[133X
+  
+  [33X[0;0YGiven  a  toric  variety  [3Xvariety[103X  one  can  consider the Cox ring [23XS[123X of this
+  variety,  which  is graded over the class group of [3Xvariety[103X. Subsequently one
+  can  consider  the  category  of  f.p. graded left [23XS[123X-modules. This attribute
+  captures the corresponding CapCategory.[133X
+  
+  [1X3.2-8 FpGradedRightModules[101X
+  
+  [33X[1;0Y[29X[2XFpGradedRightModules[102X( [3Xvariety[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CapCategory[133X
+  
+  [33X[0;0YGiven  a  toric  variety  [3Xvariety[103X  one  can  consider the Cox ring [23XS[123X of this
+  variety,  which  is graded over the class group of [3Xvariety[103X. Subsequently one
+  can  consider  the  category  of f.p. graded right [23XS[123X-modules. This attribute
+  captures the corresponding CapCategory.[133X
+  
+  
+  [1X3.3 [33X[0;0YMonoms of given degree in the Cox ring[133X[101X
+  
+  [1X3.3-1 Exponents[101X
+  
+  [33X[1;0Y[29X[2XExponents[102X( [3Xvari[103X, [3Xdegree[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists of integers[133X
+  
+  [33X[0;0YGiven  a smooth and complete toric variety and a list of integers (= degree)
+  corresponding  to  an element of the class group of the variety, this method
+  return  a  list  of  integer  valued  lists.  These  lists correspond to the
+  exponents of the monomials of degree in the Cox ring of this toric variety.[133X
+  
+  [1X3.3-2 MonomsOfCoxRingOfDegreeByNormaliz[101X
+  
+  [33X[1;0Y[29X[2XMonomsOfCoxRingOfDegreeByNormaliz[102X( [3Xvari[103X, [3Xdegree[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YGiven  a smooth and complete toric variety and a list of integers (= degree)
+  corresponding  to  an element of the class group of the variety, this method
+  returns  the list of all monomials in the Cox ring of the given degree. This
+  method uses NormalizInterface.[133X
+  
+  [1X3.3-3 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[101X
+  
+  [33X[1;0Y[29X[2XMonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[102X( [3Xvari[103X, [3Xdegree[103X, [3Xi[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of matrices[133X
+  
+  [33X[0;0YGiven  a  smooth  and  complete toric variety, a list of integers (= degree)
+  corresponding  to  an  element  of  the  class  group of the variety and two
+  non-negative  integers  i  and  l,  this  method  returns  a  list of column
+  matrices.  The  columns are of length l and have at position i the monoms of
+  the Coxring of degree 'degree'.[133X
+  
+  
+  [1X3.4 [33X[0;0YExample: Stanley-Reisner ideal for CAP[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27XSR1 := SRLeftIdealForCAP( P2 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( SR1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSR2 := SRRightIdealForCAP( P2 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( SR2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.5 [33X[0;0YExample: Irrelevant ideal for CAP[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP2 := ProjectiveSpace( 2 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 2>[128X[104X
+    [4X[25Xgap>[125X [27XIR1 := IrrelevantLeftIdealForCAP( P2 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( IR1 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIR2 := IrrelevantRightIdealForCAP( P2 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( IR2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.6 [33X[0;0YExample: Monomials of given degree[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP1 := ProjectiveSpace( 1 );[127X[104X
+    [4X[28X<A projective toric variety of dimension 1>[128X[104X
+    [4X[25Xgap>[125X [27Xvar := P1*P1;[127X[104X
+    [4X[28X<A projective toric variety of dimension 2[128X[104X
+    [4X[28Xwhich is a product of 2 toric varieties>[128X[104X
+    [4X[25Xgap>[125X [27XExponents( var, [ 1,1 ] );[127X[104X
+    [4X[28X[ [ 1, 1, 0, 0 ], [ 1, 0, 1, 0 ],[128X[104X
+    [4X[28X[ 0, 1, 0, 1 ], [ 0, 0, 1, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XMonomsOfCoxRingOfDegreeByNormaliz( var, [1,2] );[127X[104X
+    [4X[28X[ x_1^2*x_2, x_1^2*x_3, x_1*x_2*x_4,[128X[104X
+    [4X[28Xx_1*x_3*x_4, x_2*x_4^2, x_3*x_4^2 ][128X[104X
+    [4X[25Xgap>[125X [27XMonomsOfCoxRingOfDegreeByNormaliz( var, [-1,-1] );[127X[104X
+    [4X[28X[][128X[104X
+    [4X[25Xgap>[125X [27Xl := MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices[127X[104X
+    [4X[25X>[125X [27X     ( var, [1,2], 2, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( l[ 1 ] );[127X[104X
+    [4X[28X0,[128X[104X
+    [4X[28Xx_1^2*x_2,[128X[104X
+    [4X[28X0[128X[104X
+    [4X[28X(over a graded ring)[128X[104X
+  [4X[32X[104X
+  

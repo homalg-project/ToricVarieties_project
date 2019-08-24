@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (SheafCohomologyOnToricVarieties) - Contents</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap0"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap0_mj.html">[MathJax on]</a></p>
+<p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
+<div class="pcenter">
+
+<h1>SheafCohomologyOnToricVarieties</h1>
+
+
+<h2>A package to compute sheaf cohomology on toric varieties</h2>
+
+<p>
+    2019.01.11</p>
+
+<p>
+    11 January 2019
+  </p>
+
+</div>
+<p><b>
+    Martin Bies
+
+
+
+
+  </b>
+<br />Email: <span class="URL"><a href="mailto:martin.bies@alumni.uni-heidelberg.de">martin.bies@alumni.uni-heidelberg.de</a></span>
+<br />Homepage: <span class="URL"><a href="https://www.ulb.ac.be/sciences/ptm/pmif/people.html">https://www.ulb.ac.be/sciences/ptm/pmif/people.html</a></span>
+<br />Address: <br />Physique Théorique et Mathématique <br /> Université Libre de Bruxelles <br /> Campus Plaine - CP 231 <br /> Building NO - Level 6 - Office O.6.111 <br /> 1050 Brussels <br /> Belgium<br />
+</p>
+
+<p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
+
+<div class="contents">
+<h3>Contents<a id="contents" name="contents"></a></h3>
+
+<div class="ContChap"><a href="chap1.html#X7DFB63A97E67C0A1">1 <span class="Heading">Introduction</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X81D885427CCE7373">1.1 <span class="Heading">What is the goal of the SheafCohomologyOnToricVarieties package?</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap2.html#X7D7ADE9084A9A8F0">2 <span class="Heading">Tools for FPGradedModules</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X82A7ED648724EF28">2.1 <span class="Heading">Minimal free resolutions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8433F09B80165E70">2.1-1 LeftIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83B3D8E67B92F735">2.1-2 RightIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86451DED791CA6FA">2.1-3 MinimalFreeResolutionForCAP</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7D3F8F6880101A0B">2.2 <span class="Heading">Betti tables</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7914E27A7999D6B8">2.2-1 BettiTableForCAP</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X857F74B17988DA68">2.3 <span class="Heading">Example: Minimal free resolution and Betti table</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap3.html#X7A66C08A8698D99B">3 <span class="Heading">Additional methods and properties for toric varieties</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7FD321947CF8A4A6">3.1 <span class="Heading">Input check for cohomology computations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8528A8937EB0BB37">3.1-1 IsValidInputForCohomologyComputations</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X865CD75C7B927C6F">3.2 <span class="Heading">Stanley-Reisner and irrelevant ideal via FpGradedModules</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B22B95F83A49431">3.2-1 GeneratorsOfIrrelevantIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X79ACE3F77FE30422">3.2-2 IrrelevantLeftIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86F9A54682C69DBD">3.2-3 IrrelevantRightIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78362D807A6E7334">3.2-4 GeneratorsOfSRIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80CA39B87FE8012B">3.2-5 SRLeftIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D5DC0FC86BF1246">3.2-6 SRRightIdealForCAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X835E617380BF3A64">3.2-7 FpGradedLeftModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X823D261B85C1284D">3.2-8 FpGradedRightModules</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X87B26F0680686270">3.3 <span class="Heading">Monoms of given degree in the Cox ring</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X868B1B6681613E2A">3.3-1 Exponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87C90D267B9462DF">3.3-2 MonomsOfCoxRingOfDegreeByNormaliz</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F90985F79409480">3.3-3 MonomsOfCoxRingOfDegreeByNormalizAsColumnMatrices</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D8E966785BA84AA">3.4 <span class="Heading">Example: Stanley-Reisner ideal for CAP</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7897E1B678B1BD24">3.5 <span class="Heading">Example: Irrelevant ideal for CAP</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86BBA5BF8112A591">3.6 <span class="Heading">Example: Monomials of given degree</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap4.html#X8223BB1C7A235BD3">4 <span class="Heading">Cohomology of coherent sheaves from resolution</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X80480F098054EA3B">4.1 <span class="Heading">Deductions On Sheaf Cohomology From Cohomology Of projective modules in a minimal free resolution</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7EE2EBD87859666A">4.1-1 CohomologiesList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8318355A7A5ED933">4.1-2 DeductionOfSheafCohomologyFromResolution</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X84092AAF7F8D1BAB">4.2 <span class="Heading">Example: Pullback line bundle</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap5.html#X80F4CB6E7CC3A8F6">5 <span class="Heading">Wrapper for generators of semigroups and hyperplane constraints of cones</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D03633A7D98026B">5.1 <span class="Heading">GAP Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F620E4585CD2BCA">5.1-1 IsSemigroupForPresentationsByProjectiveGradedModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7847C2907F558C0B">5.1-2 IsAffineSemigroupForPresentationsByProjectiveGradedModules</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X86EC0F0A78ECBC10">5.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8559679E79F4E234">5.2-1 SemigroupForPresentationsByProjectiveGradedModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X805B7049869F75B5">5.2-2 SemigroupForPresentationsByProjectiveGradedModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X861AD2C37B7CA62F">5.2-3 AffineSemigroupForPresentationsByProjectiveGradedModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82C8862A7F92FC2D">5.2-4 AffineSemigroupForPresentationsByProjectiveGradedModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CED2E788760B25F">5.2-5 AffineSemigroupForPresentationsByProjectiveGradedModules</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C701DBF7BAE649A">5.3 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84CF285781ADAEA9">5.3-1 GeneratorList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X828C7AA47AAA81AB">5.3-2 EmbeddingDimension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78195B828461E21F">5.3-3 ConeHPresentationList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F7B530D87E7B9A6">5.3-4 Offset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80E1CD2D83A05640">5.3-5 UnderlyingSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X81E1AA2E7B2817CA">5.3-6 EmbeddingDimension</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X854AB144863C3BB4">5.4 <span class="Heading">Property</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87ED07E181BDB1D1">5.4-1 IsTrivial</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8461ED527CF1D822">5.4-2 IsSemigroupOfCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X786D6EFA81A30549">5.4-3 IsTrivial</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7DCACDFE80D574CD">5.4-4 IsAffineSemigroupOfCone</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7DE8E16C7C2D387B">5.5 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AFD481281187217">5.5-1 DecideIfIsConeSemigroupGeneratorList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X783CFB8C84B9BD6A">5.6 <span class="Heading">Check if point is contained in (affine) cone or (affine ) semigroup</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X82A214FE7B77E980">5.6-1 PointContainedInSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87B1A82385155514">5.6-2 PointContainedInAffineSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7A489A5D79DA9E5C">5.7 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap6.html#X8201C4637F14E99F">6 <span class="Heading">Vanishing sets on toric varieties</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X819265EC7FB8AF8A">6.1 <span class="Heading">GAP category for vanishing sets</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E1CB2C07F4E4A77">6.1-1 IsVanishingSet</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X86EC0F0A78ECBC10">6.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B537B427EE545B5">6.2-1 VanishingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7C2813B97E1B2309">6.2-2 VanishingSet</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C701DBF7BAE649A">6.3 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X849687377EF1A2BE">6.3-1 ListOfUnderlyingAffineSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87BD035D80CE31DF">6.3-2 EmbeddingDimension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X860662B581F0FAC3">6.3-3 CohomologicalIndex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8769C3577B4C84CE">6.3-4 CohomologicalSpecification</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X809900B980D8E310">6.3-5 AmbientToricVariety</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X854AB144863C3BB4">6.4 <span class="Heading">Property</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X84BA529978699063">6.4-1 IsFull</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7FA1F61E7A6C2B44">6.5 <span class="Heading">Improved vanishing sets via cohomCalg</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X818861BB7D57AEF2">6.5-1 TurnDenominatorIntoShiftedSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81D251E67C3C1FBB">6.5-2 VanishingSets</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X872B02807E62E84A">6.5-3 ComputeVanishingSets</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82088A1D83343227">6.5-4 PointContainedInVanishingSet</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A489A5D79DA9E5C">6.6 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap7.html#X7CCC40FA815A55EA">7 <span class="Heading">Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X830F58607B4D4C12">7.1 <span class="Heading">GAP category of irreducible, complete, torus-invariant curves (= ICT curves)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X850B21658166706F">7.1-1 IsICTCurve</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X8553801780AB31D2">7.2 <span class="Heading">Constructors for ICT Curves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B4CD31E8173B4BC">7.2-1 ICTCurve</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7B35A89482BC8E89">7.3 <span class="Heading">Attributes for ICT curves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X820B4CFF7B90E4A1">7.3-1 AmbientToricVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7931E28B7BBAE126">7.3-2 IntersectedMaximalCones</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F73DF2F846C208E">7.3-3 RayGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X80EE138281563E7D">7.3-4 DefiningVariables</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C6D5FC08563A307">7.3-5 LeftStructureSheaf</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X818EE26F7E0CB119">7.3-6 RightStructureSheaf</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C5D67897A9879FB">7.3-7 IntersectionU</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X870E47497F6FA828">7.3-8 IntersectionList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X85D64A7F820930F4">7.4 <span class="Heading">Operations with ICTCurves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E4E0C127CC4BAA8">7.4-1 ICTCurves</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86F12D36867861E5">7.4-2 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X82B2C573868E2017">7.4-3 IntersectionProduct</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7AFF052E7BA9D0F3">7.5 <span class="Heading">GAP category for proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A25DF897F2CD605">7.5-1 IsProper1Cycle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7FE0B6E9806599A1">7.6 <span class="Heading">Constructor For Proper 1-Cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EED11157DAD88FA">7.6-1 GeneratorsOfProper1Cycles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X83F7464C820146BA">7.6-2 Proper1Cycle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X849341167EF9F424">7.7 <span class="Heading">Attributes for proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X848BD3EC8504059F">7.7-1 AmbientToricVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B7E08E2850BE1F8">7.7-2 UnderlyingGroupElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X865DAEC07BE0E063">7.8 <span class="Heading">Operations with proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87E986CF7BA5A12E">7.8-1 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E3BAE0182356C57">7.8-2 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7E9AB7467AAB1B34">7.8-3 IntersectionForm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7F6099FC7DA7FF99">7.9 <span class="Heading">Examples in projective space</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap8.html#X824D03307C329CE0">8 <span class="Heading">Nef and Mori Cone</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X87741CBD80A44D38">8.1 <span class="Heading">New Properties For Toric Divisors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X824DED3C7F5F065C">8.1-1 IsNef</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X78DB40598598F631">8.1-2 IsAmpleViaNefCone</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7C701DBF7BAE649A">8.2 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8776E09C7B0DD45F">8.2-1 CartierDataGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79E7C10083F6A23B">8.2-2 NefConeInCartierDataGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8676891C8068E9BE">8.2-3 NefConeInTorusInvariantWeilDivisorGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8766EFA783BE594C">8.2-4 NefConeInClassGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7EDF97988311C7D6">8.2-5 NefCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X810BCBEE87FF0BE4">8.2-6 ClassesOfSmallestAmpleDivisors</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X82C6E9307D7230AA">8.2-7 GroupOfProper1Cycles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F2479E07CFF2511">8.2-8 MoriCone</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X82B5D6E87F491048">8.3 <span class="Heading">Nef and Mori Cone: Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7D486AA57EE583B9">8.3-1 <span class="Heading">Projective Space</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap9.html#X8724C78B7A053204">9 <span class="Heading">DegreeXLayerVectorSpaces and morphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7F5C690C79E08D5B">9.1 <span class="Heading">GAP category of DegreeXLayerVectorSpaces</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E34BC167FED4370">9.1-1 IsDegreeXLayerVectorSpace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FBABC4579DA58A6">9.1-2 IsDegreeXLayerVectorSpaceMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7FA44D177A905726">9.1-3 IsDegreeXLayerVectorSpacePresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X876AD2787F18E093">9.1-4 IsDegreeXLayerVectorSpacePresentationMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7B8A57FC7EA89289">9.2 <span class="Heading">Constructors for DegreeXLayerVectorSpaces</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7CD2AC7E7DB45030">9.2-1 DegreeXLayerVectorSpace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X87BB659C7F01DFCD">9.2-2 DegreeXLayerVectorSpaceMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X81C82EB179924A9D">9.2-3 DegreeXLayerVectorSpacePresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7BE3295D86A402B1">9.2-4 DegreeXLayerVectorSpacePresentationMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7E2F356782276C8D">9.3 <span class="Heading">Attributes for DegreeXLayerVectorSpaces</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X83D6FCD47A09721C">9.3-1 UnderlyingHomalgGradedRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X81F703E87C9EB27A">9.3-2 Generators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DE2F87E82E41996">9.3-3 UnderlyingVectorSpaceObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8711AE16835A1ED8">9.3-4 EmbeddingDimension</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7D83F3C28766FBCB">9.4 <span class="Heading">Attributes for DegreeXLayerVectorSpaceMorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X860BF0BC7CAB17D5">9.4-1 Source</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X819C68C07DC49A04">9.4-2 Range</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7C94E51E7C6185FF">9.4-3 UnderlyingVectorSpaceMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X823E920E86BBD823">9.4-4 UnderlyingHomalgGradedRing</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7B98042A79573E03">9.5 <span class="Heading">Attributes for DegreeXLayerVectorSpacePresentations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X87A2FF337C039DFF">9.5-1 UnderlyingDegreeXLayerVectorSpaceMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X79769F4883DF5646">9.5-2 UnderlyingVectorSpaceObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7CCDDECA842F4D80">9.5-3 UnderlyingVectorSpaceMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8457F800878F27BD">9.5-4 UnderlyingHomalgGradedRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DDC458E855BA14A">9.5-5 UnderlyingVectorSpacePresentation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X80B8C7DA7EEEEC40">9.6 <span class="Heading">Attributes for DegreeXLayerVectorSpacePresentationMorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X780C00FE7C59B6E4">9.6-1 Source</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DBE41747F6A3820">9.6-2 Range</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X86B5358C8360D470">9.6-3 UnderlyingHomalgGradedRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X816E0BC286D03BC4">9.6-4 UnderlyingVectorSpacePresentationMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7B40ED8B78D067A5">9.7 <span class="Heading">Convenience methods</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X80B35AB4797BADE5">9.7-1 FullInformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X78E9436082ACC06E">9.7-2 FullInformation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7A489A5D79DA9E5C">9.8 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7B7D98C17AA4D20E">9.8-1 <span class="Heading">DegreeXLayerVectorSpaces</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DA7BC87783B84EE">9.8-2 <span class="Heading">Morphisms of DegreeXLayerVectorSpaces</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X81F9E32C7EC259D6">9.8-3 <span class="Heading">DegreeXLayerVectorSpacePresentations</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7CA79C4D84AC63FD">9.8-4 <span class="Heading">Morphisms of DegreeXLayerVectorSpacePresentations</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap10.html#X841A9F698680862E">10 <span class="Heading">Truncations of graded rows and columns</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X841A9F698680862E">10.1 <span class="Heading">Truncations of graded rows and columns</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X783DA2067F0DFFD9">10.1-1 TruncateGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7EB2EE3F7F3E6A77">10.1-2 TruncateGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7AF643C87EC2BCDD">10.1-3 TruncateGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X790B952987279B54">10.1-4 TruncateGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F50402585C2E6BB">10.1-5 DegreeXLayerOfGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X84D06626846FA1CF">10.1-6 DegreeXLayerOfGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X84187E1E7BEA2930">10.1-7 DegreeXLayerOfGradedRowOrColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X79E811857FCEF7C9">10.1-8 DegreeXLayerOfGradedRowOrColumn</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7F5EB67D81E29D83">10.2 <span class="Heading">Formats for generators of truncations of graded rows and columns</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X828F7AB57A0AFA79">10.2-1 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X828A6FFD87EBC178">10.2-2 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListOfColumnMatrices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7843935480BC0942">10.2-3 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X83510BF7866C3637">10.2-4 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsUnionOfColumnMatrices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D78A75879BF12A9">10.2-5 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X783133BB7B55969C">10.2-6 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X82C81C9678844CFC">10.2-7 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7E6D79AC802768E0">10.2-8 GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7F779F5C786B932D">10.3 <span class="Heading">Truncations of graded row and column morphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8099F9B285E69DAD">10.3-1 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X82AC7ACE816136C3">10.3-2 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C450E4C7DA93253">10.3-3 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81879E1A81638CD6">10.3-4 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7E50E305806AB496">10.3-5 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X879D92CA85D4A0C6">10.3-6 TruncateGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X798284867B18B7CD">10.3-7 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78DC1C42791EA99B">10.3-8 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7871BB5886F6DAA0">10.3-9 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7DDB94AA85E978E0">10.3-10 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7E76D9B182FB607C">10.3-11 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7ED0FD307C64DF78">10.3-12 DegreeXLayerOfGradedRowOrColumnMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X82E4B7EB87C036A6">10.4 <span class="Heading">Truncations of morphisms of graded rows and columns in parallel</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X815BB3017B73C6D4">10.4-1 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8237C3037A1FA5B1">10.4-2 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81E3907A82ED9892">10.4-3 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X84E303037E38EC66">10.4-4 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78AF960D81AD0E66">10.4-5 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8705406479F88F35">10.4-6 TruncateGradedRowOrColumnMorphismInParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7A489A5D79DA9E5C">10.5 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X841A9F698680862E">10.5-1 <span class="Heading">Truncations of graded rows and columns</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F5EB67D81E29D83">10.5-2 <span class="Heading">Formats for generators of truncations of graded rows and columns</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8732695B8122C256">10.5-3 <span class="Heading">Truncatons of morphisms of graded rows and columns</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7BB879B57B46C454">10.5-4 <span class="Heading">Truncatons of morphisms of graded rows and columns in parallel</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap11.html#X86906B587977B284">11 <span class="Heading">Truncations of f.p. graded modules</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7C6111177B5624BF">11.1 <span class="Heading">Truncations of fp graded modules</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7CC5EF407D90CFC2">11.1-1 TruncateFPGradedModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X83A681827D70197E">11.2 <span class="Heading">Truncations of fp graded modules in parallel</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7EAE93E37897ED43">11.2-1 TruncateFPGradedModuleInParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X8602E944801C9369">11.3 <span class="Heading">Truncations of fp graded modules morphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D9865697CAC9B47">11.3-1 TruncateFPGradedModuleMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X852297CA785CEBF3">11.4 <span class="Heading">Truncations of fp graded modules morphisms in parallel</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87EE0A93869F26E3">11.4-1 TruncateFPGradedModuleMorphismInParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7F69C9CE7AA8D0BD">11.5 <span class="Heading">Truncations of f.p. graded module morphisms</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap12.html#X7ECAA0B7861D95F5">12 <span class="Heading">Truncation functors for f.p. graded modules</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X79DBF71F87487D00">12.1 <span class="Heading">Truncation functor for graded rows and columns</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X819184807EEFF3FB">12.1-1 TruncationFunctorForGradedRows</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8388D66E7C7E3289">12.1-2 TruncationFunctorForGradedColumns</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X8120EEB07A043B7F">12.2 <span class="Heading">Truncation functor for f.p. graded modules</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8705C7548213FB25">12.2-1 TruncationFunctorForFpGradedLeftModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7A8E18B97DDF01B2">12.2-2 TruncationFunctorForFpGradedRightModules</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X7A489A5D79DA9E5C">12.3 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+<div class="ContChap"><a href="chap13.html#X8738F1CE80A26E3D">13 <span class="Heading">Truncations of GradedExt for f.p. graded modules</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7BB04C7E7EA81C34">13.1 <span class="Heading">Truncations of InternalHoms of FpGradedModules</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X84F7CA76824A31AA">13.1-1 TruncateInternalHom</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E3B5D647DE54CD6">13.1-2 TruncateInternalHomEmbedding</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F42CA2283FB80FE">13.1-3 TruncateInternalHom</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X831634C77CA0EAFE">13.2 <span class="Heading">Truncations of InternalHoms of FpGradedModules to degree zero</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D33B521840A65A7">13.2-1 TruncateInternalHomToZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7A6B33438518955D">13.2-2 TruncateInternalHomEmbeddingToZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7CB0A87783CB2CDB">13.2-3 TruncateInternalHomToZero</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X803A24997DB44DB8">13.3 <span class="Heading">Truncations of InternalHoms of FpGradedModules in parallel</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E1745C381B13084">13.3-1 TruncateInternalHomInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7A10D1D37A306365">13.3-2 TruncateInternalHomEmbeddingInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X810BAD537C83486A">13.3-3 TruncateInternalHomInParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X812CC3F97B627AF4">13.4 <span class="Heading">Truncations of InternalHoms of FpGradedModules to degree zero in parallel</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X867EB9577A89A2B7">13.4-1 TruncateInternalHomToZeroInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7C1A1F4987B1E5DC">13.4-2 TruncateInternalHomEmbeddingToZeroInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7DB929AE8422AE49">13.4-3 TruncateInternalHomToZeroInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E3AA3B885FDD3EE">13.4-4 TruncateGradedExt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7EB2C68E856747B6">13.4-5 TruncateGradedExtToZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E6BF7497831C7E0">13.4-6 TruncateGradedExtInParallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X787B0B6F7E89060E">13.4-7 TruncateGradedExtToZeroInParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7A489A5D79DA9E5C">13.5 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X81E9CAE07AB87567">13.5-1 <span class="Heading">Truncation of IntHom</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X80891C1087761B58">13.5-2 <span class="Heading">Truncation of IntHom to degree zero</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X78744A11809F3793">13.5-3 <span class="Heading">Truncation of IntHom in parallel</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7877DA0B79C62FDD">13.5-4 <span class="Heading">Truncation of IntHom to degree zero in parallel</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7AC725F181EEE3FD">13.5-5 <span class="Heading">Truncation of GradedExt</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap14.html#X83B465EC7B2050EA">14 <span class="Heading">Sheaf cohomology by use of https://arxiv.org/abs/1802.08860</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X8749E1888244CC3D">14.1 <span class="Heading">Preliminaries</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85E7494381B5C3A8">14.1-1 ParameterCheck</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7C916ADD876A18A8">14.1-2 FindIdeal</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7F66EA1B863A9AD9">14.2 <span class="Heading">Computation of global sections</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X806638F97CECBC02">14.2-1 H0</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X82239D1584CC5169">14.2-2 H0Parallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7E0A3B137BCC127F">14.3 <span class="Heading">Computation of the i-th sheaf cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7B9CBB888756B239">14.3-1 Hi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X80DB4FBD869C8030">14.3-2 HiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7ED9C2657DDABA20">14.4 <span class="Heading">Computation of all sheaf cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8252E52187CBF1C7">14.4-1 AllHi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7CC947D1784AC28A">14.4-2 AllHiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7A489A5D79DA9E5C">14.5 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85DC50617ED0EBF9">14.5-1 <span class="Heading">Sheaf cohomology of toric vector bundles</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8161BC5279B1F45E">14.5-2 <span class="Heading">Sheaf cohomologies of the irrelevant ideal of P1xP1</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chap15.html#X857DAA9B83253C53">15 <span class="Heading">Tools for cohomology computations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X814BA5C37D9161B5">15.1 <span class="Heading">Turn CAP Graded Modules into old graded modules and vice versa</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7B552B1D7BE572F2">15.1-1 TurnIntoOldGradedModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7E2D26D17EB8826A">15.2 <span class="Heading">Save CAP f.p. graded module to file</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X80D646137C4C2787">15.2-1 SaveToFileAsOldGradedModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X852EB1358279C4BF">15.2-2 SaveToFileAsCAPGradedModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7F1DCE007A619814">15.3 <span class="Heading">Approximation Of Sheaf Cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X879C9BF681F92847">15.3-1 BPowerLeft</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7DE7517B87B72608">15.3-2 BPowerRight</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X782C40FD789477A0">15.3-3 ApproxH0</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7A20D76A87500E66">15.3-4 ApproxH0Parallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7DC2C6307B02302C">15.3-5 ApproxHi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X82F50DDF83474880">15.3-6 ApproxHiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7A489A5D79DA9E5C">15.4 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X819D1D7679F04980">15.4-1 <span class="Heading">Conversion of modules</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7EB5685C81D410CF">15.4-2 <span class="Heading">Approximation of 0-th sheaf cohomology</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X80CE8A8086FB803A">15.4-3 <span class="Heading">Approximation of 1-st sheaf cohomology</span></a>
+</span>
+</div></div>
+</div>
+<div class="ContChap"><a href="chapInd.html"><span class="Heading">Index</span></a></div>
+<br />
+</div>
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

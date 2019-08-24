@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (SheafCohomologyOnToricVarieties) - Chapter 15: Tools for cohomology computations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap15"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap15_mj.html">[MathJax on]</a></p>
+<p><a id="X857DAA9B83253C53" name="X857DAA9B83253C53"></a></p>
+<div class="ChapSects"><a href="chap15.html#X857DAA9B83253C53">15 <span class="Heading">Tools for cohomology computations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X814BA5C37D9161B5">15.1 <span class="Heading">Turn CAP Graded Modules into old graded modules and vice versa</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7B552B1D7BE572F2">15.1-1 TurnIntoOldGradedModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7E2D26D17EB8826A">15.2 <span class="Heading">Save CAP f.p. graded module to file</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X80D646137C4C2787">15.2-1 SaveToFileAsOldGradedModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X852EB1358279C4BF">15.2-2 SaveToFileAsCAPGradedModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7F1DCE007A619814">15.3 <span class="Heading">Approximation Of Sheaf Cohomologies</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X879C9BF681F92847">15.3-1 BPowerLeft</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7DE7517B87B72608">15.3-2 BPowerRight</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X782C40FD789477A0">15.3-3 ApproxH0</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7A20D76A87500E66">15.3-4 ApproxH0Parallel</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7DC2C6307B02302C">15.3-5 ApproxHi</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X82F50DDF83474880">15.3-6 ApproxHiParallel</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7A489A5D79DA9E5C">15.4 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X819D1D7679F04980">15.4-1 <span class="Heading">Conversion of modules</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7EB5685C81D410CF">15.4-2 <span class="Heading">Approximation of 0-th sheaf cohomology</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X80CE8A8086FB803A">15.4-3 <span class="Heading">Approximation of 1-st sheaf cohomology</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>15 <span class="Heading">Tools for cohomology computations</span></h3>
+
+<p><a id="X814BA5C37D9161B5" name="X814BA5C37D9161B5"></a></p>
+
+<h4>15.1 <span class="Heading">Turn CAP Graded Modules into old graded modules and vice versa</span></h4>
+
+<p><a id="X7B552B1D7BE572F2" name="X7B552B1D7BE572F2"></a></p>
+
+<h5>15.1-1 TurnIntoOldGradedModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TurnIntoOldGradedModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the corresponding graded modules in terms of the 'old' packages GradedModules</p>
+
+<p>The argument is a graded left or right module presentation M for CAP</p>
+
+<p><a id="X7E2D26D17EB8826A" name="X7E2D26D17EB8826A"></a></p>
+
+<h4>15.2 <span class="Heading">Save CAP f.p. graded module to file</span></h4>
+
+<p><a id="X80D646137C4C2787" name="X80D646137C4C2787"></a></p>
+
+<h5>15.2-1 SaveToFileAsOldGradedModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveToFileAsOldGradedModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true (in case of success) or raises error in case the file could not be written</p>
+
+<p>The argument is a graded left or right module presentation M for CAP and saves this module to file as 'old' graded module presentation. By default, the files are saved in the main directory of the package 'SheafCohomologyOnToricVarieties'.</p>
+
+<p><a id="X852EB1358279C4BF" name="X852EB1358279C4BF"></a></p>
+
+<h5>15.2-2 SaveToFileAsCAPGradedModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveToFileAsCAPGradedModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true (in case of success) or raises error in case the file could not be written</p>
+
+<p>The argument is a graded left or right module presentation M for CAP and saves this module to file as CAP graded module presentation. By default, the files are saved in the main directory of the package 'SheafCohomologyOnToricVarieties'.</p>
+
+<p><a id="X7F1DCE007A619814" name="X7F1DCE007A619814"></a></p>
+
+<h4>15.3 <span class="Heading">Approximation Of Sheaf Cohomologies</span></h4>
+
+<p><a id="X879C9BF681F92847" name="X879C9BF681F92847"></a></p>
+
+<h5>15.3-1 BPowerLeft</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BPowerLeft</code>( <var class="Arg">V</var>, <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP graded left module</p>
+
+<p>The argument is a toric variety V and a non-negative integer e. The method computes the e-th Frobenius power of the irrelevant left ideal of V.</p>
+
+<p><a id="X7DE7517B87B72608" name="X7DE7517B87B72608"></a></p>
+
+<h5>15.3-2 BPowerRight</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BPowerRight</code>( <var class="Arg">V</var>, <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP graded right module</p>
+
+<p>The argument is a toric variety V and a non-negative integer e. The method computes the e-th Frobenius power of the irrelevant right ideal of V.</p>
+
+<p><a id="X782C40FD789477A0" name="X782C40FD789477A0"></a></p>
+
+<h5>15.3-3 ApproxH0</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApproxH0</code>( <var class="Arg">V</var>, <var class="Arg">e</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a non-negative integer</p>
+
+<p>The argument is a toric variety V, a non-negative integer e and a graded CAP module M. The method computes the degree zero layer of Hom( B(e), M ) and returns its vector space dimension.</p>
+
+<p><a id="X7A20D76A87500E66" name="X7A20D76A87500E66"></a></p>
+
+<h5>15.3-4 ApproxH0Parallel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApproxH0Parallel</code>( <var class="Arg">V</var>, <var class="Arg">e</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a non-negative integer</p>
+
+<p>The argument is a toric variety V, a non-negative integer e and a graded CAP module M. The method computes the degree zero layer of Hom( B(e), M ) by use of parallelisation and returns its vector space dimension.</p>
+
+<p><a id="X7DC2C6307B02302C" name="X7DC2C6307B02302C"></a></p>
+
+<h5>15.3-5 ApproxHi</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApproxHi</code>( <var class="Arg">V</var>, <var class="Arg">i</var>, <var class="Arg">e</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a non-negative integer</p>
+
+<p>The argument is a toric variety V, non-negative integers i, e and a graded CAP module M. The method computes the degree zero layer of Ext^i( B(e), M ) and returns its vector space dimension.</p>
+
+<p><a id="X82F50DDF83474880" name="X82F50DDF83474880"></a></p>
+
+<h5>15.3-6 ApproxHiParallel</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApproxHiParallel</code>( <var class="Arg">V</var>, <var class="Arg">i</var>, <var class="Arg">e</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a non-negative integer</p>
+
+<p>The argument is a toric variety V, non-negative integer i, e and a graded CAP module M. The method computes the degree zero layer of Ext^i( B(e), M ) by use of parallelisation and returns its vector space dimension.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>15.4 <span class="Heading">Examples</span></h4>
+
+<p><a id="X819D1D7679F04980" name="X819D1D7679F04980"></a></p>
+
+<h5>15.4-1 <span class="Heading">Conversion of modules</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1 := ProjectiveSpace( 1 );</span>
+&lt;A projective toric variety of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1xP1 := P1 * P1;</span>
+&lt;A projective toric variety of dimension 2
+which is a product of 2 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">irP1xP1 := IrrelevantLeftIdealForCAP( P1xP1 );</span>
+&lt;An object in Category of f.p. graded left
+modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">module2 := TurnIntoOldGradedModule( irP1xP1 );</span>
+&lt;A graded left module presented by 4 relations for 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">module3 := TurnIntoCAPGradedModule( module2 );</span>
+&lt;An object in Category of f.p. graded left
+modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">module3 = irP1xP1;</span>
+true
+</pre></div>
+
+<p><a id="X7EB5685C81D410CF" name="X7EB5685C81D410CF"></a></p>
+
+<h5>15.4-2 <span class="Heading">Approximation of 0-th sheaf cohomology</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0( P1xP1, 0, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0( P1xP1, 1, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0( P1xP1, 2, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0Parallel( P1xP1, 0, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0Parallel( P1xP1, 1, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxH0Parallel( P1xP1, 2, irP1xP1 );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+</pre></div>
+
+<p><a id="X80CE8A8086FB803A" name="X80CE8A8086FB803A"></a></p>
+
+<h5>15.4-3 <span class="Heading">Approximation of 1-st sheaf cohomology</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F1 := Fan( [[1],[-1]],[[1],[2]] );</span>
+&lt;A fan in |R^1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1 := ToricVariety( F1 );</span>
+&lt;A toric variety of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P1xP1 := P1 * P1;</span>
+&lt;A toric variety of dimension 2 which is a product of 2 toric varieties&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">VForCAP := AsFreydCategoryObject( GradedRow( [[[1,1],1],[[-2,0],1]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                                         CoxRing( P1xP1 ) ) );</span>
+&lt;A projective object in Category of f.p. graded
+left modules over Q[x_1,x_2,x_3,x_4] (with weights
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHi( P1xP1, 1, 0, VForCAP );</span>
+&lt;A vector space object over Q of dimension 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHi( P1xP1, 1, 1, VForCAP );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHi( P1xP1, 1, 2, VForCAP );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHiParallel( P1xP1, 1, 0, VForCAP );</span>
+&lt;A vector space object over Q of dimension 0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHiParallel( P1xP1, 1, 1, VForCAP );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApproxHiParallel( P1xP1, 1, 2, VForCAP );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap14.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

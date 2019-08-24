@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (SheafCohomologyOnToricVarieties) - Chapter 7: Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap7"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap7.html">[MathJax off]</a></p>
+<p><a id="X7CCC40FA815A55EA" name="X7CCC40FA815A55EA"></a></p>
+<div class="ChapSects"><a href="chap7_mj.html#X7CCC40FA815A55EA">7 <span class="Heading">Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X830F58607B4D4C12">7.1 <span class="Heading">GAP category of irreducible, complete, torus-invariant curves (= ICT curves)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X850B21658166706F">7.1-1 IsICTCurve</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X8553801780AB31D2">7.2 <span class="Heading">Constructors for ICT Curves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B4CD31E8173B4BC">7.2-1 ICTCurve</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7B35A89482BC8E89">7.3 <span class="Heading">Attributes for ICT curves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X820B4CFF7B90E4A1">7.3-1 AmbientToricVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7931E28B7BBAE126">7.3-2 IntersectedMaximalCones</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7F73DF2F846C208E">7.3-3 RayGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X80EE138281563E7D">7.3-4 DefiningVariables</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C6D5FC08563A307">7.3-5 LeftStructureSheaf</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X818EE26F7E0CB119">7.3-6 RightStructureSheaf</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7C5D67897A9879FB">7.3-7 IntersectionU</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X870E47497F6FA828">7.3-8 IntersectionList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X85D64A7F820930F4">7.4 <span class="Heading">Operations with ICTCurves</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E4E0C127CC4BAA8">7.4-1 ICTCurves</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X86F12D36867861E5">7.4-2 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X82B2C573868E2017">7.4-3 IntersectionProduct</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7AFF052E7BA9D0F3">7.5 <span class="Heading">GAP category for proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7A25DF897F2CD605">7.5-1 IsProper1Cycle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7FE0B6E9806599A1">7.6 <span class="Heading">Constructor For Proper 1-Cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7EED11157DAD88FA">7.6-1 GeneratorsOfProper1Cycles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X83F7464C820146BA">7.6-2 Proper1Cycle</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X849341167EF9F424">7.7 <span class="Heading">Attributes for proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X848BD3EC8504059F">7.7-1 AmbientToricVariety</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B7E08E2850BE1F8">7.7-2 UnderlyingGroupElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X865DAEC07BE0E063">7.8 <span class="Heading">Operations with proper 1-cycles</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X87E986CF7BA5A12E">7.8-1 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E3BAE0182356C57">7.8-2 IntersectionProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E9AB7467AAB1B34">7.8-3 IntersectionForm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7F6099FC7DA7FF99">7.9 <span class="Heading">Examples in projective space</span></a>
+</span>
+</div>
+</div>
+
+<h3>7 <span class="Heading">Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety</span></h3>
+
+<p><a id="X830F58607B4D4C12" name="X830F58607B4D4C12"></a></p>
+
+<h4>7.1 <span class="Heading">GAP category of irreducible, complete, torus-invariant curves (= ICT curves)</span></h4>
+
+<p><a id="X850B21658166706F" name="X850B21658166706F"></a></p>
+
+<h5>7.1-1 IsICTCurve</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsICTCurve</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The GAP category for irreducible, complete, torus-invariant curves</p>
+
+<p><a id="X8553801780AB31D2" name="X8553801780AB31D2"></a></p>
+
+<h4>7.2 <span class="Heading">Constructors for ICT Curves</span></h4>
+
+<p><a id="X7B4CD31E8173B4BC" name="X7B4CD31E8173B4BC"></a></p>
+
+<h5>7.2-1 ICTCurve</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ICTCurve</code>( <var class="Arg">X_Sigma</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an ICT curve</p>
+
+<p>The arguments are a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span> and two non-negative and distinct integers <span class="SimpleMath">\(i,j\)</span>. We then consider the i-th and j-th maximal cones <span class="SimpleMath">\(\sigma_i\)</span> and <span class="SimpleMath">\(\sigma_j\)</span>. ! If <span class="SimpleMath">\(\tau := \sigma_i \cap \sigma_j\)</span> satisfies <span class="SimpleMath">\(dim \left( \tau \right) = dim \left( \sigma_1 \right) - 1\)</span>, then <span class="SimpleMath">\(\tau\)</span> corresponds to an ICT-curve. We then construct this very ICT-curve.</p>
+
+<p><a id="X7B35A89482BC8E89" name="X7B35A89482BC8E89"></a></p>
+
+<h4>7.3 <span class="Heading">Attributes for ICT curves</span></h4>
+
+<p><a id="X820B4CFF7B90E4A1" name="X820B4CFF7B90E4A1"></a></p>
+
+<h5>7.3-1 AmbientToricVariety</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientToricVariety</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a toric variety</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the toric variety, in which this curve <span class="SimpleMath">\(C\)</span> lies.</p>
+
+<p><a id="X7931E28B7BBAE126" name="X7931E28B7BBAE126"></a></p>
+
+<h5>7.3-2 IntersectedMaximalCones</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectedMaximalCones</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of two positive and distinct integers</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output are two integers, which indicate which maximal rays were intersected to form the cone <span class="SimpleMath">\(\tau\)</span> associated to this curve <span class="SimpleMath">\(C\)</span>.</p>
+
+<p><a id="X7F73DF2F846C208E" name="X7F73DF2F846C208E"></a></p>
+
+<h5>7.3-3 RayGenerators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RayGenerators</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists of integers</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the list of ray-generators for the cone tau</p>
+
+<p><a id="X80EE138281563E7D" name="X80EE138281563E7D"></a></p>
+
+<h5>7.3-4 DefiningVariables</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningVariables</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the list of variables whose simultaneous vanishing locus cuts out this curve.</p>
+
+<p><a id="X7C6D5FC08563A307" name="X7C6D5FC08563A307"></a></p>
+
+<h5>7.3-5 LeftStructureSheaf</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftStructureSheaf</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a f.p. graded left S-module</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the f.p. graded left S-module which sheafifes to the structure sheaf of this curve <span class="SimpleMath">\(C\)</span>.</p>
+
+<p><a id="X818EE26F7E0CB119" name="X818EE26F7E0CB119"></a></p>
+
+<h5>7.3-6 RightStructureSheaf</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightStructureSheaf</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a f.p. graded right S-module</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the f.p. graded right S-module which sheafifes to the structure sheaf of this curve <span class="SimpleMath">\(C\)</span>.</p>
+
+<p><a id="X7C5D67897A9879FB" name="X7C5D67897A9879FB"></a></p>
+
+<h5>7.3-7 IntersectionU</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionU</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is the integral vector <span class="SimpleMath">\(u\)</span> used to compute intersection products with Cartier divisors.</p>
+
+<p><a id="X870E47497F6FA828" name="X870E47497F6FA828"></a></p>
+
+<h5>7.3-8 IntersectionList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionList</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The argument is an ICT curve <span class="SimpleMath">\(C\)</span>. The output is a list with the intersection numbers of a canonical base of the class group. This basis is to take <span class="SimpleMath">\(\left( e_1, \dots, e_k \right)\)</span> with <span class="SimpleMath">\(e_i = \left( 0, \dots, 0, 1, 0, \dots, 0 \right) \in Cl \left( X_\Sigma \right)\)</span>.</p>
+
+<p><a id="X85D64A7F820930F4" name="X85D64A7F820930F4"></a></p>
+
+<h4>7.4 <span class="Heading">Operations with ICTCurves</span></h4>
+
+<p><a id="X7E4E0C127CC4BAA8" name="X7E4E0C127CC4BAA8"></a></p>
+
+<h5>7.4-1 ICTCurves</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ICTCurves</code>( <var class="Arg">X_Sigma</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of ICT-curves.</p>
+
+<p>For a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span>, this method computes a list of all ICT-curves in <span class="SimpleMath">\(X_\Sigma\)</span>. Note that those curves can be numerically equivalent.</p>
+
+<p><a id="X86F12D36867861E5" name="X86F12D36867861E5"></a></p>
+
+<h5>7.4-2 IntersectionProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionProduct</code>( <var class="Arg">C</var>, <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>Given an ICT-curve <span class="SimpleMath">\(C\)</span> and a divisor <span class="SimpleMath">\(D\)</span> in a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span>, this method computes their intersection product.</p>
+
+<p><a id="X82B2C573868E2017" name="X82B2C573868E2017"></a></p>
+
+<h5>7.4-3 IntersectionProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionProduct</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><a id="X7AFF052E7BA9D0F3" name="X7AFF052E7BA9D0F3"></a></p>
+
+<h4>7.5 <span class="Heading">GAP category for proper 1-cycles</span></h4>
+
+<p><a id="X7A25DF897F2CD605" name="X7A25DF897F2CD605"></a></p>
+
+<h5>7.5-1 IsProper1Cycle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsProper1Cycle</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The GAP category for proper 1-cycles</p>
+
+<p><a id="X7FE0B6E9806599A1" name="X7FE0B6E9806599A1"></a></p>
+
+<h4>7.6 <span class="Heading">Constructor For Proper 1-Cycles</span></h4>
+
+<p><a id="X7EED11157DAD88FA" name="X7EED11157DAD88FA"></a></p>
+
+<h5>7.6-1 GeneratorsOfProper1Cycles</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfProper1Cycles</code>( <var class="Arg">X_Sigma</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of ICT-curves.</p>
+
+<p>For a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span>, this method computes a list of all ICT-curves which are not numerically equivalent. We use this list of ICT-curves as a basis of proper 1-cycles on <span class="SimpleMath">\(X_\Sigma\)</span> in the constructor below, when computing the intersection form and the Nef-cone.</p>
+
+<p><a id="X83F7464C820146BA" name="X83F7464C820146BA"></a></p>
+
+<h5>7.6-2 Proper1Cycle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Proper1Cycle</code>( <var class="Arg">X_Sigma</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a proper 1-cycle</p>
+
+<p>The arguments are a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span> and a list of integers. We then use the integers in this list as 'coordinates' of the proper 1-cycle with respect to the list of proper 1-cycles produced by the previous method. We then return the corresponding proper 1-cycle.</p>
+
+<p><a id="X849341167EF9F424" name="X849341167EF9F424"></a></p>
+
+<h4>7.7 <span class="Heading">Attributes for proper 1-cycles</span></h4>
+
+<p><a id="X848BD3EC8504059F" name="X848BD3EC8504059F"></a></p>
+
+<h5>7.7-1 AmbientToricVariety</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientToricVariety</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a toric variety</p>
+
+<p>The argument is a proper 1-cycle <span class="SimpleMath">\(C\)</span>. The output is the toric variety, in which this cycle <span class="SimpleMath">\(C\)</span> lies.</p>
+
+<p><a id="X7B7E08E2850BE1F8" name="X7B7E08E2850BE1F8"></a></p>
+
+<h5>7.7-2 UnderlyingGroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingGroupElement</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>The argument is a proper 1-cycle. We then return the underlying group element (with respect to the generators computed from the method \emph{GeneratorsOfProper1Cycles}).</p>
+
+<p><a id="X865DAEC07BE0E063" name="X865DAEC07BE0E063"></a></p>
+
+<h4>7.8 <span class="Heading">Operations with proper 1-cycles</span></h4>
+
+<p><a id="X87E986CF7BA5A12E" name="X87E986CF7BA5A12E"></a></p>
+
+<h5>7.8-1 IntersectionProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionProduct</code>( <var class="Arg">C</var>, <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>Given a proper 1-cycle <span class="SimpleMath">\(C\)</span> and a divisor <span class="SimpleMath">\(D\)</span> in a smooth and complete toric variety <span class="SimpleMath">\(X_\Sigma\)</span>, this method computes their intersection product.</p>
+
+<p><a id="X7E3BAE0182356C57" name="X7E3BAE0182356C57"></a></p>
+
+<h5>7.8-2 IntersectionProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionProduct</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><a id="X7E9AB7467AAB1B34" name="X7E9AB7467AAB1B34"></a></p>
+
+<h5>7.8-3 IntersectionForm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionForm</code>( <var class="Arg">vari</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>Given a simplicial and complete toric variety, we can use proposition 6.4.1 of Cox-Schenk-Litte to compute the intersection form <span class="SimpleMath">\(N^1 \left( X_\Sigma \right) \times N_1 \left( X_\Sigma \right) \to \mathbb{R} \)</span>. We return a list of lists that encodes this mapping.</p>
+
+<p><a id="X7F6099FC7DA7FF99" name="X7F6099FC7DA7FF99"></a></p>
+
+<h4>7.9 <span class="Heading">Examples in projective space</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P2 := ProjectiveSpace( 2 );</span>
+&lt;A projective toric variety of dimension 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ICTCurves( P2 );</span>
+[ &lt;An irreducible, complete, torus-invariant curve in a toric variety
+   given as V( [ x_3 ] )&gt;,
+  &lt;An irreducible, complete, torus-invariant curve in a toric variety
+   given as V( [ x_2 ] )&gt;,
+  &lt;An irreducible, complete, torus-invariant curve in a toric variety
+   given as V( [ x_1 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1 := ICTCurves( P2 )[ 1 ];</span>
+&lt;An irreducible, complete, torus-invariant curve in a toric variety
+ given as V( [ x_3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntersectionForm( P2 );</span>
+[ [ 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntersectionProduct( C1, DivisorOfGivenClass( P2, [ 1 ] ) );</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IntersectionProduct( DivisorOfGivenClass( P2, [ 5 ] ), C1 );</span>
+5
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P3 := ProjectiveSpace( 3 );</span>
+&lt;A projective toric variety of dimension 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1 := ICTCurves( P3 )[ 1 ];</span>
+&lt;An irreducible, complete, torus-invariant curve in a toric variety
+ given as V( [ x_3, x_4 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars := DefiningVariables( C1 );</span>
+[ x_3, x_4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">structureSheaf1 := LeftStructureSheaf( C1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( structureSheaf1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">structureSheaf2 := RightStructureSheaf( C1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( structureSheaf2 );</span>
+true
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

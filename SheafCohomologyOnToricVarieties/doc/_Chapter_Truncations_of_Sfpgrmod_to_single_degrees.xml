@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees">
+<Heading>Truncations of Sfpgrmod to single degrees</Heading>
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_DegreeXLayers_of_the_Cox_ring">
+<Heading>DegreeXLayers of the Cox ring</Heading>
+
+<ManSection>
+  <Oper Arg="vari, degree" Name="Exponents" Label="for IsToricVariety, IsList"/>
+ <Returns>a list of lists of integers
+</Returns>
+ <Description>
+Given a smooth and complete toric variety and a list of integers (= degree) corresponding to an element of
+the class group of the variety, this method return a list of integer valued lists. These lists correspond
+to the exponents of the monomials of degree in the Cox ring of this toric variety.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, degree" Name="MonomsOfCoxRingOfDegreeByNormaliz" Label="for IsToricVariety, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+Given a smooth and complete toric variety and a list of integers (= degree) corresponding to an element
+of the class group of the variety, this method returns the list of all monomials in the Cox ring of the
+given degree. This method uses NormalizInterface.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, degree" Name="DegreeXLayer" Label="for IsToricVariety, IsList"/>
+ <Returns>a list
+</Returns>
+ <Description>
+Given a smooth and complete toric variety and a list of integers (= degree) corresponding to an element
+of the class group of the variety, this method returns the list of all monomials in the Cox ring of the
+given degree. This method uses NormalizInterface.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, degree, i, l" Name="DegreeXLayerVectorsAsColumnMatrices" Label="for IsToricVariety, IsList, IsPosInt, IsPosInt"/>
+ <Returns>a list of matrices
+</Returns>
+ <Description>
+Given a smooth and complete toric variety, a list of integers (= degree) corresponding to an element
+of the class group of the variety and two non-negative integers i and l, this method returns a list
+of column matrices. The columns are of length l and have at position i the monoms of the Coxring of degree 'degree'.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_GAP_category_of_DegreeXLayerVectorSpacesMorphisms">
+<Heading>GAP category of DegreeXLayerVectorSpaces(Morphisms)</Heading>
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpace" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpaceMorphism" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for morphisms between vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpacePresentation" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for (left) presentations of vector spaces that represent a degree layer of a f.p. graded module
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="object" Name="IsDegreeXLayerVectorSpacePresentationMorphism" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The GAP category for (left) presentation morphisms of vector spaces that represent a degree layer of a
+f.p. graded module
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Constructors_for_DegreeXLayerVectorSpacesMorphisms">
+<Heading>Constructors for DegreeXLayerVectorSpaces(Morphisms)</Heading>
+
+<ManSection>
+  <Oper Arg="L, S, V, n" Name="DegreeXLayerVectorSpace" Label="for IsList, IsHomalgGradedRing, IsVectorSpaceObject, IsInt"/>
+ <Returns>a CAPCategoryObject
+</Returns>
+ <Description>
+The arguments are a list of monomials <Math>L</Math>, a homalg graded ring <Math>S</Math> (the Coxring of the
+variety in question)), a vector space <Math>V</Math> and a non-negative integer <Math>n</Math>. <Math>V</Math> is to be
+given as a vector space defined in the package 'LinearAlgebraForCAP'.
+This method then returns the corresponding DegreeXLayerVectorSpace.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="L, S, V" Name="DegreeXLayerVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpace, IsVectorSpaceMorphism, IsDegreeXLayerVectorSpace"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments are a DegreeXLayerVectorSpace <A>source</A>, a vector space morphism <Math>\varphi</Math> (as defined in
+'LinearAlgebraForCAP') and a DegreeXLayerVectorSpace <A>range</A>. If <Math>\varphi</Math> is a vector space
+morphism between the underlying vector spaces of <A>source</A> and <A>range</A> this method returns
+the corresponding DegreeXLayerVectorSpaceMorphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="a" Name="DegreeXLayerVectorSpacePresentation" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments is a DegreeXLayerVectorSpaceMorphism <A>a</A>. This method treats this morphism as a
+presentation, i.e. we are interested in the cokernel of the underlying morphism of vector spaces. The corresponding
+DegreeXLayerVectorSpacePresentation is returned.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="source, \varphi, range" Name="DegreeXLayerVectorSpacePresentationMorphism" Label="for IsDegreeXLayerVectorSpacePresentation, IsVectorSpaceMorphism, IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a DegreeXLayerVectorSpacePresentationMorphism
+</Returns>
+ <Description>
+The arguments is a DegreeXLayerVectorSpacePresentation <A>source</A>, a vector space morphism <Math>\varphi</Math> and a
+DegreeXLayerVectorSpacePresentation <A>range</A>. The corresponding DegreeXLayerVectorSpacePresentationMorphism
+is returned.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Attributes_for_DegreeXLayerVectorSpacesMorphisms">
+<Heading>Attributes for DegreeXLayerVectorSpaces(Morphisms)</Heading>
+
+<ManSection>
+  <Attr Arg="V" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the Coxring, in which this
+vector space is embedded via the generators (specified when installing <Math>V</Math>).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="Generators" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a list
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the list of generators, that
+embed <Math>V</Math> into the Coxring in question.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="UnderlyingVectorSpaceObject" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. The output is the underlying vectorspace object
+(as defined in 'LinearAlgebraForCAP').
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="V" Name="EmbeddingDimension" Label="for IsDegreeXLayerVectorSpace"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpace <Math>V</Math>. For <Math>S</Math> its 'UnderlyingHomalgGradedRing' this vector space
+is embedded (via its generators) into <Math>S^n</Math>. The integer <Math>n</Math> is the embedding dimension.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Source" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Range" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpaceMorphism"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpaceMorphism <Math>a</Math>. The output is the Coxring, in which the source and range of this
+is morphism are embedded.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingDegreeXLayerVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the underlying
+DegreeXLayerVectorSpaceMorphism
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceObject" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a VectorSpaceObject
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the vector space object
+which is the cokernel of the underlying vector space morphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpaceMorphism" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a VectorSpaceMorphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the vector space morphism
+which defines the underlying morphism of DegreeXLayerVectorSpaces.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the Coxring,
+in which the source and range of the underlying morphism of DegreeXLayerVectorSpaces are embedded.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpacePresentation" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>a CAP presentation category object
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>a</Math>. The output is the underlying
+vector space presentation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Source" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a DegreeXLayerVectorSpacePresentation
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is its source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="Range" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a DegreeXLayerVectorSpacePresentation
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is its range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingHomalgGradedRing" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a homalg graded ring
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is the underlying graded ring of its
+source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="a" Name="UnderlyingVectorSpacePresentationMorphism" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>a CAP presentation category morphism
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>a</Math>. The output is the underlying vector space
+presentation morphism.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Convenient_methods_to_display_all_information_about_vector_space_presentations_and_morphisms_thereof">
+<Heading>Convenient methods to display all information about vector space presentations and morphisms thereof</Heading>
+
+<ManSection>
+  <Oper Arg="p" Name="FullInformation" Label="for IsDegreeXLayerVectorSpacePresentation"/>
+ <Returns>detailed information about p
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentation <Math>p</Math>. This method displays <Math>p</Math> in great detail.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="p" Name="FullInformation" Label="for IsDegreeXLayerVectorSpacePresentationMorphism"/>
+ <Returns>detailed information about p
+</Returns>
+ <Description>
+The argument is a DegreeXLayerVectorSpacePresentationMorphism <Math>p</Math>. This method displays <Math>p</Math> in great detail.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Truncations_of_projective_graded_modules_as_defined_in_CAP_to_a_single_degree">
+<Heading>Truncations of projective graded modules (as defined in CAP) to a single degree</Heading>
+
+<ManSection>
+  <Oper Arg="V, M, degree_list" Name="DegreeXLayerOfProjectiveGradedLeftOrRightModule" Label="for IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsList, IsHomalgRing"/>
+ <Returns>a DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a projective graded <Math>S</Math>-module <Math>M</Math> (<Math>S</Math> being the Cox ring of <Math>V</Math>)
+and a <A>degree_list</A> specifying an element of the degree group of the toric variety <Math>V</Math>. The latter can either
+be specified by a list of integers or a HomalgModuleElement. Based on this input, the method computes the
+truncation of <Math>M</Math> to the specified degree.
+We expect that <Math>V</Math> is smooth and compact. Under these circumstances the truncation is a finite dimensional
+vector space and we return the corresponding DegreeXLayerVectorSpace.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, M, degree_list" Name="DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices" Label="for IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsList"/>
+ <Returns>a formated DegreeXLayerVectorSpace
+</Returns>
+ <Description>
+The arguments are as before, but will format the DegreeXLayer a bit more.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, \varphi, degree_list" Name="DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism" Label="for IsToricVariety, IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism, IsList, IsHomalgRing, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpaceMorphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a projective graded <Math>S</Math>-module morphism <Math>\varphi</Math>
+(<Math>S</Math> being the Cox ring of <Math>V</Math>) and a <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math>. The latter can either be a list of integers or a HomalgModuleElement. Based on this input,
+the method returns the truncation of <Math>\varphi</Math> to the specified degree.
+We expect that <Math>V</Math> is smooth and compact. Under these circumstances the truncation is a morphism of finite dimensional
+vector spaces. We return the corresponding DegreeXLayerVectorSpaceMorphism.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_DegreeXLayer_of_projective_module_morphism_saved_in_file">
+<Heading>DegreeXLayer of projective module morphism saved in file</Heading>
+
+<ManSection>
+  <Oper Arg="V, \varphi, degree_list, file_name" Name="ComputeDegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphismMinimally" Label="for IsList, IsBool"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a projective graded <Math>S</Math>-module morphism <Math>\varphi</Math>
+(<Math>S</Math> being the Cox ring of <Math>V</Math>) and a <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math> and string 'file_name'. This method then computes the matrix encoding the DegreeXLayer of the
+given morphism of projective modules and saves it to the file 'file_name'. This file is prepared to be used with
+gap.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Truncation_functor_of_projective_graded_modules_as_defined_in_CAP_to_a_single_degree">
+<Heading>Truncation functor of projective graded modules (as defined in CAP) to a single degree</Heading>
+
+<ManSection>
+  <Oper Arg="V, degree_list" Name="DegreeXLayerOfProjectiveGradedLeftModulesFunctor" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math>. The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the functor for the truncation of projective graded left-<Math>S</Math>-modules
+to <A>degree_list</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, degree_list" Name="DegreeXLayerOfProjectiveGradedRightModulesFunctor" Label="for IsToricVariety, IsList"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math>. The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the functor for the truncation of projective graded right-<Math>S</Math>-modules
+to <A>degree_list</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, degree_list" Name="DegreeXLayerOfGradedLeftModulePresentationFunctor" Label="for IsToricVariety, IsList, IsBool"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math>.
+The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the functor for the truncation of
+graded left-<Math>S</Math>-module presentations to <A>degree_list</A>.
+Optionally, a boolean <Math>b</Math> can be provided as fourth argument. It will display/suppress information on the status of the computation.
+<Math>b = true</Math> will print information on the status of the computation, which might be useful in case the calculation takes several hours
+and the user wants to stay informed on the status of the computation. <Math>b = false</Math> will suppress this output. The defaul value is false.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, degree_list" Name="DegreeXLayerOfGradedRightModulePresentationFunctor" Label="for IsToricVariety, IsList, IsBool"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math> and <A>degree_list</A> specifying an element of the degree group of the
+toric variety <Math>V</Math>.
+The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the functor for the truncation of
+graded right-<Math>S</Math>-module presentations to <A>degree_list</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Truncations_of_graded_module_presentations_as_defined_in_CAP_to_a_single_degree">
+<Heading>Truncations of graded module presentations (as defined in CAP) to a single degree</Heading>
+
+<ManSection>
+  <Oper Arg="V, alpha, degree_list" Name="DegreeXLayerOfGradedLeftOrRightModulePresentation" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpacePresentation
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a graded module presentation <Math>\alpha</Math>
+and <A>degree_list</A> specifying an element of the degree group of the toric variety <Math>V</Math>.
+The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the truncation of <Math>\alpha</Math> to the specified degree.
+We expect that <Math>V</Math> is smooth and compact. Under these circumstances the truncation is a finite dimensional
+vector space presentation. We return the corresponding DegreeXLayerVectorSpacePresentation.
+Optionally, a boolean <Math>b</Math> can be provided as fourth argument. It will display/suppress information on the status of the computation.
+<Math>b = true</Math> will print information on the status of the computation, which might be useful in case the calculation takes several hours
+and the user wants to stay informed on the status of the computation. <Math>b = false</Math> will suppress this output. The defaul value is false.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, alpha, degree_list" Name="DegreeXLayer" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationForCAP, IsList, IsBool"/>
+ <Returns>a CAPPresentationCategoryObject
+</Returns>
+ <Description>
+The same as DegreeXLayerOfGradedLeftOrRightModulePresentation, but immediately returns the
+underlying vector space presentation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, alpha, degree_list" Name="DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsList, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpacePresentationMorphism
+</Returns>
+ <Description>
+The arguments are a toric variety <Math>V</Math>, a graded module presentation morphism <Math>\alpha</Math>
+and <A>degree_list</A> specifying an element of the degree group of the toric variety <Math>V</Math>.
+The latter can either be a list of integers or a HomalgModuleElement.
+Based on this input, the method returns the truncation of <Math>\alpha</Math> to the specified degree.
+We expect that <Math>V</Math> is smooth and compact. Under these circumstances the truncation is a morphism of
+finite dimensional vector space presentations. We return the corresponding DegreeXLayerVectorSpacePresentationMorphism.
+Optionally, a boolean <Math>b</Math> can be provided as fourth argument. It will display/suppress information on the status of the computation.
+<Math>b = true</Math> will print information on the status of the computation, which might be useful in case the calculation takes several hours
+and the user wants to stay informed on the status of the computation. <Math>b = false</Math> will suppress this output. The defaul value is false.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, alpha, degree_list, truncated_source, truncated_range" Name="DegreeXLayerOfGradedLeftOrRightModulePresentationMorphismWithGivenSourceAndRange" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsList,IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject, IsBool"/>
+ <Returns>a DegreeXLayerVectorSpacePresentationMorphism
+</Returns>
+ <Description>
+As 'DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism', but takes the truncations of source and range as input.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="V, alpha, degree_list" Name="DegreeXLayer" Label="for IsToricVariety, IsGradedLeftOrRightModulePresentationMorphismForCAP, IsList, IsBool"/>
+ <Returns>a CAPPresentationCategoryMorphism
+</Returns>
+ <Description>
+The same as DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism, but immediately returns the
+underlying vector space presentation morphism.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_Truncations_of_graded_module_presentations_as_defined_in_the_package_GradedModules">
+<Heading>Truncations of graded module presentations as defined in the package GradedModules</Heading>
+
+<ManSection>
+  <Oper Arg="vari, module, degree" Name="DegreeXLayerOfProjectiveGradedLeftOrRightModuleGeneratorsAsListOfColumnMatrices" Label="for IsToricVariety, IsGradedModuleOrGradedSubmoduleRep, IsList"/>
+ <Returns>a list of lists
+</Returns>
+ <Description>
+Given a smooth and complete toric variety with Coxring S, a graded free S-module 'module' and list
+of integers (=degree) corresponding to an element of the class group of the toric variety, this
+method returns a list of generators of the degree layer of the 'module'.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, module, degree" Name="DegreeXLayerOfFPGradedModuleForGradedModules" Label="for IsToricVariety, IsGradedModuleOrGradedSubmoduleRep, IsList"/>
+ <Returns>a vector space
+</Returns>
+ <Description>
+Given a smooth and complete toric variety with Coxring S, a f. p. graded S-module 'module' and list
+of integers (=degree) corresponding to an element of the class group of the toric variety, this
+method computes the degree 'degree' layer of (a) presentation morphisms of 'module' and returns the
+cokernel object of this homomorphism of vector spaces.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_DegreeXLayerVectorSpaces_Examples">
+<Heading>DegreeXLayerVectorSpaces: Examples</Heading>
+
+<Subsection Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_DegreeXLayerVectorSpaces_Examples_Subsection_DegreeXLayerVectorSpaces_of_graded_projective_modules_and_their_morphisms_on_P1xP1">
+<Heading>DegreeXLayerVectorSpaces of graded projective modules (and their morphisms) on P1xP1</Heading>
+
+<Example><![CDATA[
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> P1xP1 := P1*P1;
+<A projective toric variety of dimension 2 which is a 
+product of 2 toric varieties>
+gap> ByASmallerPresentation( ClassGroup( P1xP1 ) );
+<A free left module of rank 2 on free generators>
+gap> S := CoxRing( P1xP1 );
+Q[x_1,x_2,x_3,x_4]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), ( 0, 1 ) ])
+gap> sourceL := CAPCategoryOfProjectiveGradedLeftModulesObject( 
+>            [[[0,0],1]], S );
+<A projective graded left module of rank 1>
+gap> rangeL := CAPCategoryOfProjectiveGradedLeftModulesObject( 
+>           [[[-1,0],1]], S );
+<A projective graded left module of rank 1>
+gap> rangeL2 := CAPCategoryOfProjectiveGradedLeftModulesObject( 
+>            [[[-1,0],2]], S );
+<A projective graded left module of rank 2>
+gap> mappingL := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>             sourceL, HomalgMatrix( [[ "x_2" ]], S ), rangeL );
+<A morphism in the category of projective graded left modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> mappingL2 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>              sourceL, HomalgMatrix( [[ "x_2", "x_3" ]], S ), rangeL2 );
+<A morphism in the category of projective graded left modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> res1L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, sourceL, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ],
+[ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res1L ) );
+1
+gap> res2L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, sourceL, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res2L ) );
+6
+gap> res3L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res3L ) );
+2
+gap> res4L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res4L ) );
+9
+gap> res5L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL2, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^2>
+gap> Length( Generators( res5L ) );
+4
+gap> res6L := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL2, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^2>
+gap> Length( Generators( res6L ) );
+18
+gap> mor1L := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 0,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor1L );
+<A vector space object over Q of dimension 1>
+gap> mor2L := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 1,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 3
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created...
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor2L );
+<A vector space object over Q of dimension 1>
+gap> mor3L := UnderlyingVectorSpaceMorphism(
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 1,2 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 9
+NrColumns: 6
+Have to go until i = 6
+10% done...
+30% done...
+50% done...
+60% done...
+80% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor3L );
+<A vector space object over Q of dimension 3>
+gap> mor4L := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 0,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor4L );
+<A vector space object over Q of dimension 3>
+gap> mor5L := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 1,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 6
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor5L );
+<A vector space object over Q of dimension 4>
+gap> mor6L := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 1,2 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 18
+NrColumns: 6
+Have to go until i = 6
+10% done...
+30% done...
+50% done...
+60% done...
+80% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor6L );
+<A vector space object over Q of dimension 12>
+gap> sourceR := CAPCategoryOfProjectiveGradedRightModulesObject( [[[0,0],1]], S );
+<A projective graded right module of rank 1>
+gap> rangeR := CAPCategoryOfProjectiveGradedRightModulesObject( [[[-1,0],1]], S );
+<A projective graded right module of rank 1>
+gap> rangeR2 := CAPCategoryOfProjectiveGradedRightModulesObject( [[[-1,0],2]], S );
+<A projective graded right module of rank 2>
+gap> mappingR := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( sourceR, HomalgMatrix( [[ "x_2" ]], S ), rangeR );
+<A morphism in the category of projective graded right modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> mappingR2 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( sourceR, HomalgMatrix( [[ "x_2"],[ "x_3" ]], S ), rangeR2 );
+<A morphism in the category of projective graded right modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> res1R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, sourceL, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res1R ) );
+1
+gap> res2R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, sourceL, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res2R ) );
+6
+gap> res3R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res3R ) );
+2
+gap> res4R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^1>
+gap> Length( Generators( res4R ) );
+9
+gap> res5R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL2, [0,0] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^2>
+gap> Length( Generators( res5R ) );
+4
+gap> res6R := DegreeXLayerOfProjectiveGradedLeftOrRightModule( P1xP1, rangeL2, [1,2] );
+<A vector space embedded into (Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]))^2>
+gap> Length( Generators( res6R ) );
+18
+gap> mor1R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 0,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor1R );
+<A vector space object over Q of dimension 1>
+gap> mor2R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 1,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 3
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor2R );
+<A vector space object over Q of dimension 1>
+gap> mor3R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL, [ 1,2 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 9
+NrColumns: 6
+Have to go until i = 6
+10% done...
+30% done...
+50% done...
+60% done...
+80% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor3R );
+<A vector space object over Q of dimension 3>
+gap> mor4R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 0,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor4R );
+<A vector space object over Q of dimension 3>
+gap> mor5R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 1,0 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 6
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor5R );
+<A vector space object over Q of dimension 4>
+gap> mor6R := UnderlyingVectorSpaceMorphism( 
+>          DegreeXLayerOfProjectiveGradedLeftOrRightModuleMorphism( P1xP1, mappingL2, [ 1,2 ], true ) );
+Starting the matrix computation now... 
+
+NrRows: 18
+NrColumns: 6
+Have to go until i = 6
+10% done...
+30% done...
+50% done...
+60% done...
+80% done...
+100% done...
+matrix created... 
+<A morphism in Category of matrices over Q>
+gap> CokernelObject( mor6R );
+<A vector space object over Q of dimension 12>
+]]></Example>
+
+
+</Subsection>
+
+
+<Subsection Label="Chapter_Truncations_of_Sfpgrmod_to_single_degrees_Section_DegreeXLayerVectorSpaces_Examples_Subsection_DegreeXLayerVectorSpaces_of_fp_graded_modules_and_their_morphisms_on_P1xP1">
+<Heading>DegreeXLayerVectorSpaces of f.p. graded modules (and their morphisms) on P1xP1</Heading>
+
+<Example><![CDATA[
+gap> obj1L := CAPPresentationCategoryObject( mappingL );
+<A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg1L := DegreeXLayerOfGradedLeftOrRightModulePresentation( P1xP1, obj1L, [ 0,0 ], true );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A vector space embedded into (a suitable power of) Q[x_1,x_2,x_3,x_4] 
+ (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) given as the
+ cokernel of a vector space morphism>
+gap> IsEqualForMorphisms( UnderlyingVectorSpaceMorphism( deg1L ), mor1L );
+true
+gap> UnderlyingVectorSpaceObject( deg1L );
+<A vector space object over Q of dimension 1>
+gap> obj2L := CAPPresentationCategoryObject( mappingL2 );
+<A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg2L := DegreeXLayerOfGradedLeftOrRightModulePresentation( P1xP1, obj2L, [ 3,4 ], true );
+Starting the matrix computation now... 
+
+NrRows: 50
+NrColumns: 20
+Have to go until i = 20
+0% done...
+10% done...
+20% done...
+30% done...
+40% done...
+50% done...
+60% done...
+70% done...
+80% done...
+90% done...
+100% done...
+matrix created... 
+<A vector space embedded into (a suitable power of) Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) given as the
+cokernel of a vector space morphism>
+gap> IsMonomorphism( UnderlyingVectorSpaceMorphism( deg2L ) );
+true
+gap> IsEpimorphism( UnderlyingVectorSpaceMorphism( deg2L ) );
+false
+gap> UnderlyingVectorSpaceObject( deg2L );
+<A vector space object over Q of dimension 30>
+gap> mappingL3 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>              rangeL, HomalgMatrix( [ [ 1,1 ]], S ), rangeL2 );
+<A morphism in the category of projective graded left modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> mappingL4 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>              sourceL, HomalgMatrix( [ [ "x_2", "x_2" ]], S ), rangeL2 );
+<A morphism in the category of projective graded left modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> presentation_morphismL := CAPPresentationCategoryMorphism( 
+>                           CAPPresentationCategoryObject( mappingL ), mappingL3, 
+>                           CAPPresentationCategoryObject( mappingL4 ) );
+<A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg3L := DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism( 
+>          P1xP1, presentation_morphismL, [ 0,0 ], true );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created... 
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A vector space presentation morphism of vector spaces embedded into (
+a suitable power of) Q[x_1,x_2,x_3,x_4] (with weights 
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) and given as cokernels>
+gap> vec3L := UnderlyingVectorSpacePresentationMorphism( deg3L );
+<A morphism of the presentation category over the Category of matrices 
+over Q>
+gap> IsMonomorphism( vec3L );
+true
+gap> IsEpimorphism( vec3L );
+false
+gap> ckL := CokernelObject( vec3L );
+<An object of the presentation category over the Category of matrices over Q>
+gap> CokernelObject( UnderlyingMorphism( ckL ) );
+<A vector space object over Q of dimension 2>
+gap> obj1R := CAPPresentationCategoryObject( mappingR );
+<A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg1R := DegreeXLayerOfGradedLeftOrRightModulePresentation( P1xP1, obj1R, [ 0,0 ], true );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A vector space embedded into (a suitable power of) Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) given as the
+cokernel of a vector space morphism>
+gap> IsEqualForMorphisms( UnderlyingVectorSpaceMorphism( deg1R ), mor1R );
+true
+gap> UnderlyingVectorSpaceObject( deg1R );
+<A vector space object over Q of dimension 1>
+gap> obj2R := CAPPresentationCategoryObject( mappingR2 );
+<A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg2R := DegreeXLayerOfGradedLeftOrRightModulePresentation( P1xP1, obj2R, [ 3,4 ], true );
+Starting the matrix computation now... 
+
+NrRows: 50
+NrColumns: 20
+Have to go until i = 20
+0% done...
+10% done...
+20% done...
+30% done...
+40% done...
+50% done...
+60% done...
+70% done...
+80% done...
+90% done...
+100% done...
+matrix created... 
+<A vector space embedded into (a suitable power of) Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) given as the 
+cokernel of a vector space morphism>
+gap> IsMonomorphism( UnderlyingVectorSpaceMorphism( deg2R ) );
+true
+gap> IsEpimorphism( UnderlyingVectorSpaceMorphism( deg2R ) );
+false
+gap> UnderlyingVectorSpaceObject( deg2R );
+<A vector space object over Q of dimension 30>
+gap> mappingR3 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>              rangeR, HomalgMatrix( [ [ 1 ], [ 1 ]], S ), rangeR2 );
+<A morphism in the category of projective graded right modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> mappingR4 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
+>              sourceR, HomalgMatrix( [ [ "x_2" ], [ "x_2" ]], S ), rangeR2 );
+<A morphism in the category of projective graded right modules over 
+Q[x_1,x_2,x_3,x_4] (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> presentation_morphismR := CAPPresentationCategoryMorphism( 
+>                           CAPPresentationCategoryObject( mappingR ), mappingR3, 
+>                           CAPPresentationCategoryObject( mappingR4 ) );
+<A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+(with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+gap> deg3R := DegreeXLayerOfGradedLeftOrRightModulePresentationMorphism( 
+>          P1xP1, presentation_morphismR, [ 0,0 ], true );
+Starting the matrix computation now... 
+
+NrRows: 2
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 2
+Have to go until i = 2
+50% done...
+100% done...
+matrix created... 
+Starting the matrix computation now... 
+
+NrRows: 4
+NrColumns: 1
+Have to go until i = 1
+100% done...
+matrix created... 
+<A vector space presentation morphism of vector spaces embedded into (
+a suitable power of) Q[x_1,x_2,x_3,x_4] (with weights 
+[ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ]) and given as cokernels>
+gap> vec3R := UnderlyingVectorSpacePresentationMorphism( deg3R );
+<A morphism of the presentation category over the Category of matrices 
+ over Q>
+gap> IsMonomorphism( vec3R );
+true
+gap> IsEpimorphism( vec3R );
+false
+gap> ckR := CokernelObject( vec3R );
+<An object of the presentation category over the Category of matrices over Q>
+gap> CokernelObject( UnderlyingMorphism( ckR ) );
+<A vector space object over Q of dimension 2>
+]]></Example>
+
+
+</Subsection>
+
+
+</Section>
+
+
+</Chapter>
+
