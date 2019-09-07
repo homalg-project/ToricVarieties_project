@@ -48,3 +48,17 @@ DeclareOperation( "cohomCalgCommandString",
 #! @Arguments vari
 DeclareOperation( "cohomCalgCommandString", 
                    [ IsToricVariety ] );
+
+
+##############################################################################################
+##
+#! @Section New attribute for toric varieties to store their monomial file
+##
+##############################################################################################
+
+#! @Description
+#! The name of the monomial file use for line bundle cohomology computations on this space.
+#! @Returns a string
+#! @Arguments vari
+DeclareAttribute( "MonomialFile",
+                  IsToricVariety );
