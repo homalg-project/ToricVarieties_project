@@ -20,6 +20,152 @@ SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD := HomalgFieldOfRationalsInSingular();
 #############################################################
 
 # compute H^0 by applying my theorem
+InstallMethod( ParameterCheck2,
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ],
+  function( variety, ideal, module, Index )
+    local betti_ideal, betti_module, L_ideal, L_module, u, j, k, l, diff, tester;
+
+    # check if Index is meaningful
+    if ( Index < 0 ) or ( Index > Dimension( variety ) )  then
+
+      Error( "Index must be non-negative and must not exceed the dimension of the variety." );
+      return;
+
+    fi;
+
+    # compute Betti tables of both modules
+    # during the development process of this package (and in particular the underlying
+    # module presentations), an additional factor of (-1) has emerged here
+    betti_ideal := -1 * BettiTableForCAP( ideal );
+    betti_module := -1 * BettiTableForCAP( module );
+
+    # extract the 'lengths' of the two ideals
+    L_ideal := Length( betti_ideal ) - 1; # resolution indexed from F0 to F( L_ideal )
+    L_module := Length( betti_module ) - 1; # same...
+
+    # check condition 1
+    # check condition 1
+    if not (Minimum( L_ideal, Index - 1 ) < 0) then
+
+      for u in [ 0 .. Minimum( L_ideal, Index - 1 ) ] do
+        for j in [ 1 .. Length( betti_ideal[ u+1 ] ) ] do
+          for k in [ 0 .. Minimum( Dimension( variety ) - Index + u, L_module ) ] do
+            for l in [ 1 .. Length( betti_module[ k+1 ] ) ] do
+              diff := UnderlyingListOfRingElements( betti_ideal[ u+1 ][ j ] ) -
+                      UnderlyingListOfRingElements( betti_module[ k+1 ][ l ] );
+              tester := PointContainedInVanishingSet( VanishingSets( variety ).( k+Index-u ), diff );
+              if tester = false then
+                return false;
+              fi;
+            od;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # check condition 2
+    # check condition 2
+    if not (Minimum( L_ideal, Index - 2 ) < 0) then
+
+      for u in [ 0 .. Minimum( L_ideal, Index - 2 ) ] do
+        for j in [ 1 .. Length( betti_ideal[ u+1 ] ) ] do
+          for k in [ 0 .. Minimum( Dimension( variety ) - Index + u + 1, L_module ) ] do
+            for l in [ 1 .. Length( betti_module[ k+1 ] ) ] do
+              diff := UnderlyingListOfRingElements( betti_ideal[ u+1 ][ j ] ) -
+                      UnderlyingListOfRingElements( betti_module[ k+1 ][ l ] );
+              tester := PointContainedInVanishingSet( VanishingSets( variety ).( k+Index-u-1 ), diff );
+              if tester = false then
+                return false;
+              fi;
+            od;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # check condition 3
+    # check condition 3
+    if ( 0 < Index ) and not ( Index > L_ideal + 1 ) then
+
+      for j in [ 1 .. Length( betti_ideal[ Index ] ) ] do
+        for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
+          for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do
+            diff := UnderlyingListOfRingElements( betti_ideal[ Index ][ j ] ) -
+                    UnderlyingListOfRingElements( betti_module[ u+1 ][ l ] );
+            tester := PointContainedInVanishingSet( VanishingSets( variety ).( u ), diff );
+            if tester = false then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # check condition 4
+    # check condition 4
+    if not ( Index + 1 > L_ideal + 1 ) then
+
+      for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
+        for u in [ 1 .. Minimum( L_module, Dimension( variety ) ) ] do
+          for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do
+            diff := UnderlyingListOfRingElements( betti_ideal[ Index+1 ][ j ] ) -
+                    UnderlyingListOfRingElements( betti_module[ u+1 ][ l ] );
+            tester := PointContainedInVanishingSet( VanishingSets( variety ).( u ), diff );
+            if tester = false then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # check condition 5
+    # check condition 5
+    if not ( Index > L_ideal ) then
+
+      for j in [ 1 .. Length( betti_ideal[ Index + 1 ] ) ] do
+        for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
+          for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do
+            diff := UnderlyingListOfRingElements( betti_ideal[ Index+1 ][ j ] ) -
+                    UnderlyingListOfRingElements( betti_module[ u+1 ][ l ] );
+            tester := PointContainedInVanishingSet( VanishingSets( variety ).( u-1 ), diff );
+            if tester = false then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # check condition 6
+    # check condition 6
+    if not ( Index + 2 > L_ideal + 1 ) then
+      for j in [ 1 .. Length( betti_ideal[ Index + 2 ] ) ] do
+        for u in [ 2 .. Minimum( L_module, Dimension( variety ) + 1 ) ] do
+          for l in [ 1 .. Length( betti_module[ u+1 ] ) ] do
+            diff := UnderlyingListOfRingElements( betti_ideal[ Index+2 ][ j ] ) -
+                    UnderlyingListOfRingElements( betti_module[ u+1 ][ l ] );
+            tester := PointContainedInVanishingSet( VanishingSets( variety ).( u-1 ), diff );
+            if tester = false then
+              return false;
+            fi;
+          od;
+        od;
+      od;
+
+    fi;
+
+    # all tests passed, so return true
+    return true;
+
+end );
+
+# compute H^0 by applying my theorem
 InstallMethod( ParameterCheck,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, ideal, module, Index )

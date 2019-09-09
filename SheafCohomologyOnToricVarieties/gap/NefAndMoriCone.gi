@@ -473,6 +473,88 @@ InstallMethod( NefCone,
 end );
 
 # method to compute the smallest ample divisor of a given toric variety
+InstallMethod( ClassesOfSmallestAmpleDivisors2,
+               " for toric varieties",
+               [ IsToricVariety ],
+  function( variety )
+    local generators, new_gens, found_points, factor, polytope, pts, i, j, inequalities, interior_pts, checker,   
+         computeInequality, mons, minimum, minimal_positions, minimal_pts;
+
+    # check if it is smooth and complete
+    if not IsValidInputForCohomologyComputations( variety ) then
+
+      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
+      return;
+
+    fi;
+
+    # (1) Compute generators of nefCone
+    # (1) Compute generators of nefCone
+    generators := NefConeInClassGroup( variety );
+
+    # (2) Find smallest factor, such that we can easily find interior points of the nef_cone
+    # (2) Also, identify these interior points
+    found_points := false;
+    factor := 1;
+    while not found_points do
+
+      # set up variables
+      new_gens := List( [ 1 .. Length( generators ) ], i -> factor * generators[ i ] );
+      polytope := Polytope( new_gens );
+      pts := LatticePoints( polytope );
+      inequalities := DefiningInequalities( Cone( new_gens ) );
+      interior_pts := [];
+
+      if not Length( pts ) = 0 then
+
+        # and check if any of the lattice points is an interior point
+        for i in [ 1 .. Length( pts ) ] do
+          checker := true;
+          for j in [ 1 .. Length( inequalities ) ] do
+
+            computeInequality := Sum( List ( [ 1 .. Length( inequalities[ j ] ) ],
+                                    x -> inequalities[ j ][ x ] * pts[ i ][ x ] ) );
+
+            if not computeInequality > 0 then
+              checker := false;
+            fi;
+
+          od;
+
+          # if all checks have been passed add this interior point
+          if checker then
+            Add( interior_pts, pts[ i ] );
+          fi;
+
+        od;
+
+      fi;
+
+      # now check if there is at least one interior point
+      if Length( interior_pts ) > 0 then
+        found_points := true;
+      fi;
+
+      # increase the factor
+      factor := factor + 1;
+
+    od;
+
+    # (3) Now find those interior points, for which the number of generating monomials is minimal
+    # (3) Now find those interior points, for which the number of generating monomials is minimal
+    mons := List( [ 1 .. Length( interior_pts ) ], 
+              i -> Length( MonomsOfCoxRingOfDegreeByNormaliz( variety, interior_pts[ i ] ) ) );
+    minimum := Minimum( mons );
+    minimal_positions := Positions( mons, minimum );
+    minimal_pts := List( [ 1 .. Length( minimal_positions ) ], i -> interior_pts[ minimal_positions[ i ] ] );
+
+    # (4) return the result
+    # (4) return the result
+    return minimal_pts;
+
+end );
+
+# method to compute the smallest ample divisor of a given toric variety
 InstallMethod( ClassesOfSmallestAmpleDivisors,
                " for toric varieties",
                [ IsToricVariety ],

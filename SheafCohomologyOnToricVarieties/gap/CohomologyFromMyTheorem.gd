@@ -26,6 +26,10 @@
 #! @Arguments V, M1, M2, i
 DeclareOperation( "ParameterCheck",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+DeclareOperation( "ParameterCheck2",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+DeclareOperation( "VanishingCohomology",
+                  [ IsToricVariety, IsList, IsInt ] );
 
 #! @Description
 #! Given a toric variety $V$ and an f.p. graded S-module
