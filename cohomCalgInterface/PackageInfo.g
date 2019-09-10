@@ -16,7 +16,7 @@ PackageName := "cohomCalgInterface",
 Subtitle := "A package to communicate with the software cohomCalg",
 
 Version :=  Maximum( [
-  "2019.08.14" # Martins version
+  "2019.09.10" # Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
