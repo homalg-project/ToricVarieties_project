@@ -23,7 +23,7 @@ InstallMethod( VanishingHiByCohomCalg,
     local hi, vanish;
 
     # compute i-th cohomology
-    hi := HiByCohomCalg( variety, [[degree,1]], cohomology_index );
+    hi := HiByCohomCalg( variety, cohomology_index, [[degree,1]] );
 
     # and return the result
     vanish := false;
