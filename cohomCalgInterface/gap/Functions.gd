@@ -21,6 +21,16 @@
 
 #! @Description
 #! Given a toric variety vari and a list L = [ D_2, ..., D_n ] of degree in the class group,
+#! and thereby defining a direct sum of line bundles on vari. The third argument is a non-negative
+#! integer i. This function computes the i-th sheaf cohomology by use of cohomCalg and determines
+#! if it vanishes. The output is true or false.
+#! @Returns True or false
+#! @Arguments vari, L, i
+DeclareOperation( "VanishingHiByCohomCalg",
+                  [ IsToricVariety, IsList, IsInt ] );
+
+#! @Description
+#! Given a toric variety vari and a list L = [ D_2, ..., D_n ] of degree in the class group,
 #! and thereby defining a direct sum of line bundles on vari, this function computes all
 #! of the sheaf cohomology dimensions of this vector bundle by use of cohomCalg. 
 #! The output is a list of integers, each representing the corresponding sheaf cohomology dimension.
@@ -29,6 +39,12 @@
 DeclareOperation( "AllHiByCohomCalg",
                   [ IsToricVariety, IsList ] );
 
+#! @Description
+#! Given a toric variety vari and a list L = [ D_2, ..., D_n ] of degree in the class group,
+#! and thereby defining a direct sum of line bundles on vari. The third argument is a non-negative
+#! integer i. This function computes the i-th sheaf cohomology by use of cohomCalg.
+#! @Returns Integer
+#! @Arguments vari, L, i
 DeclareOperation( "HiByCohomCalg",
                   [ IsToricVariety, IsInt, IsList ] );
 

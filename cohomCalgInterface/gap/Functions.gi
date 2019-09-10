@@ -16,6 +16,24 @@
 ##
 ##############################################################################################
 
+# decide if i-th cohomology vanishes
+InstallMethod( VanishingHiByCohomCalg,
+               [ IsToricVariety, IsList, IsInt ],
+  function( variety, degree, cohomology_index )
+    local hi, vanish;
+
+    # compute i-th cohomology
+    hi := HiByCohomCalg( variety, [[degree,1]], cohomology_index );
+
+    # and return the result
+    vanish := false;
+    if hi = 0 then
+      vanish := true;
+    fi;
+    return vanish;
+
+end );
+
 # Compute all sheaf cohomologies by use of cohomCalg
 InstallMethod( AllHiByCohomCalg,
                "for a toric variety and a list of degrees and a bool",
@@ -102,7 +120,7 @@ InstallMethod( HiByCohomCalg,
 end );
 
 # Use cohomCalg to extract the denomiators of the rationoms which contribute to the cohomology classes.
-# [Note: Ambigious monomial contributions are not yet supported, but it should not be too hard to achieve this.]
+# Note: Ambigious monomial contributions are not supported.
 InstallMethod( ContributingDenominators,
                " for toric varieties",
                [ IsToricVariety ],
@@ -149,8 +167,7 @@ InstallMethod( ContributingDenominators,
     if not output_string_reduced[ Length( output_string_reduced ) ] =
       "There are no ambiguous contribution monomials to the variety." then
 
-      Error( "I do not support ambigious monomial contributions yet" );
-      return;
+      return fail;
 
     fi;
 

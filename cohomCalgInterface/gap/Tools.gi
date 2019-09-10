@@ -154,9 +154,13 @@ InstallMethod( cohomCalgCommandString,
     output_string := Concatenation( output_string, SR_ideal_generators, "; " );
 
     # step5: use monomial_file
-    output_string := Concatenation( output_string, Concatenation( "monomialfile \"",
-                                                                  MonomialFile( variety ),
-                                                                  "\";" ) );
+    if Tester( MonomialFile )( variety ) then
+      output_string := Concatenation( output_string, Concatenation( "monomialfile \"",
+                                                                    MonomialFile( variety ),
+                                                                    "\";" ) );
+    else
+      output_string := Concatenation( output_string, "monomialfile off;" );
+    fi;
 
     # step6: add the bundle charges, i.e. the list degree
     buffer := String( degree );
@@ -172,25 +176,25 @@ InstallMethod( cohomCalgCommandString,
 
 end );
 
-InstallMethod( MonomialFile,
-               "for a toric variety",
-               [ IsToricVariety ],
-  function( variety )
-    local path, date, date_str, a;
+#InstallMethod( MonomialFile,
+#               "for a toric variety",
+#               [ IsToricVariety ],
+#  function( variety )
+#    local path, date, date_str, a;
 
     # identify the current date string
-    path := DirectoriesSystemPrograms();
-    date := Filename( path, "date" );
-    date_str := "";
-    a := OutputTextString( date_str, true );
-    Process( DirectoryCurrent(), date, InputTextNone(), a, [] );
-    CloseStream(a);
-    RemoveCharacters( date_str, " \n\t\r:" );
+#    path := DirectoriesSystemPrograms();
+#    date := Filename( path, "date" );
+#    date_str := "";
+#    a := OutputTextString( date_str, true );
+#    Process( DirectoryCurrent(), date, InputTextNone(), a, [] );
+#    CloseStream(a);
+#    RemoveCharacters( date_str, " \n\t\r:" );
 
     # and return the name of its monomialfile
-    return Concatenation( "MonomialFileForToricVariety-", date_str, ".dat" );
+#    return Concatenation( "MonomialFileForToricVariety-", date_str, ".dat" );
 
-end );
+#end );
 
 # produce the command string that will handed over to cohomCalg
 InstallMethod( cohomCalgCommandString,
