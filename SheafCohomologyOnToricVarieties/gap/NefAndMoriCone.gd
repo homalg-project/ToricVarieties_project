@@ -85,8 +85,6 @@ DeclareAttribute( "NefCone",
 #! @Arguments vari
 DeclareAttribute( "ClassesOfSmallestAmpleDivisors",
                   IsToricVariety );
-DeclareAttribute( "ClassesOfSmallestAmpleDivisors2",
-                  IsToricVariety );
 
 #! @Description
 #! Given a simplicial and complete toric variety, we use proposition 6.4.1 of Cox-Schenk-Litte to compute 

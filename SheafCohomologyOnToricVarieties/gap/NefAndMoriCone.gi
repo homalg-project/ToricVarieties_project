@@ -473,7 +473,7 @@ InstallMethod( NefCone,
 end );
 
 # method to compute the smallest ample divisor of a given toric variety
-InstallMethod( ClassesOfSmallestAmpleDivisors2,
+InstallMethod( ClassesOfSmallestAmpleDivisors,
                " for toric varieties",
                [ IsToricVariety ],
   function( variety )
@@ -551,102 +551,6 @@ InstallMethod( ClassesOfSmallestAmpleDivisors2,
     # (4) return the result
     # (4) return the result
     return minimal_pts;
-
-end );
-
-# method to compute the smallest ample divisor of a given toric variety
-InstallMethod( ClassesOfSmallestAmpleDivisors,
-               " for toric varieties",
-               [ IsToricVariety ],
-  function( variety )
-    local extremeRays, length, extremeRays2, polytope, latticePoints, i, j, buffer, inequalities,
-         classesOfSmallestAmpleDivisors, lengthOfClassOfSmallestAmpleDivisor, checker, computeInequality, refLength;
-
-    # check if it is smooth and complete
-    if not IsValidInputForCohomologyComputations( variety ) then
-
-      Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
-      return;
-
-    fi;
-
-    # compute the nefCone
-    extremeRays := NefConeInClassGroup( variety );
-
-    # the naive guess would be to sum all rays
-    # then one would consider the class Sum( extremeRays )
-    # for simplicity we compute the Taxi-driver-distance of this vector, i.e. the sum of its components, 
-    # and then mutliply this integers with the ray generators
-    # next use the so-stretched ray generators to define a polytope within the cone
-    # this polytope contains the samllest interior lattice point...
-
-    # compute taxi-driver-distance
-    length := Sum( Sum( extremeRays ) );
-
-    # now modify the ray generators
-    extremeRays2 := List( [ 1 .. Length( extremeRays ) ], x -> length * extremeRays[ x ] );
-    Append( extremeRays2, [ UnderlyingListOfRingElements( TheZeroElement( ClassGroup( variety ) ) ) ] );
-
-    # construct polytope
-    polytope := Polytope( extremeRays2 );
-    latticePoints := LatticePoints( polytope );
-
-    # select the interior points!!!
-    inequalities := DefiningInequalities( Cone( extremeRays ) );
-
-    # now search for the INTERNAL points which have the smallest Euclidean distance from the origin
-    classesOfSmallestAmpleDivisors := [ Sum( extremeRays ) ];
-    lengthOfClassOfSmallestAmpleDivisor := Sum( List( [ 1 .. Length( latticePoints[ 1 ] ) ],
-       x -> classesOfSmallestAmpleDivisors[ 1 ][ x ] * classesOfSmallestAmpleDivisors[ 1 ][ x ] ) );
-
-    for i in [ 1 .. Length( latticePoints ) ] do
-
-      # check if internal point
-      checker := true;
-
-      for j in [ 1 .. Length( inequalities ) ] do
-
-        # compute the inequality 
-        computeInequality := Sum( List ( [ 1 .. Length( inequalities[ j ] ) ],
-                                  x -> inequalities[ j ][ x ] * latticePoints[ i ][ x ] ) );
-
-        # check if <= 0, for this means that it is not an internal point
-        if not computeInequality > 0 then
-
-          # this is not an internal point
-          checker := false;
-
-        fi;
-
-      od;
-
-      # if this is an internal point, check if it is a better choice than the one before
-      if checker then
-
-        # compute reference length
-        refLength := Sum( List( [ 1 .. Length( latticePoints[ i ] ) ],
-                          x -> latticePoints[ i ][ x ] * latticePoints[ i ][ x ] ) );
-
-        # compare with lengthOfClassOfSmallestAmpleDivisor
-        if refLength = lengthOfClassOfSmallestAmpleDivisor then
-
-          # we found another good class
-          Append( classesOfSmallestAmpleDivisors, [ latticePoints[ i ] ] );
-
-        elif refLength < lengthOfClassOfSmallestAmpleDivisor then
-
-          # we found a better class
-          classesOfSmallestAmpleDivisors := [ latticePoints[ i ] ];
-          lengthOfClassOfSmallestAmpleDivisor := refLength;
-
-        fi;
-
-      fi;
-
-    od;
-
-    # now return this class
-    return DuplicateFreeList( classesOfSmallestAmpleDivisors );
 
 end );
 
