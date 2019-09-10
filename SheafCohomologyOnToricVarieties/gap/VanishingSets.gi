@@ -325,6 +325,13 @@ InstallMethod( ComputeVanishingSets,
     # compute the denominator contributions first
     denominator_contributions := ContributingDenominators( variety );
 
+    # check if this computation succeeded
+    if denominator_contributions = fail then
+      Print( "Contributing denominators could not be determined uniquely. \n" );
+      Print( "Possible origin -- ambigious monomial contributions. \n" );
+      return fail;
+    fi;
+
     # initialise v_rec
     v_rec := rec();
 
