@@ -7,7 +7,7 @@
 ##
 ##  A package to communicate with the software cohomCalg
 ##
-#! @Chapter Functionality of cohomCalg
+#! @Chapter Functions supported by cohomCalg
 ##
 #############################################################################
 

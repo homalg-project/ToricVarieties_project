@@ -7,7 +7,7 @@
 ##
 ##  A package to communicate with the software cohomCalg
 ##
-#! @Chapter Interface to Topcom
+#! @Chapter Communication with cohomCalg
 ##
 #############################################################################
 

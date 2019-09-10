@@ -1,6 +1,6 @@
-#! @Chapter Functionality of cohomCalg-Interface
+#! @Chapter Functions supported by cohomCalg
 
-#! @Section Functionality of cohomCalg-Interface: Examples
+#! @Section Examples
 
 LoadPackage( "cohomCalgInterface" );
 
@@ -23,3 +23,15 @@ coh4 := HiByCohomCalg( P1xP1, 0, [ [[2,1],2] ] );
 coh5 := HiByCohomCalg( P1xP1, 2, [ [[-2,-2],2] ] );
 #! 2
 #! @EndExample
+
+#! We also support the use of a monomial_file. Namely, cohomCalg computes combinatorial data on
+#! monomials in the Cox ring at each program run, unless this data is stored in a corresponding file.
+#! To use such a file, set the attribute "MonomialFile" to the desired name of this monomial file.
+#! Suppose for example, that we want to use the monomial file "Test.dat" for the space P3 above. Then
+#! we can use
+
+#! @Example
+SetMonomialFile( P3, "Test.dat" );
+#! @EndExample
+
+#! This file will be stored in the folder "cohomCalg" of this package.
