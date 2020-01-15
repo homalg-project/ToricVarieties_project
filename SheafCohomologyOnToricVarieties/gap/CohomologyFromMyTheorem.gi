@@ -495,7 +495,7 @@ InstallMethod( H0Parallel,
     if display_messages then
       Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
                             " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
-      Print( "(*) Compute GradedHom... \n" );
+      Print( "(*) Compute GradedHom... \n\n" );
     fi;
 
     # step 3: compute GradedHom
@@ -651,7 +651,7 @@ InstallMethod( Hi,
     if display_messages then
       Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
                             " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
-      Print( "(*) Compute GradedHom... \n" );
+      Print( "(*) Compute GradedHom... \n\n" );
     fi;
 
 
@@ -802,7 +802,7 @@ InstallMethod( HiParallel,
     if display_messages then
       Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , 
                             " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
-      Print( "(*) Compute GradedHom... \n" );
+      Print( "(*) Compute GradedHom... \n\n" );
     fi;
 
 

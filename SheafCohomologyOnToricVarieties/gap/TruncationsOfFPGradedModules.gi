@@ -281,6 +281,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # signal start of the matrix computation
     if display_messages then
         Print( "Compute matrix for range...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
     fi;
 
     # initialise run3
@@ -289,14 +290,20 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix3 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix3 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting background jobs...\n\n" );
+          Print( Concatenation( "Starting ", String( NrJobs[ 3 ] ), " background jobs..." ) );
         fi;
 
         # compute the input
@@ -312,6 +319,9 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         run3 := true;
 
     fi;
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 3 ) process map
     gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( map ), degree );
@@ -320,6 +330,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # signal start of the matrix computation
     if display_messages then
         Print( "Compute matrix for map...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
     fi;
 
     # initalise run2
@@ -328,14 +339,20 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix2 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix2 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting background jobs...\n\n" );
+          Print( Concatenation( "Starting ", String( NrJobs[ 2 ] ), " background jobs..." ) );
         fi;
 
         # compute the input
@@ -351,6 +368,9 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         run2 := true;
 
     fi;
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 4 ) process source
     gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( source ), degree );
@@ -359,6 +379,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # signal start of the matrix computation
     if display_messages then
         Print( "Compute matrix for source...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
     fi;
 
     # initialise run1
@@ -367,14 +388,20 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix1 := HomalgZeroMatrix( 0, gensOfRange[ 1 ], rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix1 := HomalgZeroMatrix( Length( gensOfSource ), 0, rationals );
+        if display_messages then
+          Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
         if display_messages then
-          Print( "Starting background jobs...\n\n" );
+          Print( Concatenation( "Starting ", String( NrJobs[ 1 ] ), " background jobs..." ) );
         fi;
 
         # compute the input
@@ -390,9 +417,12 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
         run1 := true;
 
     fi;
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 5 ) retrieve result of job 1
-    if display_messages then
+    if display_messages and run1 then
         Print( "Extract result of truncation of source: \n" );
     fi;
 
@@ -430,7 +460,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     fi;
 
     # ( 6 ) retrieve result of job 2
-    if display_messages then
+    if display_messages and run2 then
         Print( "Extract result of truncation of map: \n" );
     fi;
 
@@ -468,7 +498,7 @@ InstallMethod( TruncateFPGradedModuleMorphismInParallel,
     fi;
 
     # ( 7 ) retrieve result of job 3
-    if display_messages then
+    if display_messages and run3 then
         Print( "Extract result of truncation of range: \n" );
     fi;
 
