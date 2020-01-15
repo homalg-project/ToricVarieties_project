@@ -36,7 +36,7 @@ InstallMethod( TruncateInternalHom,
 
       # inform about status again
       if display_messages then
-        Print( "Truncate it now... \n" );
+        Print( "Truncate it now... \n\n" );
       fi;
 
       # and return the truncation
@@ -65,7 +65,7 @@ InstallMethod( TruncateInternalHomEmbedding,
 
       # inform about status again
       if display_messages then
-        Print( "Truncate it now... \n" );
+        Print( "Truncate it now... \n\n" );
       fi;
 
       # and return the truncation
@@ -183,7 +183,7 @@ InstallMethod( TruncateInternalHomInParallel,
 
       # inform about status again
       if display_messages then
-        Print( "Truncate it now... \n" );
+        Print( "Truncate it now... \n\n" );
       fi;
 
       # and return the truncation
@@ -212,7 +212,7 @@ InstallMethod( TruncateInternalHomEmbeddingInParallel,
 
       # inform about status again
       if display_messages then
-        Print( "Truncate it now... \n" );
+        Print( "Truncate it now... \n\n" );
       fi;
 
       # and return the truncation
