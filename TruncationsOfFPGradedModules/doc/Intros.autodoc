@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the TruncationsOfFPGradedModules package?
+
+**TruncationsOfFPGradedModules** provides methods to compute truncations of FPGradedModules.
+
+@Chapter TruncationsOfForFPGradedModules
