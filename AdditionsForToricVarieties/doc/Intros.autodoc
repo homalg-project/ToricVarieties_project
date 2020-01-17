@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the AdditionsForToricVarieties package?
+
+**AdditionsForToricVarieties** provides additional structures which are not provided by the ToricVarieties package in the homalg_project yet required for the computations of sheaf cohomologies on toric varieties.
+
+@Chapter Additions for toric varieties
