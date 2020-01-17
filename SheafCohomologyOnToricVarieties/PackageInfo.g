@@ -3,7 +3,7 @@
 ##  PackageInfo.g       SheafCohomologyOnToricVarieties package
 ##                      Martin Bies
 ##
-##  Copyright 2019      ULB Brussels
+##  Copyright 2020      University of Oxford
 ##
 ##  A package to compute sheaf cohomology on toric varieties
 ##
@@ -16,7 +16,7 @@ PackageName := "SheafCohomologyOnToricVarieties",
 Subtitle := "A package to compute sheaf cohomology on toric varieties",
 
 Version :=  Maximum( [
-  "2019.09.10", ## Martins version
+  "2019.01.16", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -31,21 +31,22 @@ rec(
     IsAuthor      := true,
     IsMaintainer  := true,
     Email := "martin.bies@alumni.uni-heidelberg.de",
-    WWWHome := "https://www.ulb.ac.be/sciences/ptm/pmif/people.html",
+    WWWHome := "https://martinbies.github.io/",
     PostalAddress := Concatenation(
-                 "Physique Théorique et Mathématique \n",
-                 "Université Libre de Bruxelles \n",
-                 "Campus Plaine - CP 231 \n",
-                 "Building NO - Level 6 - Office O.6.111 \n",
-                 "1050 Brussels \n",
-                 "Belgium" ), 
-    Place         := "Brussels",
-    Institution   := "ULB Brussels"
+                 "Mathematical Institute \n",
+                 "University of Oxford \n",
+                 "Andrew Wiles Building \n",
+                 "Radcliffe Observatory Quarter \n",
+                 "Woodstock Road \n",
+                 "Oxford OX2 6GG \n",
+                 "United Kingdom" ), 
+    Place         := "Oxford",
+    Institution   := "University of Oxford"
   ),
 ],
 
 Status := "dev",
-PackageWWWHome := "https://github.com/HereAround/SheafCohomologyOnToricVarieties",
+PackageWWWHome := "https://github.com/homalg-project/SheafCohomologyOnToricVarieties",
 ArchiveFormats := ".tar.gz .zip",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "SheafCohomologyOnToricVarieties-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
@@ -69,12 +70,11 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
-                           [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
-                           [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
-                           [ "cohomCalgInterface", ">=2019.08.14" ],
+                           [ "ToricVarieties", ">=2016.05.03" ],
+                           [ "AdditionsForToricVarieties", ">=2019.01.16" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
+                           [ "cohomCalgInterface", ">=2019.08.14" ],
                            [ "NormalizInterface", ">= 0.9.7" ],
-                           [ "ToricVarieties", ">=2016.05.03" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],
   ExternalConditions := []
