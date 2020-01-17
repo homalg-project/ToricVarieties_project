@@ -3,7 +3,7 @@
 ##  makedoc.g           SheafCohomologyOnToricVarieties package
 ##                      Martin Bies
 ##
-##  Copyright 2019      ULB Brussels
+##  Copyright 2020      University of Oxford
 ##
 ##  A package to compute sheaf cohomology on toric varieties
 ##
@@ -13,36 +13,15 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "SheafCohomologyOnToricVarieties" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
-                         "gap/ToolsForFPGradedModules.gd",
-                         "examples/ToolsForFPGradedModules.g",
-                         "gap/ToricVarietiesAdditionalPropertiesForCAP.gd",
-                         "examples/ToricVarietiesAdditionalProperties.g",
+                         "gap/Input.gd",
                          "gap/CohomologyFromResolution.gd",
                          "examples/CohomologyFromResolution.g",
-                         #"gap/MapsInResolution.gd",
-                         #"examples/MapsInResolution.g",
-                         "gap/SemigroupAndConeWrapper.gd",
-                         "examples/SemigroupAndConeWrapper.g",
-                         "gap/VanishingSets.gd",
-                         "examples/VanishingSets.g",
-                         "gap/ICTCurves.gd",
-                         "examples/ICTCurves.g",
-                         "gap/NefAndMoriCone.gd",
-                         "examples/NefAndMori.g",
-                         "gap/DegreeXLayerVectorSpace.gd",
-                         "examples/DegreeXLayerVectorSpace.g",
-                         "gap/TruncationsOfGradedRowsAndColumns.gd",
-                         "examples/TruncationsOfGradedRowsAndColumns.g",
-                         "gap/TruncationsOfFPGradedModules.gd",
-                         "examples/TruncationsOfFPGradedModules.g",
-                         "gap/TruncationFunctors.gd",
-                         "examples/TruncationFunctors.g",
-                         "gap/TruncationOfGradedExt.gd",
-                         "examples/TruncationOfGradedExt.g",
                          "gap/CohomologyFromMyTheorem.gd",
                          "examples/CohomologyFromMyTheorem.g",
                          "gap/CohomologyTools.gd",
                          "examples/CohomologyTools.g",
+                         #"gap/MapsInResolution.gd",
+                         #"examples/MapsInResolution.g",
                          #"gap/CohomologyOnPn.gd",
                          #"examples/CohomologyOnPn.g",
                          ],
