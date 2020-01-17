@@ -2,7 +2,7 @@
 ##
 ##  CohomologyFromMyTheorem.gd         SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2019                     Martin Bies,       ULB Brussels
+##  Copyright 2020                     Martin Bies,       Un iversity of Oxford
 ##
 #! @Chapter Sheaf cohomology by use of https://arxiv.org/abs/1802.08860
 ##
