@@ -2,15 +2,11 @@
 ##
 ##  CohomologyFromMyTheorem.gi         SheafCohomologyOnToricVarieties package
 ##
-##  Copyright 2019                     Martin Bies,       ULB Brussels
+##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
 ##  Chapter Sheaf cohomology by use of https://arxiv.org/abs/1802.08860
 ##
 #########################################################################################
-
-# global variable used to determine if Magma is to be used or not
-SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD := HomalgFieldOfRationalsInSingular();
-#SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD := HomalgFieldOfRationalsInMAGMA();
 
 
 #############################################################
