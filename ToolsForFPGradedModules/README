@@ -1,0 +1,19 @@
+#############################################################################
+##
+##  README              ToolsForFPGradedModules package
+##                      Martin Bies
+##
+##  Copyright 2020      University of Oxford
+##
+##  A package to provide additional tools for FPGradedModules
+##
+#############################################################################
+
+README file for the `ToolsForFPGradedModules' GAP4 package
+
+To get the latest version of this GAP 4 package pull the corresponding branch
+from github.
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de

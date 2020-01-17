@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the ToolsForFPGradedModules package?
+
+**ToolsForFPGradedModules** provides additional tools to perform computations or manipulate FPGradedModules, which are for structural reasons not part of the underlying package for **FreydCategories**.
+
+@Chapter ToolsForFPGradedModules
