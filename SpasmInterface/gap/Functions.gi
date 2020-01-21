@@ -227,7 +227,7 @@ InstallMethod( SyzygiesOfRowsBySpasm,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local nR, nC, entries, output_string, data, number_Rows, number_Columns, kernel_entries;
+    local nR, nC, entries, output_string, data, number_Rows, number_Columns, sorter;
     
     # Extract information on the matrix
     nR := NumberOfRows( matrix );
