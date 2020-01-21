@@ -13,21 +13,26 @@ README file for the `SpasmInterface' GAP4 package
         
 To get the latest version of this GAP 4 package pull the corresponding branch from github. 
 
-This package requires a working installation of the software `Spasm' on your computer. The latest version is available by download from https://github.com/cbouilla/spasm.
+This package requires a working installation of the software `Spasm' on your computer. Currently, only part of the functionality of Spasm is supported by this interface.
 
-The installation of this software typically requires the following steps inside the Spasm folder:
+The latest version of Spasm can be downloaded from https://github.com/cbouilla/spasm. However, please note that by default Spasm will ignore empty rows when computing left kernels. At times this is not desired. Indeed, for the purposes of this package it is indeed expected, required and desired to take empty rows (and columns) into account when computing left (or right) kernels of matrices. Therefore, I provide in my fork of this repository at https://github.com/HereAround/spasm a branch martin_devel, which modifies this behaviour:
+(1) It extends the .gitignore file such that even after the following installation process, all newly created files are being ignored by git.
+(2) It modifies /bench/kernel.c such that zero rows are taken into account when computing kernels.
+Currently, a fully successsful installation of this package thus requires that you use the version of Spasm provided in this branch 'martin_devel'.
+
+The installation of spasm proceeds by issuing the following steps inside the Spasm folder:
 
 ./configure
 make
 make install
 
-However, the ./configure file is currently (20/01/2020) not included in the above-mentioned git repository. To create it, on Ubuntu 18.04 the following command had to be issued inside the Spasm folder:
+However, the ./configure file is currently (20/01/2020) not included in the above-mentioned git repository. To create it, on Ubuntu 18.04 the following commands had to be issued inside the Spasm folder:
 
 aclocal
 autoconf
 autoreconf --install
 
-More details/information can be found in the Spasm package. This completes the installation of this gap-package. It should be mentioned that currently, only part of the functionality in Spasm is supported by this interface.
+More details/information can be found in the Spasm package. This completes the installation of this gap-package.
 
 E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
