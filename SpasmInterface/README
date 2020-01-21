@@ -1,0 +1,36 @@
+#############################################################################
+##
+##  README              SpasmInterface package
+##                      Martin Bies
+##
+##  Copyright 2020      University of Oxford
+##
+##  A package to communicate with the software Spasm
+##
+#############################################################################
+
+README file for the `SpasmInterface' GAP4 package
+        
+To get the latest version of this GAP 4 package pull the corresponding branch from github. 
+
+This package requires a working installation of the software `Spasm' on your computer. The latest version is available by download from https://github.com/cbouilla/spasm.
+
+The installation of this software typically requires the following steps inside the Spasm folder:
+
+./configure
+make
+make install
+
+However, the ./configure file is currently (20/01/2020) not included in the above-mentioned git repository. To create it, on Ubuntu 18.04 the following command had to be issued inside the Spasm folder:
+
+aclocal
+autoconf
+autoreconf --install
+
+More details/information can be found in the Spasm package. This completes the installation of this gap-package. It should be mentioned that currently, only part of the functionality in Spasm is supported by this interface.
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+This work is supported by the Wiener – Anspach Foundation.
