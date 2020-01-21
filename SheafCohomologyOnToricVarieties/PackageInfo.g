@@ -75,6 +75,7 @@ Dependencies := rec(
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "cohomCalgInterface", ">=2019.08.14" ],
                            [ "NormalizInterface", ">= 0.9.7" ],
+                           [ "SpasmInterface", ">2020.01.20" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],
   ExternalConditions := []
