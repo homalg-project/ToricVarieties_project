@@ -24,6 +24,8 @@ AutoDoc( "SheafCohomologyOnToricVarieties" : scaffold := true, autodoc :=
                          #"examples/MapsInResolution.g",
                          #"gap/CohomologyOnPn.gd",
                          #"examples/CohomologyOnPn.g",
+                         "gap/CohomologyWithSpasm.gd",
+                         "examples/CohomologyWithSpasm.g",
                          ],
              scan_dirs := []
              ),
