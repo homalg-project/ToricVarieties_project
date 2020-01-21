@@ -48,7 +48,7 @@ InstallMethod( TurnIntoSMSString,
 end );
 
 
-InstallMethod( UnionOfRows,
+InstallMethod( UnionOfRowsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
@@ -286,7 +286,7 @@ InstallMethod( SyzygiesGenerators,
     local rowUnion, kernelMatrix, selection;
     
     # Compute a mutual syzygies matrix
-    rowUnion := UnionOfRows( matrix1, matrix2 );
+    rowUnion := UnionOfRowsOp( matrix1, matrix2 );
     kernelMatrix := SyzygiesOfRowsBySpasm( rowUnion );
     selection := CertainColumns( kernelMatrix, [ 1 .. NumberOfRows( matrix1 ) ] );
 

@@ -30,7 +30,7 @@ DeclareOperation( "TurnIntoSMSString",
 #! This functions forms the union of the rows of two SMSSparseMatrices M1, M2.
 #! @Returns SMSSparseMatrix
 #! @Arguments SMSSparseMatrices M1, M2
-DeclareOperation( "UnionOfRows",
+DeclareOperation( "UnionOfRowsOp",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
 
 #! @Description
@@ -56,19 +56,26 @@ DeclareOperation( "CertainRows",
 DeclareOperation( "CertainColumns",
                   [ IsSMSSparseMatrix, IsList ] );
 
+
+##############################################################################################
+##
+#! @Section Attributes of SMSSparseMatrices
+##
+##############################################################################################
+
 #! @Description
 #! This function accepts a SMSSparseMatrix M and finds all non-zero rows of this matrix.
 #! @Returns List
 #! @Arguments SparseMatrix M
-DeclareOperation( "NonZeroRows",
-                  [ IsSMSSparseMatrix ] );
-
+DeclareAttribute( "NonZeroRows",
+                  IsSMSSparseMatrix );
+                  
 #! @Description
 #! This function accepts a SMSSparseMatrix M and finds all non-zero columns of this matrix.
 #! @Returns List
 #! @Arguments SparseMatrix M
-DeclareOperation( "NonZeroColumns",
-                  [ IsSMSSparseMatrix ] );
+DeclareAttribute( "NonZeroColumns",
+                  IsSMSSparseMatrix );
 
 
 ##############################################################################################
