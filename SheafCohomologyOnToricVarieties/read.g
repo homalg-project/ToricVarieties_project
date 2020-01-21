@@ -16,3 +16,4 @@ ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi"
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/MapsInResolution.gi" );
 #ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyOnPn.gi" );
+ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyWithSpasm.gi" );
