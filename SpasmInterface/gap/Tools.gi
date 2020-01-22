@@ -17,35 +17,52 @@
 ##
 ##############################################################################################
 
+# Here, a hard coded path to the spasm interface can be provided if needed.
+# By default it is assumed that this is not necessary and this variable is set to fail.
+SPASM_INTERFACE_SPASM_DIRECTORY := fail;
+# However, if you need to set this directory explicitly, then this would look as follows:
+# SPASM_INTERFACE_SPASM_DIRECTORY := Directory( "path" );
+# where path is the full path to the spasm directory. For example if this was /home/spasm,
+# then we would use
+# SPASM_INTERFACE_SPASM_DIRECTORY := Directory( "/home/spasm/" );
+
 InstallMethod( FindSpasmDirectory,
                "a string -- name of SpasmBinary",
                [ ],
   function( )
-  local sys_programs, which, path, output, input, path_steps, directory;
-  
-    # find the program "which"
-    sys_programs := DirectoriesSystemPrograms();
-    which := Filename( sys_programs, "which" );
-    if IsExistingFile( which ) = false then
-        Error( "program which not found" );
+  local directory, sys_programs, which, path, output, input, path_steps;
+    
+    if SPASM_INTERFACE_SPASM_DIRECTORY <> fail then
+        
+        directory := SPASM_INTERFACE_SPASM_DIRECTORY;
+        
+    else
+        
+        # find the program "which"
+        sys_programs := DirectoriesSystemPrograms();
+        which := Filename( sys_programs, "which" );
+        if IsExistingFile( which ) = false then
+            Error( "program which not found" );
+        fi;
+        
+        # find path to the Spasm file 
+        path := "";
+        output := OutputTextString( path, true );
+        input := InputTextUser();
+        Process( DirectoryCurrent(), which, input, output, [ "kernel" ] );
+        # we use the hard-coded name "kernel", as this is one of the many methods provided by Spasm
+        
+        # process the output
+        RemoveCharacters( path, "\n" );
+        path_steps := SplitString( path, "/" );
+        path_steps := List( [ 1 .. Length( path_steps ) - 1 ], i -> Concatenation( path_steps[ i ], "/" ) );
+        directory := Directory( Concatenation( path_steps ) );
+        
     fi;
-
-    # find path to the Spasm file 
-    path := "";
-    output := OutputTextString( path, true );
-    input := InputTextUser();
-    Process( DirectoryCurrent(), which, input, output, [ "kernel" ] );
-    # we use the hard-coded name "kernel", as this is one of the many methods provided by Spasm
-
-    # process the output
-    RemoveCharacters( path, "\n" );
-    path_steps := SplitString( path, "/" );
-    path_steps := List( [ 1 .. Length( path_steps ) - 1 ], i -> Concatenation( path_steps[ i ], "/" ) );
-    directory := Directory( Concatenation( path_steps ) );
-
+    
     # return the directory
     return directory;
-
+    
 end );
 
 
