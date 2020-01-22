@@ -91,20 +91,6 @@ InstallMethod( Involution,
         Append( new_entries, [ [ Entries( matrix )[ i ][ 2 ], Entries( matrix )[ i ][ 1 ], Entries( matrix )[ i ][ 3 ] ] ] );
     od;
     
-    # (2) sort entries lexigraphically
-    sorter := function( v, w )
-        if v[ 1 ] <> w[ 1 ] then
-            return v[ 1 ] < w[ 1 ];
-        else
-            if v[ 2 ] <> w[ 2 ] then
-                return v[ 2 ] - w[ 2 ];
-            else
-                return false;
-            fi;
-        fi;
-    end;
-    Sort( new_entries, function( v,w ) return sorter( v,w ); end );
-
     # (3) form new matrix and return it
     return SMSSparseMatrix( NumberOfColumns( matrix ), NumberOfRows( matrix ), new_entries );
     
@@ -258,20 +244,6 @@ InstallMethod( SyzygiesOfRowsBySpasm,
     number_Columns := data[ 1 ][ 2 ];
     Remove( data, 1 );
     Remove( data );
-    
-    # Sort data = non-zero entries lexigraphically
-    sorter := function( v, w )
-        if v[ 1 ] <> w[ 1 ] then
-            return v[ 1 ] < w[ 1 ];
-        else
-            if v[ 2 ] <> w[ 2 ] then
-                return v[ 2 ] - w[ 2 ];
-            else
-                return false;
-            fi;
-        fi;
-    end;
-    Sort( data, function( v,w ) return sorter( v,w ); end );
     
     # Return the result as SMSSparseMatrix
     return SMSSparseMatrix( number_Rows, number_Columns, data );
