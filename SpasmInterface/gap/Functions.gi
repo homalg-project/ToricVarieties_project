@@ -83,7 +83,7 @@ InstallMethod( Involution,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local new_entries, i, sorter;
+    local new_entries, i;
     
     # (1) do a rough transposition of the entries
     new_entries := [];
@@ -213,7 +213,7 @@ InstallMethod( SyzygiesOfRowsBySpasm,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local nR, nC, entries, output_string, data, number_Rows, number_Columns, sorter;
+    local nR, nC, entries, output_string, data, number_Rows, number_Columns;
     
     # Extract information on the matrix
     nR := NumberOfRows( matrix );
