@@ -260,12 +260,9 @@ InstallMethod( SyzygiesGenerators,
     # Compute a mutual syzygies matrix
     rowUnion := UnionOfRowsOp( matrix1, matrix2 );
     kernelMatrix := SyzygiesOfRowsBySpasm( rowUnion );
-    selection := CertainColumns( kernelMatrix, [ 1 .. NumberOfRows( matrix1 ) ] );
-
-    # The resulting matrix selection may have zero rows. This can mean that they only have 0-entries.
-    # But a row is also trivial if it is contained in the relations of the underlying ring.
-    # Here I assume that no such relations exist and remove all rows which have merely 0s as their entries.
-    # can also actually, the so-obtained matrix may contain zero rows, which should be removed...
-    return CertainRows( selection, NonZeroRows( selection ) );
+    
+    # Pick only those columns corresponding to mapping into matrix1 and return this result
+    return CertainColumns( kernelMatrix, [ 1 .. NumberOfRows( matrix1 ) ] );
+    
     
 end );
