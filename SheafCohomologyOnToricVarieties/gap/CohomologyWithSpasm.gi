@@ -75,7 +75,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject ],
   function( variety, a, b )
-      local degree, range, source, map, mor, matrices, emb, ker_pres, ker, coker_dim;
+      local degree, range, source, map, mor, matrices, i, j, entries, enti, max, min, order, prime, emb, ker_pres, ker, coker_dim;
       
       # inform about status
       Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
@@ -98,14 +98,44 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "------------------------------------------------------------------------------\n" );
       Print( "Obtained matrices defining truncated morphism - compute its kernel now... \n\n" );
 
+      # Estimate a large enough prime number p, s.t. the computation performed by Spasm over
+      # the finite field Z_p matches the result over the rational numbers
+      
+      Print( "(*) Identify largest and smallest entries in the matrices \n" );
+      entries := [ , , ];
+      for i in [ 1 .. 3 ] do
+        enti := List( [ 1 .. Length( Entries( matrices[ i ] ) ) ], j -> Entries( matrices[ i ] )[ j ][ 3 ] );
+        if Length( enti ) = 0 then
+          enti := [ 0 ];
+        fi;
+        entries[ i ] := enti;
+      od;
+      max := [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ), Maximum( entries[ 3 ] ) ];
+      max := Maximum( max );
+      min := [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ), Minimum( entries[ 3 ] ) ];
+      min := Minimum( min );
+      
+      order := ( max - min ) * ( NumberOfRows( matrices[ 1 ] ) + NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) );
+      Print( Concatenation( "(*) Estimate prime to be larger than ", String( order ), "\n" ) );
+      
+      if order < 42013 then
+        prime := 42013;
+      else
+        prime := NextPrimeInt( order );
+      fi;
+      Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
+      
       # compute KernelEmbedding
-      emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ] );
-      ker_pres := SyzygiesGenerators( emb, matrices[ 1 ] );
+      emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
+      ker_pres := SyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
-      Print( "Obtained presentation of kernel - compute its dimension now... \n\n" );
-      ker := SyzygiesOfRowsBySpasm( ker_pres );
+      Print( "Obtained presentation of kernel - compute its dimension now... \n" );
+      Print( Concatenation( "(We issue this computation to be performed in the finite field over prime p = ", String( prime ), ") \n\n" ) );
+      
+      # compute dimension of the cokernel
+      ker := SyzygiesOfRowsBySpasm( ker_pres, prime );
       coker_dim := NumberOfColumns( ker_pres ) - NumberOfRows( ker_pres ) + NumberOfRows( ker );
       
       # return this dimension of the cokernel
