@@ -215,6 +215,10 @@ InstallMethod( SyzygiesOfRowsBySpasm,
   function( matrix, prime )
     local nR, nC, entries, output_string, data, number_Rows, number_Columns;
     
+    if not IsPrime( prime ) then
+        Error( "We support this operation only over finite fields Z_p with p a prime number" );
+    fi;
+    
     # Extract information on the matrix
     nR := NumberOfRows( matrix );
     nC := NumberOfColumns( matrix );
@@ -265,6 +269,10 @@ InstallMethod( SyzygiesGenerators,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
   function( matrix1, matrix2, prime )
     local rowUnion, kernelMatrix, selection;
+    
+    if not IsPrime( prime ) then
+        Error( "We support this operation only over finite fields Z_p with p a prime number" );
+    fi;
     
     # Compute a mutual syzygies matrix
     rowUnion := UnionOfRowsOp( matrix1, matrix2 );
