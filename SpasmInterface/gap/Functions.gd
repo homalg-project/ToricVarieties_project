@@ -94,16 +94,26 @@ DeclareOperation( "SyzygiesOfRowsBySpasm",
 
 #! @Description
 #! Compute left kernel of SMSSparseMatrix M by Spasm.
-#! The second argument is a prime number p and we compute
-#! this kernel in the finite field of order p.
+#! The third argument is a prime number and specifies
+#! in which finite field we perform this computation.
 #! @Returns SMSSparseMatrix
 #! @Arguments SMSSparseMatrix M
 DeclareOperation( "SyzygiesOfRowsBySpasm",
                   [ IsSMSSparseMatrix, IsInt ] );
 
 #! @Description
-#! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2
+#! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2.
+#! By default we compute it over the finite field of order 42013.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
 DeclareOperation( "SyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
+
+#! @Description
+#! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2
+#! The third argument is a prime number and specifies
+#! in which finite field we perform this computation.
+#! @Returns SMSSparseMatrix
+#! @Arguments SparseMatrices M1, M2
+DeclareOperation( "SyzygiesGenerators",
+                  [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );

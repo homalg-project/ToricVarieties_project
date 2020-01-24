@@ -262,16 +262,25 @@ end );
 
 InstallMethod( SyzygiesGenerators,
                "two sparse matrices",
-               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
-  function( matrix1, matrix2 )
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
+  function( matrix1, matrix2, prime )
     local rowUnion, kernelMatrix, selection;
     
     # Compute a mutual syzygies matrix
     rowUnion := UnionOfRowsOp( matrix1, matrix2 );
-    kernelMatrix := SyzygiesOfRowsBySpasm( rowUnion );
+    kernelMatrix := SyzygiesOfRowsBySpasm( rowUnion, prime );
     
     # Pick only those columns corresponding to mapping into matrix1 and return this result
     return CertainColumns( kernelMatrix, [ 1 .. NumberOfRows( matrix1 ) ] );
     
+    
+end );
+
+InstallMethod( SyzygiesGenerators,
+               "two sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
+  function( matrix1, matrix2 )
+    
+    return SyzygiesGenerators( matrix1, matrix2, 42013 );
     
 end );
