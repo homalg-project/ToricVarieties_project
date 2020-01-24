@@ -211,8 +211,8 @@ end );
 
 InstallMethod( SyzygiesOfRowsBySpasm,
                "a sparse matrix",
-               [ IsSMSSparseMatrix ],
-  function( matrix )
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, prime )
     local nR, nC, entries, output_string, data, number_Rows, number_Columns;
     
     # Extract information on the matrix
@@ -229,7 +229,7 @@ InstallMethod( SyzygiesOfRowsBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "kernel", TurnIntoSMSString( matrix ), [ "matrix" ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "kernel", TurnIntoSMSString( matrix ), [ "--matrix", "--modulus" ], [ "no-value", String( prime ) ] );
     
     # Format the output string
     output_string := Chomp( output_string ); # Remove trailing \n
@@ -250,6 +250,15 @@ InstallMethod( SyzygiesOfRowsBySpasm,
     
 end );
 
+InstallMethod( SyzygiesOfRowsBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    local nR, nC, entries, output_string, data, number_Rows, number_Columns;
+
+    return SyzygiesOfRowsBySpasm( matrix, 42013 );
+
+end );
 
 InstallMethod( SyzygiesGenerators,
                "two sparse matrices",

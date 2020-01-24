@@ -85,11 +85,21 @@ DeclareAttribute( "NonZeroColumns",
 ##############################################################################################
 
 #! @Description
-#! Compute left kernel of SMSSparseMatrix M by Spasm
+#! Compute left kernel of SMSSparseMatrix M by Spasm.
+#! By default we compute it over the finite field of order 42013.
 #! @Returns SMSSparseMatrix
 #! @Arguments SMSSparseMatrix M
 DeclareOperation( "SyzygiesOfRowsBySpasm",
                   [ IsSMSSparseMatrix ] );
+
+#! @Description
+#! Compute left kernel of SMSSparseMatrix M by Spasm.
+#! The second argument is a prime number p and we compute
+#! this kernel in the finite field of order p.
+#! @Returns SMSSparseMatrix
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "SyzygiesOfRowsBySpasm",
+                  [ IsSMSSparseMatrix, IsInt ] );
 
 #! @Description
 #! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2
