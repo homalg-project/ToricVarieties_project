@@ -75,7 +75,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject ],
   function( variety, a, b )
-      local degree, range, source, map, mor, matrices, i, j, entries, enti, max, min, order, prime, emb, ker_pres, ker, coker_dim;
+      local degree, range, source, map, mor, matrices, i, j, entries, rows, cols, max, min, order, prime, emb, ker_pres, ker, rk, coker_dim;
       
       # inform about status
       Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
@@ -92,7 +92,14 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "Truncate it now... \n\n" );
       
       # truncate this morphism and extract the corresponding matrices
-      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
+      #matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
+      Read( "/home/i/SoftwareStuff/matrix1.gi" );
+      m1 := SMSSparseMatrix( 9856, 9472, entries1 );
+      Read( "/home/i/SoftwareStuff/matrix2.gi" );
+      m2 := SMSSparseMatrix( 9472, 48018, entries2 );
+      Read( "/home/i/SoftwareStuff/matrix3.gi" );
+      m3 := SMSSparseMatrix( 56426, 48018, entries3 );
+      matrices := [ m1, m2, m3 ];
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
@@ -101,42 +108,65 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       # Estimate a large enough prime number p, s.t. the computation performed by Spasm over
       # the finite field Z_p matches the result over the rational numbers
       
-      Print( "(*) Identify largest and smallest entries in the matrices \n" );
-      entries := [ , , ];
-      for i in [ 1 .. 3 ] do
-        enti := List( [ 1 .. Length( Entries( matrices[ i ] ) ) ], j -> Entries( matrices[ i ] )[ j ][ 3 ] );
-        if Length( enti ) = 0 then
-          enti := [ 0 ];
-        fi;
-        entries[ i ] := enti;
-      od;
-      max := [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ), Maximum( entries[ 3 ] ) ];
-      max := Maximum( max );
-      min := [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ), Minimum( entries[ 3 ] ) ];
-      min := Minimum( min );
-      
-      order := ( max - min ) * ( NumberOfRows( matrices[ 1 ] ) + NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) );
-      Print( Concatenation( "(*) Estimate prime to be larger than ", String( order ), "\n" ) );
-      
-      if order < 42013 then
-        prime := 42013;
-      else
-        prime := NextPrimeInt( order );
+      Print( "(*) Analyse first syzygies computation \n" );
+      # Also print out sparseness of matrix
+      entries := [ , ];
+      entries[ 1 ] := [ 0 ];
+      entries[ 2 ] := [ 0 ];
+      if Length( Entries( matrices[ 2 ] ) ) > 0 then
+        entries[ 1 ] := List( [ 1 .. Length( Entries( matrices[ 2 ] ) ) ], j -> Entries( matrices[ 2 ] )[ j ][ 3 ] );
       fi;
+      if Length( Entries( matrices[ 3 ] ) ) > 0 then
+        entries[ 2 ] := List( [ 1 .. Length( Entries( matrices[ 3 ] ) ) ], j -> Entries( matrices[ 3 ] )[ j ][ 3 ] );
+      fi;
+      max := Maximum( [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ) ] );
+      min := Minimum( [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ) ] );
+      order := ( max - min ) * ( NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) );
+      if order < 100 then
+        order := 100;
+      fi;
+      prime := NextPrimeInt( order );
+      rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
+      cols := umberOfRows( matrices[ 2 ] );
+      Print( Concatenation( "(*) Matrix to be considered: " Str( rows ) " x " Str( cols ),  "\n" ) );
+      Print( Concatenation( "(*) Sparseness: " Str( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) " / " Str( rows * cols ), "\n" ) );
       Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
-      
-      # compute KernelEmbedding
+      Error( "Test1" );
       emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
+      
+      Print( "(*) Analyse second syzygies computation \n" );
+      # Also print out sparseness of matrix
+      entries := [ , ];
+      entries[ 1 ] := [ 0 ];
+      entries[ 2 ] := [ 0 ];
+      if Length( Entries( matrices[ 1 ] ) ) > 0 then
+        entries[ 1 ] := List( [ 1 .. Length( Entries( matrices[ 1 ] ) ) ], j -> Entries( matrices[ 1 ] )[ j ][ 3 ] );
+      fi;
+      if Length( Entries( emb ) ) > 0 then
+        entries[ 2 ] := List( [ 1 .. Length( Entries( emb ) ) ], j -> Entries( emb )[ j ][ 3 ] );
+      fi;
+      max := Maximum( [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ) ] );
+      min := Minimum( [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ) ] );
+      order := ( max - min ) * ( NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb ) );
+      if order < 100 then
+        order := 100;
+      fi;
+      prime := NextPrimeInt( order );
+      rows := NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb );
+      cols := umberOfRows( matrices[ 1 ] );
+      Print( Concatenation( "(*) Matrix to be considered: " Str( rows ) " x " Str( cols ),  "\n" ) );
+      Print( Concatenation( "(*) Sparseness: " Str( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) " / " Str( rows * cols ), "\n" ) );
+      Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
+      Error( "Test2" );
       ker_pres := SyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
-      Print( "Obtained presentation of kernel - compute its dimension now... \n" );
-      Print( Concatenation( "(We issue this computation to be performed in the finite field over prime p = ", String( prime ), ") \n\n" ) );
+      Print( "Obtained presentation of kernel - compute its dimension now via homalg... \n\n" );
       
-      # compute dimension of the cokernel
-      ker := SyzygiesOfRowsBySpasm( ker_pres, prime );
-      coker_dim := NumberOfColumns( ker_pres ) - NumberOfRows( ker_pres ) + NumberOfRows( ker );
+      ker := CreateHomalgMatrixFromSparseString( String( Entries( ker_pres ) ), NumberOfRows( ker_pres ), NumberOfColumns( ker_pres ), HomalgFieldOfRationals() );
+      rk := RowRankOfMatrix( ker );
+      coker_dim := NumberOfColumns( ker_pres ) - rk;
       
       # return this dimension of the cokernel
       return coker_dim;
