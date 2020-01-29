@@ -44,12 +44,13 @@ NumberOfColumns( k2 );
 #! the relative syzygies of a matrix $m1$ with respect to a second matrix $m2$. We demonstrate this with the above two matrices:
 
 #! @Example
-m3 := UnionOfRows( m1, m2 );;
+m3 := UnionOfRowsOp( m1, m2 );;
 NumberOfRows( m3 );
 #! 6
 NumberOfColumns( m3 );
 #! 2
 m4 := SyzygiesGenerators( m1, m2 );
+#! <A 4x3 sparse matrix in SMS-format>
 NumberOfRows( m4 );
 #! 4
 NumberOfColumns( m4 );
@@ -68,7 +69,7 @@ m7 := Involution( m6 );
 #! @EndExample
 
 
-#! Finally let us create a matrix with trivial columns and rows. We can identify and strip these. Also, they are taken into account by Spasm when computing kernels.
+#! Finally let us create a matrix with trivial columns and rows. We can identify and strip these. Also, after minor modifications, they are taken into account by Spasm when computing kernels.
 
 #! @Example
 entries3 := [ [ 1, 1, 1 ], [ 1, 2, 1 ], [ 1, 3, -1 ], [ 3, 2, 1 ] ];;
@@ -78,4 +79,22 @@ m9 := NonZeroRows( m8 );
 #! [ 1,3 ]
 m10 := NonZeroColumns( m8 );
 #! [ 1,2,3 ]
+m11 := SyzygiesOfRowsBySpasm( m8 );
+#! <A 3x4 sparse matrix in SMS-format>
+#! @EndExample
+
+#! Also transposition of sparse matrices is supported by spasms. As of this writing, this will always be performed modulo 42013.
+#! @Example
+m12 := Involution( m1 );
+#! <A 2x3 sparse matrix in SMS-format>
+#! @EndExample
+
+#! We can also add rows and columns. Here are some examples
+#! @Example
+SumOfRows( m2 );
+#! [ 0, 3 ]
+SumOfColumns( m2 );
+#! [ 1, 2, 0 ]
+SumEntriesOfSomeRows( m2, 2 );;
+SumEntriesOfSomeColumns( m2, 2 );;
 #! @EndExample
