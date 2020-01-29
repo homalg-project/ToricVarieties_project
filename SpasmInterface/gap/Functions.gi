@@ -36,11 +36,12 @@ InstallMethod( TurnIntoSMSString,
     fi;
     
     # Produce SMS string
-    output_string := Concatenation( String( nR ), " ", String( nC ), " M\n" );
-    for i in [ 1 .. Length( entries ) ] do
-        output_string := Concatenation( output_string, String( entries[ i ][ 1 ] ), " ", String( entries[ i ][ 2 ] ), " ", String( entries[ i ][ 3 ] ), "\n" );
-    od;
-    output_string := Concatenation( output_string, "0 0 0\n" );
+    output_string := String( Entries( matrix ) );;
+    output_string := ReplacedString( output_string, "], [", "\n" );
+    output_string := ReplacedString( output_string, "[ [", "" );
+    output_string := ReplacedString( output_string, "] ]", "" );
+    output_string := ReplacedString( output_string, ",", "" );
+    output_string := Concatenation( String( nR ), " ", String( nC ), " M\n", output_string, "\n 0 0 0\n" );
     
     # Return result
     return output_string;
