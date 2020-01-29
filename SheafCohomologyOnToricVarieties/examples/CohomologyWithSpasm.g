@@ -16,4 +16,9 @@ irP1xP1 := IrrelevantLeftIdealForCAP( P1xP1 );
 #! modules over Q[x_1,x_2,x_3,x_4] (with weights
 #! [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
 H0ParallelBySpasm( P1xP1, irP1xP1 );;
+irP1xP1 := IrrelevantRightIdealForCAP( P1xP1 );
+#! <An object in Category of f.p. graded right
+#! modules over Q[x_1,x_2,x_3,x_4] (with weights
+#! [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
+H0ParallelBySpasm( P1xP1, irP1xP1 );;
 #! @EndExample

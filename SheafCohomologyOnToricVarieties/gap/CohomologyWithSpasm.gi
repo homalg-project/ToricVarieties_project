@@ -14,7 +14,7 @@ SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD_JOBS_FOR_SPASM := [ 2, 2, 3 ];
 # compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
 InstallMethod( H0ParallelBySpasm,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsFpGradedLeftModulesObject ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module_presentation )
     
     return H0ParallelBySpasm( variety, module_presentation, 42013 );
@@ -24,7 +24,7 @@ end );
 # compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
 InstallMethod( H0ParallelBySpasm,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsFpGradedLeftModulesObject, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, p )
     local prime, ideal_infos, B_power, coker_dim;
     
@@ -67,7 +67,11 @@ InstallMethod( H0ParallelBySpasm,
     
     # step 2: compute ideal B such that H0 = GradedHom( B, M )
     Print( "(*) Determine ideal... " );
-    ideal_infos := FindIdeal( variety, module_presentation, 0 );
+    if IsFpGradedLeftModulesObject( module_presentation ) then
+        ideal_infos := FindLeftIdeal( variety, module_presentation, 0 );
+    else
+        ideal_infos := FindRightIdeal( variety, module_presentation, 0 );
+    fi;
     B_power := ideal_infos[ 3 ];
     Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
     Print( "(*) Compute GradedHom... \n\n" );
@@ -95,7 +99,7 @@ end );
 
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
-               [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject, IsInt ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, a, b, prime )
       local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim;
       
@@ -123,9 +127,11 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "(*) Analyse first syzygies computation \n" );
       rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
       cols := NumberOfRows( matrices[ 2 ] );
-      sparse := ( Length( Entries( matrices[ 2 ] ) ) + Length( Entries( matrices[ 3 ] ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
+      if rows * cols <> 0 then
+        sparse := ( Length( Entries( matrices[ 2 ] ) ) + Length( Entries( matrices[ 3 ] ) ) ) / ( rows * cols );
+        Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
+      fi;
       Print( "(*) Perform syzygies computation...\n\n" );
       emb := RowSyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
@@ -133,9 +139,11 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "(*) Analyse second syzygies computation \n" );
       rows := NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb );
       cols := NumberOfRows( matrices[ 1 ] );
-      sparse := ( Length( Entries( matrices[ 1 ] ) ) + Length( Entries( emb ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
+      if rows * cols <> 0 then
+        sparse := ( Length( Entries( matrices[ 1 ] ) ) + Length( Entries( emb ) ) ) / ( rows * cols );
+        Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
+      fi;
       Print( "(*) Perform syzygies computation...\n\n" );
       ker_pres := RowSyzygiesGenerators( emb, matrices[ 1 ], prime );
       
@@ -154,7 +162,7 @@ end );
 
 InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
                " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftModulesMorphism ],
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism ],
   function( variety, graded_module_morphism )
     local rationals, degree, NrJobs, source, map, range, gensOfSource, gensOfRange, input, job1, job2, job3, run1, run2, run3, entries,
          matrix1, matrix2, matrix3;
