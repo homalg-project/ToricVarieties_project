@@ -383,13 +383,15 @@ end );
 ##############################################################################################
 
 InstallMethod( SyzygiesOfRowsBySpasm,
-               "a sparse matrix",
+               "a sparse matrix and an integer",
                [ IsSMSSparseMatrix, IsInt ],
-  function( matrix, prime )
-    local nR, nC, entries, output_string, data, number_Rows, number_Columns;
+  function( matrix, p )
+    local prime, nR, nC, entries, output_string, data, number_Rows, number_Columns;
     
-    if not IsPrime( prime ) then
-        Error( "We support this operation only over finite fields Z_p with p a prime number" );
+    if not IsPrimeInt( p ) then
+        prime := NextPrimeInt( p );
+    else
+        prime := p;
     fi;
     
     # Extract information on the matrix
@@ -437,8 +439,29 @@ InstallMethod( SyzygiesOfRowsBySpasm,
 
 end );
 
+
+InstallMethod( SyzygiesOfColumnsBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+
+    return Involution( SyzygiesOfRowsBySpasm( Involution( matrix ), 42013 ) );
+
+end );
+
+
+InstallMethod( SyzygiesOfColumnsBySpasm,
+               "a sparse matrix and an integer",
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, prime )
+
+    return Involution( SyzygiesOfRowsBySpasm( Involution( matrix ), prime ) );
+
+end );
+
+
 InstallMethod( RowSyzygiesGenerators,
-               "two sparse matrices",
+               "two sparse matrices and an integer",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
   function( matrix1, matrix2, prime )
     local rowUnion, kernelMatrix, selection;
