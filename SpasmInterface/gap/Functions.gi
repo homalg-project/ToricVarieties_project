@@ -518,25 +518,12 @@ InstallMethod( RankGPLUBySpasm,
                "a sparse matrix",
                [ IsSMSSparseMatrix, IsInt ],
   function( matrix, p )
-    local prime, nR, nC, entries, output_string, data, number_Rows, number_Columns;
+    local prime, output_string;
     
     if not IsPrimeInt( p ) then
         prime := NextPrimeInt( p );
     else
         prime := p;
-    fi;
-    
-    # Extract information on the matrix
-    nR := NumberOfRows( matrix );
-    nC := NumberOfColumns( matrix );
-    entries := Entries( matrix );
-    
-    # Check for valid input
-    if nR < 0 then
-        Error( "Number of rows specified must be non-negative" );
-    fi;
-    if nC < 0 then
-        Error( "Number of columns specified must be non-negative" );
     fi;
     
     # Compute kernel matrix by SPASM
