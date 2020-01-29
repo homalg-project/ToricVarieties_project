@@ -143,7 +143,7 @@ DeclareOperation( "SyzygiesOfRowsBySpasm",
 #! By default we compute it over the finite field of order 42013.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
-DeclareOperation( "SyzygiesGenerators",
+DeclareOperation( "RowSyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
 
 #! @Description
@@ -152,7 +152,7 @@ DeclareOperation( "SyzygiesGenerators",
 #! in which finite field we perform this computation.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
-DeclareOperation( "SyzygiesGenerators",
+DeclareOperation( "RowSyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
 
 
