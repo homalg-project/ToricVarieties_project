@@ -65,19 +65,33 @@ DeclareOperation( "CertainColumns",
                   [ IsSMSSparseMatrix, IsList ] );
 
 #! @Description
-#! This function adds the entries in the columns of a given SMSSparseMatrix
+#! This function adds the columns of a given SMSSparseMatrix
 #! @Returns List
 #! @Arguments SparseMatrix M
 DeclareOperation( "SumOfColumns",
                   [ IsSMSSparseMatrix ] );
 
-
 #! @Description
-#! This function picks N columns by random and adds all values
-#! in these columns of a given SMSSparseMatrix
+#! This function adds the rows of a given SMSSparseMatrix
 #! @Returns List
 #! @Arguments SparseMatrix M
-DeclareOperation( "SumOfSomeColumns",
+DeclareOperation( "SumOfRows",
+                  [ IsSMSSparseMatrix ] );
+
+#! @Description
+#! This function picks N columns a given SMSSparseMatrix 
+#! by random and sums the absolute values of their entries.
+#! @Returns List
+#! @Arguments SparseMatrix M, integer N
+DeclareOperation( "SumEntriesOfSomeColumns",
+                  [ IsSMSSparseMatrix, IsInt ] );
+
+#! @Description
+#! This function picks N rows a given SMSSparseMatrix 
+#! by random and sums the absolute values of their entries.
+#! @Returns List
+#! @Arguments SparseMatrix M, integer N
+DeclareOperation( "SumEntriesOfSomeRows",
                   [ IsSMSSparseMatrix, IsInt ] );
 
 ##############################################################################################

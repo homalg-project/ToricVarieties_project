@@ -222,6 +222,34 @@ InstallMethod( SumOfColumns,
     
     # sum up all columns
     sum := [];
+    for i in [ 1 .. NumberOfRows( matrix ) ] do
+        
+        # find all entries in the i-th row
+        pos := PositionsProperty( Entries( matrix ), function( ent ) if ent[ 1 ] = i then return true; else return false; fi; end );
+        
+        # add these values
+        if Length( pos ) > 0 then
+            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ] );
+        else
+            Append( sum, [ 0 ] );
+        fi;
+        
+    od;
+    
+    # return the result
+    return sum;
+    
+end );
+
+
+InstallMethod( SumOfRows,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    local sum, i, pos, j;
+    
+    # sum up all rows
+    sum := [];
     for i in [ 1 .. NumberOfColumns( matrix ) ] do
         
         # find all entries in the i-th column
@@ -242,7 +270,7 @@ InstallMethod( SumOfColumns,
 end );
 
 
-InstallMethod( SumOfSomeColumns,
+InstallMethod( SumEntriesOfSomeColumns,
                "a sparse matrix",
                [ IsSMSSparseMatrix, IsInt ],
   function( matrix, samples )
@@ -262,7 +290,40 @@ InstallMethod( SumOfSomeColumns,
         
         # add these values
         if Length( pos ) > 0 then
-            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ] );
+            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> AbsoluteValue( Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ) ] );
+        else
+            Append( sum, [ 0 ] );
+        fi;
+        
+    od;
+    
+    # return the result
+    return sum;
+    
+end );
+
+
+InstallMethod( SumEntriesOfSomeRows,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, samples )
+    local rs, i, cols, sum, pos, j;
+    
+    # pick rougly 'sample' of columns at random
+    rs := RandomSource(IsMersenneTwister);
+    cols := List( [ 1 .. samples ], i -> Random( rs, [ 1 .. NumberOfRows( matrix ) ] ) );
+    cols := DuplicateFreeList( cols );
+    
+    # and add them up
+    sum := [];
+    for i in cols do
+        
+        # find all entries in the i-th column
+        pos := PositionsProperty( Entries( matrix ), function( ent ) if ent[ 1 ] = i then return true; else return false; fi; end );
+        
+        # add these values
+        if Length( pos ) > 0 then
+            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> AbsoluteValue( Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ) ] );
         else
             Append( sum, [ 0 ] );
         fi;
