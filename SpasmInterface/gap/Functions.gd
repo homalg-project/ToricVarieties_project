@@ -56,6 +56,21 @@ DeclareOperation( "CertainRows",
 DeclareOperation( "CertainColumns",
                   [ IsSMSSparseMatrix, IsList ] );
 
+#! @Description
+#! This function adds the entries in the columns of a given SMSSparseMatrix
+#! @Returns List
+#! @Arguments SparseMatrix M
+DeclareOperation( "SumOfColumns",
+                  [ IsSMSSparseMatrix ] );
+
+
+#! @Description
+#! This function picks N columns by random and adds all values
+#! in these columns of a given SMSSparseMatrix
+#! @Returns List
+#! @Arguments SparseMatrix M
+DeclareOperation( "SumOfSomeColumns",
+                  [ IsSMSSparseMatrix, IsInt ] );
 
 ##############################################################################################
 ##
@@ -117,3 +132,27 @@ DeclareOperation( "SyzygiesGenerators",
 #! @Arguments SparseMatrices M1, M2
 DeclareOperation( "SyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
+
+
+##############################################################################################
+##
+#! @Section Computation of rank
+##
+##############################################################################################
+
+#! @Description
+#! Compute the rank of an SMSSparseMatrix M by Spasm.
+#! By default we compute it over the finite field of order 42013.
+#! @Returns Integer
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "RankBySpasm",
+                  [ IsSMSSparseMatrix ] );
+
+#! @Description
+#! Compute the rank of an SMSSparseMatrix M by Spasm.
+#! The second argument is a prime number and specifies
+#! in which finite field we perform this computation.
+#! @Returns Integer
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "RankBySpasm",
+                  [ IsSMSSparseMatrix, IsInt ] );
