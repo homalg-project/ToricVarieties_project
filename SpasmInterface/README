@@ -10,8 +10,12 @@
 #############################################################################
 
 README file for the `SpasmInterface' GAP4 package
-        
+
 To get the latest version of this GAP 4 package pull the corresponding branch from github. 
+
+
+(1) Installation this package
+-----------------------------
 
 This package requires a working installation of the software `Spasm' on your computer. Currently, only part of the functionality of Spasm is supported by this interface.
 
@@ -65,8 +69,32 @@ Whilst this successfully installs spasm, this gap-package will not yet be functi
 
 Note that we have added the subfolder /bench to the location of spasm. This subfolder contains the scripts which this interface triggers. This completes this customized installation.
 
-More details/information on how to install spasm can be found in the spasm package. E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+More details/information on how to install spasm can be found in the spasm package. 
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+gap makedoc
+
+inside the SpasmInterface folder. This requires to have a running LaTeX installation. In this case, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
 Martin Bies, martin.bies@alumni.uni-heidelberg.de
 
-This work is supported by the Wiener – Anspach Foundation.
+
+(4) Funding
+--------------------------
+
+This work is supported by the Wiener-Anspach Foundation.
