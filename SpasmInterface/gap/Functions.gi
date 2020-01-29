@@ -560,3 +560,36 @@ InstallMethod( RankGPLUBySpasm,
     return RankGPLUBySpasm( matrix, 42013 );
     
 end );
+
+InstallMethod( RankDenseBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, p )
+    local prime, output_string;
+    
+    if not IsPrimeInt( p ) then
+        prime := NextPrimeInt( p );
+    else
+        prime := p;
+    fi;
+    
+    # Compute kernel matrix by SPASM
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_dense", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
+    
+    # 'Polish' the output string
+    output_string := SplitString( output_string, "=" )[ 2 ];
+    output_string := SplitString( output_string, "[" )[ 1 ];
+    
+    # Return the rank
+    return EvalString( output_string );
+    
+end );
+
+InstallMethod( RankDenseBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    
+    return RankDenseBySpasm( matrix, 42013 );
+    
+end );

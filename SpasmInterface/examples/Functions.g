@@ -107,5 +107,7 @@ SumEntriesOfSomeColumns( m2, 2 );;
 #! @Example
 RankGPLUBySpasm( m3 );
 #! 2
+RankDenseBySpasm( m3 );
+#! 2
 #! @EndExample
 
