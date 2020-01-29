@@ -127,7 +127,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
       Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
       Print( "(*) Perform syzygies computation...\n\n" );
-      emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
+      emb := RowSyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
       Print( "\n" );
       Print( "(*) Analyse second syzygies computation \n" );
@@ -137,7 +137,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
       Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
       Print( "(*) Perform syzygies computation...\n\n" );
-      ker_pres := SyzygiesGenerators( emb, matrices[ 1 ], prime );
+      ker_pres := RowSyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );

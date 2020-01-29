@@ -49,7 +49,7 @@ NumberOfRows( m3 );
 #! 6
 NumberOfColumns( m3 );
 #! 2
-m4 := SyzygiesGenerators( m1, m2 );
+m4 := RowSyzygiesGenerators( m1, m2 );
 #! <A 4x3 sparse matrix in SMS-format>
 NumberOfRows( m4 );
 #! 4

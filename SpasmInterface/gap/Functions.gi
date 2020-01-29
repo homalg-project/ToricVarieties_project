@@ -437,7 +437,7 @@ InstallMethod( SyzygiesOfRowsBySpasm,
 
 end );
 
-InstallMethod( SyzygiesGenerators,
+InstallMethod( RowSyzygiesGenerators,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
   function( matrix1, matrix2, prime )
@@ -457,12 +457,12 @@ InstallMethod( SyzygiesGenerators,
     
 end );
 
-InstallMethod( SyzygiesGenerators,
+InstallMethod( RowSyzygiesGenerators,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
     
-    return SyzygiesGenerators( matrix1, matrix2, 42013 );
+    return RowSyzygiesGenerators( matrix1, matrix2, 42013 );
     
 end );
 
