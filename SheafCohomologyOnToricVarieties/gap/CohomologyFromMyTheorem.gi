@@ -211,9 +211,9 @@ InstallMethod( ParameterCheck,
 
 end );
 
-# this method finds an ideal to which my theorem applies
-InstallMethod( FindIdeal,
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
+# this method finds a right ideal to which my theorem applies
+InstallMethod( FindLeftIdeal,
+               [ IsToricVariety, IsFpGradedLeftModulesObject, IsInt ],
   function( variety, module_presentation, index )
     local deg, e_list, i, ideal_generators, e, ideal_generators_power, B_power, best, chosen_degree;
 
@@ -253,6 +253,54 @@ InstallMethod( FindIdeal,
     ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], 
                                       k -> ideal_generators[ k ]^e_list[ best ] ) );
     B_power := LeftIdealForCAP( ideal_generators_power, CoxRing( variety ) );
+
+    # and return the result
+    return [ e_list[ best ], chosen_degree, B_power ];
+
+end );
+
+# this method finds a left ideal to which my theorem applies
+InstallMethod( FindRightIdeal,
+               [ IsToricVariety, IsFpGradedRightModulesObject, IsInt ],
+  function( variety, module_presentation, index )
+    local deg, e_list, i, ideal_generators, e, ideal_generators_power, B_power, best, chosen_degree;
+
+    # determine classes of smallest ample divisors and initialise e_list
+    deg := ClassesOfSmallestAmpleDivisors( variety );
+    e_list := [];
+
+    # iterate over all these degrees
+    for i in [ 1 .. Length( deg ) ] do
+
+      # find the ideal generators for these degrees
+      ideal_generators := DuplicateFreeList( MonomsOfCoxRingOfDegreeByNormaliz( variety, deg[ i ] ) );
+
+      # initialise the ideal to the power 0
+      e := 0;
+      ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
+      B_power := RightIdealForCAP( ideal_generators_power, CoxRing( variety ) );
+
+      # and start the search
+      while not ParameterCheck( variety, B_power, module_presentation, index ) do
+
+        e := e + 1;
+        ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], k -> ideal_generators[ k ]^e ) );
+        B_power := RightIdealForCAP( ideal_generators_power, CoxRing( variety ) );
+
+      od;
+
+      # save result
+      e_list[ i ] := e;
+
+    od;
+
+    # now compute the 'best' ideal
+    best := Position( e_list, Minimum( e_list ) );
+    chosen_degree := deg[ best ];
+    ideal_generators := DuplicateFreeList( MonomsOfCoxRingOfDegreeByNormaliz( variety, deg[ best ] ) );
+    ideal_generators_power := DuplicateFreeList( List( [ 1 .. Length( ideal_generators ) ], 
+                                      k -> ideal_generators[ k ]^e_list[ best ] ) );
+    B_power := RightIdealForCAP( ideal_generators_power, CoxRing( variety ) );
 
     # and return the result
     return [ e_list[ best ], chosen_degree, B_power ];
@@ -336,7 +384,11 @@ InstallMethod( H0,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := FindIdeal( variety, module_presentation, 0 );
+    if IsFpGradedLeftModulesObject( module_presentation ) then
+        ideal_infos := FindLeftIdeal( variety, module_presentation, 0 );
+    else
+        ideal_infos := FindRightIdeal( variety, module_presentation, 0 );
+    fi;
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -484,7 +536,11 @@ InstallMethod( H0Parallel,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := FindIdeal( variety, module_presentation, 0 );
+    if IsFpGradedLeftModulesObject( module_presentation ) then
+        ideal_infos := FindLeftIdeal( variety, module_presentation, 0 );
+    else
+        ideal_infos := FindRightIdeal( variety, module_presentation, 0 );
+    fi;
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -640,7 +696,11 @@ InstallMethod( Hi,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := FindIdeal( variety, module_presentation, index );
+    if IsFpGradedLeftModulesObject( module_presentation ) then
+        ideal_infos := FindLeftIdeal( variety, module_presentation, index );
+    else
+        ideal_infos := FindRightIdeal( variety, module_presentation, index );
+    fi;
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
@@ -791,7 +851,11 @@ InstallMethod( HiParallel,
       Print( "(*) Determine ideal... " );
     fi;
 
-    ideal_infos := FindIdeal( variety, module_presentation, index );
+    if IsFpGradedLeftModulesObject( module_presentation ) then
+        ideal_infos := FindLeftIdeal( variety, module_presentation, index );
+    else
+        ideal_infos := FindRightIdeal( variety, module_presentation, index );
+    fi;
     B_power := ideal_infos[ 3 ];
 
     # and inform about the result of this computation
