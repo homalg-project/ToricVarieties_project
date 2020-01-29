@@ -514,7 +514,7 @@ end );
 ##
 ##############################################################################################
 
-InstallMethod( RankBySpasm,
+InstallMethod( RankGPLUBySpasm,
                "a sparse matrix",
                [ IsSMSSparseMatrix, IsInt ],
   function( matrix, prime )
@@ -550,11 +550,11 @@ InstallMethod( RankBySpasm,
 end );
 
 
-InstallMethod( RankBySpasm,
+InstallMethod( RankGPLUBySpasm,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
     
-    return RankBySpasm( matrix, 42013 );
+    return RankGPLUBySpasm( matrix, 42013 );
     
 end );

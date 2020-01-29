@@ -173,18 +173,12 @@ DeclareOperation( "ColumnSyzygiesGenerators",
 ##############################################################################################
 
 #! @Description
-#! Compute the rank of an SMSSparseMatrix M by Spasm.
+#! Compute the rank of an SMSSparseMatrix M by Spasm by GPLU.
 #! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
 #! @Returns Integer
 #! @Arguments SMSSparseMatrix M
-DeclareOperation( "RankBySpasm",
+DeclareOperation( "RankGPLUBySpasm",
                   [ IsSMSSparseMatrix ] );
-
-#! @Description
-#! Compute the rank of an SMSSparseMatrix M by Spasm.
-#! The second argument is a prime number and specifies
-#! in which finite field we perform this computation.
-#! @Returns Integer
-#! @Arguments SMSSparseMatrix M
-DeclareOperation( "RankBySpasm",
+DeclareOperation( "RankGPLUBySpasm",
                   [ IsSMSSparseMatrix, IsInt ] );

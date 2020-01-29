@@ -143,7 +143,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "------------------------------------------------------------------------------\n" );
       Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
       
-      rk := RankBySpasm( ker_pres, prime );
+      rk := RankGPLUBySpasm( ker_pres, prime );
       Print( "\n" );
       
       # return result

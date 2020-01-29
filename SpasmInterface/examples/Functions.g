@@ -73,7 +73,7 @@ m7 := Involution( m6 );
 #! @EndExample
 
 
-#! Finally let us create a matrix with trivial columns and rows. We can identify and strip these. Also, after minor modifications, they are taken into account by Spasm when computing kernels.
+#! Let us now create a matrix with trivial columns and rows. We can identify and strip these. Also, after minor modifications, they are taken into account by Spasm when computing kernels.
 
 #! @Example
 entries3 := [ [ 1, 1, 1 ], [ 1, 2, 1 ], [ 1, 3, -1 ], [ 3, 2, 1 ] ];;
@@ -93,7 +93,7 @@ m12 := Involution( m1 );
 #! <A 2x3 sparse matrix in SMS-format>
 #! @EndExample
 
-#! We can also add rows and columns. Here are some examples
+#! We can also form sums of rows and columns. Here are some examples
 #! @Example
 SumOfRows( m2 );
 #! [ 0, 3 ]
@@ -102,3 +102,10 @@ SumOfColumns( m2 );
 SumEntriesOfSomeRows( m2, 2 );;
 SumEntriesOfSomeColumns( m2, 2 );;
 #! @EndExample
+
+#! Spasm also supports various algorithms for computing ranks of sparse matrices. Here are some examples
+#! @Example
+RankGPLUBySpasm( m3 );
+#! 2
+#! @EndExample
+
