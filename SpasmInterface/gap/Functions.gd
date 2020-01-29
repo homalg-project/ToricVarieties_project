@@ -182,3 +182,16 @@ DeclareOperation( "RankGPLUBySpasm",
                   [ IsSMSSparseMatrix ] );
 DeclareOperation( "RankGPLUBySpasm",
                   [ IsSMSSparseMatrix, IsInt ] );
+
+#! @Description
+#! Compute the rank of an SMSSparseMatrix M by Spasm. This uses an
+#! algorithm designed for handeling dense matrices, but is here applied to
+#! a sparse matrix nonetheless. By default we compute it over the finite
+#! field of order 42013. As second argument, an integer can be provided
+#! to overwrite this default.
+#! @Returns Integer
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "RankDenseBySpasm",
+                  [ IsSMSSparseMatrix ] );
+DeclareOperation( "RankDenseBySpasm",
+                  [ IsSMSSparseMatrix, IsInt ] );
