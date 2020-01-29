@@ -75,7 +75,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject ],
   function( variety, a, b )
-      local degree, range, source, map, mor, matrices, i, j, entries, rows, cols, max, min, order, prime, emb, ker_pres, ker, rk, coker_dim;
+      local degree, range, source, map, mor, matrices, i, j, entries, rows, cols, sparse, max, min, order, prime, emb, ker_pres, ker, rk, coker_dim;
       
       # inform about status
       Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
@@ -92,7 +92,14 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "Truncate it now... \n\n" );
       
       # truncate this morphism and extract the corresponding matrices
-      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
+      #matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
+      Read( "/home/i/SoftwareStuff/matrix1.gi" );
+      m1 := SMSSparseMatrix( 9856, 9472, entries1 );
+      Read( "/home/i/SoftwareStuff/matrix2.gi" );
+      m2 := SMSSparseMatrix( 9472, 48018, entries2 );
+      Read( "/home/i/SoftwareStuff/matrix3.gi" );
+      m3 := SMSSparseMatrix( 56426, 48018, entries3 );
+      matrices := [ m1, m2, m3 ];
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
@@ -120,11 +127,11 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       prime := NextPrimeInt( order );
       rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
-      cols := umberOfRows( matrices[ 2 ] );
-      Print( Concatenation( "(*) Matrix to be considered: " Str( rows ) " x " Str( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: " Str( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) " / " Str( rows * cols ), "\n" ) );
+      cols := NumberOfRows( matrices[ 2 ] );
+      sparse := ( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) / ( rows * cols );
+      Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      Print( Concatenation( "(*) Sparseness: ", String( sparse ), "\n" ) );
       Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
-      Error( "Test1" );
       emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
       Print( "(*) Analyse second syzygies computation \n" );
@@ -146,11 +153,11 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       prime := NextPrimeInt( order );
       rows := NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb );
-      cols := umberOfRows( matrices[ 1 ] );
-      Print( Concatenation( "(*) Matrix to be considered: " Str( rows ) " x " Str( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: " Str( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) " / " Str( rows * cols ), "\n" ) );
+      cols := NumberOfRows( matrices[ 1 ] );
+      sparse := ( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) / ( rows * cols );
+      Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      Print( Concatenation( "(*) Sparseness: ", String( sparse ),"\n" ) );
       Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
-      Error( "Test2" );
       ker_pres := SyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
