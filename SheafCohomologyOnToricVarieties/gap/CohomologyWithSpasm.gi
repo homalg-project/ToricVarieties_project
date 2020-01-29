@@ -16,7 +16,17 @@ InstallMethod( H0ParallelBySpasm,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsFpGradedLeftModulesObject ],
   function( variety, module_presentation )
-    local ideal_infos, B_power, coker_dim;
+    
+    return H0ParallelBySpasm( variety, module_presentation, 42013 );
+    
+end );
+    
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
+InstallMethod( H0ParallelBySpasm,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsFpGradedLeftModulesObject, IsInt ],
+  function( variety, module_presentation, p )
+    local prime, ideal_infos, B_power, coker_dim;
     
     # check if the input is valid
     if not IsValidInputForCohomologyComputations( variety ) then
@@ -24,6 +34,17 @@ InstallMethod( H0ParallelBySpasm,
       Error( "The variety has to be smooth, complete (or simplicial, projective if you allow for lazy checks)" );
       return;
     
+    fi;
+    
+    if not p > 0 then
+        Error( "Specified prime must be positive" );
+        return;
+    fi;
+    
+    if not IsPrimeInt( p ) then
+        prime := NextPrimeInt( p );
+    else
+        prime := p;
     fi;
     
     # Step 0: compute the vanishing sets
@@ -56,7 +77,8 @@ InstallMethod( H0ParallelBySpasm,
                                             TruncateIntHomToZeroInParallelBySpasm,
                                             variety,
                                             B_power,
-                                            module_presentation
+                                            module_presentation,
+                                            prime
                                   );
     
     # step 4: inform about result
@@ -73,9 +95,9 @@ end );
 
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
-               [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject ],
-  function( variety, a, b )
-      local degree, range, source, map, mor, matrices, i, j, entries, rows, cols, sparse, max, min, order, prime, emb, ker_pres, ker, rk, coker_dim;
+               [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject, IsInt ],
+  function( variety, a, b, prime )
+      local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim;
       
       # inform about status
       Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
@@ -92,14 +114,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "Truncate it now... \n\n" );
       
       # truncate this morphism and extract the corresponding matrices
-      #matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
-      Read( "/home/i/SoftwareStuff/matrix1.gi" );
-      m1 := SMSSparseMatrix( 9856, 9472, entries1 );
-      Read( "/home/i/SoftwareStuff/matrix2.gi" );
-      m2 := SMSSparseMatrix( 9472, 48018, entries2 );
-      Read( "/home/i/SoftwareStuff/matrix3.gi" );
-      m3 := SMSSparseMatrix( 56426, 48018, entries3 );
-      matrices := [ m1, m2, m3 ];
+      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
@@ -109,52 +124,19 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       # the finite field Z_p matches the result over the rational numbers
       
       Print( "(*) Analyse first syzygies computation \n" );
-      # Also print out sparseness of matrix
-      entries := [ , ];
-      entries[ 1 ] := [ 0 ];
-      entries[ 2 ] := [ 0 ];
-      if Length( Entries( matrices[ 2 ] ) ) > 0 then
-        entries[ 1 ] := List( [ 1 .. Length( Entries( matrices[ 2 ] ) ) ], j -> Entries( matrices[ 2 ] )[ j ][ 3 ] );
-      fi;
-      if Length( Entries( matrices[ 3 ] ) ) > 0 then
-        entries[ 2 ] := List( [ 1 .. Length( Entries( matrices[ 3 ] ) ) ], j -> Entries( matrices[ 3 ] )[ j ][ 3 ] );
-      fi;
-      max := Maximum( [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ) ] );
-      min := Minimum( [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ) ] );
-      order := ( max - min ) * ( NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) );
-      if order < 100 then
-        order := 100;
-      fi;
-      prime := NextPrimeInt( order );
       rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
       cols := NumberOfRows( matrices[ 2 ] );
-      sparse := ( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) / ( rows * cols );
+      sparse := ( Length( Entries( matrices[ 2 ] ) ) + Length( Entries( matrices[ 3 ] ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
       Print( Concatenation( "(*) Sparseness: ", String( sparse ), "\n" ) );
       Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
       emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
+      Print( "\n" );
       Print( "(*) Analyse second syzygies computation \n" );
-      # Also print out sparseness of matrix
-      entries := [ , ];
-      entries[ 1 ] := [ 0 ];
-      entries[ 2 ] := [ 0 ];
-      if Length( Entries( matrices[ 1 ] ) ) > 0 then
-        entries[ 1 ] := List( [ 1 .. Length( Entries( matrices[ 1 ] ) ) ], j -> Entries( matrices[ 1 ] )[ j ][ 3 ] );
-      fi;
-      if Length( Entries( emb ) ) > 0 then
-        entries[ 2 ] := List( [ 1 .. Length( Entries( emb ) ) ], j -> Entries( emb )[ j ][ 3 ] );
-      fi;
-      max := Maximum( [ Maximum( entries[ 1 ] ), Maximum( entries[ 2 ] ) ] );
-      min := Minimum( [ Minimum( entries[ 1 ] ), Minimum( entries[ 2 ] ) ] );
-      order := ( max - min ) * ( NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb ) );
-      if order < 100 then
-        order := 100;
-      fi;
-      prime := NextPrimeInt( order );
       rows := NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb );
       cols := NumberOfRows( matrices[ 1 ] );
-      sparse := ( Length( entries[ 1 ] ) + Length( entries[ 2 ] ) ) / ( rows * cols );
+      sparse := ( Length( Entries( matrices[ 1 ] ) ) + Length( Entries( emb ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
       Print( Concatenation( "(*) Sparseness: ", String( sparse ),"\n" ) );
       Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
@@ -162,13 +144,10 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
-      Print( "Obtained presentation of kernel - compute its dimension now via homalg... \n\n" );
+      Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
       
       rk := RankBySpasm( ker_pres, prime );
-      coker_dim := NumberOfColumns( ker_pres ) - rk;
-      
-      # return this dimension of the cokernel
-      return coker_dim;
+      return NumberOfColumns( ker_pres ) - rk;
       
 end );
 
