@@ -80,7 +80,7 @@ m9 := NonZeroRows( m8 );
 m10 := NonZeroColumns( m8 );
 #! [ 1,2,3 ]
 m11 := SyzygiesOfRowsBySpasm( m8 );
-#! <A 3x4 sparse matrix in SMS-format>
+#! <A 1x3 sparse matrix in SMS-format>
 #! @EndExample
 
 #! Also transposition of sparse matrices is supported by spasms. As of this writing, this will always be performed modulo 42013.
