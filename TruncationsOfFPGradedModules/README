@@ -11,11 +11,36 @@
 
 README file for the `ToolsForFPGradedModules' GAP4 package
 
-To get the latest version of this GAP 4 package pull the corresponding branch
-from github.
+
+(1) Installation
+--------------------------
+
+To get the latest version of this GAP 4 package pull the corresponding branch from github. This completes the installation process.
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+gap makedoc
+
+inside the SpasmInterface folder. This requires to have a running LaTeX installation. In this case, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
 
 E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
 Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+
+(4) Funding
+--------------------------
 
 This work is supported by the Wiener-Anspach Foundation.

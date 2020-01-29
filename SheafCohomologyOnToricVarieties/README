@@ -11,13 +11,39 @@
 
 README file for the `SheafCohomologyOnToricVarieties' GAP4 package
 
-To get the latest version of this GAP 4 package pull the corresponding branch
-from github.
 
-To complete the installation you need a working version of the cohomCalgInterface. For more details see this package in the repository https://github.com/homalg-project/SheafCohomologyOnToricVarieties.
+(1) Installation
+--------------------------
+
+To get the latest version of this GAP 4 package pull the corresponding branch from github.
+
+A complete successful installation of this software requires running versions of the cohomCalgInterface and the SpasmInterface. Both can be found in the repository 
+https://github.com/homalg-project/SheafCohomologyOnToricVarieties. Running versions of these packages assumed, the installation of this package is complete.
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+gap makedoc
+
+inside the SpasmInterface folder. This requires to have a running LaTeX installation. In this case, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
 
 E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
 
 Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+
+(4) Funding
+--------------------------
 
 This work is supported by the Wiener-Anspach Foundation.
