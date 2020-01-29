@@ -463,11 +463,13 @@ end );
 InstallMethod( RowSyzygiesGenerators,
                "two sparse matrices and an integer",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
-  function( matrix1, matrix2, prime )
-    local rowUnion, kernelMatrix, selection;
+  function( matrix1, matrix2, p )
+    local prime, rowUnion, kernelMatrix, selection;
     
-    if not IsPrime( prime ) then
-        Error( "We support this operation only over finite fields Z_p with p a prime number" );
+    if not IsPrimeInt( p ) then
+        prime := NextPrimeInt( p );
+    else
+        prime := p;
     fi;
     
     # Compute a mutual syzygies matrix
@@ -476,7 +478,6 @@ InstallMethod( RowSyzygiesGenerators,
     
     # Pick only those columns corresponding to mapping into matrix1 and return this result
     return CertainColumns( kernelMatrix, [ 1 .. NumberOfRows( matrix1 ) ] );
-    
     
 end );
 
@@ -489,7 +490,23 @@ InstallMethod( RowSyzygiesGenerators,
     
 end );
 
+InstallMethod( ColumnSyzygiesGenerators,
+               "two sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
+  function( matrix1, matrix2 )
+    
+    return Involution( RowSyzygiesGenerators( Involution( matrix1 ), Involution( matrix2 ), 42013 ) );
+    
+end );
 
+InstallMethod( ColumnSyzygiesGenerators,
+               "two sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
+  function( matrix1, matrix2, prime )
+    
+    return Involution( RowSyzygiesGenerators( Involution( matrix1 ), Involution( matrix2 ), prime ) );
+    
+end );
 
 ##############################################################################################
 ##

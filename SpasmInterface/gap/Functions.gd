@@ -154,6 +154,17 @@ DeclareOperation( "RowSyzygiesGenerators",
 DeclareOperation( "RowSyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
 
+#! @Description
+#! This function computes the ColumnSyzygyGenerators of two SMSSparseMatrices M1, M2.
+#! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
+#! @Returns SMSSparseMatrix
+#! @Arguments SparseMatrices M1, M2
+DeclareOperation( "ColumnSyzygiesGenerators",
+                  [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
+DeclareOperation( "ColumnSyzygiesGenerators",
+                  [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
+
 
 ##############################################################################################
 ##
