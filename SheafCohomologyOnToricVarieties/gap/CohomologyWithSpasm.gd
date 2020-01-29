@@ -24,13 +24,13 @@
 #! @Returns a vector space
 #! @Arguments V, M
 DeclareOperation( "H0ParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftModulesObject ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
 DeclareOperation( "H0ParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftModulesObject, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
 DeclareOperation( "TruncateIntHomToZeroInParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftModulesObject, IsFpGradedLeftModulesObject, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
 DeclareOperation( "TruncateFPGradedModuleMorphismToZeroInParallelBySpasm",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism ] );
