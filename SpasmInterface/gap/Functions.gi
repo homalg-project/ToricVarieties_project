@@ -144,7 +144,7 @@ InstallMethod( CertainRows,
                "a sparse matrix and a list of rows indices",
                [ IsSMSSparseMatrix, IsList ],
   function( matrix, row_indices )
-    local nR, nC, entries, newNR, newNC, new_entries, i;
+    local nR, nC, entries, newNR, newNC, new_entries, i, newRowPos;
     
     # check for valid input
     for i in [ 1 .. Length( row_indices ) ] do
@@ -166,8 +166,9 @@ InstallMethod( CertainRows,
     newNC := nC;
     new_entries := [];
     for i in [ 1 .. Length( entries ) ] do
-        if Position( row_indices, entries[ i ][ 1 ] ) <> fail then
-            Append( new_entries, [ entries[ i ] ] );
+        newRowPos := Position( row_indices, entries[ i ][ 1 ] );
+        if newRowPos <> fail then
+            Append( new_entries, [ [ newRowPos, entries[ i ][ 2 ], entries[ i ][ 3 ] ] ] );
         fi;
     od;
     
@@ -181,7 +182,7 @@ InstallMethod( CertainColumns,
                "a sparse matrix and a list of column indices",
                [ IsSMSSparseMatrix, IsList ],
   function( matrix, column_indices )
-    local nR, nC, entries, newNR, newNC, new_entries, i;
+    local nR, nC, entries, newNR, newNC, new_entries, i, newColPos;
     
     # check for valid input
     for i in [ 1 .. Length( column_indices ) ] do
@@ -203,8 +204,9 @@ InstallMethod( CertainColumns,
     newNC := Length( column_indices );
     new_entries := [];
     for i in [ 1 .. Length( entries ) ] do
-        if Position( column_indices, entries[ i ][ 2 ] ) <> fail then
-            Append( new_entries, [ entries[ i ] ] );
+        newColPos := Position( column_indices, entries[ i ][ 2 ] );
+        if newColPos <> fail then
+            Append( new_entries, [ [ entries[ i ][ 1 ], newColPos, entries[ i ][ 3 ] ] ] );
         fi;
     od;
     
