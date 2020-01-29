@@ -92,14 +92,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "Truncate it now... \n\n" );
       
       # truncate this morphism and extract the corresponding matrices
-      #matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
-      Read( "/home/i/SoftwareStuff/matrix1.gi" );
-      m1 := SMSSparseMatrix( 9856, 9472, entries1 );
-      Read( "/home/i/SoftwareStuff/matrix2.gi" );
-      m2 := SMSSparseMatrix( 9472, 48018, entries2 );
-      Read( "/home/i/SoftwareStuff/matrix3.gi" );
-      m3 := SMSSparseMatrix( 56426, 48018, entries3 );
-      matrices := [ m1, m2, m3 ];
+      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
@@ -164,8 +157,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "------------------------------------------------------------------------------\n" );
       Print( "Obtained presentation of kernel - compute its dimension now via homalg... \n\n" );
       
-      ker := CreateHomalgMatrixFromSparseString( String( Entries( ker_pres ) ), NumberOfRows( ker_pres ), NumberOfColumns( ker_pres ), HomalgFieldOfRationals() );
-      rk := RowRankOfMatrix( ker );
+      rk := RankBySpasm( ker_pres, prime );
       coker_dim := NumberOfColumns( ker_pres ) - rk;
       
       # return this dimension of the cokernel
