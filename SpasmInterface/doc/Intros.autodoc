@@ -4,6 +4,4 @@
 
 **SpasmInterface** provides an interface, to communicate with the software Spasm via gap. Thereby, for example, kernel of sparse matrices can be computed directly via gap.
 
-@EndSection
-
 @Chapter Functions
