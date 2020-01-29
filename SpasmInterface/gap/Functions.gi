@@ -80,6 +80,37 @@ InstallMethod( UnionOfRowsOp,
 end );
 
 
+InstallMethod( UnionOfColumnsOp,
+               "two sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
+  function( matrix1, matrix2 )
+    local nR1, nC1, entries1, nR2, nC2, entries2, newNR, newNC, newEntries, i;
+    
+    # extract data of the matrices
+    nR1 := NumberOfRows( matrix1 );
+    nC1 := NumberOfColumns( matrix1 );
+    nR2 := NumberOfRows( matrix2 );
+    nC2 := NumberOfColumns( matrix2 );
+    
+    # check if they can be stacked
+    if nR1 <> nR2 then
+        Error( "The matrices cannot be stacked as they have different numbers of rows" );
+    fi;
+    
+    # stack them
+    newNR := nR1;
+    newNC := nC1 + nC2;
+    entries1 := List( [ 1 .. Length( Entries( matrix1 ) ) ], i -> [ Entries( matrix1 )[ i ][ 1 ], Entries( matrix1 )[ i ][ 2 ], Entries( matrix1 )[ i ][ 3 ] ] );
+    entries2 := List( [ 1 .. Length( Entries( matrix2 ) ) ], i -> [ Entries( matrix2 )[ i ][ 1 ], Entries( matrix2 )[ i ][ 2 ] + nC1, Entries( matrix2 )[ i ][ 3 ] ] );
+    newEntries := entries1;
+    Append( newEntries, entries2 );
+    
+    # return result
+    return SMSSparseMatrix( newNR, newNC, newEntries );
+    
+end );
+
+
 InstallMethod( Involution,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],

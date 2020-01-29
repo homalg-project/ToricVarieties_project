@@ -34,6 +34,13 @@ DeclareOperation( "UnionOfRowsOp",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
 
 #! @Description
+#! This functions forms the union of the columns of two SMSSparseMatrices M1, M2.
+#! @Returns SMSSparseMatrix
+#! @Arguments SMSSparseMatrices M1, M2
+DeclareOperation( "UnionOfColumnsOp",
+                  [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
+
+#! @Description
 #! This function forms the involution or transposition of a SMSSparseMatrix M.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrix M
