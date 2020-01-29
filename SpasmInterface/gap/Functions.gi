@@ -115,16 +115,27 @@ InstallMethod( Involution,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local new_entries, i;
+    local output_string, data, number_Rows, number_Columns;
+
+    # Compute involution by SPASM
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "transpose", TurnIntoSMSString( matrix ), [ ], [ ] );
     
-    # (1) do a rough transposition of the entries
-    new_entries := [];
-    for i in [ 1 .. Length( Entries( matrix ) ) ] do
-        Append( new_entries, [ [ Entries( matrix )[ i ][ 2 ], Entries( matrix )[ i ][ 1 ], Entries( matrix )[ i ][ 3 ] ] ] );
-    od;
+    # Format the output string
+    output_string := Chomp( output_string ); # Remove trailing \n
+    output_string := ReplacedString( output_string, "\n", "],[" );
+    output_string := ReplacedString( output_string, " ", "," );
+    output_string := Concatenation( "[[", output_string, "]]" );
+    output_string := ReplacedString( output_string, "M", "0" ); # Remove the 'M' which indicates that we are working with matrices over the integers
     
-    # (3) form new matrix and return it
-    return SMSSparseMatrix( NumberOfColumns( matrix ), NumberOfRows( matrix ), new_entries );
+    # Eval the resulting string and extract data from it
+    data := EvalString( output_string );
+    number_Rows := data[ 1 ][ 1 ];
+    number_Columns := data[ 1 ][ 2 ];
+    Remove( data, 1 );
+    Remove( data );
+    
+    # Return result
+    return SMSSparseMatrix( number_Rows, number_Columns, data );    
     
 end );
 

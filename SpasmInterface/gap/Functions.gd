@@ -42,6 +42,7 @@ DeclareOperation( "UnionOfColumnsOp",
 
 #! @Description
 #! This function forms the involution or transposition of a SMSSparseMatrix M.
+#! Note that this operation is always performed modulo 42013 in spasm.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrix M
 DeclareOperation( "Involution",
