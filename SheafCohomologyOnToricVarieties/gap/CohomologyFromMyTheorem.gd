@@ -39,8 +39,10 @@ DeclareOperation( "ParameterCheck",
 #! We return the list [ e, d, I ].
 #! @Returns a list
 #! @Arguments V, M, i
-DeclareOperation( "FindIdeal",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+DeclareOperation( "FindLeftIdeal",
+                  [ IsToricVariety, IsFpGradedLeftModulesObject, IsInt ] );
+DeclareOperation( "FindRightIdeal",
+                  [ IsToricVariety, IsFpGradedRightModulesObject, IsInt ] );
 
 
 
