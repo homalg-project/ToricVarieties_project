@@ -118,18 +118,15 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       
       # inform about status again
       Print( "------------------------------------------------------------------------------\n" );
-      Print( "Obtained matrices defining truncated morphism - compute its kernel now... \n\n" );
-
-      # Estimate a large enough prime number p, s.t. the computation performed by Spasm over
-      # the finite field Z_p matches the result over the rational numbers
+      Print( Concatenation( "Obtained matrices defining truncated morphism - compute kernel presentation modulo p = ", String( prime ), "\n\n" ) );
       
       Print( "(*) Analyse first syzygies computation \n" );
       rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
       cols := NumberOfRows( matrices[ 2 ] );
       sparse := ( Length( Entries( matrices[ 2 ] ) ) + Length( Entries( matrices[ 3 ] ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: ", String( sparse ), "\n" ) );
-      Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
+      Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
+      Print( "(*) Perform syzygies computation...\n\n" );
       emb := SyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
       Print( "\n" );
@@ -138,8 +135,8 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       cols := NumberOfRows( matrices[ 1 ] );
       sparse := ( Length( Entries( matrices[ 1 ] ) ) + Length( Entries( emb ) ) ) / ( rows * cols );
       Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
-      Print( Concatenation( "(*) Sparseness: ", String( sparse ),"\n" ) );
-      Print( Concatenation( "(*) Perform syzygies computation modulo p = ", String( prime ), "\n\n" ) );
+      Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
+      Print( "(*) Perform syzygies computation...\n\n" );
       ker_pres := SyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
@@ -147,6 +144,9 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
       
       rk := RankBySpasm( ker_pres, prime );
+      Print( "\n" );
+      
+      # return result
       return NumberOfColumns( ker_pres ) - rk;
       
 end );
