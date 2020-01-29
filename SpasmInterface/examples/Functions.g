@@ -109,5 +109,7 @@ RankGPLUBySpasm( m3 );
 #! 2
 RankDenseBySpasm( m3 );
 #! 2
+RankHybridBySpasm( m3 );
+#! 2
 #! @EndExample
 

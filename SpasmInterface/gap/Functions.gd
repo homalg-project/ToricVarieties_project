@@ -195,3 +195,15 @@ DeclareOperation( "RankDenseBySpasm",
                   [ IsSMSSparseMatrix ] );
 DeclareOperation( "RankDenseBySpasm",
                   [ IsSMSSparseMatrix, IsInt ] );
+
+#! @Description
+#! Compute the rank of an SMSSparseMatrix M by Spasm. This uses the
+#! hybrid strategy described in [PASCO'17].
+#! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
+#! @Returns Integer
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "RankHybridBySpasm",
+                  [ IsSMSSparseMatrix ] );
+DeclareOperation( "RankHybridBySpasm",
+                  [ IsSMSSparseMatrix, IsInt ] );
