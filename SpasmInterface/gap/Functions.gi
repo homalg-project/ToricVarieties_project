@@ -171,6 +171,73 @@ InstallMethod( CertainColumns,
 end );
 
 
+InstallMethod( SumOfColumns,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    local sum, i, pos, j;
+    
+    # sum up all columns
+    sum := [];
+    for i in [ 1 .. NumberOfColumns( matrix ) ] do
+        
+        # find all entries in the i-th column
+        pos := PositionsProperty( Entries( matrix ), function( ent ) if ent[ 2 ] = i then return true; else return false; fi; end );
+        
+        # add these values
+        if Length( pos ) > 0 then
+            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ] );
+        else
+            Append( sum, [ 0 ] );
+        fi;
+        
+    od;
+    
+    # return the result
+    return sum;
+    
+end );
+
+
+InstallMethod( SumOfSomeColumns,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, samples )
+    local rs, i, cols, sum, pos, j;
+    
+    # pick rougly 'sample' of columns at random
+    rs := RandomSource(IsMersenneTwister);
+    cols := List( [ 1 .. samples ], i -> Random( rs, [ 1 .. NumberOfColumns( matrix ) ] ) );
+    cols := DuplicateFreeList( cols );
+    
+    # and add them up
+    sum := [];
+    for i in cols do
+        
+        # find all entries in the i-th column
+        pos := PositionsProperty( Entries( matrix ), function( ent ) if ent[ 2 ] = i then return true; else return false; fi; end );
+        
+        # add these values
+        if Length( pos ) > 0 then
+            Append( sum, [ Sum( List( [ 1 .. Length( pos ) ], j -> Entries( matrix )[ pos[ j ] ][ 3 ] ) ) ] );
+        else
+            Append( sum, [ 0 ] );
+        fi;
+        
+    od;
+    
+    # return the result
+    return sum;
+    
+end );
+
+
+##############################################################################################
+##
+## Attributes of SMSSparseMatrices
+##
+##############################################################################################
+
 InstallMethod( NonZeroRows,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
@@ -290,5 +357,58 @@ InstallMethod( SyzygiesGenerators,
   function( matrix1, matrix2 )
     
     return SyzygiesGenerators( matrix1, matrix2, 42013 );
+    
+end );
+
+
+
+##############################################################################################
+##
+#! @Section Computation of rank
+##
+##############################################################################################
+
+InstallMethod( RankBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix, IsInt ],
+  function( matrix, prime )
+    local nR, nC, entries, output_string, data, number_Rows, number_Columns;
+    
+    if not IsPrime( prime ) then
+        Error( "We support this operation only over finite fields Z_p with p a prime number" );
+    fi;
+    
+    # Extract information on the matrix
+    nR := NumberOfRows( matrix );
+    nC := NumberOfColumns( matrix );
+    entries := Entries( matrix );
+    
+    # Check for valid input
+    if nR < 0 then
+        Error( "Number of rows specified must be non-negative" );
+    fi;
+    if nC < 0 then
+        Error( "Number of columns specified must be non-negative" );
+    fi;
+    
+    # Compute kernel matrix by SPASM
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_gplu", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( prime ) ] );
+    
+    # 'Polish' the output string
+    output_string := SplitString( output_string, "=" )[ 2 ];
+    output_string := SplitString( output_string, "[" )[ 1 ];
+    
+    # Return the rank
+    return EvalString( output_string );
+    
+end );
+
+
+InstallMethod( RankBySpasm,
+               "a sparse matrix",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    
+    return RankBySpasm( matrix, 42013 );
     
 end );
