@@ -124,34 +124,33 @@ DeclareAttribute( "NonZeroColumns",
 #! @Description
 #! Compute left kernel of SMSSparseMatrix M by Spasm.
 #! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
 #! @Returns SMSSparseMatrix
 #! @Arguments SMSSparseMatrix M
 DeclareOperation( "SyzygiesOfRowsBySpasm",
                   [ IsSMSSparseMatrix ] );
-
-#! @Description
-#! Compute left kernel of SMSSparseMatrix M by Spasm.
-#! The third argument is a prime number and specifies
-#! in which finite field we perform this computation.
-#! @Returns SMSSparseMatrix
-#! @Arguments SMSSparseMatrix M
 DeclareOperation( "SyzygiesOfRowsBySpasm",
                   [ IsSMSSparseMatrix, IsInt ] );
 
 #! @Description
-#! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2.
+#! Compute right kernel of SMSSparseMatrix M by Spasm.
 #! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
+#! @Returns SMSSparseMatrix
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "SyzygiesOfColumnsBySpasm",
+                  [ IsSMSSparseMatrix ] );
+DeclareOperation( "SyzygiesOfColumnsBySpasm",
+                  [ IsSMSSparseMatrix, IsInt ] );
+
+#! @Description
+#! This function computes the RowSyzygyGenerators of two SMSSparseMatrices M1, M2.
+#! By default we compute it over the finite field of order 42013.
+#! As second argument, an integer can be provided to overwrite this default.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
 DeclareOperation( "RowSyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
-
-#! @Description
-#! This function computes the SyzygyGenerators of two SMSSparseMatrices M1, M2
-#! The third argument is a prime number and specifies
-#! in which finite field we perform this computation.
-#! @Returns SMSSparseMatrix
-#! @Arguments SparseMatrices M1, M2
 DeclareOperation( "RowSyzygiesGenerators",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
 
