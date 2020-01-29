@@ -17,6 +17,7 @@ Entries( m1 );
 #! [ [ 1, 1, 1 ], [ 2, 1, -1 ], [ 3, 2, 1 ] ]
 s1 := TurnIntoSMSString( m1 );;
 k1 := SyzygiesOfRowsBySpasm( m1 );;
+SyzygiesOfColumnsBySpasm( m1 );;
 NumberOfRows( k1 );
 #! 1
 NumberOfColumns( k1 );
@@ -34,6 +35,7 @@ NumberOfColumns( m2 );
 #! 2
 s2 := TurnIntoSMSString( m2 );;
 k2 := SyzygiesOfRowsBySpasm( m2 );;
+SyzygiesOfColumnsBySpasm( m2 );;
 NumberOfRows( k2 );
 #! 1
 NumberOfColumns( k2 );
@@ -51,6 +53,8 @@ NumberOfColumns( m3 );
 #! 2
 m4 := RowSyzygiesGenerators( m1, m2 );
 #! <A 4x3 sparse matrix in SMS-format>
+ColumnSyzygiesGenerators( m1, m2 );
+#! <A 2x1 sparse matrix in SMS-format>
 NumberOfRows( m4 );
 #! 4
 NumberOfColumns( m4 );
