@@ -3,7 +3,7 @@
 ##  Tools.gi            cohomCalgInterface package
 ##                      Martin Bies
 ##
-##  Copyright 2019      ULB Brussels
+##  Copyright 2020      University of Oxford
 ##
 ##  A package to communicate with the software cohomCalg
 ##
