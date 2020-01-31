@@ -29,8 +29,11 @@ DeclareOperation( "H0ParallelBySpasm",
 DeclareOperation( "H0ParallelBySpasm",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
+DeclareOperation( "H0ParallelBySpasm",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
+
 DeclareOperation( "TruncateIntHomToZeroInParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
 
 DeclareOperation( "TruncateFPGradedModuleMorphismToZeroInParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsBool ] );
