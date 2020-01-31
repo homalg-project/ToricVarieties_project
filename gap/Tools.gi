@@ -3,7 +3,7 @@
 ##  Tools.gi            TopcomInterface package
 ##                      Martin Bies
 ##
-##  Copyright 2019      ULB Brussels
+##  Copyright 2020      University of Oxford
 ##
 ##  A package to communicate with the software Topcom
 ##
