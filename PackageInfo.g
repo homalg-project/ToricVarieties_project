@@ -3,7 +3,7 @@
 ##  PackageInfo.g       TopcomInterface package
 ##                      Martin Bies
 ##
-##  Copyright 2019      ULB Brussels
+##  Copyright 2020      University of Oxford
 ##
 ##  A package to communicate with the software Topcom
 ##
@@ -16,7 +16,7 @@ PackageName := "TopcomInterface",
 Subtitle := "A package to communicate with the software Topcom",
 
 Version :=  Maximum( [
-  "2019.06.15", # Martins version  
+  "2020.06.15", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -40,7 +40,7 @@ rec(
                  "1050 Brussels \n",
                  "Belgium" ), 
     Place         := "Brussels",
-    Institution   := "ULB Brussels"
+    Institution   := "University of Oxford"
   ),
 ],
 
