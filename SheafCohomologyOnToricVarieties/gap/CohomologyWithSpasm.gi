@@ -17,15 +17,25 @@ InstallMethod( H0ParallelBySpasm,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module_presentation )
     
-    return H0ParallelBySpasm( variety, module_presentation, 42013 );
+    return H0ParallelBySpasm( variety, module_presentation, 42013, true );
     
 end );
-    
+
 # compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
 InstallMethod( H0ParallelBySpasm,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, p )
+    
+    return H0ParallelBySpasm( variety, module_presentation, p, true );
+    
+end );
+
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
+InstallMethod( H0ParallelBySpasm,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
+  function( variety, module_presentation, p, display_messages )
     local prime, ideal_infos, B_power, coker_dim;
     
     # check if the input is valid
@@ -49,32 +59,48 @@ InstallMethod( H0ParallelBySpasm,
     
     # Step 0: compute the vanishing sets
     if not HasVanishingSets( variety ) then
-        Print( "(*) Compute vanishing sets... " );
+        if display_messages then
+            Print( "(*) Compute vanishing sets... " );
+        fi;
         VanishingSets( variety );;
-        Print( "finished \n" );
+        if display_messages then
+            Print( "finished \n" );
+        fi;
     else
-        Print( "(*) Vanishing sets known... \n" );
+        if display_messages then
+            Print( "(*) Vanishing sets known... \n" );
+        fi;
     fi;
     
     # step 1: compute Betti number of the module
     if HasBettiTableForCAP( module_presentation ) then
-        Print( "(*) Betti numbers of module known... \n" );
+        if display_messages then
+            Print( "(*) Betti numbers of module known... \n" );
+        fi;
     else
-        Print( "(*) Compute Betti numbers of module..." );
+        if display_messages then
+            Print( "(*) Compute Betti numbers of module..." );
+        fi;
         BettiTableForCAP( module_presentation );;
-        Print( "finished \n" );
+        if display_messages then
+            Print( "finished \n" );
+        fi;
     fi;
     
     # step 2: compute ideal B such that H0 = GradedHom( B, M )
-    Print( "(*) Determine ideal... " );
+    if display_messages then
+        Print( "(*) Determine ideal... " );
+    fi;
     if IsFpGradedLeftModulesObject( module_presentation ) then
         ideal_infos := FindLeftIdeal( variety, module_presentation, 0 );
     else
         ideal_infos := FindRightIdeal( variety, module_presentation, 0 );
     fi;
     B_power := ideal_infos[ 3 ];
-    Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
-    Print( "(*) Compute GradedHom... \n\n" );
+    if display_messages then
+        Print( Concatenation( "finished (found e = ", String( ideal_infos[ 1 ] ) , " for degree ", String( ideal_infos[ 2 ] ), ") \n" ) );
+        Print( "(*) Compute GradedHom... \n\n" );
+    fi;
     
     # step 3: compute presentation of the truncated GradedHom by use of Spasm
     coker_dim := TOOLS_FOR_HOMALG_GET_REAL_TIME_OF_FUNCTION_CALL(
@@ -82,14 +108,17 @@ InstallMethod( H0ParallelBySpasm,
                                             variety,
                                             B_power,
                                             module_presentation,
-                                            prime
+                                            prime,
+                                            display_messages
                                   );
     
     # step 4: inform about result
-    Print( "------------------------------------------------------------------------------\n" );
-    Print( Concatenation( "Found dimension of truncated GradedHom after ", String( coker_dim[ 1 ] ), " seconds. Summary: \n" ) );
-    Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
-    Print( Concatenation( "(*) h^0 = ", String( coker_dim[ 2 ] ), "\n \n" ) );
+    if display_messages then
+        Print( "------------------------------------------------------------------------------\n" );
+        Print( Concatenation( "Found dimension of truncated GradedHom after ", String( coker_dim[ 1 ] ), " seconds. Summary: \n" ) );
+        Print( Concatenation( "(*) used ideal power: ", String( ideal_infos[ 1 ] ), "\n" ) );
+        Print( Concatenation( "(*) h^0 = ", String( coker_dim[ 2 ] ), "\n \n" ) );
+    fi;
     
     # return the result
     return [ coker_dim[ 1 ], ideal_infos[ 1 ], coker_dim[ 2 ] ];
@@ -99,12 +128,14 @@ end );
 
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt ],
-  function( variety, a, b, prime )
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
+  function( variety, a, b, prime, display_messages )
       local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim;
       
       # inform about status
-      Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
+      if display_messages then
+        Print( "Compute FpGradedModuleMorphism whose kernel is the InternalHom...\n" );
+      fi;
       
       # determine morphism whose kernel is the InternalHom in question
       source := InternalHomOnMorphisms( IdentityMorphism( Range( RelationMorphism( a ) ) ), RelationMorphism( b ) );
@@ -115,44 +146,68 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       mor := FreydCategoryMorphism( source, map, range );
       
       # inform about status again
-      Print( "Truncate it now... \n\n" );
+      if display_messages then
+        Print( "Truncate it now... \n\n" );
+      fi;
       
       # truncate this morphism and extract the corresponding matrices
-      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor );
+      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor, display_messages );
       
       # inform about status again
-      Print( "------------------------------------------------------------------------------\n" );
-      Print( Concatenation( "Obtained matrices defining truncated morphism - compute kernel presentation modulo p = ", String( prime ), "\n\n" ) );
+      if display_messages then
+        Print( "------------------------------------------------------------------------------\n" );
+        Print( Concatenation( "Obtained matrices defining truncated morphism - compute kernel presentation modulo p = ", String( prime ), "\n\n" ) );
+      fi;
       
-      Print( "(*) Analyse first syzygies computation \n" );
+      if display_messages then
+        Print( "(*) Analyse first syzygies computation \n" );
+      fi;
       rows := NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] );
       cols := NumberOfRows( matrices[ 2 ] );
-      Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      if display_messages then
+        Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      fi;
       if rows * cols <> 0 then
         sparse := ( Length( Entries( matrices[ 2 ] ) ) + Length( Entries( matrices[ 3 ] ) ) ) / ( rows * cols );
-        Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
+        if display_messages then
+            Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ), "%\n" ) );
+        fi;
       fi;
-      Print( "(*) Perform syzygies computation...\n\n" );
+      if display_messages then
+        Print( "(*) Perform syzygies computation...\n\n" );
+      fi;
       emb := RowSyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
       
-      Print( "\n" );
-      Print( "(*) Analyse second syzygies computation \n" );
+      if display_messages then
+        Print( "\n" );
+        Print( "(*) Analyse second syzygies computation \n" );
+      fi;
       rows := NumberOfRows( matrices[ 1 ] ) + NumberOfRows( emb );
       cols := NumberOfRows( matrices[ 1 ] );
-      Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      if display_messages then
+        Print( Concatenation( "(*) Matrix to be considered: ", String( rows ), " x ", String( cols ),  "\n" ) );
+      fi;
       if rows * cols <> 0 then
         sparse := ( Length( Entries( matrices[ 1 ] ) ) + Length( Entries( emb ) ) ) / ( rows * cols );
-        Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
+        if display_messages then
+            Print( Concatenation( "(*) Sparseness: ", String( Float( 100 * sparse ) ),"%\n" ) );
+        fi;
       fi;
-      Print( "(*) Perform syzygies computation...\n\n" );
+      if display_messages then
+        Print( "(*) Perform syzygies computation...\n\n" );
+      fi;
       ker_pres := RowSyzygiesGenerators( emb, matrices[ 1 ], prime );
       
       # inform about status again
-      Print( "------------------------------------------------------------------------------\n" );
-      Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
+      if display_messages then
+        Print( "------------------------------------------------------------------------------\n" );
+        Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
+      fi;
       
       rk := RankGPLUBySpasm( ker_pres, prime );
-      Print( "\n" );
+      if display_messages then
+        Print( "\n" );
+      fi;
       
       # return result
       return NumberOfColumns( ker_pres ) - rk;
@@ -161,9 +216,9 @@ end );
 
 
 InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
-               " a toric variety, an f.p. graded module, a list specifying a degree ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism ],
-  function( variety, graded_module_morphism )
+               " a toric variety, an f.p. graded module, and a boolian",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsBool ],
+  function( variety, graded_module_morphism, display_messages )
     local rationals, degree, NrJobs, source, map, range, gensOfSource, gensOfRange, input, job1, job2, job3, run1, run2, run3, entries,
          matrix1, matrix2, matrix3;
 
@@ -193,8 +248,10 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
     gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( range ), degree );
 
     # signal start of the matrix computation
-    Print( "Compute matrix for range...\n" );
-    Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    if display_messages then
+        Print( "Compute matrix for range...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    fi;
 
     # initialise run3
     run3 := false;
@@ -202,15 +259,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix3 := SMSSparseMatrix( 0, gensOfRange[ 1 ], [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix3 := SMSSparseMatrix( Length( gensOfSource ), 0, [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
-        Print( Concatenation( "Starting ", String( NrJobs[ 3 ] ), " background jobs..." ) );
+        if display_messages then
+            Print( Concatenation( "Starting ", String( NrJobs[ 3 ] ), " background jobs..." ) );
+        fi;
 
         # compute the input
         input := ComputeInput( variety, range, gensOfSource );
@@ -225,15 +288,19 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         run3 := true;
 
     fi;
-    Print( "\n\n" );
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 3 ) process map
     gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( map ), degree );
     gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( map ), degree );
 
     # signal start of the matrix computation
-    Print( "Compute matrix for map...\n" );
-    Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    if display_messages then
+        Print( "Compute matrix for map...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    fi;
 
     # initalise run2
     run2 := false;
@@ -241,15 +308,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix2 := SMSSparseMatrix( 0, gensOfRange[ 1 ], [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix2 := SMSSparseMatrix( Length( gensOfSource ), 0, [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
-        Print( Concatenation( "Starting ", String( NrJobs[ 2 ] ), " background jobs..." ) );
+        if display_messages then
+            Print( Concatenation( "Starting ", String( NrJobs[ 2 ] ), " background jobs..." ) );
+        fi;
 
         # compute the input
         input := ComputeInput( variety, map, gensOfSource );
@@ -264,15 +337,19 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         run2 := true;
 
     fi;
-    Print( "\n\n" );
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 4 ) process source
     gensOfSource := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListList( variety, Source( source ), degree );
     gensOfRange := GeneratorsOfDegreeXLayerOfGradedRowOrColumnAsListsOfRecords( variety, Range( source ), degree );
 
     # signal start of the matrix computation
-    Print( "Compute matrix for source...\n" );
-    Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    if display_messages then
+        Print( "Compute matrix for source...\n" );
+        Print( Concatenation( "Size: ", String( Length( gensOfSource ) ) ,"x", String( gensOfRange[ 1 ] ), "\n" ) );
+    fi;
 
     # initialise run1
     run1 := false;
@@ -280,15 +357,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
     # truncate the mapping matrix
     if Length( gensOfSource ) = 0 then
         matrix1 := SMSSparseMatrix( 0, gensOfRange[ 1 ], [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     elif gensOfRange[ 1 ] = 0 then
         matrix1 := SMSSparseMatrix( Length( gensOfSource ), 0, [] );
-        Print( "Result trivially obtained..." );
+        if display_messages then
+            Print( "Result trivially obtained..." );
+        fi;
     else
 
         # start a background job with this input data to obtain entries
         # this job calls a number of other jobs by itself
-        Print( Concatenation( "Starting ", String( NrJobs[ 1 ] ), " background jobs..." ) );
+        if display_messages then
+            Print( Concatenation( "Starting ", String( NrJobs[ 1 ] ), " background jobs..." ) );
+        fi;
 
         # compute the input
         input := ComputeInput( variety, source, gensOfSource );
@@ -303,11 +386,15 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         run1 := true;
 
     fi;
-    Print( "\n\n" );
+    if display_messages then
+        Print( "\n\n" );
+    fi;
 
     # ( 5 ) retrieve result of job 1
     if run1 then
-        Print( "Extract result of truncation of source: \n" );
+        if display_messages then
+            Print( "Extract result of truncation of source: \n" );
+        fi;
     fi;
 
     # only perform actions with job1 if it is running
@@ -322,15 +409,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         else
 
             # inform about status
-            Print( "(*) job1 completed successfully \n" );
+            if display_messages then
+                Print( "(*) job1 completed successfully \n" );
+            fi;
 
             # create the corresponding matrix
             matrix1 := SMSSparseMatrix( entries[ 2 ], entries[ 3 ], entries[ 1 ] );
-            Print( "(*) result of job1 read \n" );
+            if display_messages then
+                Print( "(*) result of job1 read \n" );
+            fi;
 
             # and kill this job
             Kill( job1 );
-            Print( "(*) job1 killed \n\n" );
+            if display_messages then
+                Print( "(*) job1 killed \n\n" );
+            fi;
 
         fi;
 
@@ -338,7 +431,9 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
 
     # ( 6 ) retrieve result of job 2
     if run2 then
-        Print( "Extract result of truncation of map: \n" );
+        if display_messages then
+            Print( "Extract result of truncation of map: \n" );
+        fi;
     fi;
 
     # only perform actions with job2 if it is running
@@ -353,15 +448,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         else
 
             # inform about status
-            Print( "(*) job2 completed successfully \n" );
+            if display_messages then
+                Print( "(*) job2 completed successfully \n" );
+            fi;
 
             # create the corresponding matrix
             matrix2 := SMSSparseMatrix( entries[ 2 ], entries[ 3 ], entries[ 1 ] );
-            Print( "(*) result of job2 read \n" );
+            if display_messages then
+                Print( "(*) result of job2 read \n" );
+            fi;
 
             # and kill this job
             Kill( job2 );
-            Print( "(*) job2 killed \n\n" );
+            if display_messages then
+                Print( "(*) job2 killed \n\n" );
+            fi;
 
         fi;
 
@@ -369,7 +470,9 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
 
     # ( 7 ) retrieve result of job 3
     if run3 then
-        Print( "Extract result of truncation of range: \n" );
+        if display_messages then
+            Print( "Extract result of truncation of range: \n" );
+        fi;
     fi;
 
     # only perform actions with job1 if it is running
@@ -384,15 +487,21 @@ InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
         else
 
             # inform about status
-            Print( "(*) job3 completed successfully \n" );
+            if display_messages then
+                Print( "(*) job3 completed successfully \n" );
+            fi;
 
             # create the corresponding matrix
             matrix3 := SMSSparseMatrix( entries[ 2 ], entries[ 3 ], entries[ 1 ] );
-            Print( "(*) result of job3 read \n" );
+            if display_messages then
+                Print( "(*) result of job3 read \n" );
+            fi;
 
             # and kill this job
             Kill( job3 );
-            Print( "(*) job3 killed \n\n" );
+            if display_messages then
+                Print( "(*) job3 killed \n\n" );
+            fi;
 
         fi;
 
