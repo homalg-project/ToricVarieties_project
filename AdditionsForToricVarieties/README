@@ -23,9 +23,9 @@ To get the latest version of this GAP 4 package pull the corresponding branch fr
 
 You can create the documentation for this package by issuing
 
-gap makedoc
+gap makedoc.g
 
-inside the SpasmInterface folder. This requires to have a running LaTeX installation. In this case, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+inside the SpasmInterface folder. Provided a running LaTeX installation, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
 
 After this step, you can also issue a test on this software by issuing
 
