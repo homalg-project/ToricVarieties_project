@@ -34,21 +34,3 @@ DeclareOperation( "FindSmastoDirectory", [ ] );
 #! @Returns the corresponding directory
 #! @Arguments none
 DeclareOperation( "SetSmastoDirectory", [ IsString ] );
-
-
-##############################################################################################
-##
-#! @Section Executing Smasto
-##
-##############################################################################################
-
-#! @Description
-#! This operation executes Spasm with four pieces of input information.
-#! The first is the directory of Smasto, the second the name of the binary 
-#! that is to be executed, the third is the input required by this binary.
-#! The fourth argument is a list of options supported by Smasto and the
-#! fifth the list of values for these arguments.
-#! @Returns the corresponding quantity as computed by Smasto as a string
-#! @Arguments A Directory, a string and two lists
-DeclareOperation( "ExecuteSmasto",
-                  [ IsDirectory, IsString, IsList, IsList, IsList ] );
