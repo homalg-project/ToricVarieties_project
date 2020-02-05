@@ -112,7 +112,12 @@ InstallMethod( Involution,
                [ IsSMSSparseMatrix ],
   function( matrix )
     local SmastoBinary, output_string, output, input_string, input, data, number_Rows, number_Columns;
-
+    
+    # check for degenerate cases
+    if ( NumberOfRows( matrix ) = 0 ) or ( NumberOfColumns( matrix ) = 0 ) then
+        return SMSSparseMatrix( NumberOfColumns( matrix ), NumberOfRows( matrix ), [] );
+    fi;
+    
     # find SmastoBinary
     SmastoBinary := Filename( FindSmastoDirectory(), "sms-transpose" );
     
