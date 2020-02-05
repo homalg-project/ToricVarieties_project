@@ -11,5 +11,4 @@
 
 # the cohomology pieces
 ReadPackage( "SpasmInterface", "gap/Tools.gi" );
-ReadPackage( "SpasmInterface", "gap/SparseMatrices.gi" );
 ReadPackage( "SpasmInterface", "gap/Functions.gi" );
