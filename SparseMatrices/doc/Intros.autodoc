@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the SparseMatrices package?
+
+**SparseMatrices** provides functionality to handle sparse matrices in gap.
+
+@Chapter Functions
