@@ -15,7 +15,7 @@
 
 ##############################################################################################
 ##
-#! @Section Elementary manipulations of SMSSparseMatrices
+#! @Section Input and output of SMSSparseMatrices
 ##
 ##############################################################################################
 
@@ -25,6 +25,27 @@
 #! @Arguments SMSSparseMatrix M
 DeclareOperation( "TurnIntoSMSString",
                   [ IsSMSSparseMatrix ] );
+
+#! @Description
+#! Save a SMSSparseMatrix M to the .sms-file f.
+#! @Returns a boolen (= success)
+#! @Arguments SMSSparseMatrix M and filename f
+DeclareOperation( "SaveToSMSFile",
+                  [ IsSMSSparseMatrix, IsString ] );
+
+#! @Description
+#! Read a SMSSparseMatrix M from a .sms-file.
+#! @Returns SMSSparseMatrix M
+#! @Arguments File in sms format
+DeclareOperation( "ReadFromSMSFile",
+                  [ IsString ] );
+
+
+##############################################################################################
+##
+#! @Section Elementary operations of SMSSparseMatrices
+##
+##############################################################################################
 
 #! @Description
 #! This functions forms the union of the rows of two SMSSparseMatrices M1, M2.

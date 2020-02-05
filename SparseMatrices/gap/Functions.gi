@@ -49,6 +49,80 @@ InstallMethod( TurnIntoSMSString,
 end );
 
 
+InstallMethod( SaveToSMSFile,
+               "a sparse matrix and a filename",
+               [ IsSMSSparseMatrix, IsString ],
+  function( matrix, name )
+    local file, stream;
+    
+    # open filestream
+    file := Filename( DirectoryCurrent(), name );
+    stream := OutputTextFile( file, false );
+    
+    # Write content
+    PrintTo( stream, TurnIntoSMSString( matrix ) );
+    
+    # close stream and signal success
+    CloseStream( stream );
+    return true;
+    
+end );
+
+
+InstallMethod( ReadFromSMSFile,
+               "a filename",
+               [ IsString ],
+  function( name )
+    local file, stream, s, data, nR, nC, entries, run;
+    
+    # open stream
+    file := Filename( DirectoryCurrent(), name );
+    if not IsReadableFile( file ) then
+        Error( Concatenation( "Cannot read from file ", String( file ) ) );
+        return false;
+    fi;
+    stream := InputTextFile( file );
+    
+    # read header
+    s := ReadLine( stream );
+    Chomp( s );
+    NormalizeWhitespace( s );
+    s := ReplacedString( s, " ", "," );
+    s := ReplacedString( s, "M", "0" );
+    s := Concatenation( "[", s, "];" );
+    data := EvalString( s );
+    nR := data[ 1 ];
+    nC := data[ 2 ];
+    
+    # read entries
+    entries := [];
+    run := true;
+    while run do
+        s := ReadLine( stream );
+        Chomp( s );
+        NormalizeWhitespace( s );
+        s := ReplacedString( s, " ", "," );
+        s := Concatenation( "[", s, "];" );
+        data := EvalString( s );
+        if ( data[ 1 ] = 0 and data[ 2 ] = 0 and data[ 3 ] = 0 ) then
+            run := false;
+        else
+            Append( entries, [ data ] );
+        fi;
+    od;
+    CloseStream( stream );
+    
+    # build matrix from the result
+    return SMSSparseMatrix( nR, nC, entries );
+    
+end );
+
+##############################################################################################
+##
+#! @Section Elementary operations of SMSSparseMatrices
+##
+##############################################################################################
+
 InstallMethod( UnionOfRowsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
