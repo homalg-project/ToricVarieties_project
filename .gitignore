@@ -29,3 +29,4 @@
 /cohomCalgInterface/cohomCalg/x86_64-apple-darwin/*.dat
 
 SpasmInterface/gap/SpasmDirectory.txt
+SparseMatrices/gap/SmastoDirectory.txt
