@@ -53,29 +53,8 @@ InstallMethod( UnionOfRowsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
-    local nR1, nC1, entries1, nR2, nC2, entries2, newNR, newNC, newEntries, i;
-
-    # extract data of the matrices
-    nR1 := NumberOfRows( matrix1 );
-    nC1 := NumberOfColumns( matrix1 );
-    nR2 := NumberOfRows( matrix2 );
-    nC2 := NumberOfColumns( matrix2 );
     
-    # check if they can be stacked
-    if nC1 <> nC2 then
-        Error( "The matrices cannot be stacked as they have different numbers of columns" );
-    fi;
-    
-    # stack them
-    newNR := nR1 + nR2;
-    newNC := nC1;
-    entries1 := List( [ 1 .. Length( Entries( matrix1 ) ) ], i -> [ Entries( matrix1 )[ i ][ 1 ], Entries( matrix1 )[ i ][ 2 ], Entries( matrix1 )[ i ][ 3 ] ] );
-    entries2 := List( [ 1 .. Length( Entries( matrix2 ) ) ], i -> [ Entries( matrix2 )[ i ][ 1 ] + nR1, Entries( matrix2 )[ i ][ 2 ], Entries( matrix2 )[ i ][ 3 ] ] );
-    newEntries := entries1;
-    Append( newEntries, entries2 );
-    
-    # return result
-    return SMSSparseMatrix( newNR, newNC, newEntries );
+    return Involution( UnionOfColumnsOp( Involution( matrix1 ), Involution( matrix2 ) ) );
     
 end );
 
@@ -85,7 +64,45 @@ InstallMethod( UnionOfColumnsOp,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
     
-        return UnionOfRowsOp( Involution( matrix1 ), Involution( matrix2 ) );
+    local SmastoBinary, output_string, output, input_string, input, dir, file1, file2, data, number_Rows, number_Columns;
+
+    # find SmastoBinary
+    SmastoBinary := Filename( FindSmastoDirectory(), "sms-adjoin" );
+
+    # prepare output stream
+    output_string := "";
+    output := OutputTextString( output_string, true );
+    
+    # prepare input_stream to launch Spasm
+    input_string := "";
+    input := InputTextString( input_string );
+    
+    # write contents of matrices to files (not ideal, I know)
+    dir := FindSmastoDirectory();
+    file1 := Filename( dir, "m1.sms" );
+    PrintTo( file1, TurnIntoSMSString( matrix1 ) );
+    file2 := Filename( dir, "m2.sms" );
+    PrintTo( file2, TurnIntoSMSString( matrix2 ) );
+    
+    # call smasto
+    Process( DirectoryCurrent(), SmastoBinary, input, output, [ String( file1 ), String( file2 ) ] );
+    
+    # Format the output string
+    output_string := Chomp( output_string ); # Remove trailing \n
+    output_string := ReplacedString( output_string, "\n", "],[" );
+    output_string := ReplacedString( output_string, " ", "," );
+    output_string := Concatenation( "[[", output_string, "]]" );
+    output_string := ReplacedString( output_string, "M", "0" ); # Remove the 'M' which indicates that we are working with matrices over the integers
+    
+    # Eval the resulting string and extract data from it
+    data := EvalString( output_string );
+    number_Rows := data[ 1 ][ 1 ];
+    number_Columns := data[ 1 ][ 2 ];
+    Remove( data, 1 );
+    Remove( data );
+    
+    # Return result
+    return SMSSparseMatrix( number_Rows, number_Columns, data );
     
 end );
 
@@ -94,10 +111,21 @@ InstallMethod( Involution,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local output_string, data, number_Rows, number_Columns;
+    local SmastoBinary, output_string, output, input_string, input, data, number_Rows, number_Columns;
 
-    # Compute involution by SPASM
-    output_string := ExecuteSmasto( FindSmastoDirectory( ), "sms-transpose", TurnIntoSMSString( matrix ), [ ], [ ] );
+    # find SmastoBinary
+    SmastoBinary := Filename( FindSmastoDirectory(), "sms-transpose" );
+    
+    # prepare output stream
+    output_string := "";
+    output := OutputTextString( output_string, true );
+    
+    # prepare input_stream to launch Spasm
+    input_string := Concatenation( TurnIntoSMSString( matrix ), " " );
+    input := InputTextString( input_string );
+    
+    # call smasto
+    Process( DirectoryCurrent(), SmastoBinary, input, output, [ ] );
     
     # Format the output string
     output_string := Chomp( output_string ); # Remove trailing \n
