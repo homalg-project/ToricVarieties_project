@@ -54,6 +54,13 @@ InstallMethod( UnionOfRowsOp,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
     
+    # check for valid input
+    if NumberOfColumns( matrix1 ) <> NumberOfColumns( matrix2 ) then
+        Error( "These matrices cannot be stacked" );
+        return;
+    fi;
+    
+    # otherwise stack them
     return Involution( UnionOfColumnsOp( Involution( matrix1 ), Involution( matrix2 ) ) );
     
 end );
@@ -63,9 +70,14 @@ InstallMethod( UnionOfColumnsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
-    
     local SmastoBinary, output_string, output, input_string, input, dir, file1, file2, data, number_Rows, number_Columns;
-
+    
+    # check for valid input
+    if NumberOfRows( matrix1 ) <> NumberOfRows( matrix2 ) then
+        Error( "These matrices cannot be placed side-by-side" );
+        return;
+    fi;
+    
     # find SmastoBinary
     SmastoBinary := Filename( FindSmastoDirectory(), "sms-adjoin" );
 
