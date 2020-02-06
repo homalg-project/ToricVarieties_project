@@ -44,9 +44,9 @@ NumberOfRows( m3 );
 #! 6
 NumberOfColumns( m3 );
 #! 2
-m4 := RowSyzygiesGenerators( m1, m2 );
+m4 := RowSyzygiesGeneratorsBySpasm( m1, m2 );
 #! <A 4x3 sparse matrix in SMS-format>
-ColumnSyzygiesGenerators( m1, m2 );
+ColumnSyzygiesGeneratorsBySpasm( m1, m2 );
 #! <A 2x1 sparse matrix in SMS-format>
 NumberOfRows( m4 );
 #! 4

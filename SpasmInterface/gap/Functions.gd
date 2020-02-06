@@ -46,9 +46,9 @@ DeclareOperation( "SyzygiesOfColumnsBySpasm",
 #! As second argument, an integer can be provided to overwrite this default.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
-DeclareOperation( "RowSyzygiesGenerators",
+DeclareOperation( "RowSyzygiesGeneratorsBySpasm",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
-DeclareOperation( "RowSyzygiesGenerators",
+DeclareOperation( "RowSyzygiesGeneratorsBySpasm",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
 
 #! @Description
@@ -57,9 +57,9 @@ DeclareOperation( "RowSyzygiesGenerators",
 #! As second argument, an integer can be provided to overwrite this default.
 #! @Returns SMSSparseMatrix
 #! @Arguments SparseMatrices M1, M2
-DeclareOperation( "ColumnSyzygiesGenerators",
+DeclareOperation( "ColumnSyzygiesGeneratorsBySpasm",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
-DeclareOperation( "ColumnSyzygiesGenerators",
+DeclareOperation( "ColumnSyzygiesGeneratorsBySpasm",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ] );
 
 
