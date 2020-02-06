@@ -173,6 +173,10 @@ InstallMethod( UnionOfColumnsOp,
     # call smasto
     Process( DirectoryCurrent(), SmastoBinary, input, output, [ String( file1 ), String( file2 ) ] );
     
+    # Remove files
+    RemoveFile( file1 );
+    RemoveFile( file2 );
+    
     # Format the output string
     output_string := Chomp( output_string ); # Remove trailing \n
     output_string := ReplacedString( output_string, "\n", "],[" );
