@@ -27,3 +27,10 @@ DeclareOperation( "SyzygiesOfColumnsByLinbox",
                   
 DeclareOperation( "ColumnSyzygiesGeneratorsByLinbox",
                   [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
+
+#! @Description
+#! Compute rank of SMSSparseMatrix M over integers by Linbox.
+#! @Returns integer
+#! @Arguments SMSSparseMatrix M
+DeclareOperation( "RankByLinbox",
+                  [ IsSMSSparseMatrix ] );
