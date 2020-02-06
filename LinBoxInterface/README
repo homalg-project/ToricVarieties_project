@@ -17,19 +17,11 @@ To get the latest version of this GAP 4 package pull the corresponding branch fr
 (1) Installation this package
 -----------------------------
 
-This package requires a working installation of the software `LinBox' on your computer. Currently, only part of the functionality of LinBox is supported by this interface.
+The latest version of LinBox can be downloaded from https://github.com/linbox-team/linbox. Currently, only part of the functionality of LinBox is supported by this interface. For convenience, we provide the corresponding binaries in the /bin subfolder of this pakage.
 
-The latest version of LinBox can be downloaded from https://github.com/linbox-team/linbox.
+Note that the kernel computations with Linbox are as of this writing (06/02/2020) unstable (c.f. https://github.com/linbox-team/linbox/issues/245).
 
-In order to communicate with LinBox, we need to configure this interface with the directory of your LinBox installation. Let us assume that it is located at /home/usr/linbox. Then do the following:
-
-(1) Start gap
-(2) Load LinBoxInterface by issuing "LoadPackage( "LinBoxInterface" );"
-(3) Issue "SetLinboxDirectory( "/home/usr/linbox/MyCode" );"
-
-Note that we have added the subfolder /MyCode to the location of LinBox. This subfolder contains the binaries which this interface triggers. This completes this customized installation.
-
-More details/information on how to install LinBox can be found at https://linalg.org/.
+More details/information on LinBox can be found at https://linalg.org/.
 
 
 (2) Documentation and test
