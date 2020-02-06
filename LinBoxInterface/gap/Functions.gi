@@ -50,3 +50,22 @@ InstallMethod( ColumnSyzygiesGeneratorsByLinbox,
     return CertainRows( kernelMatrix, [ 1 .. NumberOfColumns( matrix1 ) ] );
     
 end );
+
+
+InstallMethod( RankByLinbox,
+               "a sparse matrix and an integer",
+               [ IsSMSSparseMatrix ],
+  function( matrix )
+    local output_string, rank;
+    
+    # Compute kernel matrix by Linbox
+    output_string := ExecuteLinbox( FindLinboxDirectory(), "./rankLinbox", TurnIntoSMSString( matrix ) );
+    
+    # Format the output string
+    output_string := Chomp( output_string ); # Remove trailing \n
+    rank := EvalString( output_string );
+    
+    # Return the rank
+    return rank;
+    
+end );
