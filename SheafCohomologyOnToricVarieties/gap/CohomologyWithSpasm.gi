@@ -22,7 +22,7 @@ InstallMethod( H0ParallelBySpasm,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module_presentation )
     
-    return H0ParallelBySpasm( variety, module_presentation, 42013, true );
+    return H0ParallelBySpasmAndLinbox( variety, module_presentation, 42013, true, false );
     
 end );
 
@@ -32,15 +32,36 @@ InstallMethod( H0ParallelBySpasm,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, p )
     
-    return H0ParallelBySpasm( variety, module_presentation, p, true );
+    return H0ParallelBySpasmAndLinbox( variety, module_presentation, p, true, false );
     
 end );
 
-# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
-InstallMethod( H0ParallelBySpasm,
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation and perform check with linbox
+InstallMethod( H0ParallelBySpasmAndLinboxCheck,
                " for a toric variety, a f.p. graded S-module ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
-  function( variety, module_presentation, p, display_messages )
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
+  function( variety, module_presentation )
+    
+    return H0ParallelBySpasmAndLinbox( variety, module_presentation, 42013, true, true );
+    
+end );
+
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation  and perform check with linbox
+InstallMethod( H0ParallelBySpasmAndLinboxCheck,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
+  function( variety, module_presentation, p )
+    
+    return H0ParallelBySpasmAndLinbox( variety, module_presentation, p, true, true );
+    
+end );
+
+
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
+InstallMethod( H0ParallelBySpasmAndLinbox,
+               " for a toric variety, a f.p. graded S-module ",
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
+  function( variety, module_presentation, p, display_messages, linbox_check )
     local prime, ideal_infos, B_power, coker_dim;
     
     # check if the input is valid
@@ -114,7 +135,8 @@ InstallMethod( H0ParallelBySpasm,
                                             B_power,
                                             module_presentation,
                                             prime,
-                                            display_messages
+                                            display_messages,
+                                            linbox_check
                                   );
     
     # step 4: inform about result
@@ -142,8 +164,8 @@ end );
 
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
-               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
-  function( variety, a, b, prime, display_messages )
+               [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
+  function( variety, a, b, prime, display_messages, linbox_check )
       local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim;
       
       # inform about status
@@ -191,6 +213,10 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
       emb := RowSyzygiesGeneratorsBySpasm( matrices[ 2 ], matrices[ 3 ], prime );
+      if linbox_check then
+        Print( "(*) Check rank with Linbox...\n" );
+        Print( "TO BE IMPLEMENTED\n" );
+      fi;
       
       if display_messages then
         Print( "\n" );
@@ -211,6 +237,10 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
       ker_pres := RowSyzygiesGeneratorsBySpasm( emb, matrices[ 1 ], prime );
+      if linbox_check then
+        Print( "(*) Check rank with Linbox...\n" );
+        Print( "TO BE IMPLEMENTED\n" );
+      fi;
       
       # inform about status again
       if display_messages then
@@ -219,6 +249,10 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       
       rk := RankGPLUBySpasm( ker_pres, prime );
+      if linbox_check then
+        Print( "(*) Check rank with Linbox...\n" );
+        Print( "TO BE IMPLEMENTED\n" );
+      fi;
       if display_messages then
         Print( "\n" );
       fi;
