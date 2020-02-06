@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
-#! @Chapter Sheaf cohomology computations (https://arxiv.org/abs/1802.08860) with Spasm
+#! @Chapter Sheaf cohomology with Spasm and Linbox
 ##
 #########################################################################################
 

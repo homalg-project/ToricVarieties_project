@@ -1,4 +1,4 @@
-#! @Chapter Sheaf cohomology computations (https://arxiv.org/abs/1802.08860) with Spasm
+#! @Chapter Sheaf cohomology with Spasm and Linbox
 
 #! @Section Examples
 
@@ -24,3 +24,11 @@ irP1xP1 := IrrelevantRightIdealForCAP( P1xP1 );
 h0 := H0ParallelBySpasmAndLinbox( P1xP1, irP1xP1, 42013, false, true )[ 3 ];
 #! 1
 #! @EndExample
+
+#! We provide more convenient methods calls. Namely, H0ParallelBySpasmAndLinboxCheck( P1xP1, irP1xP1 ); is short for
+#! H0ParallelBySpasmAndLinbox( P1xP1, irP1xP1, 42013, true, true ). The fourth argument being true, this will always
+#! display information on the status of the computation. Since the fifth argument is true, this method will check
+#! ranks with Linbox.
+
+#! We also provide the method H0ParallelBySpasm( P1xP1, irP1xP1 ). It calls H0ParallelBySpasmAndLinbox( P1xP1, irP1xP1, 42013, true, true ).
+#! Consequently, this method operates similar to the previous shorthand. However, in contrast, it will not perform checks with Linbox.
