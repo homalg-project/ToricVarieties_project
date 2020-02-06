@@ -42,28 +42,3 @@ InstallMethod( FindSmastoDirectory,
     return smasto_directory;
     
 end );
-
-InstallMethod( SetSmastoDirectory,
-               "a string",
-               [ IsString ],
-  function( path )
-    local package_directory, file;
-
-    # We want to write a file to the PackageFolder in which we store the location of Spasm
-    package_directory := DirectoriesPackageLibrary( "SparseMatrices", "gap" );
-    if Length( package_directory ) > 1 then
-        # If there are at least two versions, then we cannot know in which folder to write
-        Error( "Found at least two versions of SparseMatrices - unable to set SmastoDirectory" );
-        return;
-    fi;
-    package_directory := package_directory[ 1 ];
-    file := Filename( package_directory, "SmastoDirectory.txt" );
-    
-    # Now create this file/overwrite any existing such file
-    PrintTo( file, path );
-    
-    # Signal sucess
-    Print( "Smasto directory set successfully \n" );
-    return true;
-    
-end );
