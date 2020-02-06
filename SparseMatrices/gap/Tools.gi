@@ -22,7 +22,7 @@ InstallMethod( FindSmastoDirectory,
                "",
                [ ],
   function( )
-  local smasto_directory, package_directory, file, sys_programs, which, path, output, input, path_steps;
+  local smasto_directory, package_directory, s, file, sys_programs, which, path, output, input, path_steps;
     
     # Initialse spasm_directory with fail and try in the following to do better
     smasto_directory := fail;
@@ -36,50 +36,7 @@ InstallMethod( FindSmastoDirectory,
         return;
     fi;
     package_directory := package_directory[ 1 ];
-    file := Filename( package_directory, "SmastoDirectory.txt" );
-    
-    # Now figure out what our options are
-    if IsExistingFile( file ) then
-        
-        # This file contains the directory to the spasm programs
-        input := InputTextFile(file);
-        smasto_directory := Directory( Chomp( ReadAll( input ) ) );
-        CloseStream(input);
-        
-    else
-        
-        # try to find the program "which"
-        sys_programs := DirectoriesSystemPrograms();
-        which := Filename( sys_programs, "which" );
-        if IsExistingFile( which ) then
-        
-            # set up variables
-            path := "";
-            output := OutputTextString( path, true );
-            input := InputTextUser();
-            
-            # and use which to find "sms-adjoin" script, installed by smasto
-            Process( DirectoryCurrent(), which, input, output, [ "sms-adjoin" ] );
-            
-            # in case we found a result, path is not empty
-            if Length( path ) > 0 then
-                
-                # process the output
-                RemoveCharacters( path, "\n" );
-                path_steps := SplitString( path, "/" );
-                path_steps := List( [ 1 .. Length( path_steps ) - 1 ], i -> Concatenation( path_steps[ i ], "/" ) );
-                smasto_directory := Directory( Concatenation( path_steps ) );
-                
-            fi;
-        
-        fi;
-        
-    fi;
-    
-    # check if we were successful and otherwise raise and error
-    if smasto_directory = fail then
-        Error( "Could not find the SmastoDirectory" );
-    fi;
+    smasto_directory := Directory( ReplacedString( Filename( package_directory, "" ), "gap/", "bin/" ) );
     
     # return the result
     return smasto_directory;
