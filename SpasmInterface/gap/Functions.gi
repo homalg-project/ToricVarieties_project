@@ -42,7 +42,7 @@ InstallMethod( SyzygiesOfRowsBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "kernel_spasm", TurnIntoSMSString( matrix ), [ "--matrix", "--modulus" ], [ "no-value", String( prime ) ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "kernel", TurnIntoSMSString( matrix ), [ "--matrix", "--modulus" ], [ "no-value", String( prime ) ] );
     
     # Format the output string
     output_string := Chomp( output_string ); # Remove trailing \n
@@ -161,7 +161,7 @@ InstallMethod( RankGPLUBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_gplu_spasm", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( prime ) ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_gplu", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( prime ) ] );
     
     # 'Polish' the output string
     output_string := SplitString( output_string, "=" )[ 2 ];
@@ -195,7 +195,7 @@ InstallMethod( RankDenseBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_dense_spasm", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_dense", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
     
     # 'Polish' the output string
     output_string := SplitString( output_string, "=" )[ 2 ];
@@ -228,7 +228,7 @@ InstallMethod( RankHybridBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_hybrid_spasm", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_hybrid", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
     
     # 'Polish' the output string
     output_string := SplitString( output_string, "=" )[ 2 ];
