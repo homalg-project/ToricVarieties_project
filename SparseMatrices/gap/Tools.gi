@@ -22,7 +22,7 @@ InstallMethod( FindSmastoDirectory,
                "",
                [ ],
   function( )
-  local smasto_directory, package_directory, s, file, sys_programs, which, path, output, input, path_steps;
+  local smasto_directory, package_directory;
     
     # Initialse spasm_directory with fail and try in the following to do better
     smasto_directory := fail;
