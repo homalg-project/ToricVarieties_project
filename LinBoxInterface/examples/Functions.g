@@ -26,4 +26,11 @@ m2 := ColumnSyzygiesGeneratorsByLinbox( m1, m1 );
 #! <A 3x5 sparse matrix in SMS-format>
 #! @EndExample
 
-#! We can also compute ranks (eventually...)
+#! We can also compute ranks as follows:
+
+#! @Example
+RankByLinbox( m1 );
+#! 1
+RankByLinbox( m2 );
+#! 3
+#! @EndExample
