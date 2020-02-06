@@ -24,7 +24,7 @@ InstallMethod( SyzygiesOfColumnsByLinbox,
     local output_string, data;
     
     # Compute kernel matrix by Linbox
-    output_string := ExecuteLinbox( FindLinboxDirectory(), "./nullspacebasis", TurnIntoSMSString( matrix ) );
+    output_string := ExecuteLinbox( FindLinboxDirectory(), "./kernelLinbox", TurnIntoSMSString( matrix ) );
     
     # Format the output string
     output_string := Chomp( output_string ); # Remove trailing \n
