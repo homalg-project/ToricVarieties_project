@@ -8,8 +8,13 @@
 ##
 #########################################################################################
 
-# This fixes the number of parallel jobs being used during the truncation
-SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD_JOBS_FOR_SPASM := [ 2, 2, 3 ];
+
+#############################################################
+##
+#! @Section Cohomology from Spasm, Linbox and Singular
+##
+#############################################################
+
 
 # compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
 InstallMethod( H0ParallelBySpasm,
@@ -126,6 +131,15 @@ InstallMethod( H0ParallelBySpasm,
 end );
 
 
+
+
+
+#############################################################
+##
+#! @Section Computation of truncated internal hom
+##
+#############################################################
+
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ],
@@ -151,7 +165,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       
       # truncate this morphism and extract the corresponding matrices
-      matrices := TruncateFPGradedModuleMorphismToZeroInParallelBySpasm( variety, mor, display_messages );
+      matrices := TruncateFPGradedModuleMorphismToZeroInParallelToSparseMatrices( variety, mor, display_messages );
       
       # inform about status again
       if display_messages then
@@ -176,7 +190,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       if display_messages then
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
-      emb := RowSyzygiesGenerators( matrices[ 2 ], matrices[ 3 ], prime );
+      emb := RowSyzygiesGeneratorsBySpasm( matrices[ 2 ], matrices[ 3 ], prime );
       
       if display_messages then
         Print( "\n" );
@@ -196,7 +210,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       if display_messages then
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
-      ker_pres := RowSyzygiesGenerators( emb, matrices[ 1 ], prime );
+      ker_pres := RowSyzygiesGeneratorsBySpasm( emb, matrices[ 1 ], prime );
       
       # inform about status again
       if display_messages then
@@ -215,7 +229,16 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
 end );
 
 
-InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelBySpasm,
+#############################################################
+##
+#! @Section Truncation to sparse matrices
+##
+#############################################################
+
+# This fixes the number of parallel jobs being used during the truncation
+SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD_JOBS_FOR_SPASM := [ 2, 2, 3 ];
+
+InstallMethod( TruncateFPGradedModuleMorphismToZeroInParallelToSparseMatrices,
                " a toric variety, an f.p. graded module, and a boolian",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesMorphism, IsBool ],
   function( variety, graded_module_morphism, display_messages )
