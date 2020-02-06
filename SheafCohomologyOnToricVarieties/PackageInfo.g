@@ -16,7 +16,7 @@ PackageName := "SheafCohomologyOnToricVarieties",
 Subtitle := "A package to compute sheaf cohomology on toric varieties",
 
 Version :=  Maximum( [
-  "2020.01.20", ## Martins version
+  "2020.02.06", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -75,8 +75,8 @@ Dependencies := rec(
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "cohomCalgInterface", ">=2019.08.14" ],
                            [ "NormalizInterface", ">= 0.9.7" ],
-                           [ "SpasmInterface", ">2020.01.20" ],
-                           [ "LinBoxInterface", ">2020.02.05" ]
+                           [ "SpasmInterface", ">2020.02.06" ],
+                           [ "LinBoxInterface", ">2020.02.06" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],
   ExternalConditions := []

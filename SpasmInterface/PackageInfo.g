@@ -16,7 +16,7 @@ PackageName := "SpasmInterface",
 Subtitle := "A package to communicate with the software Spasm",
 
 Version :=  Maximum( [
-  "2020.02.05", # Martins version  
+  "2020.02.06", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -68,7 +68,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
-                           [ "SparseMatrices", ">=2020.02.05" ]
+                           [ "SparseMatrices", ">=2020.02.06" ]
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
