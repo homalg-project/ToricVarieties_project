@@ -120,7 +120,7 @@ InstallMethod( RowSyzygiesGeneratorsBySpasm,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
     
-    return RowSyzygiesGenerators( matrix1, matrix2, 42013 );
+    return RowSyzygiesGeneratorsBySpasm( matrix1, matrix2, 42013 );
     
 end );
 
@@ -129,7 +129,7 @@ InstallMethod( ColumnSyzygiesGeneratorsBySpasm,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
     
-    return Involution( RowSyzygiesGenerators( Involution( matrix1 ), Involution( matrix2 ), 42013 ) );
+    return Involution( RowSyzygiesGeneratorsBySpasm( Involution( matrix1 ), Involution( matrix2 ), 42013 ) );
     
 end );
 
@@ -138,7 +138,7 @@ InstallMethod( ColumnSyzygiesGeneratorsBySpasm,
                [ IsSMSSparseMatrix, IsSMSSparseMatrix, IsInt ],
   function( matrix1, matrix2, prime )
     
-    return Involution( RowSyzygiesGenerators( Involution( matrix1 ), Involution( matrix2 ), prime ) );
+    return Involution( RowSyzygiesGeneratorsBySpasm( Involution( matrix1 ), Involution( matrix2 ), prime ) );
     
 end );
 
