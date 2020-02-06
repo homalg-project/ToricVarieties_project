@@ -22,7 +22,7 @@ InstallMethod( FindSpasmDirectory,
                "",
                [ ],
   function( )
-  local spasm_directory, package_directory, file, sys_programs, which, path, output, input, path_steps;
+  local spasm_directory, package_directory;
     
     # Initialse spasm_directory with fail and try in the following to do better
     spasm_directory := fail;
@@ -36,78 +36,10 @@ InstallMethod( FindSpasmDirectory,
         return;
     fi;
     package_directory := package_directory[ 1 ];
-    file := Filename( package_directory, "SpasmDirectory.txt" );
-    
-    # Now figure out what our options are
-    if IsExistingFile( file ) then
-        
-        # This file contains the directory to the spasm programs
-        input := InputTextFile(file);
-        spasm_directory := Directory( Chomp( ReadAll( input ) ) );
-        CloseStream(input);
-        
-    else
-        
-        # try to find the program "which"
-        sys_programs := DirectoriesSystemPrograms();
-        which := Filename( sys_programs, "which" );
-        if IsExistingFile( which ) then
-        
-            # set up variables
-            path := "";
-            output := OutputTextString( path, true );
-            input := InputTextUser();
-            
-            # and use which to find "kernel" script, installed by spasm
-            Process( DirectoryCurrent(), which, input, output, [ "kernel" ] );
-            
-            # in case we found a result, path is not empty
-            if Length( path ) > 0 then
-                
-                # process the output
-                RemoveCharacters( path, "\n" );
-                path_steps := SplitString( path, "/" );
-                path_steps := List( [ 1 .. Length( path_steps ) - 1 ], i -> Concatenation( path_steps[ i ], "/" ) );
-                spasm_directory := Directory( Concatenation( path_steps ) );
-                
-            fi;
-        
-        fi;
-        
-    fi;
-    
-    # check if we were successful and otherwise raise and error
-    if spasm_directory = fail then
-        Error( "Could not find the SpasmDirectory" );
-    fi;
+    spasm_directory := Directory( ReplacedString( Filename( package_directory, "" ), "gap/", "bin/" ) );
     
     # return the result
     return spasm_directory;
-    
-end );
-
-InstallMethod( SetSpasmDirectory,
-               "a string",
-               [ IsString ],
-  function( path )
-    local package_directory, file;
-
-    # We want to write a file to the PackageFolder in which we store the location of Spasm
-    package_directory := DirectoriesPackageLibrary( "SpasmInterface", "gap" );
-    if Length( package_directory ) > 1 then
-        # If there are at least two versions, then we cannot know in which folder to write
-        Error( "Found at least two versions of SpasmInterface - unable to set SpasmDirectory" );
-        return;
-    fi;
-    package_directory := package_directory[ 1 ];
-    file := Filename( package_directory, "SpasmDirectory.txt" );
-    
-    # Now create this file/overwrite any existing such file
-    PrintTo( file, path );
-    
-    # Signal sucess
-    Print( "Spasm directory set successfully \n" );
-    return true;
     
 end );
 
