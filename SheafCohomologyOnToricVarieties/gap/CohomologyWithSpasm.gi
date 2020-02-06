@@ -166,7 +166,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
   function( variety, a, b, prime, display_messages, linbox_check )
-      local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim;
+      local range, source, map, mor, matrices, rows, cols, sparse, emb, rank_Linbox, ker_pres, rk, coker_dim;
       
       # inform about status
       if display_messages then
@@ -214,8 +214,16 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       emb := RowSyzygiesGeneratorsBySpasm( matrices[ 2 ], matrices[ 3 ], prime );
       if linbox_check then
-        Print( "(*) Check rank with Linbox...\n" );
-        Print( "TO BE IMPLEMENTED\n" );
+        if display_messages then
+            Print( "\n" );
+            Print( "(*) Check rank with Linbox..." );
+        fi;
+        rank_Linbox := RankByLinbox( UnionOfRowsOp( matrices[ 2 ], matrices[ 3 ] ) );
+        if ( NumberOfRows( emb ) <> NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - rank_Linbox ) then
+            Error( "Cross-check with Linbox failed" );
+        elif display_messages then
+            Print( "success\n" );
+        fi;
       fi;
       
       if display_messages then
@@ -238,8 +246,15 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       ker_pres := RowSyzygiesGeneratorsBySpasm( emb, matrices[ 1 ], prime );
       if linbox_check then
-        Print( "(*) Check rank with Linbox...\n" );
-        Print( "TO BE IMPLEMENTED\n" );
+        if display_messages then
+            Print( "(*) Check rank with Linbox..." );
+        fi;
+        rank_Linbox := RankByLinbox( UnionOfRowsOp( emb, matrices[ 1 ] ) );
+        if ( NumberOfRows( ker_pres ) <> NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - rank_Linbox ) then
+            Error( "Cross-check with Linbox failed" );
+        elif display_messages then
+            Print( "success\n\n" );
+        fi;
       fi;
       
       # inform about status again
@@ -248,13 +263,24 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         Print( "Obtained presentation of kernel - compute its dimension... \n\n" );
       fi;
       
-      rk := RankGPLUBySpasm( ker_pres, prime );
-      if linbox_check then
-        Print( "(*) Check rank with Linbox...\n" );
-        Print( "TO BE IMPLEMENTED\n" );
-      fi;
-      if display_messages then
-        Print( "\n" );
+      if NumberOfRows( ker_pres ) = 0 then
+        rk := 0;
+        if display_messages then
+            Print( "(*) Rank trivially obtained\n\n" );
+        fi;
+      else
+        rk := RankGPLUBySpasm( ker_pres, prime );
+        if linbox_check then
+            if display_messages then
+                Print( "(*) Check rank with Linbox..." );
+            fi;
+            rank_Linbox := RankByLinbox( ker_pres );
+            if ( rk <> rank_Linbox ) then
+                Error( "Cross-check with Linbox failed" );
+            elif display_messages then
+                Print( "success\n\n" );
+            fi;
+        fi;
       fi;
       
       # return result
