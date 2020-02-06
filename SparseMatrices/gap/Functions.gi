@@ -134,6 +134,14 @@ InstallMethod( UnionOfRowsOp,
         return;
     fi;
     
+    # check for degenerate cases
+    if NumberOfRows( matrix1 ) = 0 then
+        return matrix2;
+    fi;
+    if NumberOfRows( matrix2 ) = 0 then
+        return matrix1;
+    fi;
+    
     # otherwise stack them
     return Involution( UnionOfColumnsOp( Involution( matrix1 ), Involution( matrix2 ) ) );
     
@@ -150,6 +158,14 @@ InstallMethod( UnionOfColumnsOp,
     if NumberOfRows( matrix1 ) <> NumberOfRows( matrix2 ) then
         Error( "These matrices cannot be placed side-by-side" );
         return;
+    fi;
+    
+    # check for degenerate cases
+    if NumberOfColumns( matrix1 ) = 0 then
+        return matrix2;
+    fi;
+    if NumberOfColumns( matrix2 ) = 0 then
+        return matrix1;
     fi;
     
     # find SmastoBinary
