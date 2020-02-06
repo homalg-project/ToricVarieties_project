@@ -228,7 +228,7 @@ InstallMethod( RankHybridBySpasm,
     fi;
     
     # Compute kernel matrix by SPASM
-    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_dense", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
+    output_string := ExecuteSpasm( FindSpasmDirectory( ), "rank_hybrid", TurnIntoSMSString( matrix ), [ "--modulus" ], [ String( 42013 ) ] );
     
     # 'Polish' the output string
     output_string := SplitString( output_string, "=" )[ 2 ];
