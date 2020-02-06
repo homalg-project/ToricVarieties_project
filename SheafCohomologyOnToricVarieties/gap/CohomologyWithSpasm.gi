@@ -166,7 +166,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
   function( variety, a, b, prime, display_messages, linbox_check )
-      local range, source, map, mor, matrices, rows, cols, sparse, emb, rank_Linbox, ker_pres, rk, coker_dim;
+      local range, source, map, mor, matrices, rows, cols, sparse, emb, rank_Linbox, ker_pres, rk, coker_dim, checks, ranks;
       
       # inform about status
       if display_messages then
@@ -188,6 +188,10 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       
       # truncate this morphism and extract the corresponding matrices
       matrices := TruncateFPGradedModuleMorphismToZeroInParallelToSparseMatrices( variety, mor, display_messages );
+      
+      # initialise results of checks;
+      checks := [ false, false, false ];
+      ranks := [ 0,0,0 ];
       
       # inform about status again
       if display_messages then
@@ -219,10 +223,12 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
             Print( "(*) Check rank with Linbox..." );
         fi;
         rank_Linbox := RankByLinbox( UnionOfRowsOp( matrices[ 2 ], matrices[ 3 ] ) );
+        ranks[ 1 ] := rank_Linbox;
         if ( NumberOfRows( emb ) <> NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - rank_Linbox ) then
-            Error( "Cross-check with Linbox failed" );
+            Print( "failed\n" );
         elif display_messages then
             Print( "success\n" );
+            checks[ 1 ] := true;
         fi;
       fi;
       
@@ -250,10 +256,12 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
             Print( "(*) Check rank with Linbox..." );
         fi;
         rank_Linbox := RankByLinbox( UnionOfRowsOp( emb, matrices[ 1 ] ) );
+        ranks[ 2 ] := rank_Linbox;
         if ( NumberOfRows( ker_pres ) <> NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - rank_Linbox ) then
-            Error( "Cross-check with Linbox failed" );
+            Print( "failed\n\n" );
         elif display_messages then
             Print( "success\n\n" );
+            checks[ 2 ] := true;
         fi;
       fi;
       
@@ -267,6 +275,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         rk := 0;
         if display_messages then
             Print( "(*) Rank trivially obtained\n\n" );
+            checks[ 3 ] := true;
         fi;
       else
         rk := RankGPLUBySpasm( ker_pres, prime );
@@ -275,12 +284,48 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                 Print( "(*) Check rank with Linbox..." );
             fi;
             rank_Linbox := RankByLinbox( ker_pres );
+            ranks[ 3 ] := rank_Linbox;
             if ( rk <> rank_Linbox ) then
-                Error( "Cross-check with Linbox failed" );
+                Print( "failed\n\n" );
             elif display_messages then
                 Print( "success\n\n" );
+                checks[ 3 ] := true;
             fi;
         fi;
+      fi;
+      
+      # print results of checks
+      if display_messages and linbox_check then
+        
+        Print( "--------------------------------------------------" );
+        Print( "Tests with linbox performed\n\n" );
+        Print( "Test 1: \n" );
+        Print( Concatenation( "Rank by linbox: ", String( ranks[ 1 ] ), "\n" ) );
+        Print( Concatenation( "Rank by spasm: ", String( NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - NumberOfRows( emb ) ), "\n" ) );
+        if checks[ 1 ] then
+            Print( "Test passed \n\n" );
+        else
+            Print( "Test failed \n\n" );
+        fi;
+        
+        Print( "Test 2: \n" );
+        Print( Concatenation( "Rank by linbox: ", String( ranks[ 2 ] ), "\n" ) );
+        Print( Concatenation( "Rank by spasm: ", String( NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - NumberOfRows( ker_pres ) ), "\n" ) );
+        if checks[ 2 ] then
+            Print( "Test passed \n\n" );
+        else
+            Print( "Test failed \n\n" );
+        fi;
+        
+        Print( "Test 3: \n" );
+        Print( Concatenation( "Rank by linbox: ", String( ranks[ 3 ] ), "\n" ) );
+        Print( Concatenation( "Rank by spasm: ", String( rk ), "\n" ) );
+        if checks[ 3 ] then
+            Print( "Test passed \n\n" );
+        else
+            Print( "Test failed \n\n" );
+        fi;
+        
       fi;
       
       # return result
