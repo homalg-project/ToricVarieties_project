@@ -31,8 +31,20 @@ DeclareOperation( "H0ParallelBySpasm",
 DeclareOperation( "H0ParallelBySpasm",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
-DeclareOperation( "H0ParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
+#! @Description
+#! Just as the previous method. However, for every kernel computation by Spasm,
+#! it triggers a rank computation with Linbox to cross-check these results over the integers.
+#! @Returns a vector space
+#! @Arguments V, M, prime p, boolean b
+DeclareOperation( "H0ParallelBySpasmAndLinboxCheck",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
+
+DeclareOperation( "H0ParallelBySpasmAndLinboxCheck",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
+
+
+DeclareOperation( "H0ParallelBySpasmAndLinbox",
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ] );
 
 
 #############################################################
@@ -42,7 +54,7 @@ DeclareOperation( "H0ParallelBySpasm",
 #############################################################
 
 DeclareOperation( "TruncateIntHomToZeroInParallelBySpasm",
-                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool ] );
+                  [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ] );
 
 
 #############################################################
