@@ -1,7 +1,0 @@
-@Chapter Introduction
-
-@Section What is the goal of the LinBoxInterface package?
-
-**LinBoxInterface** provides an interface, to communicate with the software LinBox via gap. Thereby, for example, kernels of sparse matrices can be computed directly via gap.
-
-@Chapter Functions
