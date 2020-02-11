@@ -67,3 +67,9 @@ SumOfColumns( m2 );
 SumEntriesOfSomeRows( m2, 2 );;
 SumEntriesOfSomeColumns( m2, 2 );;
 #! @EndExample
+
+#! We can also multiply sparse matrices. This works as follows:
+#! @Example
+Involution( m12 ) * m12;
+#! <A 3x3 sparse matrix in SMS-format>
+#! @EndExample
