@@ -10,6 +10,5 @@
 #############################################################################
 
 # the cohomology pieces
-ReadPackage( "SparseMatrices", "gap/Tools.gi" );
 ReadPackage( "SparseMatrices", "gap/SparseMatrices.gi" );
 ReadPackage( "SparseMatrices", "gap/Functions.gi" );

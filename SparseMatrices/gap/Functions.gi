@@ -127,23 +127,29 @@ InstallMethod( UnionOfRowsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
+    local nR1, nC1, entries1, nR2, nC2, entries2, newNR, newNC, newEntries, i;
+
+    # extract data of the matrices
+    nR1 := NumberOfRows( matrix1 );
+    nC1 := NumberOfColumns( matrix1 );
+    nR2 := NumberOfRows( matrix2 );
+    nC2 := NumberOfColumns( matrix2 );
     
-    # check for valid input
-    if NumberOfColumns( matrix1 ) <> NumberOfColumns( matrix2 ) then
-        Error( "These matrices cannot be stacked" );
-        return;
+    # check if they can be stacked
+    if nC1 <> nC2 then
+        Error( "The matrices cannot be stacked as they have different numbers of columns" );
     fi;
     
-    # check for degenerate cases
-    if NumberOfRows( matrix1 ) = 0 then
-        return matrix2;
-    fi;
-    if NumberOfRows( matrix2 ) = 0 then
-        return matrix1;
-    fi;
+    # stack them
+    newNR := nR1 + nR2;
+    newNC := nC1;
+    entries1 := List( [ 1 .. Length( Entries( matrix1 ) ) ], i -> [ Entries( matrix1 )[ i ][ 1 ], Entries( matrix1 )[ i ][ 2 ], Entries( matrix1 )[ i ][ 3 ] ] );
+    entries2 := List( [ 1 .. Length( Entries( matrix2 ) ) ], i -> [ Entries( matrix2 )[ i ][ 1 ] + nR1, Entries( matrix2 )[ i ][ 2 ], Entries( matrix2 )[ i ][ 3 ] ] );
+    newEntries := entries1;
+    Append( newEntries, entries2 );
     
-    # otherwise stack them
-    return Involution( UnionOfColumnsOp( Involution( matrix1 ), Involution( matrix2 ) ) );
+    # return result
+    return SMSSparseMatrix( newNR, newNC, newEntries );
     
 end );
 
@@ -152,64 +158,9 @@ InstallMethod( UnionOfColumnsOp,
                "two sparse matrices",
                [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
   function( matrix1, matrix2 )
-    local SmastoBinary, output_string, output, input_string, input, dir, file1, file2, data, number_Rows, number_Columns;
-    
-    # check for valid input
-    if NumberOfRows( matrix1 ) <> NumberOfRows( matrix2 ) then
-        Error( "These matrices cannot be placed side-by-side" );
-        return;
-    fi;
-    
-    # check for degenerate cases
-    if NumberOfColumns( matrix1 ) = 0 then
-        return matrix2;
-    fi;
-    if NumberOfColumns( matrix2 ) = 0 then
-        return matrix1;
-    fi;
-    
-    # find SmastoBinary
-    SmastoBinary := Filename( FindSmastoDirectory(), "sms-adjoin" );
-
-    # prepare output stream
-    output_string := "";
-    output := OutputTextString( output_string, true );
-    
-    # prepare input_stream to launch Spasm
-    input_string := "";
-    input := InputTextString( input_string );
-    
-    # write contents of matrices to files (not ideal, I know)
-    dir := FindSmastoDirectory();
-    file1 := Filename( dir, "m1.sms" );
-    PrintTo( file1, TurnIntoSMSString( matrix1 ) );
-    file2 := Filename( dir, "m2.sms" );
-    PrintTo( file2, TurnIntoSMSString( matrix2 ) );
-    
-    # call smasto
-    Process( DirectoryCurrent(), SmastoBinary, input, output, [ String( file1 ), String( file2 ) ] );
-    
-    # Remove files
-    RemoveFile( file1 );
-    RemoveFile( file2 );
-    
-    # Format the output string
-    output_string := Chomp( output_string ); # Remove trailing \n
-    output_string := ReplacedString( output_string, "\n", "],[" );
-    output_string := ReplacedString( output_string, " ", "," );
-    output_string := Concatenation( "[[", output_string, "]]" );
-    output_string := ReplacedString( output_string, "M", "0" ); # Remove the 'M' which indicates that we are working with matrices over the integers
-    
-    # Eval the resulting string and extract data from it
-    data := EvalString( output_string );
-    number_Rows := data[ 1 ][ 1 ];
-    number_Columns := data[ 1 ][ 2 ];
-    Remove( data, 1 );
-    Remove( data );
-    
-    # Return result
-    return SMSSparseMatrix( number_Rows, number_Columns, data );
-    
+        
+        return Involution( UnionOfRowsOp( Involution( matrix1 ), Involution( matrix2 ) ) );
+        
 end );
 
 
@@ -217,46 +168,18 @@ InstallMethod( Involution,
                "a sparse matrix",
                [ IsSMSSparseMatrix ],
   function( matrix )
-    local SmastoBinary, output_string, output, input_string, input, data, number_Rows, number_Columns;
+    local new_entries, i;
     
-    # check for degenerate cases
-    if ( NumberOfRows( matrix ) = 0 ) or ( NumberOfColumns( matrix ) = 0 ) then
-        return SMSSparseMatrix( NumberOfColumns( matrix ), NumberOfRows( matrix ), [] );
-    fi;
+    # (1) do a rough transposition of the entries
+    new_entries := [];
+    for i in [ 1 .. Length( Entries( matrix ) ) ] do
+        Append( new_entries, [ [ Entries( matrix )[ i ][ 2 ], Entries( matrix )[ i ][ 1 ], Entries( matrix )[ i ][ 3 ] ] ] );
+    od;
     
-    # find SmastoBinary
-    SmastoBinary := Filename( FindSmastoDirectory(), "sms-transpose" );
-    
-    # prepare output stream
-    output_string := "";
-    output := OutputTextString( output_string, true );
-    
-    # prepare input_stream to launch Spasm
-    input_string := Concatenation( TurnIntoSMSString( matrix ), " " );
-    input := InputTextString( input_string );
-    
-    # call smasto
-    Process( DirectoryCurrent(), SmastoBinary, input, output, [ ] );
-    
-    # Format the output string
-    output_string := Chomp( output_string ); # Remove trailing \n
-    output_string := ReplacedString( output_string, "\n", "],[" );
-    output_string := ReplacedString( output_string, " ", "," );
-    output_string := Concatenation( "[[", output_string, "]]" );
-    output_string := ReplacedString( output_string, "M", "0" ); # Remove the 'M' which indicates that we are working with matrices over the integers
-    
-    # Eval the resulting string and extract data from it
-    data := EvalString( output_string );
-    number_Rows := data[ 1 ][ 1 ];
-    number_Columns := data[ 1 ][ 2 ];
-    Remove( data, 1 );
-    Remove( data );
-    
-    # Return result
-    return SMSSparseMatrix( number_Rows, number_Columns, data );    
+    # (3) form new matrix and return it
+    return SMSSparseMatrix( NumberOfColumns( matrix ), NumberOfRows( matrix ), new_entries );
     
 end );
-
 
 InstallMethod( Transpose,
                "a sparse matrix",

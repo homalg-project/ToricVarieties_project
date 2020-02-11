@@ -11,13 +11,11 @@
 
 README file for the `SparseMatrices' GAP4 package
 
-To get the latest version of this GAP 4 package pull the corresponding branch from github. 
-
 
 (1) Installation this package
 -----------------------------
 
-This package is based on functionality of the software `Smasto'. The latest version of Smasto can be found at https://github.com/riccardomurri/smasto. For convenience of installation, the necessary binaries are shipped in the /bin subfolder of this package. For more details on smasto see https://github.com/riccardomurri/smasto. This completes the installation of this package.
+To get the latest version of this GAP 4 package pull the corresponding branch from github. This completes the installation of this package.
 
 
 (2) Documentation and test

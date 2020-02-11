@@ -13,7 +13,7 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "SparseMatrices" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
-                         "gap/Tools.gd",
+                         "gap/SparseMatrices.gd",
                          "gap/Functions.gd",
                          "examples/Functions.g"
                          ],
