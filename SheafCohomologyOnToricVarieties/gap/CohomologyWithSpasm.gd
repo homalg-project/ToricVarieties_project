@@ -4,13 +4,13 @@
 ##
 ##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
-#! @Chapter Sheaf cohomology with Spasm and Linbox
+#! @Chapter Sheaf cohomology with Spasm
 ##
 #########################################################################################
 
 #############################################################
 ##
-#! @Section Cohomology from Spasm, Linbox and Singular
+#! @Section Cohomology from Spasm and checks over the integers
 ##
 #############################################################
 
@@ -33,17 +33,17 @@ DeclareOperation( "H0ParallelBySpasm",
 
 #! @Description
 #! Just as the previous method. However, for every kernel computation by Spasm,
-#! it triggers a rank computation with Linbox to cross-check these results over the integers.
+#! it triggers a rank computation with Singlar to cross-check these results over the integers.
 #! @Returns a vector space
 #! @Arguments V, M, prime p, boolean b
-DeclareOperation( "H0ParallelBySpasmAndLinboxCheck",
+DeclareOperation( "H0ParallelBySpasmAndCheckOverIntegers",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ] );
 
-DeclareOperation( "H0ParallelBySpasmAndLinboxCheck",
+DeclareOperation( "H0ParallelBySpasmAndCheckOverIntegers",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ] );
 
 
-DeclareOperation( "H0ParallelBySpasmAndLinbox",
+DeclareOperation( "H0ParallelBySpasm",
                   [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ] );
 
 
