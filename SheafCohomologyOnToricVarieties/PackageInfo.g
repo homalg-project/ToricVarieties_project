@@ -76,7 +76,6 @@ Dependencies := rec(
                            [ "cohomCalgInterface", ">=2019.08.14" ],
                            [ "NormalizInterface", ">= 0.9.7" ],
                            [ "SpasmInterface", ">2020.02.06" ],
-                           [ "LinBoxInterface", ">2020.02.06" ]
                            ],
   SuggestedOtherPackages := [ [ "ToricIdeals", ">=2011.01.01" ] ],
   ExternalConditions := []

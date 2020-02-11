@@ -11,7 +11,7 @@
 
 #############################################################
 ##
-#! @Section Cohomology from Spasm, Linbox and Singular
+#! @Section Cohomology from Spasm
 ##
 #############################################################
 
@@ -22,7 +22,7 @@ InstallMethod( H0ParallelBySpasm,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module_presentation )
     
-    return H0ParallelBySpasmAndLinbox( variety, module_presentation, 42013, true, false );
+    return H0ParallelBySpasm( variety, module_presentation, 42013, true, false );
     
 end );
 
@@ -32,36 +32,36 @@ InstallMethod( H0ParallelBySpasm,
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, p )
     
-    return H0ParallelBySpasmAndLinbox( variety, module_presentation, p, true, false );
+    return H0ParallelBySpasm( variety, module_presentation, p, true, false );
     
 end );
 
-# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation and perform check with linbox
-InstallMethod( H0ParallelBySpasmAndLinboxCheck,
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation and perform check over the integers
+InstallMethod( H0ParallelBySpasmAndCheckOverIntegers,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module_presentation )
     
-    return H0ParallelBySpasmAndLinbox( variety, module_presentation, 42013, true, true );
+    return H0ParallelBySpasm( variety, module_presentation, 42013, true, true );
     
 end );
 
-# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation  and perform check with linbox
-InstallMethod( H0ParallelBySpasmAndLinboxCheck,
+# compute H^0 by applying my theorem and using Spasm as external CAS for the truncation  and perform check over the integers
+InstallMethod( H0ParallelBySpasmAndCheckOverIntegers,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt ],
   function( variety, module_presentation, p )
     
-    return H0ParallelBySpasmAndLinbox( variety, module_presentation, p, true, true );
+    return H0ParallelBySpasm( variety, module_presentation, p, true, true );
     
 end );
 
 
 # compute H^0 by applying my theorem and using Spasm as external CAS for the truncation
-InstallMethod( H0ParallelBySpasmAndLinbox,
+InstallMethod( H0ParallelBySpasm,
                " for a toric variety, a f.p. graded S-module ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
-  function( variety, module_presentation, p, display_messages, linbox_check )
+  function( variety, module_presentation, p, display_messages, homalg_check )
     local prime, ideal_infos, B_power, coker_dim;
     
     # check if the input is valid
@@ -136,7 +136,7 @@ InstallMethod( H0ParallelBySpasmAndLinbox,
                                             module_presentation,
                                             prime,
                                             display_messages,
-                                            linbox_check
+                                            homalg_check
                                   );
     
     # step 4: inform about result
@@ -165,8 +165,8 @@ end );
 InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
                " for a toric variety, an f.p. graded module, an f.p. graded module, a bool ",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject, IsFpGradedLeftOrRightModulesObject, IsInt, IsBool, IsBool ],
-  function( variety, a, b, prime, display_messages, linbox_check )
-      local range, source, map, mor, matrices, rows, cols, sparse, emb, rank_Linbox, ker_pres, rk, coker_dim, checks, ranks;
+  function( variety, a, b, prime, display_messages, homalg_check )
+      local range, source, map, mor, matrices, rows, cols, sparse, emb, ker_pres, rk, coker_dim, checks, ranks, matrix_homalg;
       
       # inform about status
       if display_messages then
@@ -191,7 +191,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       
       # initialise results of checks;
       checks := [ false, false, false ];
-      ranks := [ 0,0,0 ];
+      ranks := [ -1,-1,-1 ];
       
       # inform about status again
       if display_messages then
@@ -217,14 +217,17 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
       emb := RowSyzygiesGeneratorsBySpasm( matrices[ 2 ], matrices[ 3 ], prime );
-      if linbox_check then
+      if homalg_check then
         if display_messages then
             Print( "\n" );
-            Print( "(*) Check rank with Linbox..." );
+            Print( "(*) Check rank over integers..." );
         fi;
-        rank_Linbox := RankByLinbox( UnionOfRowsOp( matrices[ 2 ], matrices[ 3 ] ) );
-        ranks[ 1 ] := rank_Linbox;
-        if ( NumberOfRows( emb ) <> NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - rank_Linbox ) then
+        matrix_homalg := CreateHomalgMatrixFromSparseString( String( Entries( UnionOfRowsOp( matrices[ 2 ], matrices[ 3 ] ) ) ),
+                                        NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ),
+                                        NumberOfColumns( matrices[ 2 ] ) + NumberOfColumns( matrices[ 3 ] ),
+                                        SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
+        ranks[ 1 ] := RowRankOfMatrix( matrix_homalg );
+        if ( NumberOfRows( emb ) <> NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - ranks[ 1 ] ) then
             Print( "failed\n" );
         elif display_messages then
             Print( "success\n" );
@@ -251,13 +254,16 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         Print( "(*) Perform syzygies computation...\n\n" );
       fi;
       ker_pres := RowSyzygiesGeneratorsBySpasm( emb, matrices[ 1 ], prime );
-      if linbox_check then
+      if homalg_check then
         if display_messages then
-            Print( "(*) Check rank with Linbox..." );
+            Print( "(*) Check rank over integers..." );
         fi;
-        rank_Linbox := RankByLinbox( UnionOfRowsOp( emb, matrices[ 1 ] ) );
-        ranks[ 2 ] := rank_Linbox;
-        if ( NumberOfRows( ker_pres ) <> NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - rank_Linbox ) then
+        matrix_homalg := CreateHomalgMatrixFromSparseString( String( Entries( UnionOfRowsOp( emb, matrices[ 1 ] ) ) ),
+                                        NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ),
+                                        NumberOfColumns( emb ) + NumberOfColumns( matrices[ 1 ] ),
+                                        SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
+        ranks[ 2 ] := RowRankOfMatrix( matrix_homalg );
+        if ( NumberOfRows( ker_pres ) <> NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - ranks[ 2 ] ) then
             Print( "failed\n\n" );
         elif display_messages then
             Print( "success\n\n" );
@@ -273,19 +279,23 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       
       if NumberOfRows( ker_pres ) = 0 then
         rk := 0;
+        ranks[ 3 ] := 0;
         if display_messages then
             Print( "(*) Rank trivially obtained\n\n" );
             checks[ 3 ] := true;
         fi;
       else
         rk := RankGPLUBySpasm( ker_pres, prime );
-        if linbox_check then
+        if homalg_check then
             if display_messages then
-                Print( "(*) Check rank with Linbox..." );
+                Print( "(*) Check rank with homalg..." );
             fi;
-            rank_Linbox := RankByLinbox( ker_pres );
-            ranks[ 3 ] := rank_Linbox;
-            if ( rk <> rank_Linbox ) then
+            matrix_homalg := CreateHomalgMatrixFromSparseString( String( Entries( ker_pres ) ),
+                                        NumberOfRows( ker_pres ),
+                                        NumberOfColumns( ker_pres ),
+                                        SHEAF_COHOMOLOGY_ON_TORIC_VARIETIES_FIELD );
+            ranks[ 3 ] := RowRankOfMatrix( matrix_homalg );
+            if ( rk <> ranks[ 3 ] ) then
                 Print( "failed\n\n" );
             elif display_messages then
                 Print( "success\n\n" );
@@ -295,12 +305,12 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
       fi;
       
       # print results of checks
-      if display_messages and linbox_check then
+      if display_messages and homalg_check then
         
         Print( "--------------------------------------------------" );
-        Print( "Tests with linbox performed\n\n" );
+        Print( "Tests over integers performed\n\n" );
         Print( "Test 1: \n" );
-        Print( Concatenation( "Rank by linbox: ", String( ranks[ 1 ] ), "\n" ) );
+        Print( Concatenation( "Rank over integers: ", String( ranks[ 1 ] ), "\n" ) );
         Print( Concatenation( "Rank by spasm: ", String( NumberOfRows( matrices[ 2 ] ) + NumberOfRows( matrices[ 3 ] ) - NumberOfRows( emb ) ), "\n" ) );
         if checks[ 1 ] then
             Print( "Test passed \n\n" );
@@ -309,7 +319,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         fi;
         
         Print( "Test 2: \n" );
-        Print( Concatenation( "Rank by linbox: ", String( ranks[ 2 ] ), "\n" ) );
+        Print( Concatenation( "Rank over integers: ", String( ranks[ 2 ] ), "\n" ) );
         Print( Concatenation( "Rank by spasm: ", String( NumberOfRows( emb ) + NumberOfRows( matrices[ 1 ] ) - NumberOfRows( ker_pres ) ), "\n" ) );
         if checks[ 2 ] then
             Print( "Test passed \n\n" );
@@ -318,7 +328,7 @@ InstallMethod( TruncateIntHomToZeroInParallelBySpasm,
         fi;
         
         Print( "Test 3: \n" );
-        Print( Concatenation( "Rank by linbox: ", String( ranks[ 3 ] ), "\n" ) );
+        Print( Concatenation( "Rank over integers: ", String( ranks[ 3 ] ), "\n" ) );
         Print( Concatenation( "Rank by spasm: ", String( rk ), "\n" ) );
         if checks[ 3 ] then
             Print( "Test passed \n\n" );
