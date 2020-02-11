@@ -425,3 +425,71 @@ InstallMethod( NonZeroColumns,
     return Filtered( [ 1 .. NumberOfColumns( matrix ) ], i -> non_zeros[ i ] );
     
 end );
+
+
+InstallMethod( Multiplication,
+               "two SMS sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
+  function( matrix1, matrix2 )
+    local NrRows, NrCols, i, j, k, entries, col, row, non_trivial_row, non_trivial_col, res, pos;
+    
+    # check if the matrices can be multiplied
+    if NumberOfColumns( matrix1 ) <> NumberOfRows( matrix2 ) then
+        Error( "The matrices cannot be multiplied" );
+        return;
+    fi;
+    
+    # set up dimensions of resulting matrix
+    NrRows := NumberOfRows( matrix1 );
+    NrCols := NumberOfColumns( matrix2 );
+    
+    # now iterate over all these entries and compute the non-trivial ones
+    entries := [];
+    for i in [ 1 .. NrRows ] do
+        for j in [ 1 .. NrRows ] do
+            
+            # pick row and column of the two matrices which are to be multiplied
+            # and immediately extract their entries
+            row := Entries( CertainRows( matrix1, [ i ] ) );
+            non_trivial_row := List( [ 1 .. Length( row ) ], k -> row[ k ][ 2 ] );
+            col := Entries( CertainColumns( matrix2, [ j ] ) );
+            non_trivial_col := List( [ 1 .. Length( col ) ], k -> col[ k ][ 1 ] );
+            #Error( "Test" );
+            # multiply
+            res := 0;
+            if Length( row ) < Length( col ) then
+                for k in [ 1 .. Length( non_trivial_row ) ] do
+                    pos := Position( non_trivial_col, non_trivial_row[ k ] );
+                    if pos <> fail then
+                        res := res + row[ k ][ 3 ] * col[ pos ][ 3 ];
+                    fi;
+                od;
+            else
+                for k in [ 1 .. Length( non_trivial_col ) ] do
+                    pos := Position( non_trivial_row, non_trivial_col[ k ] );
+                    if pos <> fail then
+                        res := res + row[ pos ][ 3 ] * col[ k ][ 3 ];
+                    fi;
+                od;
+            fi;
+            #Error( "Test2" );
+            # check if entry is non-trivial and if so, save it
+            if res <> 0 then
+                Add( entries, [ [ i, j, res ] ] );
+            fi;
+        od;
+    od;
+    
+    # construct the resulting matrix and return it
+    return SMSSparseMatrix( NrRows, NrCols, entries );
+    
+end );
+
+InstallMethod( \*,
+               "two SMS sparse matrices",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ],
+  function( matrix1, matrix2 )
+
+    return Multiplication( matrix1, matrix2 );
+
+end );

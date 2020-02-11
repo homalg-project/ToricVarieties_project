@@ -137,3 +137,20 @@ DeclareAttribute( "NonZeroRows",
 #! @Arguments SparseMatrix M
 DeclareAttribute( "NonZeroColumns",
                   IsSMSSparseMatrix );
+
+
+##############################################################################################
+##
+#! @Section Multiplication of sparse matrices
+##
+##############################################################################################
+
+#! @Description
+#! This method computes the matrix product of two sparse matrices M1 and M2.
+#! @Returns SMSSparseMatrix
+#! @Arguments SparseMatrix M1, SparseMatrix M2
+DeclareOperation( "Multiplication",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
+
+DeclareOperation( "\*",
+               [ IsSMSSparseMatrix, IsSMSSparseMatrix ] );
