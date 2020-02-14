@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the CoherentSheavesOnToricVarieties package?
+
+**CoherentSheavesOnToricVarieties** models coherent sheaves on toric varieties by a categorical Serre quotient.
+
+@Chapter Functions
