@@ -15,3 +15,12 @@ sheaf := CoherentSheafOnToricVariety( P2, ir );
 AmbientToricVariety( sheaf );;
 DefiningModule( sheaf );;
 #! @EndExample
+
+#! We can also compute tensor products and powers of a sheaf.
+
+#! @Example
+p1 := sheaf * sheaf;;
+p2 := sheaf^2;;
+DefiningModule( p1 ) = DefiningModule( p2 );
+#! true
+#! @EndExample
