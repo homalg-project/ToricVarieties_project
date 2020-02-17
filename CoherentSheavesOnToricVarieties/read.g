@@ -10,3 +10,4 @@
 #######################################################################################
 
 ReadPackage( "CoherentSheavesOnToricVarieties", "gap/Sheaves.gi" );
+ReadPackage( "CoherentSheavesOnToricVarieties", "gap/Subvarieties.gi" );
