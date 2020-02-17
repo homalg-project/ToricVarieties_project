@@ -90,6 +90,14 @@ InstallMethod( ToricVarietyString,
     
 end );
 
+InstallMethod( ToricVarietyString,
+               " for toric varieties",
+               [ IsToricVariety ],
+  function( var )
+    
+    return ToricVarietyString( var, false );
+    
+end );
 
 
 ##############################################################################################
@@ -202,4 +210,71 @@ InstallMethod( ViewObj,
 
       Print( Concatenation( "<", String( sheaf ), ">" ) );
 
+end );
+
+
+##############################################################################################
+##
+##  Properties of coherent sheaves
+##
+##############################################################################################
+
+InstallMethod( IsWellDefined,
+               " for coherent sheaves on toric varieties",
+               [ IsCoherentSheafOnToricVariety ],
+  function( sheaf )
+    
+    # check if defined over Cox ring of ambient toric variety
+    if not CoxRing( AmbientToricVariety( sheaf ) ) = UnderlyingHomalgGradedRing( RelationMorphism( DefiningModule( sheaf ) ) ) then
+        return false;
+    fi;
+    
+    # otherwise check if the defining module is well defined
+    return IsWellDefined( DefiningModule( sheaf ) );
+    
+end );
+
+
+##############################################################################################
+##
+##  Operations for coherent sheaves
+##
+##############################################################################################
+
+InstallMethod( TensorProductOnObjects,
+               "for two coherent sheaves",
+                [ IsCoherentSheafOnToricVariety, IsCoherentSheafOnToricVariety ],
+      function( sheaf1, sheaf2 );
+      
+      # check that they are defined over the same toric variety
+      if not AmbientToricVariety( sheaf1 ) = AmbientToricVariety( sheaf2 ) then
+        Error( "The sheaves are not defined over the same toric variety" );
+      fi;
+      
+      # check that they are both represented by left or both by right ideals
+      if not IsFpGradedLeftModulesObject( DefiningModule( sheaf1 ) ) = IsFpGradedLeftModulesObject( DefiningModule( sheaf2 ) ) then
+        Error( "The defining modules must both be left or both be right modules" );
+      fi;
+      
+      # compute their tensor product
+      return CoherentSheafOnToricVariety( AmbientToricVariety( sheaf1 ), TensorProductOnObjects( DefiningModule( sheaf1 ), DefiningModule( sheaf2 ) ) );
+      
+end );
+
+InstallMethod( \*,
+               "powers of presentations",
+               [ IsCoherentSheafOnToricVariety, IsCoherentSheafOnToricVariety ],
+  function( sheaf1, sheaf2 )
+    
+    return TensorProductOnObjects( sheaf1, sheaf2 );
+    
+end );
+
+InstallMethod( \^,
+               "powers of presentations",
+               [ IsCoherentSheafOnToricVariety, IsInt ],
+  function( sheaf, power )
+    
+    return CoherentSheafOnToricVariety( AmbientToricVariety( sheaf ), DefiningModule( sheaf )^power );
+    
 end );

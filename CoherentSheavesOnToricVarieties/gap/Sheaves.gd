@@ -23,6 +23,8 @@ DeclareCategory( "IsCoherentSheafOnToricVariety",
                  IsObject );
 DeclareOperation( "ToricVarietyString",
                   [ IsToricVariety, IsBool ] );
+DeclareOperation( "ToricVarietyString",
+                  [ IsToricVariety ] );
 
 
 ##############################################################################################
@@ -60,3 +62,45 @@ DeclareAttribute( "AmbientToricVariety",
 #! @Arguments F
 DeclareAttribute( "DefiningModule",
                   IsCoherentSheafOnToricVariety );
+
+
+##############################################################################################
+##
+#! @Section Properties of coherent sheaves
+##
+##############################################################################################
+
+#! @Description
+#! Check if a coherent sheaf F is well defined.
+#! @Returns true or false
+#! @Arguments F
+DeclareProperty( "IsWellDefined",
+                  IsCoherentSheafOnToricVariety );
+
+
+##############################################################################################
+##
+#! @Section Operations for coherent sheaves
+##
+##############################################################################################
+
+#! @Description
+#! Computes tensor product of two coherent sheaves F1, F2.
+#! @Returns coherent sheaf
+#! @Arguments F1, F2
+DeclareOperation( "TensorProductOnObjects",
+                  [ IsCoherentSheafOnToricVariety, IsCoherentSheafOnToricVariety ] );
+
+#! @Description
+#! Computes tensor product of two coherent sheaves F1, F2.
+#! @Returns coherent sheaf
+#! @Arguments F1, F2
+DeclareOperation( "\*",
+               [ IsCoherentSheafOnToricVariety, IsCoherentSheafOnToricVariety ] );
+
+#! @Description
+#! Computes n-th power of a coherent sheaf F.
+#! @Returns coherent sheaf
+#! @Arguments F, n
+DeclareOperation( "\^",
+               [ IsCoherentSheafOnToricVariety, IsInt ] );
