@@ -52,7 +52,11 @@ InstallMethod( AllHiByCohomCalg,
     fi;
 
     # identify the location of cohomcalg
-    cohomCalg := cohomCalgBinary( );
+    if HasSpecialCohomCalg( variety ) then
+        cohomCalg := SpecialCohomCalg( variety );
+    else
+        cohomCalg := cohomCalgBinary( );
+    fi;
 
     # set up communication channels
     stdin := InputTextUser();
@@ -131,8 +135,12 @@ InstallMethod( ContributingDenominators,
     # this the string that we need to address cohomCalg
     command_string := cohomCalgCommandString( variety );
 
-    cohomCalg := cohomCalgBinary( );
-
+    if HasSpecialCohomCalg( variety ) then
+        cohomCalg := SpecialCohomCalg( variety );
+    else
+        cohomCalg := cohomCalgBinary( );
+    fi;
+    
     # set up communication channels
     stdin := InputTextUser();
     output_string := "";
