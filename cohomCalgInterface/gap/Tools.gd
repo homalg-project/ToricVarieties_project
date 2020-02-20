@@ -62,3 +62,13 @@ DeclareOperation( "cohomCalgCommandString",
 #! @Arguments vari
 DeclareAttribute( "MonomialFile",
                   IsToricVariety );
+
+#! @Description
+#! By setting this attribute, a special instance of cohomCalg can be used to iterate on
+#! the given toric variety. In this case, the value has to be set to the list [ dir, file ]
+#! where dir is the directory that contains the cohomCalg binary and file is the gap
+#! filename datatype, which points to the actual binary.
+#! @Returns list
+#! @Arguments vari
+DeclareAttribute( "SpecialCohomCalg",
+                  IsToricVariety );
