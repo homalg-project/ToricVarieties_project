@@ -10,6 +10,5 @@
 #############################################################################
 
 ReadPackage( "ToolsForFPGradedModules", "gap/ToolsForFPGradedModules.gd" );
-ReadPackage( "ToolsForFPGradedModules", "gap/TruncationOfGradedExt.gd" );
 ReadPackage( "ToolsForFPGradedModules", "gap/Conversion.gd" );
 ReadPackage( "ToolsForFPGradedModules", "gap/OverloadedFunctionality.gd" );
