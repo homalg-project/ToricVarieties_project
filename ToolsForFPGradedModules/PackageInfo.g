@@ -16,7 +16,7 @@ PackageName := "ToolsForFPGradedModules",
 Subtitle := "A package to provide additional structures for toric varieties",
 
 Version :=  Maximum( [
-  "2020.01.16", ## Martins version
+  "2020.03.10", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -70,7 +70,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
                            [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
-                           [ "TruncationsOfFPGradedModules", ">=2020.01.16" ],
+                           [ "GradedModules", ">= 2020.01.02" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
