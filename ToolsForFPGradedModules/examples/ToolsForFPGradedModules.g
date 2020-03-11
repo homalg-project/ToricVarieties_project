@@ -1,6 +1,6 @@
 #! @Chapter Tools for FPGradedModules
 
-#! @Section Example: Minimal free resolution and Betti table
+#! @Section Example: Ideal, minimal free resolution and Betti table
 
 LoadPackage( "ToolsForFPGradedModules" );
 
