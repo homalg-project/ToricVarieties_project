@@ -248,3 +248,95 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     return true;
 
 end );
+
+
+
+##############################################################################################
+##
+##  Turn left into right modules and vice versa
+##
+##############################################################################################
+
+InstallMethod( TurnIntoGradedColumn,
+               [ IsGradedRow ],
+  function( graded_row )
+    local degrees;
+    
+    degrees := List( DegreeList( graded_row ), i -> [ UnderlyingListOfRingElements( i[ 1 ] ), i[ 2 ] ] );
+    return GradedColumn( degrees, UnderlyingHomalgGradedRing( graded_row ) );
+    
+end );
+
+InstallMethod( TurnIntoGradedRow,
+               [ IsGradedColumn ],
+  function( graded_column )
+    local degrees;
+    
+    degrees := List( DegreeList( graded_column ), i -> [ UnderlyingListOfRingElements( i[ 1 ] ), i[ 2 ] ] );
+    return GradedRow( degrees, UnderlyingHomalgGradedRing( graded_column ) );
+    
+end );
+
+InstallMethod( TurnIntoGradedColumnMorphism,
+               [ IsGradedRowMorphism ],
+  function( graded_row_morphism )
+    local source, range, matrix;
+    
+    source := TurnIntoGradedColumn( Source( graded_row_morphism ) );
+    range := TurnIntoGradedColumn( Range( graded_row_morphism ) );
+    matrix := Involution( UnderlyingHomalgMatrix( graded_row_morphism ) );
+    return GradedRowOrColumnMorphism( source, matrix, range );
+    
+end );
+
+InstallMethod( TurnIntoGradedRowMorphism,
+               [ IsGradedColumnMorphism ],
+  function( graded_column_morphism )
+    local source, range, matrix;
+    
+    source := TurnIntoGradedRow( Source( graded_column_morphism ) );
+    range := TurnIntoGradedRow( Range( graded_column_morphism ) );
+    matrix := Involution( UnderlyingHomalgMatrix( graded_column_morphism ) );
+    return GradedRowOrColumnMorphism( source, matrix, range );
+    
+end );
+
+InstallMethod( TurnIntoFpGradedRightModule,
+               [ IsFpGradedLeftModulesObject ],
+  function( module )
+    
+    return FreydCategoryObject( TurnIntoGradedColumnMorphism( RelationMorphism( module ) ) );
+    
+end );
+
+InstallMethod( TurnIntoFpGradedLeftModule,
+               [ IsFpGradedRightModulesObject ],
+  function( module )
+    
+    return FreydCategoryObject( TurnIntoGradedRowMorphism( RelationMorphism( module ) ) );
+    
+end );
+
+InstallMethod( TurnIntoFpGradedRightModuleMorphism,
+               [ IsFpGradedLeftModulesMorphism ],
+  function( morphism )
+    local new_source, new_range, new_mor_datum;
+    
+    new_source := TurnIntoFpGradedRightModule( Source( morphism ) );
+    new_range := TurnIntoFpGradedRightModule( Range( morphism ) );
+    new_mor_datum := TurnIntoGradedColumnMorphism( MorphismDatum( morphism ) );
+    return FreydCategoryMorphism( new_source, new_mor_datum, new_range );
+    
+end );
+
+InstallMethod( TurnIntoFpGradedLeftModuleMorphism,
+               [ IsFpGradedRightModulesMorphism ],
+  function( morphism )
+    local new_source, new_range, new_mor_datum;
+    
+    new_source := TurnIntoFpGradedLeftModule( Source( morphism ) );
+    new_range := TurnIntoFpGradedLeftModule( Range( morphism ) );
+    new_mor_datum := TurnIntoGradedRowMorphism( MorphismDatum( morphism ) );
+    return FreydCategoryMorphism( new_source, new_mor_datum, new_range );
+    
+end );
