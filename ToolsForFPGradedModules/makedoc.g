@@ -16,8 +16,9 @@ AutoDoc( "ToolsForFPGradedModules" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
                          "gap/ToolsForFPGradedModules.gd",
                          "examples/ToolsForFPGradedModules.g",
-                         "gap/TruncationOfGradedExt.gd",
-                         "examples/TruncationOfGradedExt.g",
+                         "gap/Conversion.gd",
+                         "examples/Conversion.g",
+                         "gap/OverloadedFunctionality.gd",
                          ],
              scan_dirs := []
              ),
