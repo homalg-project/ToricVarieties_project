@@ -72,6 +72,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "ToricVarieties", ">=2016.05.03" ],
                            [ "AdditionsForToricVarieties", ">=2019.01.16" ],
+                           [ "TruncationsOfFPGradedModules", ">=2020.01.16" ],
                            [ "LinearAlgebraForCAP", ">= 2015.12.03 " ],
                            [ "cohomCalgInterface", ">=2019.08.14" ],
                            [ "NormalizInterface", ">= 0.9.7" ],

@@ -70,6 +70,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
                            [ "ToricVarieties", ">= 2016.05.03" ],
+                           [  "ToolsForFPGradedModules", ">= 2020.03.10" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
