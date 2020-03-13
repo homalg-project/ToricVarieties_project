@@ -1,0 +1,4 @@
+(*) Input for toric varieties - localization at variables that are forbidden to vanish simultaneously should return error
+(*) Localization at empty set should have ordinary truncations as fallback
+(*) Allow also truncation to degrees different than degree 0
+(*) Better input format for the variables at which the localization is to be taken
