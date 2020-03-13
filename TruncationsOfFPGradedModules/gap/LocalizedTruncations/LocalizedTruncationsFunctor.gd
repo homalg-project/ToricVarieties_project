@@ -4,13 +4,13 @@
 ##
 ##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
-#!  @Chapter Functor for localized truncations to degree 0
+#!  @Chapter Functors for localized truncations to degree 0
 ##
 ################################################################################################
 
 #######################################################################################
 ##
-#! @Section Localized truncation functor for graded rows and columns
+#! @Section Localized truncation functors for graded rows and columns
 ##
 #######################################################################################
 
@@ -38,7 +38,7 @@ DeclareOperation( "LocalizedTruncationFunctorForGradedRowsAndColumns",
 
 #######################################################################################
 ##
-#! @Section Localized truncation functor for f.p. graded modules
+#! @Section Localized truncation functors for f.p. graded modules
 ##
 #######################################################################################
 
