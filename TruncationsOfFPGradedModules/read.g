@@ -9,8 +9,15 @@
 ##
 #############################################################################
 
-ReadPackage( "TruncationsOfFPGradedModules", "gap/MonomsOfDegree.gi" );
-ReadPackage( "TruncationsOfFPGradedModules", "gap/DegreeXLayerVectorSpace.gi" );
-ReadPackage( "TruncationsOfFPGradedModules", "gap/TruncationsOfGradedRowsAndColumns.gi" );
-ReadPackage( "TruncationsOfFPGradedModules", "gap/TruncationsOfFPGradedModules.gi" );
-ReadPackage( "TruncationsOfFPGradedModules", "gap/TruncationFunctors.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/MonomsOfDegree.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/DegreeXLayerVectorSpace.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationsOfGradedRowsAndColumns.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationsOfFPGradedModules.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationFunctors.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationOfGradedExt.gi" );
+
+ReadPackage( "TruncationsOfFPGradedModules", "gap/LocalizedTruncations/LocalizedDegree0Ring.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/LocalizedTruncations/Tools.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/LocalizedTruncations/LocalizedTruncationsOfGradedRowsAndColumns.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/LocalizedTruncations/LocalizedTruncationsOfFPGradedModules.gi" );
+ReadPackage( "TruncationsOfFPGradedModules", "gap/LocalizedTruncations/LocalizedTruncationsFunctor.gi" );
