@@ -1,8 +1,8 @@
 ####################################################################################
 ##
-##  SemigroupAndConeWrapper.gd   SheafCohomologyOnToricVarieties package
-##                               Martin Bies
-##  Copyright 2019               ULB Brussels
+##  SemigroupAndConeWrapper.gd   AdditionsForToricVarieties package
+##
+##  Copyright 2020               Martin Bies,       University of Oxford
 ##
 #! @Chapter Wrapper for generators of semigroups and hyperplane constraints of cones
 ##

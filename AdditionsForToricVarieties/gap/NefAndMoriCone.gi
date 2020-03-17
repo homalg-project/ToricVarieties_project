@@ -1,8 +1,8 @@
 ################################################################################################
 ##
-##  NefMoriAndIntersection.gi          SheafCohomologyOnToricVarieties package
+##  NefMoriAndIntersection.gi          AdditionsForToricVarieties package
 ##
-##  Copyright 2019                     Martin Bies,       ULB Brussels
+##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
 #! @Chapter Nef and Mori Cone
 ##

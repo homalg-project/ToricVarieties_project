@@ -1,6 +1,6 @@
 ################################################################################################
 ##
-##  Central.gd                     SheafCohomologyOnToricVarieties package
+##  Central.gd                     AdditionsForToricVarieties package
 ##
 ##  Copyright 2020                 Martin Bies,       University of Oxford
 ##
