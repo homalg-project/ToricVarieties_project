@@ -68,9 +68,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
-                           [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
                            [ "ToricVarieties", ">= 2016.05.03" ],
-                           [  "ToolsForFPGradedModules", ">= 2020.03.10" ],
+                           [  "AdditionsForToricVarieties", ">= 2020.01.16" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
