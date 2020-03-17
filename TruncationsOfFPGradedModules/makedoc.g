@@ -14,8 +14,6 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "TruncationsOfFPGradedModules" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
-                         "gap/OrdinaryTruncations/MonomsOfDegree.gd",
-                         "examples/OrdinaryTruncations/MonomsOfDegree.g",
                          "gap/OrdinaryTruncations/DegreeXLayerVectorSpace.gd",
                          "examples/OrdinaryTruncations/DegreeXLayerVectorSpace.g",
                          "gap/OrdinaryTruncations/TruncationsOfGradedRowsAndColumns.gd",
