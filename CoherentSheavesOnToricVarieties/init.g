@@ -9,5 +9,6 @@
 ##
 #######################################################################################
 
+ReadPackage( "CoherentSheavesOnToricVarieties", "gap/CoherentSheaves.gd" );
 ReadPackage( "CoherentSheavesOnToricVarieties", "gap/Sheaves.gd" );
 ReadPackage( "CoherentSheavesOnToricVarieties", "gap/Subvarieties.gd" );

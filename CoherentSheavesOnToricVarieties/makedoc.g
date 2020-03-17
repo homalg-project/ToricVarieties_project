@@ -13,6 +13,8 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "CoherentSheavesOnToricVarieties" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
+                         "gap/CoherentSheaves.gd",
+                         "examples/CoherentSheaves.g",
                          "gap/Sheaves.gd",
                          "examples/Sheaves.g",
                          "gap/Subvarieties.gd",
