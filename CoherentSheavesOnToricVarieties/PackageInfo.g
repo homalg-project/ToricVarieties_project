@@ -16,7 +16,7 @@ PackageName := "CoherentSheavesOnToricVarieties",
 Subtitle := "A package to model coherent toric sheaves as elements in a Serre quotient category.",
 
 Version :=  Maximum( [
-  "2020.02.14", # Martins version  
+  "2020.02.14", # Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -69,8 +69,7 @@ Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "TruncationsOfFPGradedModules", ">=2020.01.16" ],
-                           #[ "GeneralizedMorphismsForCAP", ">=2019.01.16" ],
-                           [ "ToricVarieties", ">= 2016.05.03" ],
+                           [ "GeneralizedMorphismsForCAP", ">=2019.01.16" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
