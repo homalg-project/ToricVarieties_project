@@ -1,6 +1,6 @@
 ################################################################################################
 ##
-##  SRAndIRForCAP.gd.gd        SheafCohomologyOnToricVarieties package
+##  SRAndIRForCAP.gd           SheafCohomologyOnToricVarieties package
 ##
 ##  Copyright 2020             Martin Bies,       University of Oxford
 ##

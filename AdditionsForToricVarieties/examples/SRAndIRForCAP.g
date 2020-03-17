@@ -2,7 +2,7 @@
 
 #! @Section Example: Stanley-Reisner ideal for CAP
 
-LoadPackage( "SheafCohomologyOnToricVarieties" );
+LoadPackage( "AdditionsForToricVarieties" );
 
 #! @Example
 P2 := ProjectiveSpace( 2 );

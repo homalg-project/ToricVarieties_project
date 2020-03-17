@@ -24,6 +24,8 @@ AutoDoc( "AdditionsForToricVarieties" : scaffold := true, autodoc :=
                          "examples/SemigroupAndConeWrapper.g",
                          "gap/VanishingSets.gd",
                          "examples/VanishingSets.g",
+                         "gap/SRAndIRForCAP.gd",
+                         "examples/SRAndIRForCAP.g",
                          ],
              scan_dirs := []
              ),
