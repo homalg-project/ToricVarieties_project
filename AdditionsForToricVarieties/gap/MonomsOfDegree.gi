@@ -1,6 +1,6 @@
 ################################################################################################
 ##
-##  MonomsOfDegree.gi        TruncationsOfFPGradedModules package
+##  MonomsOfDegree.gi        AdditionsForToricVarieties package
 ##
 ##  Copyright 2020           Martin Bies,       University of Oxford
 ##
