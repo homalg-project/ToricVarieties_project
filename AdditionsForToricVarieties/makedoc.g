@@ -14,6 +14,8 @@ LoadPackage( "AutoDoc" );
 AutoDoc( "AdditionsForToricVarieties" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
                          "gap/Input.gd",
+                         "gap/MonomsOfDegree.gd",
+                         "examples/MonomsOfDegree.g",
                          "gap/ICTCurves.gd",
                          "examples/ICTCurves.g",
                          "gap/NefAndMoriCone.gd",

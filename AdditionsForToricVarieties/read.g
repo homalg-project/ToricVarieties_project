@@ -10,6 +10,7 @@
 #############################################################################
 
 ReadPackage( "AdditionsForToricVarieties", "gap/Input.gi" );
+ReadPackage( "AdditionsForToricVarieties", "gap/MonomsOfDegree.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/ICTCurves.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/NefAndMoriCone.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/SemigroupAndConeWrapper.gi" );
