@@ -9,7 +9,6 @@
 ##
 #############################################################################
 
-ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/MonomsOfDegree.gi" );
 ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/DegreeXLayerVectorSpace.gi" );
 ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationsOfGradedRowsAndColumns.gi" );
 ReadPackage( "TruncationsOfFPGradedModules", "gap/OrdinaryTruncations/TruncationsOfFPGradedModules.gi" );
