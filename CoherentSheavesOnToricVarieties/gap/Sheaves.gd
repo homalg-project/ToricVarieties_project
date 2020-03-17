@@ -63,6 +63,12 @@ DeclareAttribute( "AmbientToricVariety",
 DeclareAttribute( "DefiningModule",
                   IsCoherentSheafOnToricVariety );
 
+#! @Description
+#! The argument is a coherent sheaf F on a toric varieties.
+#! The output is the corresponding object in the Serre quotient category.
+#! @Arguments F
+DeclareAttribute( "DefiningSerreQuotientObject",
+                  IsCoherentSheafOnToricVariety );
 
 ##############################################################################################
 ##

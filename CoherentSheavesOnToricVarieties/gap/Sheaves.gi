@@ -111,19 +111,31 @@ InstallMethod( CoherentSheafOnToricVariety,
                "a toric variety and an fp graded left- or right-module",
                [ IsToricVariety, IsFpGradedLeftOrRightModulesObject ],
   function( variety, module )
-    local sheaf;
+    local new_module, coh, Serre_object, sheaf;
     
-    # Check for valid input
+    # check for valid input
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( RelationMorphism( module ) ), CoxRing( variety ) ) then
         Error( "The module is not defined over the Coxring of the toric variety" );
         return;
     fi;
     
-    # Then build the sheaf
+    # turn a given module into a left module
+    if IsFpGradedRightModulesObject( module ) then
+        new_module := TurnIntoFpGradedLeftModule( module );
+    else
+        new_module := module;
+    fi;
+    
+    # and form the corresponding object in the Serre quotient
+    coh := CategoryOfCoherentSheaves( variety );
+    Serre_object := AsSerreQuotientCategoryObject( coh, new_module );
+    
+    # now build the sheaf
     sheaf := rec( );
     ObjectifyWithAttributes( sheaf, TheTypeOfCoherentSheafOnToricVariety,
                              AmbientToricVariety, variety,
-                             DefiningModule, module
+                             DefiningModule, new_module,
+                             DefiningSerreQuotientObject, Serre_object
                              );
     return sheaf;
     
