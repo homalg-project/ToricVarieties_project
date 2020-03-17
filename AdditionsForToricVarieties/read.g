@@ -15,3 +15,4 @@ ReadPackage( "AdditionsForToricVarieties", "gap/ICTCurves.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/NefAndMoriCone.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/SemigroupAndConeWrapper.gi" );
 ReadPackage( "AdditionsForToricVarieties", "gap/VanishingSets.gi" );
+ReadPackage( "AdditionsForToricVarieties", "gap/SRAndIRForCAP.gi" );

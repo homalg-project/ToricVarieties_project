@@ -10,7 +10,6 @@
 #############################################################################
 
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/Input.gi" );
-ReadPackage( "SheafCohomologyOnToricVarieties", "gap/SRAndIRForCAP.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromResolution.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyFromMyTheorem.gi" );
 ReadPackage( "SheafCohomologyOnToricVarieties", "gap/CohomologyTools.gi" );
