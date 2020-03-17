@@ -2,7 +2,7 @@
 
 #! @Section Example: monoms of Cox ring of degree
 
-LoadPackage( "TruncationsOfFPGradedModules" );
+LoadPackage( "AdditionsForToricVarieties" );
 
 #! @Example
 P1 := ProjectiveSpace( 1 );
