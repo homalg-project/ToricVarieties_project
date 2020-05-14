@@ -52,7 +52,7 @@ InstallMethod( CategoryOfCoherentSheaves,
             local module_matrix, degree_positions, current_section_module;
             
             # first a quick and dirty test: modules with free parts never sheafify to zero
-            module_matrix := UnderlyingMatrix( module );
+            module_matrix := UnderlyingHomalgMatrix( RelationMorphism( module ) );
             degree_positions := PositionOfFirstNonZeroEntryPerColumn( module_matrix );
             if ForAny( degree_positions, i -> i = 0 ) then
                 return false;
