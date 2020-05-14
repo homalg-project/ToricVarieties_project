@@ -29,7 +29,7 @@ InstallMethod( CategoryOfCoherentSheaves,
     if IsFree( DegreeGroup( graded_ring ) ) and ForAll( degrees, i -> ForAll( i, j -> j >= 0 ) ) and IsSmooth( variety ) then
         
         # in this case, the test is simple
-        test_function := module -> IsZero( HilbertPolynomial( UnderlyingMatrixOverNonGradedRing( UnderlyingMatrix( module ) ) ) );
+        test_function := module -> IsZero( HilbertPolynomial( UnderlyingMatrixOverNonGradedRing( UnderlyingHomalgMatrix( RelationMorphism( module ) ) ) ) );
         
     else
         
