@@ -16,7 +16,7 @@
 InstallMethod( CategoryOfCoherentSheaves,
                [ IsToricVariety ],
   function( variety )
-    local graded_ring, degrees, presentation_category, test_function, rays_in_maximal_cones, irrelevant_ideal_generators, i, j, current_generator, functor_list, functor, serre_quotient_category;
+    local graded_ring, degrees, presentation_category, test_function, rays_in_maximal_cones, irrelevant_ideal_generators, i, j, current_generator, gen, serre_quotient_category;
     
     # extract Cox ring and degrees of the indeterminates
     graded_ring := CoxRing( variety );
@@ -45,7 +45,6 @@ InstallMethod( CategoryOfCoherentSheaves,
             od;
             Add( irrelevant_ideal_generators, current_generator );
         od;
-        functor_list := List( irrelevant_ideal_generators, i -> LocalizedTruncationFunctorForFPGradedLeftModules( graded_ring, i ) );
         
         # now set up the corresponding test_function which tells us if the module sheafifes to the trivial sheaf
         test_function := function( module )
@@ -59,8 +58,8 @@ InstallMethod( CategoryOfCoherentSheaves,
             fi;
             
             # otherwise employ the above functors to test if, on each affine patch, the given module sheafifes to 0
-            for functor in functor_list do
-                current_section_module := ApplyFunctor( functor, module );
+            for gen in irrelevant_ideal_generators do
+                current_section_module := LocalizedDegreeZero( module, gen );
                 if not IsZeroForObjects( current_section_module ) = true then
                     return false;
                 fi;
