@@ -16,8 +16,11 @@ EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves(
 #! @Example
 EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves(
                                         [ 3,-1,-1,-1 ], [1,-1,-3,-1], 1 );;
+#!
 #! Analyse bundle on 7 degenerate curves...
-#! Spectrum: [ 2, 3, "NA" ]
+#! Estimated spectrum on 5 curves
+#! Spectrum estimate: [ 2, 3 ]
+#!
 #! @EndExample
 
 #! The most details are provided for verbose level 2.
@@ -28,8 +31,11 @@ EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves(
 #! @Example
 EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves(
                                         [4,-1,-2,-1], [ 3,-3,-1,-2 ], 1 );;
+#!
 #! Analyse bundle on 10 degenerate curves...
-#! Spectrum: [ "NA" ]
+#! Estimated spectrum on 0 curves
+#! Spectrum estimate: [ ]
+#!
 #! @EndExample
 
 #! However, in other cases, we can estimate the number of global sections for all maximally degenerate curves:
