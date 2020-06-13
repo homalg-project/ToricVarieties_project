@@ -1,7 +1,0 @@
-@Chapter Introduction
-
-@Section What is the goal of the LocalSectionCounter package?
-
-**LocalSectionCounter** provides functionality to estimate global sections from topological counts of local sections. The current implementations focus on curves in dP3 and pullback line bundles thereon.
-
-@Chapter Functions
