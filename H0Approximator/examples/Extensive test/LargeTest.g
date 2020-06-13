@@ -1,5 +1,4 @@
 LoadPackage( "H0Approximator" );
-LoadPackage( "SheafC" );
 pairs := [ [ [ 5,-2,-2,-1 ], [2, -2, -4, -2] ],
            [ [ 5, -2, -2, -1], [1, -1, -3, 0] ],
            [ [5, -2, -2, -1], [1, 2, -2, 0] ],
@@ -82,7 +81,6 @@ pairs := [ [ [ 5,-2,-2,-1 ], [2, -2, -4, -2] ],
 [ [4, -1, -2, -1],[3, 2, -3, -5] ],
 [ [4, -1, -2, -1],[1, 1, -4, 2] ],
 [ [4, -1, -2, -1],[1, 0, -4, -1] ] ];
-#l := List( [ 1 .. Length( pairs ) ], i -> EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves( pairs[ i ][ 1 ], pairs[ i ][ 2 ] ) );
 l := List( [ 1 .. Length( pairs ) ], i -> FineApproximation( pairs[ i ][ 1 ], pairs[ i ][ 2 ] ) );
 
 data_base_values := [
