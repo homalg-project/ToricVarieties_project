@@ -266,45 +266,52 @@ InstallMethod( FineApproximationWithSetups,
             fi;
             
             # more than one component
-            # only continue if all are non-rigid powers
-            if not ( ForAny( degs, IsRigidPower ) ) then
+            if ( Length( degs ) > 1 ) then
                 
-                # prepare list of split components
-                splits := degs;
-                Append( splits, [ [ 0, data[ i ][ 5 ], 0, 0 ] ] );
-                Append( splits, [ [ 0, 0, data[ i ][ 6 ], 0 ] ] );
-                Append( splits, [ [ 0, 0, 0, data[ i ][ 7 ] ] ] );
-                Append( splits, [ [ data[ i ][ 8 ], - data[ i ][ 8 ], - data[ i ][ 8 ], 0 ] ] );
-                Append( splits, [ [ data[ i ][ 9 ], - data[ i ][ 9 ], 0, - data[ i ][ 9 ] ] ] );
-                Append( splits, [ [ data[ i ][ 10 ], 0, - data[ i ][ 10 ], - data[ i ][ 10 ] ] ] );
-                
-                # compute topological data anew
-                genera := List( [ 1 .. Length( splits ) ], i -> Genus( splits[ i ] ) );
-                degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegree( splits[ i ], bundle ) );
-                sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
-                intersections := IntersectionsAmongCurveComponents( splits );
-                
-                # check if this is a simple setup and if so, estimate h0
-                if IsSimpleSetup( splits, sections ) then
+                # more than one component
+                # only continue if all are non-rigid powers
+                if not ( ForAny( degs, IsRigidPower ) ) then
                     
-                    # estimate glueable sections on each component
-                    glueable_sections := EstimateGlobalSections( sections, intersections );
+                    # prepare list of split components
+                    splits := degs;
+                    Append( splits, [ [ 0, data[ i ][ 5 ], 0, 0 ] ] );
+                    Append( splits, [ [ 0, 0, data[ i ][ 6 ], 0 ] ] );
+                    Append( splits, [ [ 0, 0, 0, data[ i ][ 7 ] ] ] );
+                    Append( splits, [ [ data[ i ][ 8 ], - data[ i ][ 8 ], - data[ i ][ 8 ], 0 ] ] );
+                    Append( splits, [ [ data[ i ][ 9 ], - data[ i ][ 9 ], 0, - data[ i ][ 9 ] ] ] );
+                    Append( splits, [ [ data[ i ][ 10 ], 0, - data[ i ][ 10 ], - data[ i ][ 10 ] ] ] );
                     
-                    # check if we can estimate overall number of global sections
-                    if ForAll( glueable_sections, IsInt ) then
-                        estimate := Sum( glueable_sections );
+                    # compute topological data anew
+                    genera := List( [ 1 .. Length( splits ) ], i -> Genus( splits[ i ] ) );
+                    degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegree( splits[ i ], bundle ) );
+                    sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
+                    intersections := IntersectionsAmongCurveComponents( splits );
+                    
+                    # check if this is a simple setup and if so, estimate h0
+                    if IsSimpleSetup( splits, sections ) then
+                        
+                        # estimate glueable sections on each component
+                        glueable_sections := EstimateGlobalSections( sections, intersections );
+                        
+                        # check if we can estimate overall number of global sections
+                        if ForAll( glueable_sections, IsInt ) then
+                            
+                            # estimate h0
+                            estimate := Sum( glueable_sections );
+                            
+                            # prepare data
+                            dummy := data[ i ];
+                            Remove( dummy );
+                            Append( dummy, [ estimate ] );
+                            
+                            # and append it
+                            Append( final_setups, [ [ dummy, false ] ] );
+                            Append( final_h0_estimates, [ estimate ] );
+                            
+                        fi;
                     fi;
-                    
-                    # append to data
-                    dummy := data[ i ];
-                    Remove( dummy );
-                    Append( dummy, [ estimate ] );
-                    Append( final_setups, [ [ dummy, false ] ] );
-                    Append( final_h0_estimates, [ estimate ] );
-                    
                 fi;
             fi;
-            
        fi;
     od;
     
