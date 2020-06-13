@@ -1,0 +1,3 @@
+Compile on ubuntu 18.04 via
+
+g++ -o counter main.cpp
