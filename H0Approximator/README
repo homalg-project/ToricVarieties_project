@@ -1,0 +1,46 @@
+#############################################################################
+##
+##  README              H0Approximator package
+##                      Martin Bies
+##
+##  Copyright 2020      University of Oxford
+##
+##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3
+##
+#############################################################################
+
+README file for the `H0Approximator' GAP4 package
+
+
+(1) Installation this package
+-----------------------------
+
+To get the latest version of this GAP 4 package pull the corresponding branch from github. This completes the installation of this package.
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+gap makedoc.g
+
+inside the H0Approximator folder. Provided a running LaTeX installation, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+
+(4) Funding
+--------------------------
+
+This work is supported by the Wiener-Anspach Foundation.
