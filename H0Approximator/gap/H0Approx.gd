@@ -66,6 +66,8 @@ DeclareOperation( "DescendantLevel",
 #! Consequently, this method performs faster than FineApproximation, but produces less accurate results.
 #! @Returns A list
 #! @Arguments Lists c l
+DeclareOperation( "RoughApproximationWithSetups",
+                  [ IsList, IsList ] );
 DeclareOperation( "RoughApproximation",
                   [ IsList, IsList ] );
 
@@ -75,5 +77,7 @@ DeclareOperation( "RoughApproximation",
 #! RoughApproximation, but produces more accurate results.
 #! @Returns A list
 #! @Arguments Lists c l
+DeclareOperation( "FineApproximationWithSetups",
+                  [ IsList, IsList ] );
 DeclareOperation( "FineApproximation",
                   [ IsList, IsList ] );

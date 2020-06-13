@@ -123,7 +123,7 @@ end );
 ##
 ##############################################################################################
 
-InstallMethod( RoughApproximation,
+InstallMethod( RoughApproximationWithSetups,
                "for two lists",
                [ IsList, IsList ],
     function( curve, bundle )
@@ -165,23 +165,31 @@ InstallMethod( RoughApproximation,
     
     # inform about the spectrum obtained
     Print( Concatenation( "(*) Rough spectrum estimate: ", String( spectrum ), "\n" ) );
-    #Print( "(*) Statistics: \n" );
     for i in [ 1 .. Length( spectrum ) ] do
-        Print( Concatenation( "     (*) h0 = ", String( spectrum[ i ] ), ": ", String( Length( Positions( h0_estimates, spectrum[ i ] ) ) ), "\n" ) );
+        Print( Concatenation( "     (x) h0 = ", String( spectrum[ i ] ), ": ", String( Length( Positions( h0_estimates, spectrum[ i ] ) ) ), "\n" ) );
     od;
     
     # return result
-    return data;
+    return [ data, spectrum ];
     
 end );
 
-InstallMethod( FineApproximation,
+InstallMethod( RoughApproximation,
+               "for two lists",
+               [ IsList, IsList ],
+    function( curve, bundle )
+    
+        return RoughApproximationWithSetups( curve, bundle )[ 2 ];
+    
+end );
+
+InstallMethod( FineApproximationWithSetups,
                "for two lists",
                [ IsList, IsList ],
     function( curve, bundle )
     local data, rays, max_cones, weights, vars, dP3, final_setups, final_h0_estimates, i, component, spectrum;
     
-    data := RoughApproximation( curve, bundle );
+    data := RoughApproximationWithSetups( curve, bundle )[ 1 ];
     Print( "(*) Checking irreducibility of curves...\n" );
     
     # create dP3 with canonical grading
@@ -208,16 +216,20 @@ InstallMethod( FineApproximation,
     # inform about the spectrum obtained
     Print( Concatenation( "(*) ", String( Length( final_setups ) ), " fine approximations\n" ) );
     Print( Concatenation( "(*) Fine spectrum estimate: ", String( spectrum ), "\n" ) );
-    #Print( "(*) Statistics: \n" );
     for i in [ 1 .. Length( spectrum ) ] do
-        Print( Concatenation( "     (*) h0 = ", String( spectrum[ i ] ), ": ", String( Length( Positions( final_h0_estimates, spectrum[ i ] ) ) ), "\n" ) );
+        Print( Concatenation( "     (x) h0 = ", String( spectrum[ i ] ), ": ", String( Length( Positions( final_h0_estimates, spectrum[ i ] ) ) ), "\n" ) );
     od;
     
     # return result
-    #return final_setups;
-    return spectrum;
+    return [ final_setups, spectrum ];
     
 end );
 
-
-
+InstallMethod( FineApproximation,
+               "for two lists",
+               [ IsList, IsList ],
+    function( curve, bundle )
+    
+        return FineApproximationWithSetups( curve, bundle )[ 2 ];
+    
+end );
