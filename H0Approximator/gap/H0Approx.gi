@@ -36,7 +36,7 @@ InstallMethod( IsIrreducible,
     splits := PrimaryDecomposition( ideal );
     splits := List( [ 1 .. Length( splits ) ], i -> splits[ i ][ 2 ] );
     splits := Filtered( splits,  i -> not IsSubset( i, IrrelevantIdeal( dP3 ) ) );
-    
+    Error( "Test" );
     # decide if curve is split
     if Length( splits ) = 1 then
         result := true;
@@ -48,6 +48,53 @@ InstallMethod( IsIrreducible,
     return result;
     
 end );
+
+InstallMethod( DegreesOfComponents,
+               "a list",
+               [ IsList, IsToricVariety ],
+  function( curve, dP3 )
+    local mysource, monoms, coeffs, poly, ideal, splits, result, degs, i, dummy;
+
+    # define a random source
+    mysource := RandomSource(IsMersenneTwister, 42);;
+    
+    # find the defining polynomial with random coefficients between 1 and 20
+    monoms := MonomsOfCoxRingOfDegreeByNormaliz( dP3, curve );
+    coeffs := List( [ 1 .. Length( monoms ) ], i -> Random(mysource, 1, 20) );
+    poly := Sum( List( [ 1 .. Length( monoms ) ], k -> coeffs[ k ] * monoms[ k ] ) );
+
+    # compute number of split components
+    ideal := HomalgMatrix( [ poly ], CoxRing( dP3 ) );
+    ideal := LeftSubmodule( ideal );
+    splits := PrimaryDecomposition( ideal );
+    splits := List( [ 1 .. Length( splits ) ], i -> splits[ i ][ 2 ] );
+    splits := Filtered( splits,  i -> not IsSubset( i, IrrelevantIdeal( dP3 ) ) );
+    
+    # compute degrees of the generators of the split components
+    degs := [];
+    for i in [ 1 .. Length( splits ) ] do
+    
+        # extract the degrees of the generators
+        dummy := DegreesOfGenerators( splits[ i ] );
+        
+        # check if each ideal is principal - if not stop here
+        if Length( dummy ) > 1 then
+            return fail;
+        fi;
+        
+        # slightly modify the degrees
+        dummy := UnderlyingListOfRingElements( dummy[ 1 ] );
+        
+        # and append
+        Append( degs, [ dummy ] );
+        
+    od;
+    
+    # return the result
+    return degs;
+    
+end );
+
 
 
 ##############################################################################################
@@ -187,7 +234,8 @@ InstallMethod( FineApproximationWithSetups,
                "for two lists",
                [ IsList, IsList ],
     function( curve, bundle )
-    local data, rays, max_cones, weights, vars, dP3, final_setups, final_h0_estimates, i, component, spectrum;
+    local data, rays, max_cones, weights, vars, dP3, final_setups, final_h0_estimates, i, component, degs, spectrum, splits, j, genera, degrees, sections, intersections,
+         glueable_sections, estimate, dummy;
     
     data := RoughApproximationWithSetups( curve, bundle )[ 1 ];
     Print( "(*) Checking irreducibility of curves...\n" );
@@ -203,10 +251,60 @@ InstallMethod( FineApproximationWithSetups,
     final_setups := [];
     final_h0_estimates := [];
     for i in [ 1 .. Length( data ) ] do
+       
+       # extract first component, perform primary decomposition
        component := [ data[ i ][ 1 ], data[ i ][ 2 ], data[ i ][ 3 ], data[ i ][ 4 ] ];
-       if IsIrreducible( component, dP3 ) then
-         Append( final_setups, [ data[ i ] ] );
-         Append( final_h0_estimates, [ data[ i ][ Length( data[ i ] ) ] ] );
+       degs := DegreesOfComponents( component, dP3 );
+       
+       # if all components are principal continue
+       if degs <> fail then
+            
+            # just one component -> we are finished
+            if ( Length( degs ) = 1 ) then
+                Append( final_setups, [ [ data[ i ], true ] ] );
+                Append( final_h0_estimates, [ data[ i ][ Length( data[ i ] ) ] ] );
+            fi;
+            
+            # more than one component
+            # only continue if all are non-rigid powers
+            if not ( ForAny( degs, IsRigidPower ) ) then
+                
+                # prepare list of split components
+                splits := degs;
+                Append( splits, [ [ 0, data[ i ][ 5 ], 0, 0 ] ] );
+                Append( splits, [ [ 0, 0, data[ i ][ 6 ], 0 ] ] );
+                Append( splits, [ [ 0, 0, 0, data[ i ][ 7 ] ] ] );
+                Append( splits, [ [ data[ i ][ 8 ], - data[ i ][ 8 ], - data[ i ][ 8 ], 0 ] ] );
+                Append( splits, [ [ data[ i ][ 9 ], - data[ i ][ 9 ], 0, - data[ i ][ 9 ] ] ] );
+                Append( splits, [ [ data[ i ][ 10 ], 0, - data[ i ][ 10 ], - data[ i ][ 10 ] ] ] );
+                
+                # compute topological data anew
+                genera := List( [ 1 .. Length( splits ) ], i -> Genus( splits[ i ] ) );
+                degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegree( splits[ i ], bundle ) );
+                sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
+                intersections := IntersectionsAmongCurveComponents( splits );
+                
+                # check if this is a simple setup and if so, estimate h0
+                if IsSimpleSetup( splits, sections ) then
+                    
+                    # estimate glueable sections on each component
+                    glueable_sections := EstimateGlobalSections( sections, intersections );
+                    
+                    # check if we can estimate overall number of global sections
+                    if ForAll( glueable_sections, IsInt ) then
+                        estimate := Sum( glueable_sections );
+                    fi;
+                    
+                    # append to data
+                    dummy := data[ i ];
+                    Remove( dummy );
+                    Append( dummy, [ estimate ] );
+                    Append( final_setups, [ [ dummy, false ] ] );
+                    Append( final_h0_estimates, [ estimate ] );
+                    
+                fi;
+            fi;
+            
        fi;
     od;
     
