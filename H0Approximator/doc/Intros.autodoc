@@ -1,0 +1,9 @@
+@Chapter Introduction
+
+@Section What is the goal of the H0Approximator package?
+
+**H0Approximator** provides functionality to estimate global sections from topological counts only. A refined approximation checks irreducibility of curves, and thereby computes more accurate results, at the expense of longer runtimes.
+
+The current implementations is specific to hypersurface curves in dP3 and pullback line bundles thereon. Generalizations thereof are reserved for future work.
+
+@Chapter Functions
