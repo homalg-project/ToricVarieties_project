@@ -56,7 +56,7 @@ end );
 ##
 ##############################################################################################
 
-# compute sections of bundle of degree d on genus g curve (negative genus taken into account)
+# return generic number of sections based on genus g and degree d
 InstallMethod( Sections,
                "an integer, an integer",
                [ IsInt, IsInt ],
@@ -66,13 +66,11 @@ InstallMethod( Sections,
         # compute the chiral index
         chi := degree - genus + 1;
         
-        # decide sections based on Kodaira vanishing and Riemann-Roch
+        # return generic number of sections
         if chi < 0 then
             h0 := 0;
-        elif degree > 2 * genus - 2 then
-            h0 := degree - genus + 1;
         else
-            h0 := "A";
+            h0 := chi;
         fi;
         
         # return result
