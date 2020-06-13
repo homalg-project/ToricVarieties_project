@@ -43,6 +43,61 @@ DeclareOperation( "LineBundleDegree",
 
 ##############################################################################################
 ##
+#! @Section Check if a curve class if a power of a rigid divisor
+##
+##############################################################################################
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE1Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE2Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE3Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE4Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE5Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of E1
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsE6Power",
+                  [ IsList ] );
+
+#! @Description
+#! Checks if a curve class if a power of a rigid divisor.
+#! @Returns True or false
+#! @Arguments List c
+DeclareOperation( "IsRigidPower",
+                  [ IsList ] );
+
+##############################################################################################
+##
 #! @Section Topological section counter
 ##
 ##############################################################################################

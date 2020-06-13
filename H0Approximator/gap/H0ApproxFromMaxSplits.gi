@@ -52,6 +52,172 @@ end );
 
 ##############################################################################################
 ##
+#! @Section Check if a curve class if a power of a rigid divisor
+##
+##############################################################################################
+
+InstallMethod( IsE1Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        
+        if curve[ 1 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 2 ] = 0 then
+            return false;
+        fi;
+        if curve[ 3 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 4 ] <> 0 then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsE2Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        
+        if curve[ 1 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 2 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 3 ] = 0 then
+            return false;
+        fi;
+        if curve[ 4 ] <> 0 then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsE3Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        
+        if curve[ 1 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 2 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 3 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 4 ] = 0 then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsE4Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        local a;
+        
+        a := curve[ 1 ];
+        if a < 1 then
+            return false;
+        fi;
+        if curve[ 2 ] <> -a then
+            return false;
+        fi;
+        if curve[ 3 ] <> -a then
+            return false;
+        fi;
+        if curve[ 4 ] <> 0 then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsE5Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        local a;
+        
+        a := curve[ 1 ];
+        if a < 1 then
+            return false;
+        fi;
+        if curve[ 2 ] <> -a then
+            return false;
+        fi;
+        if curve[ 3 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 4 ] <> -a then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsE6Power,
+               "a list",
+               [ IsList ],
+    function( curve )
+        local a;
+        
+        a := curve[ 1 ];
+        if a < 1 then
+            return false;
+        fi;
+        if curve[ 2 ] <> 0 then
+            return false;
+        fi;
+        if curve[ 3 ] <> -a then
+            return false;
+        fi;
+        if curve[ 4 ] <> -a then
+            return false;
+        fi;
+        return true;
+        
+end );
+
+InstallMethod( IsRigidPower,
+               "a list",
+               [ IsList ],
+    function( curve )
+        
+        if IsE1Power( curve ) then
+            return true;
+        fi;
+        if IsE2Power( curve ) then
+            return true;
+        fi;
+        if IsE3Power( curve ) then
+            return true;
+        fi;
+        if IsE4Power( curve ) then
+            return true;
+        fi;
+        if IsE5Power( curve ) then
+            return true;
+        fi;
+        if IsE6Power( curve ) then
+            return true;
+        fi;
+        return false;
+        
+end );
+
+
+##############################################################################################
+##
 ## Topological section counter
 ##
 ##############################################################################################
