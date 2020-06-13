@@ -56,7 +56,7 @@ DeclareOperation( "DescendantLevel",
 
 ##############################################################################################
 ##
-#! @Section Approx spectrum
+#! @Section Approximate h0-spectrum
 ##
 ##############################################################################################
 
@@ -68,6 +68,11 @@ DeclareOperation( "DescendantLevel",
 #! @Arguments Lists c l
 DeclareOperation( "RoughApproximationWithSetups",
                   [ IsList, IsList ] );
+
+#! @Description
+#! The same as RoughApproximationWithSetups, but returns only the spectrum estimate.
+#! @Returns A list
+#! @Arguments Lists c l
 DeclareOperation( "RoughApproximation",
                   [ IsList, IsList ] );
 
@@ -79,5 +84,10 @@ DeclareOperation( "RoughApproximation",
 #! @Arguments Lists c l
 DeclareOperation( "FineApproximationWithSetups",
                   [ IsList, IsList ] );
+
+#! @Description
+#! The same as FineApproximationWithSetups, but returns only the spectrum estimate.
+#! @Returns A list
+#! @Arguments Lists c l
 DeclareOperation( "FineApproximation",
                   [ IsList, IsList ] );
