@@ -26,6 +26,15 @@
 DeclareOperation( "IsIrreducible",
                   [ IsList, IsToricVariety ] );
 
+#! @Description
+#! This operation performs a primary decomposition of a hypersurface curve in dP3.
+#! If all components are principal, it returns the degrees of the generators.
+#! Otherwise it returns fail.
+#! @Returns A list of fail
+#! @Arguments List
+DeclareOperation( "DegreesOfComponents",
+                  [ IsList, IsToricVariety ] );
+
 
 ##############################################################################################
 ##
