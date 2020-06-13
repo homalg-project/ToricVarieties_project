@@ -207,15 +207,6 @@ InstallMethod( AnalyzeBundleOnCurve,
         intersection_matrix := IntersectionMatrix( splits );
         intersections := IntersectionsAmongCurveComponents( splits );
         
-        # display results
-        if verbose > 1 then
-            Print( Concatenation( "Genera: ", String( genera ) ), "\n" );
-            Print( Concatenation( "Degrees: ", String( degrees ) ), "\n" );
-            Print( Concatenation( "Local sections: ", String( sections ) ), "\n" );
-            Print( Concatenation( "Intersection matrix: ", String( intersection_matrix ) ), "\n" );
-            Print( Concatenation( "Intersection counts: ", String( intersections ) ), "\n" );
-        fi;
-        
         # check if this is a simple setup
         naive_count := "NA";
         naive_global_sections := "NA";
@@ -231,7 +222,14 @@ InstallMethod( AnalyzeBundleOnCurve,
         fi;
         
         # inform on the result of analyzing the global sections
-        if verbose > 1 then
+        if ( verbose > 1 ) and ( naive_global_sections <> "NA" ) then
+            Print( "------------------------------------------------------------------------\n\n" );
+            Print( Concatenation( "Splits: ", String( splits ), "\n" ) );
+            Print( Concatenation( "Genera: ", String( genera ) ), "\n" );
+            Print( Concatenation( "Degrees: ", String( degrees ) ), "\n" );
+            Print( Concatenation( "Local sections: ", String( sections ) ), "\n" );
+            Print( Concatenation( "Intersection matrix: ", String( intersection_matrix ) ), "\n" );
+            Print( Concatenation( "Intersection counts: ", String( intersections ) ), "\n" );
             Print( Concatenation( "Gluable local sections: ", String( naive_count ) ), "\n" );
             Print( Concatenation( "Global sections (naively): ", String( naive_global_sections ) ), "\n" );
             Print( "\n" );
@@ -296,30 +294,27 @@ InstallMethod( EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves,
                "a list, a list, an integer",
                [ IsList, IsList, IsInt ],
     function( curve, bundle, verbose )
-        local desc, i, sections, spectrum;
+        local desc, i, sections, analysed_setups, spectrum;
         
         # compute the descendants
         desc := MaximallyDegenerateCurves( curve );
         
         # inform how many maximally degenerate curves we analyse
         if verbose > 0 then
-            Print( Concatenation( "Analyse bundle on ", String( Length( desc ) ), " degenerate curves...\n" ) );
-        fi;
-        if verbose > 1 then
             Print( "\n" );
         fi;
         
         # estimate global sections on each curve
         spectrum := [];
+        analysed_setups := 0;
         for i in [ 1 .. Length( desc ) ] do
             
-            if verbose > 1 then
-                Print( "------------------------------------------------------------------------\n\n" );
-                Print( Concatenation( "Splits: ", String( desc[ i ] ), "\n" ) );
-            fi;
-            
             sections := AnalyzeBundleOnCurve( desc[ i ], bundle, verbose );
-            Append( spectrum, [ sections ] );
+            
+            if sections <> "NA" then
+                Append( spectrum, [ sections ] );
+                analysed_setups := analysed_setups + 1;
+            fi;
             
         od;
         
@@ -332,7 +327,9 @@ InstallMethod( EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurves,
             Print( "------------------------------------------------------------------------\n\n" );
         fi;
         if verbose > 0 then
-            Print( Concatenation( "Spectrum: ", String( spectrum ), "\n\n" ) );
+            Print( Concatenation( "Analyse bundle on ", String( Length( desc ) ), " degenerate curves...\n" ) );
+            Print( Concatenation( "Estimated spectrum on ", String( analysed_setups ), " curves\n" ) );
+            Print( Concatenation( "Spectrum estimate: ", String( spectrum ), "\n\n" ) );
         fi;
         
         # return spectrum
