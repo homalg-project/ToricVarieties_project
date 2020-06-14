@@ -85,7 +85,7 @@ InstallMethod( Localized_degree_zero_ring_and_generators,
     # we represent this localized degree-0 ring as a quotient ring of the following ring
     indet_string := List( [ 1 .. Length( monomials ) ], i -> Concatenation( "t", String( i ) ) );
     indet_string := JoinStringsWithSeparator( indet_string, "," );
-    ring := HomalgFieldOfRationalsInSingular()*indet_string;
+    ring := UnderlyingNonGradedRing( CoefficientsRing( graded_ring ) ) * indet_string;
     
     # and the relations which we identify now
     if relations <> [ ] then
