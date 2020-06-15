@@ -1,4 +1,4 @@
-#! @Chapter Functionality
+#! @Chapter Spectrum approximation from maximal curve splittings
 
 #! @Section Examples
 

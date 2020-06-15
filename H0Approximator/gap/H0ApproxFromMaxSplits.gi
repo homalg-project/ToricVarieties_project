@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  MaxSplits.gi        H0Approximator package
-##                      Martin Bies
+##  H0ApproxFromMaxSplits.gi        H0Approximator package
+##                                  Martin Bies
 ##
 ##  Copyright 2020      University of Oxford
 ##

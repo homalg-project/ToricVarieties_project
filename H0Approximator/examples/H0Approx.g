@@ -1,4 +1,4 @@
-#! @Chapter Functionality
+#! @Chapter Spectrum approximation from curve splittings
 
 #! @Section Examples
 
