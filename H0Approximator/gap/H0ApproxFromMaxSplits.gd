@@ -1,13 +1,13 @@
 #############################################################################
 ##
-##  MaxSplits.gd        H0Approximator package
-##                      Martin Bies
+##  H0ApproxFromMaxSplits.gd        H0Approximator package
+##                                  Martin Bies
 ##
 ##  Copyright 2020      University of Oxford
 ##
 ##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3
 ##
-#! @Chapter Functionality
+#! @Chapter Spectrum approximation from maximal curve splittings
 ##
 #############################################################################
 

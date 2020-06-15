@@ -1,13 +1,13 @@
 ###############################################################################################
 ##
-##  Other.gd            H0Approximator package
+##  H0Approx.gd         H0Approximator package
 ##                      Martin Bies
 ##
 ##  Copyright 2020      University of Oxford
 ##
 ##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3
 ##
-#! @Chapter Stuff
+#! @Chapter Spectrum approximation from curve splittings
 ##
 ###############################################################################################
 
