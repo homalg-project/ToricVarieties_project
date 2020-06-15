@@ -1,1 +1,1 @@
-A collection of software packages designed to compute cohomologies of coherent sheaves on toric varieties.
+A collection of software packages designed to compute cohomologies of coherent sheaves on toric varieties. Further information, involving an installation script, is available at https://martinbies.github.io/software/.
