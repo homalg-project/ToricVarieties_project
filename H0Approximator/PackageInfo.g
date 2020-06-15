@@ -16,7 +16,7 @@ PackageName := "H0Approximator",
 Subtitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3",
 
 Version :=  Maximum( [
-  "2020.06.13", # Martins version  
+  "2020.06.15", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
