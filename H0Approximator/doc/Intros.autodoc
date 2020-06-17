@@ -1,5 +1,9 @@
 @Chapter Introduction
 
+@Section Acknowledgements
+
+This algorithm is the result of ongoing collaboration with Mirjam Cvetic, Ron Donagi, Ling Lin, Muyang Liu and Fabian Rühle. The corresponding preprint will be available very soon.
+
 @Section What is the goal of the H0Approximator package?
 
 **H0Approximator** provides functionality to estimate global sections from topological counts only. A refined approximation checks irreducibility of curves, and thereby computes more accurate results, at the expense of longer runtimes.
