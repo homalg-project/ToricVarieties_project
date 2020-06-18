@@ -46,9 +46,9 @@ approx2 := FineApproximation( [3,-1,-1,-1],[1,-1,-3,-1] );;
 approx2 := RoughApproximation( [5,-1,-1,-2],[1,1,-4,1] );;
 #! (*) Curve: [ 5, -1, -1, -2 ]
 #! (*) Bundle: [ 1, 1, -4, 1 ]
-#! (*) 325 rough approximations
+#! (*) 332 rough approximations
 #! (*) Rough spectrum estimate: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
-#!      (x) h0 = 0: 13
+#!      (x) h0 = 0: 20
 #!      (x) h0 = 1: 18
 #!      (x) h0 = 2: 9
 #!      (x) h0 = 3: 37
