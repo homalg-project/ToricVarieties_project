@@ -276,10 +276,14 @@ int approxH0( std::vector<std::vector<int>> &components, std::vector<int> &bundl
                 estimate = estimate + local_sections[ i ] - boundaries[ i ];
             }
         }
-    }
-    
+    } else if ( components.size() == 2 ) {
+        if (local_sections[0] + local_sections[1] >= boundaries[0]) {
+           estimate =  local_sections[0] + local_sections[1] - boundaries[0];
+        } 	 
+      }
+     
     // check if our estimate is valid
-    if ( estimate < h0_min ){
+    if ( estimate < h0_min ){ 
         estimate = -1;
     }
     
