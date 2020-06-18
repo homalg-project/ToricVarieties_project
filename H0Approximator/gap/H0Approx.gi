@@ -309,6 +309,23 @@ InstallMethod( FineApproximationWithSetups,
                             Append( final_h0_estimates, [ estimate ] );
                             
                         fi;
+                    elif Length(splits) = 2 then
+                    
+                        if sections[1] + sections[2] - intersections[1] >= 0 then
+                        
+                            # estimate h0
+                            estimate := sections[1] + sections[2] - intersections[1];
+                            
+                            # prepare data
+                            dummy := data[ i ];
+                            Remove( dummy );
+                            Append( dummy, [ estimate ] );
+                            
+                            # and append it
+                            Append( final_setups, [ [ dummy, false ] ] );
+                            Append( final_h0_estimates, [ estimate ] );
+                            
+                        fi;
                     fi;
                 fi;
             fi;
