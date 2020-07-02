@@ -75,10 +75,51 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-  
-    return true;
-  end,
-
+    local topcom_binaries, bool;
+    
+    topcom_binaries := [ "points2chiro",
+                         "chiro2dual",
+                         "chiro2circuits",
+                         "chiro2cocircuits",
+                         "cocircuits2facets",
+                         "points2facets",
+                         "points2nflips",
+                         "points2flips",
+                         "chiro2placingtriang",
+                         "points2placingtriang",
+                         "chiro2finetriang",
+                         "points2finetriang",
+                         "chiro2triangs",
+                         "points2triangs",
+                         "chiro2ntriangs",
+                         "points2ntriangs",
+                         "chiro2finetriangs",
+                         "points2finetriangs",
+                         "chiro2nfinetriangs",
+                         "points2nfinetriangs",
+                         "chiro2alltriangs",
+                         "points2alltriangs",
+                         "chiro2nalltriangs",
+                         "points2nalltriangs",
+                         "chiro2allfinetriangs",
+                         "points2allfinetriangs",
+                         "chiro2nallfinetriangs",
+                         "points2nallfinetriangs"
+                        ];
+    
+    bool := ForAll( topcom_binaries, name -> ( not Filename(DirectoriesSystemPrograms(), name ) = fail ) );
+    
+    if not bool then
+        LogPackageLoadingMessage( PACKAGE_WARNING,
+                [ "At least one of the topcom binaries",
+                  JoinStringsWithSeparator( topcom_binaries, ", " ),
+                  "is not installed on your system.",
+                  "topcom can be downloaded from http://www.rambau.wm.uni-bayreuth.de/TOPCOM/" ] );
+    fi;
+    
+    return bool;
+    
+end,
 
 
 Autoload := false,
