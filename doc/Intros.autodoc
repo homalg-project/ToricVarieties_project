@@ -4,6 +4,4 @@
 
 **TopcomInterface** provides an interface, to communicate with the software Topcom via gap. Thereby, for example, triangulations of toric varieties can be computed directly via gap.
 
-@EndSection
-
 @Chapter Functions
