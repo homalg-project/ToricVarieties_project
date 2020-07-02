@@ -2,7 +2,8 @@
 
 @Section Acknowledgements
 
-This algorithm is the result of ongoing collaboration with Mirjam Cvetic, Ron Donagi, Ling Lin, Muyang Liu and Fabian Rühle. The corresponding preprint will be available very soon.
+This algorithm is the result of ongoing collaboration with Mirjam Cvetič, Ron Donagi, Ling Lin, Muyang Liu and Fabian Rühle. The corresponding preprint 2007.00009 is available
+<Alt Not="Text"><URL Text="here">https://arxiv.org/abs/2007.00009</URL></Alt>.
 
 @Section What is the goal of the H0Approximator package?
 
