@@ -62,7 +62,7 @@ rec(
 ],
 
 Status := "dev",
-PackageWWWHome := "https://github.com/homalg-project/SheafCohomologyOnToricVarieties",
+PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project",
 ArchiveFormats := ".tar.gz .zip",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "SparseMatrices-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
