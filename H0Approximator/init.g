@@ -7,6 +7,12 @@
 ##
 ##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3
 ##
+
+#############################################################################
+
+ReadPackage( "H0Approximator", "gap/CommonTools.gd" );
+
+
 #############################################################################
 
 ReadPackage( "H0Approximator", "gap/H0Approx.gd" );

@@ -5,7 +5,7 @@
 ##
 ##  Copyright 2020      University of Oxford
 ##
-##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3
+##  A package to estimate global sections of pullback line bundle on hypersurface curves in $\mathrm{dP}_3$ and H2
 ##
 #! @Chapter Spectrum approximation from curve splittings
 ##
@@ -27,7 +27,7 @@ DeclareOperation( "IsIrreducible",
                   [ IsList, IsToricVariety ] );
 
 #! @Description
-#! This operation performs a primary decomposition of a hypersurface curve in dP3.
+#! This operation performs a primary decomposition of a hypersurface curve in $\mathrm{dP}_3$.
 #! If all components are principal, it returns the degrees of the generators.
 #! Otherwise it returns fail.
 #! @Returns A list of fail
@@ -43,7 +43,7 @@ DeclareOperation( "DegreesOfComponents",
 ##############################################################################################
 
 #! @Description
-#! This operation identifies the location of the counter binary.
+#! This operation identifies the location of the counter binary when applied in $\mathrm{dP}_3$.
 #! @Returns the corresponding filename
 #! @Arguments none
 DeclareOperation( "FindCounterBinary", [ ] );
@@ -56,7 +56,7 @@ DeclareOperation( "FindCounterBinary", [ ] );
 ##############################################################################################
 
 #! @Description
-#! Estimates the maximal power to which a rigid divisor can be peeled-off the given curve.
+#! Estimates the maximal power to which a rigid divisor can be peeled-off in $\mathrm{dP}_3$ with the given curve.
 #! @Returns An integer
 #! @Arguments List c
 DeclareOperation( "DescendantLevel",
@@ -70,7 +70,7 @@ DeclareOperation( "DescendantLevel",
 ##############################################################################################
 
 #! @Description
-#! Given a curve class c and a line bundle class l, this method approximates the h0-spectrum
+#! Given a curve class c and a line bundle class l in $\mathrm{dP}_3$, this method approximates the h0-spectrum
 #! by use of topological methods only. In particular, irreducibility of curves is not checked.
 #! Consequently, this method performs faster than FineApproximation, but produces less accurate results.
 #! @Returns A list
@@ -86,7 +86,7 @@ DeclareOperation( "RoughApproximation",
                   [ IsList, IsList ] );
 
 #! @Description
-#! Given a curve class c and a line bundle class l, this method approximates the h0-spectrum
+#! Given a curve class c and a line bundle class l in $\mathrm{dP}_3$, this method approximates the h0-spectrum
 #! by use of topological methods and checks irreducibility of curves. It performs slower than
 #! RoughApproximation, but produces more accurate results.
 #! @Returns A list
