@@ -13,6 +13,7 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "H0Approximator" : scaffold := true, autodoc :=
              rec( files := [ "doc/Intros.autodoc",
+                         "gap/CommonTools.gd",
                          "gap/H0Approx.gd",
                          "examples/H0Approx.g",
                          "gap/H0ApproxFromMaxSplits.gd",

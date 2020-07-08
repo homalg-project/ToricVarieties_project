@@ -4,7 +4,7 @@
 
 LoadPackage( "H0Approximator" );
 
-#! We can consider maximal degenerations of a given curve class and use these to estimate the number of global sections for a line bundle on this curve. This estimate is derived from counts of the local sections. Here is a simple example:
+#! We can consider maximal degenerations of a given curve class in $\mathrm{H}_2$ and use these to estimate the number of global sections for a line bundle on this curve. This estimate is derived from counts of the local sections. Here is a simple example:
 
 #! @Example
 EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurvesOnH2(

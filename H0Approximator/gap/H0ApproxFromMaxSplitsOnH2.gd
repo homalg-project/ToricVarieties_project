@@ -15,26 +15,26 @@
 
 ##############################################################################################
 ##
-#! @Section Install elementary topological functions in H2
+#! @Section Install elementary topological functions
 ##
 ##############################################################################################
 
 #! @Description
-#! Compute the topological intersection number between two divisor classes d1, d2 in H2
+#! Compute the topological intersection number between two divisor classes d1, d2 in $\mathrm{H}_2$
 #! @Returns Integer
 #! @Arguments Lists d1, d2
 DeclareOperation( "IntersectionNumberOnH2",
                   [ IsList, IsList ] );
 
 #! @Description
-#! Compute the genus of a curve of class c in H2
+#! Compute the genus of a curve of class c in $\mathrm{H}_2$
 #! @Returns Integer
 #! @Arguments List c
 DeclareOperation( "GenusOnH2",
                   [ IsList ] );
 
 #! @Description
-#! Computes the degree of a pullback line bundle of class l on a curve of class c in H2
+#! Computes the degree of a pullback line bundle of class l on a curve of class c in $\mathrm{H}_2$
 #! @Returns Integer
 #! @Arguments Lists l, c
 DeclareOperation( "LineBundleDegreeOnH2",
@@ -43,7 +43,7 @@ DeclareOperation( "LineBundleDegreeOnH2",
 
 ##############################################################################################
 ##
-#! @Section Check if a curve class if a power of a toric divisor in H2
+#! @Section Check if a curve class if a power of a toric divisor
 ##
 ##############################################################################################
 
@@ -76,7 +76,7 @@ DeclareOperation( "IsD4Power",
                   [ IsList ] );
 
 #! @Description
-#! Checks if a curve class if a power of a toric divisor in H2.
+#! Checks if a curve class if a power of a toric divisor in $\mathrm{H}_2$.
 #! @Returns True or false
 #! @Arguments List c
 DeclareOperation( "IsDiPowerOnH2",
@@ -85,26 +85,26 @@ DeclareOperation( "IsDiPowerOnH2",
 
 ##############################################################################################
 ##
-#! @Section Local section analyser in H2
+#! @Section Local section analyser
 ##
 ##############################################################################################
 
 #! @Description
-#! Identify the intersection matrix among all components of a curve in H2.
+#! Identify the intersection matrix among all components of a curve in $\mathrm{H}_2$.
 #! @Returns A list of lists of integers
 #! @Arguments List of curve components
 DeclareOperation( "IntersectionMatrixOnH2",
                   [ IsList ] );
 
 #! @Description
-#! Identify the intersection numbers among all components of a curve in H2.
+#! Identify the intersection numbers among all components of a curve in $\mathrm{H}_2$.
 #! @Returns A list of integers
 #! @Arguments List of curve components.
 DeclareOperation( "IntersectionsAmongCurveComponentsOnH2",
                   [ IsList ] );
 
 #! @Description
-#! This method checks whether the pair of curve with components with intersection numbers I
+#! This method checks whether the pair of curves in $\mathrm{H}_2$ with components with intersection numbers I
 #! and local section counts n allow to easily estimate the number of global sections.
 #! @Returns An integer
 #! @Arguments Lists S, n
@@ -113,7 +113,7 @@ DeclareOperation( "IsSimpleSetupOnH2",
 
 #! @Description
 #! This method displays details on the analysis of the pullback line
-#! bundle of class l on a curve with components S.
+#! bundle of class l on a curve in $\mathrm{H}_2$ with components S.
 #! @Returns An integer
 #! @Arguments Lists S, l
 DeclareOperation( "AnalyzeBundleOnCurveOnH2",
@@ -124,12 +124,12 @@ DeclareOperation( "AnalyzeBundleOnCurveOnH2",
 
 ##############################################################################################
 ##
-#! @Section Analyse bundle on maximally degenerate curves in H2
+#! @Section Analyse bundle on maximally degenerate curves
 ##
 ##############################################################################################
 
 #! @Description
-#! This method identifies the maximal degenerations of a curve of class c in H2.
+#! This method identifies the maximal degenerations of a curve of class c in $\mathrm{H}_2$.
 #! @Returns A list
 #! @Arguments List c
 DeclareOperation( "MaximallyDegenerateCurvesOnH2",
@@ -137,7 +137,7 @@ DeclareOperation( "MaximallyDegenerateCurvesOnH2",
 
 #! @Description
 #! This method analysis the local and global sections of a pullback
-#! line bundle of class l on the maximally degenerate curves of class c.
+#! line bundle of class l on the maximally degenerate curves of class c in $\mathrm{H}_2$.
 #! @Returns A list
 #! @Arguments Lists c,l
 DeclareOperation( "EstimateGlobalSectionsOfBundleOnMaximallyDegenerateCurvesOnH2",

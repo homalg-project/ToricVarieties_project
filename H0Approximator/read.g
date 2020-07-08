@@ -9,6 +9,10 @@
 ##
 #############################################################################
 
+ReadPackage( "H0Approximator", "gap/CommonTools.gi" );
+
+#############################################################################
+
 ReadPackage( "H0Approximator", "gap/H0Approx.gi" );
 ReadPackage( "H0Approximator", "gap/H0ApproxFromMaxSplits.gi" );
 
