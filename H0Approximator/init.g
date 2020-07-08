@@ -11,3 +11,9 @@
 
 ReadPackage( "H0Approximator", "gap/H0Approx.gd" );
 ReadPackage( "H0Approximator", "gap/H0ApproxFromMaxSplits.gd" );
+
+
+#############################################################################
+
+ReadPackage( "H0Approximator", "gap/H0ApproxOnH2.gd" );
+ReadPackage( "H0Approximator", "gap/H0ApproxFromMaxSplitsOnH2.gd" );

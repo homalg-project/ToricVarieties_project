@@ -17,6 +17,10 @@ AutoDoc( "H0Approximator" : scaffold := true, autodoc :=
                          "examples/H0Approx.g",
                          "gap/H0ApproxFromMaxSplits.gd",
                          "examples/H0ApproxFromMaxSplits.g",
+                         "gap/H0ApproxOnH2.gd",
+                         "examples/H0ApproxOnH2.g",
+                         "gap/H0ApproxFromMaxSplitsOnH2.gd",
+                         "examples/H0ApproxFromMaxSplitsOnH2.g"                        
                          ],
              scan_dirs := []
              ),
