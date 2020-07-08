@@ -39,10 +39,26 @@ rec(
                  "Radcliffe Observatory Quarter \n",
                  "Woodstock Road \n",
                  "Oxford OX2 6GG \n",
-                 "United Kingdom" ), 
+                 "United Kingdom" ),
     Place         := "Oxford",
     Institution   := "University of Oxford"
-  ),
+    ),
+rec(
+    LastName := "Liu",
+    FirstNames := "Muyang",
+    IsAuthor := true,
+    IsMaintainer := true,
+    Email := "muyang@sas.upenn.edu",
+    WWWHome := "https://github.com/lmyreg2017",
+    PostalAddress := Concatenation(
+                "Department of Physics and Astronomy \n",
+                "University of Pennsylvania \n",
+                "209 South 33rd Street \n",
+                "Philadelphia, PA 19104-6396 \n",
+                "United States" ),
+    Place := "Philadelphia",
+    Institution := "University of Pennsylvania"
+    ),
 ],
 
 Status := "dev",
