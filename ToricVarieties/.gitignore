@@ -47,3 +47,7 @@ doc/_Chapter_Blowups_of_toric_varieties.xml
 doc/title.xml
 maketest.g
 doc/_Chunks.xml
+coverage.json
+performance.out
+stats
+stats.*
