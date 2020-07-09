@@ -7,7 +7,7 @@
 ##
 ##  A package to estimate global sections of pullback line bundle on hypersurface curves in $\mathrm{dP}_3$ and H2
 ##
-#! @Chapter Spectrum approximation from curve splittings
+#! @Chapter Spectrum approximation from curve splittings in dP3
 ##
 ###############################################################################################
 

@@ -1,4 +1,4 @@
-#! @Chapter Spectrum approximation from maximal curve splittings
+#! @Chapter Spectrum approximation from maximal curve splittings in dP3
 
 #! @Section Examples
 
