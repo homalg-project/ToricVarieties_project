@@ -21,5 +21,5 @@
 #! this method tries to identify the number of sections of the line bundle.
 #! @Returns Integer
 #! @Arguments Integers d, g
-DeclareOperation( "Sections",
+DeclareOperation( "LowerBoundOnSections",
                   [ IsInt, IsInt ] );

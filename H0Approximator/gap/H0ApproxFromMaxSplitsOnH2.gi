@@ -244,7 +244,7 @@ InstallMethod( AnalyzeBundleOnCurveOnH2,
         # compute genera, degrees and sections
         genera := List( [ 1 .. Length( splits ) ], i -> GenusOnH2( splits[ i ] ) );
         degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegreeOnH2( splits[ i ], bundle ) );
-        sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
+        sections := List( [ 1 .. Length( splits ) ], i -> LowerBoundOnSections( genera[ i ], degrees[ i ] ) );
         intersection_matrix := IntersectionMatrixOnH2( splits );
         intersections := IntersectionsAmongCurveComponentsOnH2( splits );
         
