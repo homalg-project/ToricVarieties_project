@@ -345,7 +345,7 @@ InstallMethod( AnalyzeBundleOnCurve,
         # compute genera, degrees and sections
         genera := List( [ 1 .. Length( splits ) ], i -> Genus( splits[ i ] ) );
         degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegree( splits[ i ], bundle ) );
-        sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
+        sections := List( [ 1 .. Length( splits ) ], i -> LowerBoundOnSections( genera[ i ], degrees[ i ] ) );
         intersection_matrix := IntersectionMatrix( splits );
         intersections := IntersectionsAmongCurveComponents( splits );
         

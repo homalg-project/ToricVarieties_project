@@ -17,7 +17,7 @@
 ##############################################################################################
 
 # return generic number of sections based on genus g and degree d
-InstallMethod( Sections,
+InstallMethod( LowerBoundOnSections,
                "an integer, an integer",
                [ IsInt, IsInt ],
     function( genus, degree )
