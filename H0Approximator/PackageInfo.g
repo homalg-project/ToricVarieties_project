@@ -10,7 +10,7 @@
 ##
 ##  Copyright 2020
 ##
-##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3 and H2
+##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2
 ##
 #############################################################################
 
