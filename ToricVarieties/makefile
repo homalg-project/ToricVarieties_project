@@ -12,7 +12,8 @@ docclean:
 	(cd doc ; ./clean)
 
 test:	doc
-	gap maketest.g
+	(cd tst ; ./clean)
+	gap tst/testall.g
 
 test-with-coverage:	doc
 	OUTPUT=$$(/usr/bin/time --quiet --format="%U %S\n%e" --output=performance.out gap --banner --quitonbreak --cover stats maketest.g 2>&1); \
