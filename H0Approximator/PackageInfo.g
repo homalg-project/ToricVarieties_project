@@ -13,7 +13,7 @@ SetPackageInfo( rec(
 
 PackageName := "H0Approximator",
 
-Subtitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3",
+Subtitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2",
 
 Version :=  Maximum( [
   "2020.07.08", # Martins version  
