@@ -5,7 +5,7 @@
 ##
 ##  Copyright 2020      University of Pennsylvania
 ##
-##  A package to estimate global sections of pullback line bundle on hypersurface curves in $\mathrm{dP}_3$ and $H_2$
+##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3 and H2
 ##
 #! @Chapter Common functions applied generically to all toric surfaces
 ##
