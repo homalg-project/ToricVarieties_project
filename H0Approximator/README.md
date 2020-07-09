@@ -1,5 +1,5 @@
 # H0Approximator
-A gap package to estimate the global sections of a pullback line bundle on a hypersurface curve in dP3.
+A gap package to estimate the global sections of a pullback line bundle on a hypersurface curve in dP3 and H2.
 
 This algorithm is the result of ongoing collaboration with
 * Mirjam Cvetič (https://live-sas-physics.pantheon.sas.upenn.edu/people/standing-faculty/mirjam-cvetic)

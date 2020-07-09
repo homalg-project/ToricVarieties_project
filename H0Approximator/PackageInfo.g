@@ -5,7 +5,7 @@
 ##
 ##  Copyright 2020      University of Oxford
 ##
-##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3
+##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3 and H2
 ##
 #############################################################################
 
@@ -68,7 +68,7 @@ ArchiveURL     := Concatenation( ~.PackageWWWHome, "SparseMatrices-", ~.Version 
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-AbstractHTML := "H0Approximator allows to estimate global sections of a line bundle on curves in dP3",
+AbstractHTML := "H0Approximator allows to estimate global sections of a line bundle on curves in dP3 and H2",
 
 PackageDoc := rec(
   BookName  := "H0Approximator",
@@ -76,7 +76,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3",
+  LongTitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2",
   Autoload  := false
 ),
 
@@ -101,6 +101,6 @@ AvailabilityTest := function()
 Autoload := false,
 
 
-Keywords := [ "Coherent sheaves", "Line bundles", "delPezzo", "sections" ]
+Keywords := [ "Coherent sheaves", "Line bundles", "delPezzo", "Hirzebruch", "sections" ]
 
 ));

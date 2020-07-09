@@ -5,7 +5,7 @@
 ##
 ##  Copyright 2020      University of Oxford
 ##
-##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3
+##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3 and H2
 ##
 #! @Chapter Spectrum approximation from curve splittings in H2
 ##
