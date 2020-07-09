@@ -1,9 +1,14 @@
 #############################################################################
 ##
 ##  PackageInfo.g       H0Approximator package
-##                      Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##                      Martin Bies
+##                      University of Oxford
+##
+##                      Muyang Liu
+##                      University of Pennsylvania
+##
+##  Copyright 2020
 ##
 ##  A package to estimate global sections of pullback line bundle on hypersurface curves in dP3 and H2
 ##
