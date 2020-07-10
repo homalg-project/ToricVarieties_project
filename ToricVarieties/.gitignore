@@ -51,3 +51,4 @@ coverage.json
 performance.out
 stats
 stats.*
+tst/toricvarieties*
