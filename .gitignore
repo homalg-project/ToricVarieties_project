@@ -29,3 +29,6 @@
 /cohomCalgInterface/cohomCalg/x86_64-apple-darwin/*.dat
 
 /SpasmInterface/gap/SpasmDirectory.txt
+
+*/tst/truncations*
+*/tst/toric*
