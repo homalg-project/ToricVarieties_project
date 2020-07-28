@@ -1,12 +1,12 @@
-#! @Chapter DegreeXLayerVectorSpaces and morphisms
+#! @Chapter DegreeXLayerVectorSpaceMorphisms
 
 #! @Section Examples
 
 #! @Subsection DegreeXLayerVectorSpaces
 
-LoadPackage( "TruncationsOfFPGradedModules" );
-
 #! @Example
+HOMALG_IO.show_banners := false;;
+HOMALG_IO.suppress_PID := true;;
 mQ := HomalgFieldOfRationals();
 #! Q
 P1 := ProjectiveSpace( 1 );
@@ -25,7 +25,6 @@ EmbeddingDimension( DXVS );
 Generators( DXVS );
 #! [ <A 1 x 1 matrix over a graded ring>, <A 1 x 1 matrix over a graded ring> ]
 #! @EndExample
-
 
 #! @Subsection Morphisms of DegreeXLayerVectorSpaces
 

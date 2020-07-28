@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2020                     Martin Bies,    University of Oxford
 ##
-#! @Chapter DegreeXLayerVectorSpaces and morphisms
+#! @Chapter DegreeXLayerVectorSpaceMorphisms
 ##
 #########################################################################################
 

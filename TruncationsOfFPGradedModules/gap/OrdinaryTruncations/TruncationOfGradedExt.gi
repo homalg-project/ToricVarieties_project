@@ -11,7 +11,7 @@
 
 ##########################################################
 ##
-#! @Section Truncations of InternalHoms of FpGradedModules
+##  Section Truncations of InternalHoms of FpGradedModules
 ##
 ##########################################################
 
@@ -118,7 +118,7 @@ end );
 
 #########################################################################
 ##
-#! @Section Truncations of InternalHoms of FpGradedModules to degree zero
+## Section Truncations of InternalHoms of FpGradedModules to degree zero
 ##
 #########################################################################
 
@@ -158,7 +158,7 @@ end );
 
 ######################################################################
 ##
-#! @Section Truncations of InternalHoms of FpGradedModules in parallel
+## Section Truncations of InternalHoms of FpGradedModules in parallel
 ##
 ######################################################################
 
@@ -270,7 +270,7 @@ end );
 
 #####################################################################################
 ##
-#! @Section Truncations of InternalHoms of FpGradedModules to degree zero in parallel
+## Section Truncations of InternalHoms of FpGradedModules to degree zero in parallel
 ##
 #####################################################################################
 

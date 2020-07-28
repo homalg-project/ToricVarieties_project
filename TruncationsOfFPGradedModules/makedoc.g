@@ -9,42 +9,19 @@
 ##
 #############################################################################
 
+# This file is a script which compiles the package manual.
 
-LoadPackage( "AutoDoc" );
+if fail = LoadPackage("AutoDoc", "2019.05.20") then
+    Error("AutoDoc version 2019.05.20 or newer is required.");
+fi;
 
-AutoDoc( "TruncationsOfFPGradedModules" : scaffold := true, autodoc :=
-             rec( files := [ "doc/Intros.autodoc",
-                         "gap/OrdinaryTruncations/DegreeXLayerVectorSpace.gd",
-                         "examples/OrdinaryTruncations/DegreeXLayerVectorSpace.g",
-                         "gap/OrdinaryTruncations/TruncationsOfGradedRowsAndColumns.gd",
-                         "examples/OrdinaryTruncations/TruncationsOfGradedRowsAndColumns.g",
-                         "gap/OrdinaryTruncations/TruncationsOfFPGradedModules.gd",
-                         "examples/OrdinaryTruncations/TruncationsOfFPGradedModules.g",
-                         "gap/OrdinaryTruncations/TruncationFunctors.gd",
-                         "examples/OrdinaryTruncations/TruncationFunctors.g",
-                         "gap/OrdinaryTruncations/TruncationOfGradedExt.gd",
-                         "examples/OrdinaryTruncations/TruncationOfGradedExt.g",
-                         
-                         "gap/LocalizedTruncations/LocalizedDegree0Ring.gd",
-                         "examples/LocalizedTruncations/LocalizedDegree0Ring.g",
-                         "gap/LocalizedTruncations/LocalizedTruncationsOfGradedRowsAndColumns.gd",
-                         "examples/LocalizedTruncations/LocalizedTruncationsOfGradedRowsAndColumns.g",
-                         "gap/LocalizedTruncations/LocalizedTruncationsOfFPGradedModules.gd",
-                         "examples/LocalizedTruncations/LocalizedTruncationsOfFPGradedModules.g",
-                         "gap/LocalizedTruncations/LocalizedTruncationsFunctor.gd",
-                         "examples/LocalizedTruncations/LocalizedTruncationsFunctor.g",
-                         ],
-             scan_dirs := []
-             ),
-         maketest := rec( folder := ".",
-                          commands :=
-                            [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"TruncationsOfFPGradedModules\" );",
-                              "HOMALG_IO.show_banners := false;",
-                              "HOMALG_IO.suppress_PID := true;",
-                              "HOMALG_IO.use_common_stream := true;",
-                             ]
-                           )
-);
+AutoDoc(rec(
+    scaffold := true,
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+        scan_dirs := [ "gap/OrdinaryTruncations", "gap/LocalizedTruncations", "examples/OrdinaryTruncations", "examples/LocalizedTruncations" ]
+    ),
+    extract_examples := rec( units := "Single" ),
+));
 
 QUIT;

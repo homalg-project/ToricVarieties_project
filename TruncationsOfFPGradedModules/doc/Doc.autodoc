@@ -1,0 +1,25 @@
+@Chapter Introduction
+
+@Section What is the goal of the TruncationsOfFPGradedModules package?
+
+**TruncationsOfFPGradedModules** provides methods to compute truncations of FPGradedModules.
+
+@Chapter DegreeXLayerVectorSpaceMorphisms
+
+@Chapter Truncations of graded rows and columns
+
+@Chapter Truncations of f.p. graded modules
+
+@Chapter Truncation functors for f.p. graded modules
+
+@Chapter Truncations of GradedExt for f.p. graded modules
+
+
+
+@Chapter Localized degree-0 rings
+
+@Chapter Localized truncations of graded rows or columns
+
+@Chapter Localized truncations of FPGradedModules
+
+@Chapter Functors for localized truncations to degree 0
