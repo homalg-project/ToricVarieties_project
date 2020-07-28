@@ -380,7 +380,7 @@ end );
 
 ##############################################################################################
 ##
-#! @Section Truncations of graded row and column morphisms
+## Section Truncations of graded row and column morphisms
 ##
 ##############################################################################################
 
