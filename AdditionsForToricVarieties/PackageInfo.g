@@ -16,7 +16,7 @@ PackageName := "AdditionsForToricVarieties",
 Subtitle := "A package to provide additional structures for toric varieties",
 
 Version :=  Maximum( [
-  "2020.01.16", ## Martins version
+  "2020.07.28", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
