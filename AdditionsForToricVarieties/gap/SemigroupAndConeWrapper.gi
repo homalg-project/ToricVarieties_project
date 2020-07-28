@@ -44,7 +44,7 @@ BindGlobal( "TheTypeOfAffineSemigroupsForPresentationsByProjectiveGradedModules"
 
 ############################################
 ##
-#! @Section Constructors
+## Section Constructors
 ##
 ############################################
 

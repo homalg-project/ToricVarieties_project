@@ -5,6 +5,8 @@
 LoadPackage( "AdditionsForToricVarieties" );
 
 #! @Example
+HOMALG_IO.show_banners := false;;
+HOMALG_IO.suppress_PID := true;;
 P2 := ProjectiveSpace( 2 );
 #! <A projective toric variety of dimension 2>
 ICTCurves( P2 );

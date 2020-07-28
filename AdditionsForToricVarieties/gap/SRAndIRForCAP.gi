@@ -118,7 +118,7 @@ end );
 
 ####################################################################
 ##
-#! @Section FPGraded left and right modules over the Cox ring
+## Section FPGraded left and right modules over the Cox ring
 ##
 ####################################################################
 
