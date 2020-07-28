@@ -1,29 +1,52 @@
+#############################################################################
+##
+##  README              ToricVarieties package
+##                      Martin Bies -- University of Oxford
+##                      Sebastian Gutsche
+##
+##  Copyright 2020
+##
+##  A package to compute properties of toric varieties
+##
+#############################################################################
+
 README file for the `ToricVarieties' GAP4 package
-        
-To get the newest version of this GAP 4 package download one of the
-archive files
-    ToricVarieties-x.x.tar.gz
-    ToricVarieties-x.x.tar.bz2
-    ToricVarieties-x.x.zip
-and unpack it using 
-    tar xvf ToricVarieties-x.x.tar.gz
-respectively
-    unzip ToricVarieties-x.x.zip
-
-Do this preferably (but not necessarily) inside the `pkg' subdirectory
-of your GAP 4 installation. It creates a subdirectory called `ToricVarieties'.
-
-This completes the installation of the package.
-
-Testing the package is possible by invoking
-
-ReadPackage( "ToricVarieties", "maketest.g" );
-
-from within GAP.
-
-E-mail us if there are any questions, remarks, suggestions. Also, we
-would like to hear about applications of this package.
 
 
-Mohamed Barakat, e-mail: mohamed.barakat@uni-siegen.de
-Markus Lange-Hegermann, e-mail: markus.lange.hegermann@rwth-aachen.de
+(1) Installation
+--------------------------
+
+To get the latest version of this GAP 4 package, clone ToricVarieties_project from github (https://github.com/homalg-project/ToricVarieties_project). This completes the installation process.
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+make doc
+
+inside the ToricVarieties/doc folder. If a running LaTeX installation is available, the documentation will subsequently be available as manual.pdf.
+
+If you later want to delete the existing documentation and create it anew (e.g. after updating to a new version of this package), issue the following
+
+make docclean
+make doc
+
+You can test the installation by issuing
+
+make test
+
+
+(3) Contact
+--------------------------
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+
+(4) Funding
+--------------------------
+
+The work of Martin Bies is supported by the Wiener-Anspach Foundation.
