@@ -143,7 +143,7 @@ InstallMethod( Degree_part_relations,
                 current_vector := ListWithIdenticalEntries( Length( degree_basis_elements ), 0 );
                 
                 # express the intersection point as (element in S_0 ) * i-th generator
-                monomial_solution := 4ti2Interface_zsolve_equalities_and_inequalities(
+                monomial_solution := SolveEqualitiesAndInequalitiesOverIntergers(
                                         transposed_degree_zero_generating_set, current_intersected_point - degree_basis_elements[ i ],
                                         positive_orthant_inequalities, positive_orthant_inequalities_rhs );
                 
@@ -153,7 +153,7 @@ InstallMethod( Degree_part_relations,
                                        k -> ring_indets[ k ]^monomial_solution[ 1 ][ 1 ][ k ] );
                 
                 # express intersection point as (element in S_0 ) * j-th generator
-                monomial_solution := 4ti2Interface_zsolve_equalities_and_inequalities(
+                monomial_solution := SolveEqualitiesAndInequalitiesOverIntergers(
                                         transposed_degree_zero_generating_set, current_intersected_point - degree_basis_elements[ j ], 
                                         positive_orthant_inequalities, positive_orthant_inequalities_rhs );
                 
@@ -184,7 +184,7 @@ end );
 
 #######################################################################################
 ##
-#! @Section Localized degree-0-layer of graded rows and columns
+## Section Localized degree-0-layer of graded rows and columns
 ##
 #######################################################################################
 

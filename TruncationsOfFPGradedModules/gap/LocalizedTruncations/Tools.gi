@@ -46,15 +46,14 @@ InstallMethod( Result_of_generator,
             
             for i in [ 1 .. Length( new_generators ) ] do
                 
-                ## Unfortunately, there is a bug in 4ti2, not displaying 0 as a solution if
-                ## it is the only solution present. We are nevertheless going to prefer this solution.
-                
+                # Check if 0 is the only solution, since we prefer this solution.
                 if ForAll( current_monomial - new_generators[ i ], i -> i = 0 ) then
                     Add( collected_vectors, [ i, 0 ] );
                     break;
                 fi;
                 
-                current_solution := 4ti2Interface_zsolve_equalities_and_inequalities(
+                # Otherwise solve for solutions
+                current_solution := SolveEqualitiesAndInequalitiesOverIntergers(
                                         base_ring_generators_transposed, current_monomial - new_generators[ i ],
                                         inequality_matrix_list, inequality_matrix_list_rhs );
                 
