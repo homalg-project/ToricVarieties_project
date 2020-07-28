@@ -77,7 +77,7 @@ InstallMethod( Localized_degree_zero_ring_and_generators,
     
     # and establish the relations among these generators
     if monomials <> [ ] then
-        relations := 4ti2Interface_groebner_matrix( monomials );
+        relations := ExponentsOfGeneratorsOfToricIdeal( monomials );
     else
         relations := [ ];
     fi;
