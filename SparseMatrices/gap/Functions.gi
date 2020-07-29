@@ -119,7 +119,7 @@ end );
 
 ##############################################################################################
 ##
-#! @Section Elementary operations of SMSSparseMatrices
+## Section Elementary operations of SMSSparseMatrices
 ##
 ##############################################################################################
 

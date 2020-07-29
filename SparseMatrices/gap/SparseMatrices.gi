@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2020            Martin Bies,    University of Oxford
 ##
-#! @Chapter Sparse matrices
+##  Sparse matrices
 ##
 #########################################################################################
 
@@ -110,7 +110,7 @@ end );
 
 ################################################################################################################
 ##
-#! @Section Convenient methods to display all information about vector space presentations and morphisms thereof
+## Section Convenient methods to display all information about vector space presentations and morphisms thereof
 ##
 ################################################################################################################
 
