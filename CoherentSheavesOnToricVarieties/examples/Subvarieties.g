@@ -33,32 +33,21 @@ v2 := SubvarietyOfToricVariety( P2, [ ] );
 #! From the defining data we derive the coordinate ring and structure sheaf of a subvariety from this data:
 
 #! @Example
-LeftCoordinateRing( v );;
-RightCoordinateRing( v );;
-ls := LeftStructureSheaf( v );;
-IsWellDefined( ls );
+CoordinateRing( v );;
+Os := StructureSheaf( v );;
+IsWellDefined( Os );
 #! true
-rs := RightStructureSheaf( v );;
-IsWellDefined( rs );
-#! true
-LeftCoordinateRing( v2 );;
-RightCoordinateRing( v2 );;
-ls2 := LeftStructureSheaf( v2 );;
-IsWellDefined( ls2 );
-#! true
-rs2 := RightStructureSheaf( v2 );;
-IsWellDefined( rs2 );
+CoordinateRing( v2 );;
+Os2 := StructureSheaf( v2 );;
+IsWellDefined( Os2 );
 #! true
 #! @EndExample
 
 #! We can also construct ideal sheaves.
 
 #! @Example
-left_ideal_sheaf := LeftIdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( left_ideal_sheaf );
-#! true
-right_ideal_sheaf := RightIdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( right_ideal_sheaf );
+ideal_sheaf := IdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
+IsWellDefined( ideal_sheaf );
 #! true
 #! @EndExample
 
@@ -66,26 +55,18 @@ IsWellDefined( right_ideal_sheaf );
 #! This is the line bundle associated to the divisor V( x1, x2 ).
 
 #! @Example
-inverse_of_left_ideal_sheaf := InverseOfLeftIdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( inverse_of_left_ideal_sheaf );
-#! true
-inverse_of_right_ideal_sheaf := InverseOfRightIdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( inverse_of_right_ideal_sheaf );
+inverse_of_ideal_sheaf := InverseOfIdealSheafOnSubvariety( v, [ vars[ 1 ], vars[ 2 ] ] );;
+IsWellDefined( inverse_of_ideal_sheaf );
 #! true
 #! @EndExample
 
 #! Of course, it makes a difference if we consider the ideal sheaf of V( x1, x2 ) inside V( x1 ) (where it is dual to a line bundle) or on P2, where V( x1, x2 ) is inverse to a skyscraper sheaf.
 
 #! @Example
-inverse_of_left_skyscraper := LeftIdealSheafOnSubvariety( v2, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( inverse_of_left_skyscraper );
+inverse_of_skyscraper := IdealSheafOnSubvariety( v2, [ vars[ 1 ], vars[ 2 ] ] );;
+IsWellDefined( inverse_of_skyscraper );
 #! true
-inverse_of_right_skyscraper := RightIdealSheafOnSubvariety( v2, [ vars[ 1 ], vars[ 2 ] ] );;
-IsWellDefined( inverse_of_right_skyscraper );
-#! true
-DefiningModule( inverse_of_left_skyscraper ) = DefiningModule( inverse_of_left_ideal_sheaf );
-#! false
-DefiningModule( inverse_of_right_skyscraper ) = DefiningModule( inverse_of_right_ideal_sheaf );
+DefiningModule( inverse_of_skyscraper ) = DefiningModule( inverse_of_ideal_sheaf );
 #! false
 #! @EndExample
 
