@@ -1,0 +1,1 @@
+Once cohomCalg has been build, this folder contains the corresponding binary. In addition, all monomial files, that are generated whilst using this interface, are located in this folder.

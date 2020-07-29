@@ -17,13 +17,11 @@
 ##
 ##############################################################################################
 
-InstallMethod( cohomCalgBinary,
-               "a string -- name of TopcomBinary",
-               [ ],
+InstallMethod( cohomCalgBinary, [ ],
   function( )
     local dir, cohomcalg;
     
-    dir := DirectoriesPackageLibrary( "cohomCalgInterface", "cohomCalg/bin" )[ 1 ];
+    dir := DirectoriesPackageLibrary( "cohomCalgInterface", "binAndMonomialFiles" )[ 1 ];
     cohomcalg := Filename( dir, "cohomcalg" );
     
     if not IsExistingFile( cohomcalg ) then
