@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        image: [gapsystem/gap-docker, gapsystem/gap-docker-master]
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Copy ToricVarieties_project branch
+        run: |
+          echo "------------------------------------------------------------------------"
+          echo "Step 1: Install system dependencies"
+          echo "------------------------------------------------------------------------"
+          sudo apt update
+          sudo apt dist-upgrade -y
+          sudo apt-get install -y texlive-latex-extra texlive-science time python-pathlib
+          sudo apt-get install -y --fix-broken autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
+          echo "------------------------------------------------------------------------"
+          echo "Step 2: Copy branch"
+          echo "------------------------------------------------------------------------"
+          echo""
+          echo "(*) Prepare folder for latest packages"
+          echo""
+          mkdir -p /home/gap/.gap/pkg/
+          sudo cp -a $GITHUB_WORKSPACE /home/gap/.gap/pkg/
+          sudo chown -R gap:gap /home/gap/.gap/pkg/
+      - name: Install packages and conduct tests
+        run: |
+          export HOME="/home/gap"
+          cd /home/gap/.gap/pkg/
+          echo "(*) Clone AutoDoc"
+          git clone https://github.com/homalg-project/AutoDoc.git
+          echo""
+          echo "(*) Clone CAP_project"
+          git clone https://github.com/homalg-project/CAP_project.git
+          echo ""
+          echo "(*) Clone CddInterface"
+          git clone https://github.com/homalg-project/CddInterface.git
+          echo ""
+          echo "(*) Clone ComplexesForCAP"
+          git clone https://github.com/homalg-project/ComplexesForCAP.git
+          echo ""
+          echo "(*) Clone homalg_project"
+          git clone https://github.com/homalg-project/homalg_project.git
+          echo ""
+          echo "(*) Clone LessGenerators"
+          git clone https://github.com/homalg-project/LessGenerators.git
+          echo ""
+          echo "(*) Clone NConvex"
+          git clone https://github.com/homalg-project/NConvex.git
+          echo ""
+          echo "(*) Clone PrimaryDecomposition"
+          git clone https://github.com/homalg-project/PrimaryDecomposition.git
+          echo ""
+          echo "(*) Clone QPA2"
+          git clone https://github.com/sunnyquiver/QPA2.git
+          echo ""
+          echo "(*) Clone SingularForHomalg"
+          git clone https://github.com/homalg-project/SingularForHomalg.git
+          echo ""
+          echo "(*) Clone HigherHomologicalAlgebra"
+          git clone https://github.com/homalg-project/HigherHomologicalAlgebra.git
+          echo ""
+          echo "------------------------------------------------------------------------"
+          echo "Step 3: Install packages"
+          echo "------------------------------------------------------------------------"
+          echo ""
+          echo "(*) Install Gauss"
+          echo ""
+          cd homalg_project/Gauss/
+          ./configure /home/gap/inst/gap*
+          make -j $(nproc)
+          cd ../..
+          echo ""
+          echo "(*) Install CddInterface"
+          echo ""
+          cd CddInterface/
+          ./install.sh /home/gap/inst/gap*
+          cd ..
+          echo "(*) Install cohomCalgInterface"
+          echo ""
+          cd ToricVarieties_project/cohomCalgInterface
+          ./installCohomCalg.sh
+          cd ..
+          echo ""
+          echo "(*) Install SpasmInterface"
+          echo ""
+          cd SpasmInterface
+          git clone https://github.com/cbouilla/spasm.git
+          cd spasm
+          git checkout -b prepared
+          git remote add MartinBies https://github.com/HereAround/spasm
+          git pull MartinBies martin_devel
+          aclocal
+          autoconf
+          autoreconf --install
+          ./configure
+          make -j $(nproc)
+          cd bench/
+          pwd > /home/gap/.gap/pkg/ToricVarieties_project/SpasmInterface/gap/SpasmDirectory.txt
+          cd ../../..
+          echo "$(pwd)"
+          echo ""
+          echo "(*) Install H0Approximator"
+          echo ""
+          cd H0Approximator
+          ./install.sh
+          cd ..
+          echo ""
+          echo "------------------------------------------------------------------------"
+          echo "Step 4: Perform tests"
+          echo "------------------------------------------------------------------------"
+          echo "SetInfoLevel(InfoPackageLoading, 3);" > ~/.gap/gaprc
+          cd ToricVarieties
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd AdditionsForToricVarieties
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd SpasmInterface
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd SparseMatrices
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd cohomCalgInterface
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd ToolsForFPGradedModules
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd TruncationsOfFPGradedModules
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd SheafCohomologyOnToricVarieties
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          cd CoherentSheavesOnToricVarieties
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
+          #cd H0Approximator
+          #TERM=dumb make -j $(nproc) --output-sync ci-test
+          #curl -s https://codecov.io/bash | bash
+          #cd ..
