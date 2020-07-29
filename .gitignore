@@ -30,6 +30,7 @@
 
 /SpasmInterface/gap/SpasmDirectory.txt
 
-*/tst/truncations*
-*/tst/toric*
-*/tst/additions*
+*/tst/truncationsoffpgradedmodules*
+*/tst/toricvarieties*
+*/tst/additionsfortoricvarieties*
+*/tst/toolsforfpgradedmodules*
