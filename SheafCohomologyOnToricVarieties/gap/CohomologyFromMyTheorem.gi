@@ -621,7 +621,7 @@ end );
 
 #############################################################
 ##
-#! @Section Computation of Hi
+## Section Computation of Hi
 ##
 #############################################################
 
@@ -938,7 +938,7 @@ end );
 
 ###################################################################################
 ##
-#! @Section My theorem implemented to compute all cohomology classes
+## Section My theorem implemented to compute all cohomology classes
 ##
 ###################################################################################
 
