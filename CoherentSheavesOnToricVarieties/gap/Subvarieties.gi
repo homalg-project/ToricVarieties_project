@@ -136,7 +136,7 @@ end );
 ################################################
 
 
-InstallMethod( LeftCoordinateRing,
+InstallMethod( CoordinateRing,
               [ IsSubvarietyOfToricVariety ],
   function( subvariety )
     local tor;
@@ -151,7 +151,7 @@ InstallMethod( LeftCoordinateRing,
 end );
 
 
-InstallMethod( LeftCoordinateRing,
+InstallMethod( CoordinateRing,
               [ IsToricVariety ],
   function( tor )
     
@@ -160,31 +160,7 @@ InstallMethod( LeftCoordinateRing,
 end );
 
 
-InstallMethod( RightCoordinateRing,
-              [ IsSubvarietyOfToricVariety ],
-  function( subvariety )
-    local tor;
-
-    tor := AmbientToricVariety( subvariety );
-    if Length( DefiningEquations( subvariety ) ) = 0 then
-        return CoxRing( tor );
-    else
-        return CoxRing( tor ) / GradedRightSubmodule( DefiningEquations( subvariety ), CoxRing( tor ) );
-    fi;
-
-end );
-
-
-InstallMethod( RightCoordinateRing,
-              [ IsToricVariety ],
-  function( tor )
-    
-    return CoxRing( tor );
-    
-end );
-
-
-InstallMethod( LeftStructureSheaf,
+InstallMethod( StructureSheaf,
                "for toric Cartier divisors",
               [ IsSubvarietyOfToricVariety ],
   function( subvariety )
@@ -218,55 +194,12 @@ InstallMethod( LeftStructureSheaf,
 end );
 
 
-InstallMethod( LeftStructureSheaf,
+InstallMethod( StructureSheaf,
                "for toric Cartier divisors",
               [ IsToricVariety ],
   function( tor )
     
     return CoherentSheafOnToricVariety( tor, AsFreydCategoryObject( GradedRow( [[TheZeroElement(DegreeGroup(CoxRing( tor ))),1]], CoxRing( tor ) ) ) );
-    
-end );
-
-
-InstallMethod( RightStructureSheaf,
-              [ IsSubvarietyOfToricVariety ],
-  function( subvariety )
-    local S, range, matrix, struc_sheaf;
-    
-    # identify the Cox ring of the ambient toric variety
-    S := CoxRing( AmbientToricVariety( subvariety ) );
-    
-    # check for degenerate case
-    if Length( DefiningEquations( subvariety ) ) = 0 then
-        
-        struc_sheaf := AsFreydCategoryObject( GradedColumn( [[TheZeroElement(DegreeGroup(S)),1]], S ) );
-        
-    else
-        
-        # otherwise construct structure sheaf of the subvariety
-        range := GradedColumn( [[TheZeroElement(DegreeGroup(S)),1]], S );
-        matrix := HomalgMatrix( [DefiningEquations( subvariety )], S );
-        struc_sheaf := FreydCategoryObject( DeduceSomeMapFromMatrixAndRangeForGradedCols( matrix, range ) );
-        
-    fi;
-    
-    # check that this object is indeed well-defined
-    if not IsWellDefined( struc_sheaf ) then
-        Error( "The structure sheaf is not well-defined" );
-    fi;
-    
-    # return result
-    return CoherentSheafOnToricVariety( AmbientToricVariety( subvariety ), struc_sheaf );
-    
-end );
-
-
-InstallMethod( RightStructureSheaf,
-               "for toric Cartier divisors",
-              [ IsToricVariety ],
-  function( tor )
-    
-    return CoherentSheafOnToricVariety( tor, AsFreydCategoryObject( GradedColumn( [[TheZeroElement(DegreeGroup(CoxRing( tor ))),1]], CoxRing( tor ) ) ) );
     
 end );
 
@@ -278,7 +211,7 @@ end );
 ##############################################################################################
 
 
-InstallMethod( LeftIdealSheafOnSubvariety,
+InstallMethod( IdealSheafOnSubvariety,
               [ IsSubvarietyOfToricVariety, IsList ],
   function( subvariety, polynomials )
     local coxring, M, range, map, source, alpha, ideal_sheaf, matrix;
@@ -296,8 +229,8 @@ InstallMethod( LeftIdealSheafOnSubvariety,
     fi;
     
     # Derive map whose image is the ideal in question
-    M := Involution( HomalgMatrix( [ polynomials ], 1, Length( polynomials ), LeftCoordinateRing( subvariety ) ) );
-    range := GradedRow( [[TheZeroElement(DegreeGroup(coxring)),1]], LeftCoordinateRing( subvariety ) );
+    M := Involution( HomalgMatrix( [ polynomials ], 1, Length( polynomials ), CoordinateRing( subvariety ) ) );
+    range := GradedRow( [[TheZeroElement(DegreeGroup(coxring)),1]], CoordinateRing( subvariety ) );
     map := DeduceSomeMapFromMatrixAndRangeForGradedRows( M, range );
     source := FreydCategoryObject( WeakKernelEmbedding( map ) );
     range := AsFreydCategoryObject( Range( map ) );
@@ -314,7 +247,7 @@ InstallMethod( LeftIdealSheafOnSubvariety,
         matrix := HomalgMatrix( EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf ) ) ), coxring );
         ideal_sheaf := FreydCategoryObject( DeduceSomeMapFromMatrixAndRangeForGradedRows( matrix, range ) );
     fi;
-    ideal_sheaf := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf, DefiningModule( LeftStructureSheaf( subvariety ) ) ) );
+    ideal_sheaf := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf, DefiningModule( StructureSheaf( subvariety ) ) ) );
 
     # Return result
     return CoherentSheafOnToricVariety( AmbientToricVariety( subvariety ), ideal_sheaf );
@@ -322,69 +255,16 @@ InstallMethod( LeftIdealSheafOnSubvariety,
 end );
 
 
-InstallMethod( LeftIdealSheafOnSubvariety,
+InstallMethod( IdealSheafOnSubvariety,
               [ IsToricVariety, IsList ],
   function( tor, polynomials )
     
-    return LeftIdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
+    return IdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
     
 end );
 
 
-InstallMethod( RightIdealSheafOnSubvariety,
-              [ IsSubvarietyOfToricVariety, IsList ],
-  function( subvariety, polynomials )
-    local coxring, M, range, map, source, alpha, ideal_sheaf, matrix;
-    
-    # Extract the important information
-    coxring := CoxRing( AmbientToricVariety( subvariety ) );
-    
-    # Check that the polynomials are specified in terms of the toric ambient space
-    if not ForAll( polynomials, IsRingElement ) then
-        Error( "Not all list elements are ring elements" );
-        return;
-    fi;
-    if not ForAll( polynomials, function( p ) if HomalgRing( p ) = coxring then return true; else return false; fi; end ) then
-        Error( "Not all list elements are elements of the Cox ring of the provided toric variety" );
-    fi;
-    
-    # Derive map whose image is the ideal in question
-    M := HomalgMatrix( [ polynomials ], 1, Length( polynomials ), RightCoordinateRing( subvariety ) );
-    range := GradedColumn( [[TheZeroElement(DegreeGroup(coxring)),1]], RightCoordinateRing( subvariety ) );
-    map := DeduceSomeMapFromMatrixAndRangeForGradedCols( M, range );
-    source := FreydCategoryObject( WeakKernelEmbedding( map ) );
-    range := AsFreydCategoryObject( Range( map ) );
-    alpha := FreydCategoryMorphism( source, map, range );
-
-    # Compute the image
-    ideal_sheaf := ImageObject( alpha );
-
-    # turn ideal_sheaf into a module over the toric ambient space
-    range := GradedColumn( DegreeList( Range( RelationMorphism( ideal_sheaf ) ) ), coxring );
-    if IsZero( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf ) ) ) then
-        ideal_sheaf := AsFreydCategoryObject( range );
-    else
-        matrix := HomalgMatrix( EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf ) ) ), coxring );
-        ideal_sheaf := FreydCategoryObject( DeduceSomeMapFromMatrixAndRangeForGradedCols( matrix, range ) );
-    fi;
-    ideal_sheaf := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf, DefiningModule( RightStructureSheaf( subvariety ) ) ) );
-
-    # Return result
-    return CoherentSheafOnToricVariety( AmbientToricVariety( subvariety ), ideal_sheaf );
-
-end );
-
-
-InstallMethod( RightIdealSheafOnSubvariety,
-              [ IsToricVariety, IsList ],
-  function( tor, polynomials )
-    
-    return RightIdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
-    
-end );
-
-
-InstallMethod( InverseOfLeftIdealSheafOnSubvariety,
+InstallMethod( InverseOfIdealSheafOnSubvariety,
               [ IsSubvarietyOfToricVariety, IsList ],
   function( subvariety, polynomials )
     local coxring, M, range, map, source, alpha, ideal_sheaf_inverse, matrix;
@@ -402,8 +282,8 @@ InstallMethod( InverseOfLeftIdealSheafOnSubvariety,
     fi;
     
     # Derive map whose image is the ideal in question
-    M := Involution( HomalgMatrix( [ polynomials ], 1, Length( polynomials ), LeftCoordinateRing( subvariety ) ) );
-    range := GradedRow( [[TheZeroElement(DegreeGroup(coxring)),1]], LeftCoordinateRing( subvariety ) );
+    M := Involution( HomalgMatrix( [ polynomials ], 1, Length( polynomials ), CoordinateRing( subvariety ) ) );
+    range := GradedRow( [[TheZeroElement(DegreeGroup(coxring)),1]], CoordinateRing( subvariety ) );
     map := DeduceSomeMapFromMatrixAndRangeForGradedRows( M, range );
     source := FreydCategoryObject( WeakKernelEmbedding( map ) );
     range := AsFreydCategoryObject( Range( map ) );
@@ -420,7 +300,7 @@ InstallMethod( InverseOfLeftIdealSheafOnSubvariety,
         matrix := HomalgMatrix( EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf_inverse ) ) ), coxring );
         ideal_sheaf_inverse := FreydCategoryObject( DeduceSomeMapFromMatrixAndRangeForGradedRows( matrix, range ) );
     fi;
-    ideal_sheaf_inverse := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf_inverse, DefiningModule( LeftStructureSheaf( subvariety ) ) ) );
+    ideal_sheaf_inverse := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf_inverse, DefiningModule( StructureSheaf( subvariety ) ) ) );
 
     # Return result
     return CoherentSheafOnToricVariety( AmbientToricVariety( subvariety ), ideal_sheaf_inverse );
@@ -428,63 +308,10 @@ InstallMethod( InverseOfLeftIdealSheafOnSubvariety,
 end );
 
 
-InstallMethod( InverseOfLeftIdealSheafOnSubvariety,
+InstallMethod( InverseOfIdealSheafOnSubvariety,
               [ IsToricVariety, IsList ],
   function( tor, polynomials )
     
-    return InverseOfLeftIdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
-    
-end );
-
-
-InstallMethod( InverseOfRightIdealSheafOnSubvariety,
-              [ IsSubvarietyOfToricVariety, IsList ],
-  function( subvariety, polynomials )
-    local coxring, M, range, map, source, alpha, ideal_sheaf_inverse, matrix;
-    
-    # Extract the important information
-    coxring := CoxRing( AmbientToricVariety( subvariety ) );
-    
-    # Check that the polynomials are specified in terms of the toric ambient space
-    if not ForAll( polynomials, IsRingElement ) then
-        Error( "Not all list elements are ring elements" );
-        return;
-    fi;
-    if not ForAll( polynomials, function( p ) if HomalgRing( p ) = coxring then return true; else return false; fi; end ) then
-        Error( "Not all list elements are elements of the Cox ring of the provided toric variety" );
-    fi;
-    
-    # Derive map whose image is the ideal in question
-    M := HomalgMatrix( [ polynomials ], 1, Length( polynomials ), RightCoordinateRing( subvariety ) );
-    range := GradedColumn( [[TheZeroElement(DegreeGroup(coxring)),1]], RightCoordinateRing( subvariety ) );
-    map := DeduceSomeMapFromMatrixAndRangeForGradedCols( M, range );
-    source := FreydCategoryObject( WeakKernelEmbedding( map ) );
-    range := AsFreydCategoryObject( Range( map ) );
-    alpha := FreydCategoryMorphism( source, map, range );
-
-    # Compute the image
-    ideal_sheaf_inverse := DualOnObjects( ImageObject( alpha ) );
-
-    # turn ideal_sheaf_inverse into a module over the toric ambient space
-    range := GradedColumn( DegreeList( Range( RelationMorphism( ideal_sheaf_inverse ) ) ), coxring );
-    if IsZero( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf_inverse ) ) ) then
-        ideal_sheaf_inverse := AsFreydCategoryObject( range );
-    else
-        matrix := HomalgMatrix( EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( ideal_sheaf_inverse ) ) ), coxring );
-        ideal_sheaf_inverse := FreydCategoryObject( DeduceSomeMapFromMatrixAndRangeForGradedCols( matrix, range ) );
-    fi;
-    ideal_sheaf_inverse := ByASmallerPresentation( TensorProductOnObjects( ideal_sheaf_inverse, DefiningModule( RightStructureSheaf( subvariety ) ) ) );
-
-    # Return result
-    return CoherentSheafOnToricVariety( AmbientToricVariety( subvariety ), ideal_sheaf_inverse );
-
-end );
-
-
-InstallMethod( InverseOfRightIdealSheafOnSubvariety,
-              [ IsToricVariety, IsList ],
-  function( tor, polynomials )
-    
-    return InverseOfRightIdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
+    return InverseOfIdealSheafOnSubvariety( SubvarietyOfToricVariety( tor, [] ), polynomials );
     
 end );
