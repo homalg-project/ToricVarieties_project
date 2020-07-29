@@ -1,13 +1,10 @@
-#! @Chapter Sheaf cohomology on (direct products of) projective spaces
-
-#! @Section Sheaf cohomology on direct product of projective spaces: Examples 
-
+#! @Chapter Work in progress
+#! @Section Sheaf cohomology computations on (direct products of) projective spaces
 #! @Subsection Examples for graded modules on P1 and P1xP1
 
 LoadPackage( "SheafCohomologyOnToricVarieties" );
 
-#! @Example
-
+#! @Log
 F1 := Fan( [[1],[-1]],[[1],[2]] );
 #! <A fan in |R^1>
 P1 := ToricVariety( F1 );
@@ -38,20 +35,16 @@ VPrime := CAPCategoryOfProjectiveGradedLeftModulesObject( [[[-1,-1],1]], CoxRing
 VPrime := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( VPrime ) ), VPrime );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 0, 1 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ] ])>
-
-#! @EndExample
-
-
-
+#! @EndLog
 
 #! @Subsection Examples for cohomology computations on P1
 
 #! Note that these computations still rely on the GradedModules package and thus do not yet use CAP.
 #! This will hopefully change soon.
 
-#! @Example
+#! @Log
 H0OnProjectiveSpaceViaLinearRegularity( P1, C );
 #! 1
 H0OnProjectiveSpaceInRangeViaLinearRegularity( P1, C, [ 0 .. 5 ] );
 #! [ [ 0, 1 ], [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5, 6 ] ]
-#! @EndExample
+#! @EndLog

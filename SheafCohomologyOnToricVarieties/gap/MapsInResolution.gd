@@ -4,14 +4,15 @@
 ##
 ##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
-#! @Chapter Maps In Resolution
+#! @Chapter Work in progress
+#! @Section Maps In Resolution
 ##
 #########################################################################################
 
 
 ##############################################################################################
 ##
-#! @Section Compute maps in minimal free resolution of a sheaf
+#! @Subsection Compute maps in minimal free resolution of a sheaf
 ##
 ##############################################################################################
 

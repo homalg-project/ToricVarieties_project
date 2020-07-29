@@ -4,7 +4,8 @@
 ##
 ##  Copyright 2020                     Martin Bies,       University of Oxford
 ##
-#! @Chapter Sheaf cohomology computations on (direct products of) projective spaces
+#! @Chapter Work in progress
+#! @Section Sheaf cohomology computations on (direct products of) projective spaces
 ##
 #########################################################################################
 
@@ -12,7 +13,7 @@
 
 ####################################################
 ##
-#! @Section Specialised methods on CPn
+#! @Subsection Specialised methods on CPn
 ##
 ####################################################
 
@@ -49,7 +50,7 @@ DeclareOperation( "H0OnProjectiveSpaceInRangeViaLinearRegularity",
 
 #####################################################################################################################
 ##
-#! @Section Experimental methods for computations on direct products on Pns implemented for the GradedModules Package
+#! @Subsection Experimental methods for computations on direct products on Pns implemented for the GradedModules Package
 ##
 #####################################################################################################################
 
