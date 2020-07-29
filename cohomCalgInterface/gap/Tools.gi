@@ -21,27 +21,13 @@ InstallMethod( cohomCalgBinary,
                "a string -- name of TopcomBinary",
                [ ],
   function( )
-    local arch, linux, apple, dir, cohomcalg;
+    local dir, cohomcalg;
     
-    arch := GAPInfo.Architecture;
-
-    linux := "x86_64-pc-linux";
-    apple := "x86_64-apple-darwin";
-    
-    if arch{[ 1 .. 15 ]} = linux then
-        arch := linux;
-    elif arch{[ 1 .. 19 ]} = apple then
-        arch := apple;
-    fi;
-    
-    arch := Concatenation( "cohomCalg/", arch );
-    
-    dir := DirectoriesPackageLibrary( "cohomCalgInterface", arch )[ 1 ];
-    
+    dir := DirectoriesPackageLibrary( "cohomCalgInterface", "cohomCalg/bin" )[ 1 ];
     cohomcalg := Filename( dir, "cohomcalg" );
     
     if not IsExistingFile( cohomcalg ) then
-        Error( "no cohomcalg binary found in the subdirectory ", arch );
+        Error( "no cohomcalg binary found" );
     fi;
     
     return [ dir, cohomcalg ];
@@ -154,7 +140,7 @@ InstallMethod( cohomCalgCommandString,
     output_string := Concatenation( output_string, SR_ideal_generators, "; " );
 
     # step5: use monomial_file
-    if Tester( MonomialFile )( variety ) then
+    if HasMonomialFile( variety ) then
       output_string := Concatenation( output_string, Concatenation( "monomialfile \"",
                                                                     MonomialFile( variety ),
                                                                     "\";" ) );
