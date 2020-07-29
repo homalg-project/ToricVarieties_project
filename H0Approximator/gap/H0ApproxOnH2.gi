@@ -287,7 +287,7 @@ InstallMethod( FineApproximationWithSetupsOnH2,
                     # compute topological data anew
                     genera := List( [ 1 .. Length( splits ) ], i -> GenusOnH2( splits[ i ] ) );
                     degrees := List( [ 1 .. Length( splits ) ], i -> LineBundleDegreeOnH2( splits[ i ], bundle ) );
-                    sections := List( [ 1 .. Length( splits ) ], i -> Sections( genera[ i ], degrees[ i ] ) );
+                    sections := List( [ 1 .. Length( splits ) ], i -> LowerBoundOnSections( genera[ i ], degrees[ i ] ) );
                     intersections := IntersectionsAmongCurveComponentsOnH2( splits );
                     
                     # check if this is a simple setup and if so, estimate h0
