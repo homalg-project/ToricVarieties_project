@@ -4,4 +4,8 @@
 
 **ToolsForFPGradedModules** provides additional tools to perform computations or manipulate FPGradedModules, which are for structural reasons not part of the underlying package for **FreydCategories**.
 
-@Chapter ToolsForFPGradedModules
+@Chapter Tools for FPGradedModules
+
+@Chapter Conversion among f.p. graded modules
+
+@Chapter Overloaded functions

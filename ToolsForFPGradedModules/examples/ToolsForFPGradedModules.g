@@ -5,6 +5,8 @@
 LoadPackage( "ToolsForFPGradedModules" );
 
 #! @Example
+HOMALG_IO.show_banners := false;;
+HOMALG_IO.suppress_PID := true;;
 Q := HomalgFieldOfRationalsInSingular();
 #! Q
 S := GradedRing( Q * "x_1, x_2, x_3" );
