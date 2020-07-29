@@ -4,4 +4,16 @@
 
 **AdditionsForToricVarieties** provides additional structures which are not provided by the ToricVarieties package in the homalg_project yet required for the computations of sheaf cohomologies on toric varieties.
 
-@Chapter Additions for toric varieties
+@Chapter Central functions and constants
+
+@Chapter Irreducible, complete, torus-invariant curves and proper 1-cycles in a toric variety
+
+@Chapter Monoms of Coxring of given degree
+
+@Chapter Nef and Mori Cone
+
+@Chapter Stanley Reisner and irrelevant ideal as FPGradedModules
+
+@Chapter Wrapper for generators of semigroups and hyperplane constraints of cones
+
+@Chapter Vanishing sets on toric varieties

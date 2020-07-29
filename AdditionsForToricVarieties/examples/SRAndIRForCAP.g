@@ -1,4 +1,4 @@
-#! @Chapter Additional methods and properties for toric varieties
+#! @Chapter Stanley Reisner and irrelevant ideal as FPGradedModules
 
 #! @Section Example: Stanley-Reisner ideal for CAP
 

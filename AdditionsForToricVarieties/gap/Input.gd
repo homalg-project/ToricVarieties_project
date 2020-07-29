@@ -11,7 +11,7 @@
 
 ###################################################
 ##
-#! @Section Input check for cohomology computations
+#! @Section Input check for valid input
 ##
 ###################################################
 
