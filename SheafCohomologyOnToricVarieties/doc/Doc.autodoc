@@ -7,4 +7,16 @@ is to provide high-performance-algorithms for its computation. To this, our main
 is based on an idea of Gregory G. Smith (see math/0305214 and DOI: 10.4171/OWR/2013/25), which we combine with the powerful
 cohomCalg algorithm. Information on the latter can be found at https://arxiv.org/abs/1003.5217v3 and references therein.
 
-@Chapter Sheaf Cohomology On Toric Varieties
+@Chapter Central functions and constants
+
+@Chapter Cohomology of coherent sheaves from resolution
+
+@Chapter Sheaf cohomology by use of https://arxiv.org/abs/1802.08860
+
+@Chapter Tools for cohomology computations
+
+@Chapter Sheaf cohomology with Spasm
+
+@Chapter Work in progress
+
+The following functionality isnot yet supported, but work in progress.
