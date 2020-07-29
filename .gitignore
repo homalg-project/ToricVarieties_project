@@ -43,3 +43,4 @@ cohomCalgInterface/binAndMonomialFiles/*
 H0Approximator/bin/*
 ! H0Approximator/bin/counter
 ! H0Approximator/bin/counterH2
+*/tst/sparsematrices*
