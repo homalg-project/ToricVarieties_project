@@ -1,5 +1,3 @@
-Compile on ubuntu 18.04 via
-
+cd bin
 g++ -o counter main.cpp
-
 g++ -o counterH2 mainH2.cpp
