@@ -9,29 +9,19 @@
 ##
 #######################################################################################
 
-LoadPackage( "AutoDoc" );
+# This file is a script which compiles the package manual.
 
-AutoDoc( "CoherentSheavesOnToricVarieties" : scaffold := true, autodoc :=
-             rec( files := [ "doc/Intros.autodoc",
-                         "gap/CoherentSheaves.gd",
-                         "examples/CoherentSheaves.g",
-                         "gap/Sheaves.gd",
-                         "examples/Sheaves.g",
-                         #"gap/Subvarieties.gd",
-                         #"examples/Subvarieties.g",
-                         ],
-             scan_dirs := []
-             ),
-         maketest := rec( folder := ".",
-                          commands :=
-                            [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"SheafCohomologyOnToricVarieties\" );",
-                              "LoadPackage( \"CoherentSheavesOnToricVarieties\" );",
-                              "HOMALG_IO.show_banners := false;",
-                              "HOMALG_IO.suppress_PID := true;",
-                              "HOMALG_IO.use_common_stream := true;",
-                             ]
-                           )
-);
+if fail = LoadPackage("AutoDoc", "2019.05.20") then
+    Error("AutoDoc version 2019.05.20 or newer is required.");
+fi;
+
+AutoDoc(rec(
+    scaffold := true,
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+        scan_dirs := [ "gap", "examples" ]
+    ),
+    extract_examples := rec( units := "Single" ),
+));
 
 QUIT;

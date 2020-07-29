@@ -7,7 +7,7 @@
 ##
 ##  A package to model coherent toric sheaves as elements in a Serre quotient category.
 ##
-#! @Chapter Stuff
+#! @Chapter Category of coherent sheaves
 ##
 #######################################################################################
 
