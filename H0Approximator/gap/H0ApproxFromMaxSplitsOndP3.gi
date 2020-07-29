@@ -57,7 +57,7 @@ end );
 
 ##############################################################################################
 ##
-#! @Section Check if a curve class if a power of a rigid divisor
+## Section Check if a curve class if a power of a rigid divisor
 ##
 ##############################################################################################
 
