@@ -17,4 +17,12 @@ In the following, it will be crucial to denote the divisor classes on $\mathrm{d
 * Recall that the Picard group of a $\mathrm{dP}_3$ has generators $H$, $E_1$, $E_2$, $E_3$, i.e. the hyperplane class $H$ of $\mathbb{P}^2$ and the three exceptional classes $E_i$ corresponding to the blowup $\mathbb{P}^1$s at three generic points of $\mathbb{P}^2$. We use these divisors as basis for the divisor classes of $\mathrm{dP}_3$. Thus $[1;2,3,4] =  1 \cdot H + 2 \cdot E_1 + 3 \cdot E_2 + 4 \cdot E_3$.
 * For $\mathrm{H}_2$, we assume that the Cox ring is $\mathbb{Z}^2$-graded by $$ x_1 = (1,0) \, , \qquad x_2 \colon (-2,1) \, , \qquad x_3 \colon (1,0) \, , \qquad x_4 \colon (0,1) \, . $$ We denote the toric divisors by $D_i = V( x_i )$ and use $\{ D_1, D_2 \}$ as basis of the divisor classes on $\mathrm{H}_2$. Thus, $(1,2) = 1 \cdot D_1 + 2 \cdot D_2$.
 
-@Chapter Functions
+@Chapter Common functions applied generically to all toric surfaces
+
+@Chapter Spectrum approximation from curve splittings in dP3
+
+@Chapter Spectrum approximation from maximal curve splittings in dP3
+
+@Chapter Spectrum approximation from curve splittings in H2
+
+@Chapter Spectrum approximation from maximal curve splittings in H2

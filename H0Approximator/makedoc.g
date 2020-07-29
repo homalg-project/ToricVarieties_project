@@ -14,32 +14,20 @@
 ##
 #############################################################################
 
-LoadPackage( "AutoDoc" );
 
-AutoDoc( "H0Approximator" : scaffold := true, autodoc :=
-             rec( files := [ "doc/Intros.autodoc",
-                         "gap/CommonTools.gd",
-                         "examples/CommonTools.g",
-                         "gap/H0ApproxOndP3.gd",
-                         "examples/H0ApproxOndP3.g",
-                         "gap/H0ApproxFromMaxSplitsOndP3.gd",
-                         "examples/H0ApproxFromMaxSplitsOndP3.g",
-                         "gap/H0ApproxOnH2.gd",
-                         "examples/H0ApproxOnH2.g",
-                         "gap/H0ApproxFromMaxSplitsOnH2.gd",
-                         "examples/H0ApproxFromMaxSplitsOnH2.g"                        
-                         ],
-             scan_dirs := []
-             ),
-         maketest := rec( folder := ".",
-                          commands :=
-                            [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"H0Approximator\" );",
-                              "HOMALG_IO.show_banners := false;",
-                              "HOMALG_IO.suppress_PID := true;",
-                              "HOMALG_IO.use_common_stream := true;",
-                             ]
-                           )
-);
+# This file is a script which compiles the package manual.
+
+if fail = LoadPackage("AutoDoc", "2019.05.20") then
+    Error("AutoDoc version 2019.05.20 or newer is required.");
+fi;
+
+AutoDoc(rec(
+    scaffold := true,
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+        scan_dirs := [ "gap", "examples" ]
+    ),
+    extract_examples := rec( units := "Single" ),
+));
 
 QUIT;
