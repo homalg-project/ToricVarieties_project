@@ -1,4 +1,4 @@
-#! @Chapter Stuff
+#! @Chapter Category of coherent sheaves
 
 #! @Section Examples
 
@@ -7,6 +7,8 @@ LoadPackage( "CoherentSheavesOnToricVarieties" );
 #! We form the category of coherent sheaves on P2:
 
 #! @Example
+HOMALG_IO.show_banners := false;;
+HOMALG_IO.suppress_PID := true;;
 P2 := ProjectiveSpace( 2 );;
 coh := CategoryOfCoherentSheaves( P2 );;
 #! @EndExample

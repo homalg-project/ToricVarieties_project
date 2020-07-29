@@ -4,4 +4,8 @@
 
 **CoherentSheavesOnToricVarieties** models coherent sheaves on toric varieties by a categorical Serre quotient.
 
-@Chapter Functions
+@Chapter Category of coherent sheaves
+
+@Chapter Coherent sheaves on toric varieties
+
+@Chapter Subvarieties of toric varieties
