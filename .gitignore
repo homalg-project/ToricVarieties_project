@@ -39,3 +39,7 @@
 cohomCalgInterface/cohomCalg/*
 cohomCalgInterface/binAndMonomialFiles/*
 ! cohomCalgInterface/binAndMonomialFiels/Info.txt
+*/tst/h0approximator*
+H0Approximator/bin/*
+! H0Approximator/bin/counter
+! H0Approximator/bin/counterH2
