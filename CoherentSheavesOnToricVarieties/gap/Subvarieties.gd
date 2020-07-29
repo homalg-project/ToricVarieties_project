@@ -65,19 +65,9 @@ DeclareAttribute( "DefiningEquations",
 #! The output is the left coordinate ring of S.
 #! @Returns a ring
 #! @Arguments S
-DeclareAttribute( "LeftCoordinateRing",
+DeclareAttribute( "CoordinateRing",
                   IsSubvarietyOfToricVariety );
-DeclareAttribute( "LeftCoordinateRing",
-                  IsToricVariety );
-
-#! @Description
-#! The argument is a subvarieties S of toric varieties.
-#! The output is the right coordinate ring of S.
-#! @Returns a ring
-#! @Arguments S
-DeclareAttribute( "RightCoordinateRing",
-                  IsSubvarietyOfToricVariety );
-DeclareAttribute( "RightCoordinateRing",
+DeclareAttribute( "CoordinateRing",
                   IsToricVariety );
 
 #! @Description
@@ -86,20 +76,9 @@ DeclareAttribute( "RightCoordinateRing",
 #! to the structure sheaf of S.
 #! @Returns a coherent sheaf
 #! @Arguments S
-DeclareAttribute( "LeftStructureSheaf",
+DeclareAttribute( "StructureSheaf",
                   IsSubvarietyOfToricVariety );
-DeclareAttribute( "LeftStructureSheaf",
-                  IsToricVariety );
-
-#! @Description
-#! The argument is a subvarieties S of toric varieties.
-#! The output is a f.p. graded right module M which sheafifies
-#! to the structure sheaf of S.
-#! @Returns a coherent sheaf
-#! @Arguments S
-DeclareAttribute( "RightStructureSheaf",
-                  IsSubvarietyOfToricVariety );
-DeclareAttribute( "RightStructureSheaf",
+DeclareAttribute( "StructureSheaf",
                   IsToricVariety );
 
 
@@ -117,13 +96,9 @@ DeclareAttribute( "RightStructureSheaf",
 #! the simulatenous vanishing of all polynomials in L.
 #! @Returns a coherent sheaf
 #! @Arguments S, L
-DeclareOperation( "LeftIdealSheafOnSubvariety",
+DeclareOperation( "IdealSheafOnSubvariety",
                   [ IsSubvarietyOfToricVariety, IsList ] );
-DeclareOperation( "LeftIdealSheafOnSubvariety",
-                  [ IsToricVariety, IsList ] );
-DeclareOperation( "RightIdealSheafOnSubvariety",
-                  [ IsSubvarietyOfToricVariety, IsList ] );
-DeclareOperation( "RightIdealSheafOnSubvariety",
+DeclareOperation( "IdealSheafOnSubvariety",
                   [ IsToricVariety, IsList ] );
 
 #! @Description
@@ -137,11 +112,7 @@ DeclareOperation( "RightIdealSheafOnSubvariety",
 #! Warning: We do not perform a test to check if V is a divisor of S.
 #! @Returns a coherent sheaf
 #! @Arguments S, L
-DeclareOperation( "InverseOfLeftIdealSheafOnSubvariety",
+DeclareOperation( "InverseOfIdealSheafOnSubvariety",
                   [ IsSubvarietyOfToricVariety, IsList ] );
-DeclareOperation( "InverseOfLeftIdealSheafOnSubvariety",
-                  [ IsToricVariety, IsList ] );
-DeclareOperation( "InverseOfRightIdealSheafOnSubvariety",
-                  [ IsSubvarietyOfToricVariety, IsList ] );
-DeclareOperation( "InverseOfRightIdealSheafOnSubvariety",
+DeclareOperation( "InverseOfIdealSheafOnSubvariety",
                   [ IsToricVariety, IsList ] );
