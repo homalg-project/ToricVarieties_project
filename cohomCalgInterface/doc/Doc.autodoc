@@ -4,4 +4,6 @@
 
 **cohomCalgInterface** provides an interface, to communicate with the software cohomCalg via gap. Thereby, for example, line bundle cohomologies of toric varieties can be computed directly via gap.
 
-@Chapter Functions
+@Chapter Functions supported by cohomCalg
+
+@Chapter Communication with cohomCalg
