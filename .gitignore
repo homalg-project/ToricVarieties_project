@@ -37,3 +37,5 @@
 */tst/coherentsheavesontoricvarieties*
 */tst/cohomcalginterface*
 cohomCalgInterface/cohomCalg/*
+cohomCalgInterface/binAndMonomialFiles/*
+! cohomCalgInterface/binAndMonomialFiels/Info.txt
