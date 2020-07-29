@@ -4,4 +4,6 @@
 
 **SparseMatrices** provides functionality to handle sparse matrices in gap.
 
-@Chapter Functions
+@Chapter Sparse matrices
+
+@Chapter Functionality
