@@ -71,6 +71,7 @@ Dependencies := rec(
                            [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
                            [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
                            [ "GradedModules", ">= 2020.01.02" ],
+                           [ "IO_ForHomalg", ">= 2020.04.30" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []
