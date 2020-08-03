@@ -43,16 +43,18 @@ rec(
     FirstNames    := "Martin",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "martin.bies@alumni.uni-heidelberg.de",
-    PostalAddress := Concatenation( [
-                        "Physique Théorique et Mathématique \n",
-                        "Université Libre de Bruxelles \n",
-                        "Campus Plaine - CP 231 \n",
-                        "Building NO - Level 6 - Office O.6.111 \n",
-                        "1050 Brussels \n",
-                        "Belgium" ] ), 
-    Place         := "Brussels",
-    Institution   := "ULB Brussels"
+    Email := "martin.bies@alumni.uni-heidelberg.de",
+    WWWHome := "https://martinbies.github.io/",
+    PostalAddress := Concatenation(
+                 "Mathematical Institute \n",
+                 "University of Oxford \n",
+                 "Andrew Wiles Building \n",
+                 "Radcliffe Observatory Quarter \n",
+                 "Woodstock Road \n",
+                 "Oxford OX2 6GG \n",
+                 "United Kingdom" ),
+    Place         := "Oxford",
+    Institution   := "University of Oxford"
   ),
 ],
 
