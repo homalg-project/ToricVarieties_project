@@ -75,7 +75,7 @@ AbstractHTML :=
                  "structure and by their combinatorics. For combinatorics, it uses the Convex package.",
                  " Its goal is to provide a suitable framework to work with toric varieties." ),
 
-               
+
 PackageDoc := rec(
   BookName  := "ToricVarieties",
   ArchiveURLSubset := ["doc"],
