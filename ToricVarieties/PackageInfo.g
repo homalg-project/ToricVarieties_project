@@ -59,14 +59,14 @@ rec(
 ],
 
 Status := "deposited",
-SourceRepository := rec( 
-  Type := "git", 
-  URL := "https://github.com/homalg-project/homalg_project"
+SourceRepository := rec(
+  Type := "git",
+  URL := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome := "https://homalg-project.github.io/homalg_project/ToricVarieties/",
-ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := Concatenation( "https://github.com/homalg-project/homalg_project/releases/download/ToricVarieties-", ~.Version, "/ToricVarieties-", ~.Version ),
+PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties",
+ArchiveFormats := ".tar. gz .zip",
+ArchiveURL     := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
