@@ -92,8 +92,7 @@ Dependencies := rec(
                            [ "Modules", ">=2016.01.20" ],
                            [ "GradedModules", ">=2015.12.04" ],
                            [ "ToolsForHomalg", ">=2016.02.17" ],
-                           [ "AutoDoc", ">=2016.02.16" ],
-                           [ "IO_ForHomalg", ">=2020.04.30" ] ],
+                           [ "AutoDoc", ">=2016.02.16" ] ],
   SuggestedOtherPackages := [ [ "4ti2Interface", ">=2020.04.25" ],
                               [ "TopcomInterface", ">=2019.06.15" ], ],
   ExternalConditions := []
