@@ -87,7 +87,16 @@ AvailabilityTest := function()
 Autoload := false,
 
 
-Keywords := [ "FPGradedModules, Ideals, Resolutions, Betti tables" ]
+Keywords := [ "FPGradedModules, Ideals, Resolutions, Betti tables" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+This package may be distributed under the terms and conditions
+of the GNU Public License Version 2 or (at your option) any later version.
+"""
+    ),
+),
 
 ));
 

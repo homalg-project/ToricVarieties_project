@@ -86,6 +86,15 @@ AvailabilityTest := function()
 Autoload := false,
 
 
-Keywords := [ "coherent sheaves", "toric varieties" ]
+Keywords := [ "coherent sheaves", "toric varieties" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+This package may be distributed under the terms and conditions
+of the GNU Public License Version 2 or (at your option) any later version.
+"""
+    ),
+),
 
 ));

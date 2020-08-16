@@ -89,6 +89,15 @@ AvailabilityTest := function()
 Autoload := false,
 
 
-Keywords := [ "Sheaf cohomology" ]
+Keywords := [ "Sheaf cohomology" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+This package may be distributed under the terms and conditions
+of the GNU Public License Version 2 or (at your option) any later version.
+"""
+    ),
+),
 
 ));
