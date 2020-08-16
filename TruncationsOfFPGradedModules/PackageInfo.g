@@ -46,9 +46,9 @@ rec(
 ],
 
 Status := "dev",
-PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/",
-ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "TruncationsOfFPGradedModules-", ~.Version ),
+PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/TruncationsOfFPGradedModules/",
+ArchiveFormats := ".zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/TruncationsOfFPGradedModules.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
