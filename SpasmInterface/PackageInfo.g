@@ -85,6 +85,15 @@ AvailabilityTest := function()
 Autoload := false,
 
 
-Keywords := [ "Sparse matrices", "Linear Algebra" ]
+Keywords := [ "Sparse matrices", "Linear Algebra" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+This package may be distributed under the terms and conditions
+of the GNU Public License Version 2 or (at your option) any later version.
+"""
+    ),
+),
 
 ));
