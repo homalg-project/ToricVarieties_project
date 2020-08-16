@@ -16,7 +16,7 @@ PackageName := "SparseMatrices",
 Subtitle := "A package to handle sparse matrices in gap",
 
 Version :=  Maximum( [
-  "2020.02.06", # Martins version  
+  "2020.08.16", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},

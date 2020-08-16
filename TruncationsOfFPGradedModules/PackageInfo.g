@@ -16,7 +16,7 @@ PackageName := "TruncationsOfFPGradedModules",
 Subtitle := "A package to compute truncations of FPGradedModules",
 
 Version :=  Maximum( [
-  "2020.01.16", ## Martins version
+  "2020.08.16", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
