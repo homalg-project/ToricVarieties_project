@@ -46,9 +46,9 @@ rec(
 ],
 
 Status := "dev",
-PackageWWWHome := "https://github.com/HereAround/cohomCalgInterface",
-ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "cohomCalgInterface-", ~.Version ),
+PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/cohomCalgInterface/",
+ArchiveFormats := ".zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/cohomCalgInterface.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 

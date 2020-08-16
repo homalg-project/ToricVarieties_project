@@ -46,9 +46,9 @@ rec(
 ],
 
 Status := "dev",
-PackageWWWHome := "https://github.com/homalg-project/SheafCohomologyOnToricVarieties",
-ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "SpasmInterface-", ~.Version ),
+PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/SpasmInterface/",
+ArchiveFormats := ".zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/SpasmInterface.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
