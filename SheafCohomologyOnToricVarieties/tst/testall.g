@@ -12,6 +12,8 @@ options := rec(
     ),
 );
 
+LoadPackage( "FreydCategoriesForCAP", false );
+
 TestDirectory( DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "tst" ), options );
 
 FORCE_QUIT_GAP( 1 ); # if we ever get here, there was an error
