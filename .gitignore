@@ -1,6 +1,5 @@
 */maketest.g
 */doc/*.xml
-
 */doc/chap*.html
 */doc/chap*.txt
 */doc/*.css
@@ -25,10 +24,16 @@
 /tmp/
 /gh-pages/
 
-/cohomCalgInterface/cohomCalg/x86_64-pc-linux/*.dat
-/cohomCalgInterface/cohomCalg/x86_64-apple-darwin/*.dat
+cohomCalgInterface/cohomCalg/*
+cohomCalgInterface/binAndMonomialFiles/*
+! cohomCalgInterface/binAndMonomialFiles/Info.txt
 
-/SpasmInterface/gap/SpasmDirectory.txt
+SpasmInterface/gap/SpasmDirectory.txt
+SpasmInterface/spasm/*
+
+H0Approximator/bin/*
+! H0Approximator/bin/counter
+! H0Approximator/bin/counterH2
 
 */tst/truncationsoffpgradedmodules*
 */tst/toricvarieties*
@@ -36,13 +41,11 @@
 */tst/toolsforfpgradedmodules*
 */tst/coherentsheavesontoricvarieties*
 */tst/cohomcalginterface*
-cohomCalgInterface/cohomCalg/*
-cohomCalgInterface/binAndMonomialFiles/*
-! cohomCalgInterface/binAndMonomialFiels/Info.txt
 */tst/h0approximator*
-H0Approximator/bin/*
-! H0Approximator/bin/counter
-! H0Approximator/bin/counterH2
 */tst/sparsematrices*
-SpasmInterface/spasm/*
 */tst/spasminterface*
+*/tst/sheafcohomologyontoricvarieties*
+
+*/stats*
+*/coverage*
+*/performance*
