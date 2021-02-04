@@ -132,8 +132,8 @@ ci-test: doc
 	cd SparseMatrices && make ci-test
 	cd SpasmInterface && make ci-test
 	cd ToolsForFPGradedModules && make ci-test
-	cd ToricVarieties && make doc
-	cd TruncationsOfFPGradedModules && make doc
+	cd ToricVarieties && make ci-test
+	cd TruncationsOfFPGradedModules && make ci-test
 
 
 
