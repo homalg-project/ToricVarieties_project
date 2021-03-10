@@ -8,7 +8,17 @@ echo ""
 
 echo ""
 echo "------------------------------------------------------------------------"
-echo "Step1: Clone spasm"
+echo "Step1: Save path to file which by default stores the SpasmDirectory"
+echo "------------------------------------------------------------------------"
+echo ""
+
+cd gap
+FILE_PATH=$(readlink -f SpasmDirectory.txt)
+cd ..
+
+echo ""
+echo "------------------------------------------------------------------------"
+echo "Step2: Clone spasm"
 echo "------------------------------------------------------------------------"
 echo ""
 
@@ -21,7 +31,7 @@ git pull MartinBies martin_devel
 
 echo ""
 echo "------------------------------------------------------------------------"
-echo "Step2: Build spasm"
+echo "Step3: Build spasm"
 echo "------------------------------------------------------------------------"
 echo ""
 
@@ -38,19 +48,8 @@ echo ""
 echo "(*) Configure SpasmInterface"
 echo ""
 cd bench/
-touch set.gi
-echo 'LoadPackage( "SpasmInterface" );' >> set.gi
-echo 'path := DirectoriesSystemPrograms();;' >> set.gi
-echo 'pwd := Filename( path, "pwd" );;' >> set.gi
-echo 'stdin := InputTextUser();;' >> set.gi
-echo 'str := "";;' >> set.gi
-echo 'stdout := OutputTextString(str,true);;' >> set.gi
-echo 'String ( Process( DirectoryCurrent(), pwd, stdin, stdout, [] ) );;' >> set.gi
-echo 'SetSpasmDirectory( str );' >> set.gi
-echo 'QUIT;;' >> set.gi
-gap set.gi
-rm set.gi
-
+pwd > $FILE_PATH
+cd ../../..
 
 echo ""
 echo "------------------------------------------------------------------------"
