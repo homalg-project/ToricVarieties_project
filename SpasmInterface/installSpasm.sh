@@ -42,7 +42,7 @@ aclocal
 autoconf
 autoreconf --install
 ./configure
-make -j4
+make -j($nproc)
 
 echo ""
 echo "(*) Configure SpasmInterface"
