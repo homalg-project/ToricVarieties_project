@@ -24,9 +24,9 @@ echo ""
 
 git clone https://github.com/cbouilla/spasm.git
 cd spasm
-git checkout -b prepared
 git remote add MartinBies https://github.com/HereAround/spasm
-git pull MartinBies martin_devel
+git fetch MartinBies martin_devel:martin_devel
+git checkout martin_devel
 
 
 echo ""
