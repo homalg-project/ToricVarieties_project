@@ -96,20 +96,8 @@ jobs:
           echo "(*) Install SpasmInterface"
           echo ""
           cd SpasmInterface
-          git clone https://github.com/cbouilla/spasm.git
-          cd spasm
-          git checkout -b prepared
-          git remote add MartinBies https://github.com/HereAround/spasm
-          git pull MartinBies martin_devel
-          aclocal
-          autoconf
-          autoreconf --install
-          ./configure
-          make -j $(nproc)
-          cd bench/
-          pwd > /home/gap/.gap/pkg/ToricVarieties_project/SpasmInterface/gap/SpasmDirectory.txt
-          cd ../../..
-          echo "$(pwd)"
+          ./installSpasm.sh
+          cd ..
           echo ""
           echo "(*) Install H0Approximator"
           echo ""
