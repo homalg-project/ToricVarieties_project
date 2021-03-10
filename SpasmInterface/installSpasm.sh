@@ -49,7 +49,7 @@ echo "(*) Configure SpasmInterface"
 echo ""
 cd bench/
 pwd > $FILE_PATH
-cd ../../..
+cd ../..
 
 echo ""
 echo "------------------------------------------------------------------------"
