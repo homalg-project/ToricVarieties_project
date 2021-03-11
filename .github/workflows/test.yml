@@ -103,52 +103,11 @@ jobs:
           echo ""
           cd H0Approximator
           ./install.sh
-          cd bin
-          echo $(pwd)
-          echo $(ls -a)
-          cd ../..
+          cd ..
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
           echo "------------------------------------------------------------------------"
           echo "SetInfoLevel(InfoPackageLoading, 3);" > ~/.gap/gaprc
-          #cd ToricVarieties
           TERM=dumb make -j $(nproc) --output-sync ci-test
           curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd AdditionsForToricVarieties
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd SpasmInterface
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd SparseMatrices
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd cohomCalgInterface
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd ToolsForFPGradedModules
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd TruncationsOfFPGradedModules
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd SheafCohomologyOnToricVarieties
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd CoherentSheavesOnToricVarieties
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
-          #cd H0Approximator
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
