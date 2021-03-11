@@ -118,7 +118,7 @@ InstallMethod( FindCounterBinaryOnH2,
     bin := fail;
     
     # Binary provided with H0Approximator package
-    package_directory := DirectoriesPackageLibrary( "H0Approximator", "gap" );
+    package_directory := DirectoriesPackageLibrary( "H0Approximator", "bin" );
     if Length( package_directory ) > 1 then
         # If there are at least two versions, then we cannot find the SpasmDirectory uniquely
         Error( "Found at least two versions of H0Approximator - unable to determine CounterDirectory" );
@@ -126,7 +126,6 @@ InstallMethod( FindCounterBinaryOnH2,
     else
         # create path to the binary
         dir := package_directory[ 1 ];
-        dir := Directory( ReplacedString( Filename( dir, "" ), "gap/", "bin/" ) );
         bin := Filename( dir, "counterH2" );
         
         # check if the binary exists
