@@ -53,7 +53,7 @@ rec(
                  "Philadelphia \n",
                  "PA 19104" ),
     Place         := "Philadelphia",
-    Institution   := "USA"
+    Institution   := "University of Pennsylvania"
   ),
 ],
 
