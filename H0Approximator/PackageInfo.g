@@ -38,15 +38,14 @@ rec(
     Email := "martin.bies@alumni.uni-heidelberg.de",
     WWWHome := "https://martinbies.github.io/",
     PostalAddress := Concatenation(
-                 "Mathematical Institute \n",
-                 "University of Oxford \n",
-                 "Andrew Wiles Building \n",
-                 "Radcliffe Observatory Quarter \n",
-                 "Woodstock Road \n",
-                 "Oxford OX2 6GG \n",
-                 "United Kingdom" ),
-    Place         := "Oxford",
-    Institution   := "University of Oxford"
+                 "Department of Mathematics \n",
+                 "University of Pennsylvania \n",
+                 "David Rittenhouse Laboratory \n",
+                 "209 S 33rd St \n",
+                 "Philadelphia \n",
+                 "PA 19104" ),
+    Place         := "Philadelphia",
+    Institution   := "University of Pennsylvania"
     ),
 rec(
     LastName := "Liu",
