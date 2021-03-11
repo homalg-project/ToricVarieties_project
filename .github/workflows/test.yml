@@ -103,7 +103,10 @@ jobs:
           echo ""
           cd H0Approximator
           ./install.sh
-          cd ..
+          cd bin
+          echo $(pwd)
+          echo $(ls -a)
+          cd ../..
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
@@ -145,7 +148,7 @@ jobs:
           TERM=dumb make -j $(nproc) --output-sync ci-test
           curl -s https://codecov.io/bash | bash
           cd ..
-          #cd H0Approximator
-          #TERM=dumb make -j $(nproc) --output-sync ci-test
-          #curl -s https://codecov.io/bash | bash
-          #cd ..
+          cd H0Approximator
+          TERM=dumb make -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd ..
