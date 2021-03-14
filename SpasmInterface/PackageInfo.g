@@ -16,7 +16,7 @@ PackageName := "SpasmInterface",
 Subtitle := "A package to communicate with the software Spasm",
 
 Version :=  Maximum( [
-  "2021.03.10", # Martins version  
+  "2021.03.14", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/SpasmInterface/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/SpasmInterface.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/SpasmInterface.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
