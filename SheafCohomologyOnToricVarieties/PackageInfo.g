@@ -16,7 +16,7 @@ PackageName := "SheafCohomologyOnToricVarieties",
 Subtitle := "A package to compute sheaf cohomology on toric varieties",
 
 Version :=  Maximum( [
-  "2020.08.16", ## Martins version
+  "2021.03.14", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/SheafCohomologyOnToricVarieties/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/SheafCohomologyOnToricVarieties.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/SheafCohomologyOnToricVarieties.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
