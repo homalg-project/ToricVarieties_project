@@ -21,7 +21,7 @@ PackageName := "H0Approximator",
 Subtitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2",
 
 Version :=  Maximum( [
-  "2021.03.11", # Martins version  
+  "2021.03.14", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -68,7 +68,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/H0Approximator/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2020-08-16/H0Approximator.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/H0Approximator.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
