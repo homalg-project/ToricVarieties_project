@@ -99,7 +99,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ [ "NConvex", ">= 2017.01.01" ],
+  NeededOtherPackages := [ [ "Convex", ">= 2021.03.13" ],
                            [ "GradedRingForHomalg", ">=2020.04.25" ],
                            [ "Modules", ">=2016.01.20" ],
                            [ "GradedModules", ">=2015.12.04" ],
