@@ -9,7 +9,7 @@ Version :=  Maximum( [
 ## this line prevents merge conflicts
   "2020.04.25", ## Mohamed's version
 ## this line prevents merge conflicts
-  "2021.01.12", ## Martin's version
+  "2021.03.14", ## Martin's version
 ## this line prevents merge conflicts
   "2019.12.05", ## Kamal's version
 ## this line prevents merge conflicts
@@ -65,7 +65,7 @@ SourceRepository := rec(
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-01-12/ToricVarieties",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/ToricVarieties",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
