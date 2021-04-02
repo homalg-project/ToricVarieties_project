@@ -357,7 +357,7 @@ InstallMethod( CountLimitRootsOfQSM, [ IsInt ],
         Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
         
         # str now contains the number of processors upon evaluation of this string
-        return CountLimitRoots( index, EvalString( str ) );
+        return CountLimitRootsOfQSM( index, EvalString( str ) );
         
 end );
 
