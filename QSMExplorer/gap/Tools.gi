@@ -137,7 +137,7 @@ InstallMethod( ReadQSM,
         fi;
         
         # continue if this was successful
-        if (path = fail ) then
+        if (file = fail ) then
             return fail;
         else
             
@@ -158,7 +158,7 @@ InstallMethod( ReadQSMByPolytope,
         file := FindDataBase();
         
         # continue if this was successful
-        if (path = fail ) then
+        if (file = fail ) then
             Print( "The QSM with the specified polytope does not exist.\n" );
             return fail;
         else
