@@ -1,0 +1,66 @@
+#############################################################################
+##
+##  README              QSMExplorer package
+##
+##                      Martin Bies
+##                      University of Pennsylvania
+##
+##                      Muyang Liu
+##                      University of Pennsylvania
+##
+##  Copyright 2021
+##
+##  A package to explor one Quadrillion F-theory Standard Models
+##
+#############################################################################
+
+README file for the `QSMExplorer' GAP4 package
+
+
+(1) Installation this package
+-----------------------------
+
+To get the latest version of this GAP 4 package pull the corresponding branch from github. Subsequently execute the install script (./install.sh), which is located in the folder of the QSMExplorer.
+This completes the installation of this package.
+
+
+(2) Documentation and test
+--------------------------
+
+Once the installation is complete, you can create the documentation for this package by issuing
+
+gap makedoc.g
+
+inside the QSMExplorer folder. Provided a running LaTeX installation, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+Muyang Liu, lmyreg2017@gmail.com
+
+
+(4) Funding
+--------------------------
+
+This work is partially supported by:
+
+- DOE Award DE-SC0013528Y,
+- NSF grant DMS 2001673,
+- Simons Foundation Collaboration grant #390287 on ``Homological Mirror Symmetry'',
+- Simons Foundation Collaboration grant #724069 on ``Special Holonomy in Geometry, Analysis and Physics'',
+- Slovenian Research Agency No.~P1-0306,
+- Fay R.~and Eugene L.~Langberg Chair.
+
+
+(5) Acknowledgements
+--------------------------
+
+This algorithm is the result of ongoing collaboration of Martin Bies, Mirjam Cvetič and Muyang Liu. The corresponding preprint will be available very soon.
