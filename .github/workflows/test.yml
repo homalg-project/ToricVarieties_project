@@ -105,6 +105,12 @@ jobs:
           ./install.sh
           cd ..
           echo ""
+          echo "(*) Install QSMExplorer"
+          echo ""
+          cd QSMExplorer
+          ./install.sh
+          cd ..
+          echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
           echo "------------------------------------------------------------------------"
