@@ -1,0 +1,11 @@
+@Chapter Introduction
+
+@Section Acknowledgements
+
+This algorithm is the result of ongoing collaboration of Martin Bies, Mirjam Cvetič and Muyang Liu. The corresponding preprint will be available very soon.
+
+@Section What is the goal of the QSMExplorer package?
+
+**QSMExplorer** provides functionality to easily and efficiently explore one Quadrillion F-theory Standard Models.
+
+@Chapter Tools for investigation of one Quadrillion F-theory Standard Models
