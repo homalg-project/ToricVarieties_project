@@ -49,3 +49,8 @@ H0Approximator/bin/*
 */stats*
 */coverage*
 */performance*
+
+QSMExplorer/bin/RootCounter/WDiagram.o
+QSMExplorer/bin/RootCounter/counter
+QSMExplorer/bin/RootCounter/main.o
+
