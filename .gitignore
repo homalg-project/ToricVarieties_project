@@ -45,6 +45,7 @@ H0Approximator/bin/*
 */tst/sparsematrices*
 */tst/spasminterface*
 */tst/sheafcohomologyontoricvarieties*
+*/tst/qsmexplorer*
 
 */stats*
 */coverage*
