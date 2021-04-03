@@ -99,14 +99,15 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ [ "Convex", ">= 2021.03.13" ],
-                           [ "GradedRingForHomalg", ">=2020.04.25" ],
+  NeededOtherPackages := [ [ "GradedRingForHomalg", ">=2020.04.25" ],
                            [ "Modules", ">=2016.01.20" ],
                            [ "GradedModules", ">=2015.12.04" ],
                            [ "ToolsForHomalg", ">=2016.02.17" ],
                            [ "AutoDoc", ">=2016.02.16" ] ],
   SuggestedOtherPackages := [ [ "4ti2Interface", ">=2020.04.25" ],
-                              [ "TopcomInterface", ">=2019.06.15" ], ],
+                              [ "TopcomInterface", ">=2019.06.15" ], 
+                              [ "Convex", ">= 2021.03.13" ],
+                              [ "NConvex", ">= 2021.03-13" ] ],
   ExternalConditions := []
   
 ),
