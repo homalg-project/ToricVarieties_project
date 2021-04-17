@@ -39,10 +39,10 @@ DisplayQSMByPolytope( 7 );
 #! true
 #! @EndLog
 
-#! Given the index i of polytope in our database.csv file, DisplayQSM( i ) shows the important information of the QSMs built from this polytope. For example, below is the important information of the QSMs from the 702 nd polytope in our list, which corresponds to the 3th polytope in the Kreuzer and Skarke list. 
+#! Given the index i of polytope in our database.csv file, DisplayQSM( i ) shows the important information of the QSMs built from this polytope. For example, below is the important information of the QSMs from the 1st polytope in our list, which corresponds to the 3th polytope in the Kreuzer and Skarke list. 
 
 #! @Log
-DisplayQSM( 702 );
+DisplayQSM( 1 );
 #!
 #! The QSM defined by FRSTs of the 3th 3-dimensional polytope in the Kreuzer-Skarke list
 #! ----------------------------------------------------------------------------------------
@@ -111,10 +111,10 @@ CountLimitRootsOfQSMByPolytope( 7 );
 #! 142560
 #! @EndLog
 
-#! Alternatively, we can compute the limit counting of selected polytope by issuing CountLimitRootsOfQSM( i ) that corresponds to the i-th polytope in our list. Below is the root counting for the 702-th polytope.
+#! Alternatively, we can compute the limit counting of selected polytope by issuing CountLimitRootsOfQSM( i ) that corresponds to the i-th polytope in our list. Below is the root counting for the 1st polytope.
 
 #! @Log
-CountLimitRootsOfQSM( 702 );
+CountLimitRootsOfQSM( 1 );
 #!
 #! Received diagram:
 #! -----------------
@@ -150,7 +150,7 @@ CountLimitRootsOfQSM( 702 );
 n := CountLimitRootsOfQSMByPolytope( 7 );;
 n;
 #! 142560
-n := CountLimitRootsOfQSM( 702 );;
+n := CountLimitRootsOfQSM( 1 );;
 n;
 #! 11110
 #! @EndExample
