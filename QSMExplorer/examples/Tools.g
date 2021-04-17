@@ -4,12 +4,14 @@
 
 LoadPackage( "QSMExplorer" );
 
-#! Given the index i of polytope in the Kreuzer and Skarke list, DisplayQSMByPolytope( i ) shows important information of the QSMs built from this polytope. For example, below is the output expected from the 7-th polytope in the Kreuzer and Skarke list.
+#! Given the index i of polytope in the Kreuzer and Skarke list, DisplayQSMByPolytope( i ) shows important information of the QSMs built from this polytope. We mention that
+#! in particular Sage starts its iterations at 0. Thus, for example the 8-th polytope is in Sage obtained by asking for the polytope with index 7.
+#! In the QSM-Explorer, we obtain information about the QSM associated to the 8-th polytope in the Kreuzer-Skarke list as follows:
 
 #! @Log
-DisplayQSMByPolytope( 7 );
+DisplayQSMByPolytope( 8 );
 #!
-#! The QSM defined by FRSTs of the 7th 3-dimensional polytope in the Kreuzer-Skarke list
+#! The QSM defined by FRSTs of the 8th 3-dimensional polytope in the Kreuzer-Skarke list
 #! ----------------------------------------------------------------------------------------
 #!
 #! Information on the 3-fold:
@@ -79,7 +81,7 @@ DisplayQSM( 1 );
 #! We can compute the limit counting of selected polytope by issuing CountLimitRootsOfQSMByPolytope( i ) that corresponds to the i-th polytope in the Kreuzer and Skarke list. Below is the root counting for the 7-th polytope.
 
 #! @Log
-CountLimitRootsOfQSMByPolytope( 7 );
+CountLimitRootsOfQSMByPolytope( 8 );
 #!
 #! Received diagram:
 #! -----------------
@@ -147,7 +149,7 @@ CountLimitRootsOfQSM( 1 );
 #! @EndLog
 
 #! @Example for short, below display the root counting of the 7th polytope in the Kreuzer and Skarke list and the 702 nd polytope in our list.
-n := CountLimitRootsOfQSMByPolytope( 7 );;
+n := CountLimitRootsOfQSMByPolytope( 8 );;
 n;
 #! 142560
 n := CountLimitRootsOfQSM( 1 );;
