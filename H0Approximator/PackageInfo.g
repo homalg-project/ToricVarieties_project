@@ -3,12 +3,12 @@
 ##  PackageInfo.g       H0Approximator package
 ##
 ##                      Martin Bies
-##                      University of Oxford
+##                      University of Pennsylvania
 ##
 ##                      Muyang Liu
 ##                      University of Pennsylvania
 ##
-##  Copyright 2020
+##  Copyright 2021
 ##
 ##  A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2
 ##
@@ -21,7 +21,7 @@ PackageName := "H0Approximator",
 Subtitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2",
 
 Version :=  Maximum( [
-  "2021.03.14", # Martins version  
+  "2021.04.19", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -68,7 +68,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/H0Approximator/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/H0Approximator.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/H0Approximator.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
