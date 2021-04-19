@@ -3,7 +3,7 @@
 ##  PackageInfo.g       TruncationsOfFPGradedModules package
 ##                      Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##  Copyright 2021      University of Pennsylvania
 ##
 ##  A package to compute truncations of FPGradedModules
 ##
@@ -16,7 +16,7 @@ PackageName := "TruncationsOfFPGradedModules",
 Subtitle := "A package to compute truncations of FPGradedModules",
 
 Version :=  Maximum( [
-  "2021.03.14", ## Martins version
+  "2021.04.19", ## Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/TruncationsOfFPGradedModules/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/TruncationsOfFPGradedModules.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/TruncationsOfFPGradedModules.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
