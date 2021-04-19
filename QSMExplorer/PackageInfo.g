@@ -21,7 +21,7 @@ PackageName := "QSMExplorer",
 Subtitle := "A package to explor one Quadrillion F-theory Standard Models",
 
 Version :=  Maximum( [
-  "2021.04.01", # Martins version  
+  "2021.04.19", # Martins version  
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -68,7 +68,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/QSMExplorer",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-01/QSMExplorer",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/QSMExplorer",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
