@@ -26,4 +26,6 @@ Detailed instructions for the installation can be found [here](https://martinbie
 
 ## Funding
 
-The work of Martin Bies is supported by the [Wiener-Anspach foundation](http://fwa.ulb.ac.be/).
+The work of Martin Bies is partially supported by *NSF grant DMS 201673*, the *Simons Foundation Collaboration grant #390287 on Homological Mirror Symmetry* and the *Simons Foundation Collaboration grant #724069 on Special Holonomy in Geometry, Analysis and Physics*. 
+
+
