@@ -3,9 +3,9 @@
 ##  PackageInfo.g       cohomCalgInterface package
 ##                      Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##  Copyright 2020      University of Pennsylvania
 ##
-##  A package to communicate with the software Topcom
+##  A package to communicate with the software cohomCalg
 ##
 #############################################################################
 
@@ -16,7 +16,7 @@ PackageName := "cohomCalgInterface",
 Subtitle := "A package to communicate with the software cohomCalg",
 
 Version :=  Maximum( [
-  "2021.03.14" # Martins version
+  "2021.04.19" # Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/cohomCalgInterface/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-03-14/cohomCalgInterface.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/cohomCalgInterface.zip",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
