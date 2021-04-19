@@ -3,7 +3,7 @@
 ##  PackageInfo.g       CoherentSheavesOnToricVarieties package
 ##                      Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##  Copyright 2021      University of Pennsylvania
 ##
 ##  A package to model coherent toric sheaves as elements in a Serre quotient category.
 ##
@@ -16,7 +16,7 @@ PackageName := "CoherentSheavesOnToricVarieties",
 Subtitle := "A package to model coherent toric sheaves as elements in a Serre quotient category.",
 
 Version :=  Maximum( [
-  "2021.03.14", # Martins version
+  "2021.04.19", # Martins version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
