@@ -76,7 +76,7 @@ SourceRepository := rec(
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/ToricVarieties",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-24/ToricVarieties",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
@@ -106,8 +106,7 @@ Dependencies := rec(
                            [ "AutoDoc", ">=2016.02.16" ] ],
   SuggestedOtherPackages := [ [ "4ti2Interface", ">=2020.04.25" ],
                               [ "TopcomInterface", ">=2019.06.15" ], 
-                              [ "Convex", ">= 2021.03.13" ],
-                              [ "NConvex", ">= 2021.03-13" ] ],
+                              [ "Convex", ">= 2021.04.24" ] ],
   ExternalConditions := []
   
 ),
