@@ -68,7 +68,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/QSMExplorer",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-19/QSMExplorer",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-24/QSMExplorer",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
