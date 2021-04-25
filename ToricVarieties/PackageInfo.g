@@ -76,7 +76,7 @@ SourceRepository := rec(
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/ToricVarieties/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-24/ToricVarieties",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-25/ToricVarieties",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
