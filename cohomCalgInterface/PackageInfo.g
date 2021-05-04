@@ -60,7 +60,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to communicate with the software cohomCalg",
-  Autoload  := false
 ),
 
 
@@ -74,15 +73,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "cohomCalg", "line bundle cohomology" ],
 

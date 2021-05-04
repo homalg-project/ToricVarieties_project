@@ -60,7 +60,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to handle sparse matrices in gap",
-  Autoload  := false
 ),
 
 
@@ -73,15 +72,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Sparse matrices", "Linear Algebra" ],
 

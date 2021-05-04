@@ -60,7 +60,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to provide additional structures for toric varieties which are required to compute sheaf cohomologies",
-  Autoload  := false
 ),
 
 
@@ -77,14 +76,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Toric Varieties, Sheaf cohomology" ],
 

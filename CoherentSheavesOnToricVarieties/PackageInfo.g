@@ -60,7 +60,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to model coherent toric sheaves as elements in a Serre quotient category.",
-  Autoload  := false
 ),
 
 
@@ -75,15 +74,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "coherent sheaves", "toric varieties" ],
 

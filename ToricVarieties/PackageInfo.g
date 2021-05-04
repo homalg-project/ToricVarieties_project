@@ -93,7 +93,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to compute properties of toric varieties",
-  Autoload  := false
 ),
 
 
@@ -112,14 +111,7 @@ Dependencies := rec(
   
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Toric geometry", "Toric varieties", "Divisors", "Geometry"],
 

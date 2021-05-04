@@ -81,7 +81,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to estimate global sections of a pullback line bundle on hypersurface curves in dP3 and H2",
-  Autoload  := false
 ),
 
 
@@ -95,15 +94,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Coherent sheaves", "Line bundles", "delPezzo", "Hirzebruch", "sections" ],
 

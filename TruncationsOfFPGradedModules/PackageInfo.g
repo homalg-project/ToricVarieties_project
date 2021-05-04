@@ -60,7 +60,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to compute truncations of FPGradedModules",
-  Autoload  := false
 ),
 
 
@@ -75,14 +74,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "FPGradedModules, Truncations" ],
 
