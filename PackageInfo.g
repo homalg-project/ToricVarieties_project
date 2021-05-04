@@ -61,7 +61,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to communicate with the software Topcom",
-  Autoload  := false
 ),
 
 
@@ -120,10 +119,6 @@ AvailabilityTest := function()
     return bool;
     
 end,
-
-
-Autoload := false,
-
 
 Keywords := [ "Topcom", "Triangulations" ]
 
