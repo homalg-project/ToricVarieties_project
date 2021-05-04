@@ -1,0 +1,61 @@
+#############################################################################
+##
+##  PackageInfo.g       TopcomInterface package
+##                      Martin Bies
+##
+##  Copyright 2020      University of Oxford
+##
+##  A package to communicate with the software Topcom
+##
+#############################################################################
+
+README file for the `TopcomInterface' GAP4 package
+
+
+(1) Installation
+--------------------------
+
+To get the latest version of this GAP 4 package pull the corresponding branch from github. 
+
+This package requires a working installation of topcom on your computer. To this end download the latest version from
+http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
+
+The installation of this software typically means to perform the following steps inside the Topcom folder:
+
+./configure CFLAGS="-m64" CXXFLAGS="-m64"
+make
+make check
+make install
+make clean
+
+More details/information can be found in the topcom package. This completes the installation of this gap-package.
+
+Currently, some functionality is not yet supported. In particular, this include the command line options -d, -h, -v, cardinality[k], frequency[ k ] and the input-type "chiro".
+
+
+(2) Documentation and test
+--------------------------
+
+You can create the documentation for this package by issuing
+
+gap makedoc.g
+
+inside the SpasmInterface folder. Provided a running LaTeX installation, the documentation will subsequently be available inside the /doc subfolder as manual.pdf.
+
+After this step, you can also issue a test on this software by issuing
+
+gap maketest.g
+
+
+(3) Contact
+--------------------------
+
+E-mail me if there are any questions, remarks, suggestions. Also, I would like to hear about applications of this package.
+
+Martin Bies, martin.bies@alumni.uni-heidelberg.de
+
+
+(4) Funding
+--------------------------
+
+This project is supported by the Wiener-Anspach Foundation.

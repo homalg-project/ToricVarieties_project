@@ -1,0 +1,7 @@
+@Chapter Introduction
+
+@Section What is the goal of the TopcomInterface package?
+
+**TopcomInterface** provides an interface, to communicate with the software Topcom via gap. Thereby, for example, triangulations of toric varieties can be computed directly via gap.
+
+@Chapter Functions
