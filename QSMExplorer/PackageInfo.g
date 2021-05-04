@@ -81,7 +81,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to explor one Quadrillion F-theory Standard Models",
-  Autoload  := false
 ),
 
 
@@ -95,15 +94,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Polytopes", "root bundles", "limit roots", "nodal curves" ],
 

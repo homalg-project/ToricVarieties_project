@@ -62,7 +62,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A package to compute sheaf cohomology on toric varieties",
-  Autoload  := false
 ),
 
 
@@ -78,15 +77,7 @@ Dependencies := rec(
 
 ),
 
-AvailabilityTest := function()
-  
-    return true;
-  end,
-
-
-
-Autoload := false,
-
+AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Sheaf cohomology" ],
 
