@@ -3,7 +3,7 @@ all: doc test
 .PHONY: test
 
 clean:
-
+	clean_all
 
 
 AdditionsForToricVarieties_clean_tst:
@@ -35,6 +35,12 @@ ToricVarieties_clean_tst:
 
 TruncationsOfFPGradedModules_clean_tst:
 	cd TruncationsOfFPGradedModules/tst && ./clean
+
+QSMExplorer_clean_tst:
+	cd QSMExplorer/tst && ./clean
+
+JConvex_clean_tst:
+	cd JConvex/tst && ./clean
 
 
 
@@ -68,6 +74,12 @@ ToricVarieties_clean_doc:
 TruncationsOfFPGradedModules_clean_doc:
 	cd TruncationsOfFPGradedModules/doc && ./clean
 
+QSMExplorer_clean_doc:
+	cd QSMExplorer/doc && ./clean
+
+JConvex_clean_doc:
+	cd JConvex/doc && ./clean
+
 
 
 AdditionsForToricVarieties_clean: AdditionsForToricVarieties_clean_tst AdditionsForToricVarieties_clean_doc
@@ -80,14 +92,16 @@ SpasmInterface_clean: SpasmInterface_clean_tst SpasmInterface_clean_doc
 ToolsForFPGradedModules_clean: ToolsForFPGradedModules_clean_tst ToolsForFPGradedModules_clean_doc
 ToricVarieties_clean: ToricVarieties_clean_tst ToricVarieties_clean_doc
 TruncationsOfFPGradedModules_clean: TruncationsOfFPGradedModules_clean_tst TruncationsOfFPGradedModules_clean_doc
+QSMExplorer_clean: QSMExplorer_clean_tst QSMExplorer_clean_doc
+JConvex_clean: JConvex_clean_tst JConvex_clean_doc
 
 
 
-clean_all: AdditionsForToricVarieties_clean CoherentSheavesOnToricVarieties_clean cohomCalgInterface_clean H0Approximator_clean SheafCohomologyOnToricVarieties_clean SparseMatrices_clean SpasmInterface_clean ToolsForFPGradedModules_clean ToricVarieties_clean TruncationsOfFPGradedModules_clean
+clean_all: AdditionsForToricVarieties_clean CoherentSheavesOnToricVarieties_clean cohomCalgInterface_clean H0Approximator_clean SheafCohomologyOnToricVarieties_clean SparseMatrices_clean SpasmInterface_clean ToolsForFPGradedModules_clean ToricVarieties_clean TruncationsOfFPGradedModules_clean QSMExplorer_clean JConvex_clean
 
-clean_all_doc: AdditionsForToricVarieties_clean_doc CoherentSheavesOnToricVarieties_clean_doc cohomCalgInterface_clean_doc H0Approximator_clean_doc SheafCohomologyOnToricVarieties_clean_doc SparseMatrices_clean_doc SpasmInterface_clean_doc ToolsForFPGradedModules_clean_doc ToricVarieties_clean_doc TruncationsOfFPGradedModules_clean_doc
+clean_all_doc: AdditionsForToricVarieties_clean_doc CoherentSheavesOnToricVarieties_clean_doc cohomCalgInterface_clean_doc H0Approximator_clean_doc SheafCohomologyOnToricVarieties_clean_doc SparseMatrices_clean_doc SpasmInterface_clean_doc ToolsForFPGradedModules_clean_doc ToricVarieties_clean_doc TruncationsOfFPGradedModules_clean_doc QSMExplorer_clean_doc JConvex_clean_doc
 
-clean_all_tst: AdditionsForToricVarieties_clean_tst CoherentSheavesOnToricVarieties_clean_tst cohomCalgInterface_clean_tst H0Approximator_clean_tst SheafCohomologyOnToricVarieties_clean_tst SparseMatrices_clean_tst SpasmInterface_clean_tst ToolsForFPGradedModules_clean_tst ToricVarieties_clean_tst TruncationsOfFPGradedModules_clean_tst
+clean_all_tst: AdditionsForToricVarieties_clean_tst CoherentSheavesOnToricVarieties_clean_tst cohomCalgInterface_clean_tst H0Approximator_clean_tst SheafCohomologyOnToricVarieties_clean_tst SparseMatrices_clean_tst SpasmInterface_clean_tst ToolsForFPGradedModules_clean_tst ToricVarieties_clean_tst TruncationsOfFPGradedModules_clean_tst QSMExplorer_clean_tst JConvex_clean_tst
 
 
 
@@ -121,7 +135,10 @@ ToricVarieties_test:
 TruncationsOfFPGradedModules_test:
 	cd TruncationsOfFPGradedModules && make test
 
-test: AdditionsForToricVarieties_test CoherentSheavesOnToricVarieties_test cohomCalgInterface_test H0Approximator_test SheafCohomologyOnToricVarieties_test SparseMatrices_test SpasmInterface_test ToolsForFPGradedModules_test ToricVarieties_test TruncationsOfFPGradedModules_test
+QSMExplorer_test:
+	cd QSMExplorer && make test
+
+test: AdditionsForToricVarieties_test CoherentSheavesOnToricVarieties_test cohomCalgInterface_test H0Approximator_test SheafCohomologyOnToricVarieties_test SparseMatrices_test SpasmInterface_test ToolsForFPGradedModules_test ToricVarieties_test TruncationsOfFPGradedModules_test QSMExplorer_test
 
 ci-test: doc
 	cd AdditionsForToricVarieties && make ci-test
@@ -134,11 +151,11 @@ ci-test: doc
 	cd ToolsForFPGradedModules && make ci-test
 	cd ToricVarieties && make ci-test
 	cd TruncationsOfFPGradedModules && make ci-test
-
+	cd QSMExplorer && make ci-test
 
 
 # BEGIN PACKAGE JANITOR
-doc: doc_AdditionsForToricVarieties doc_CoherentSheavesOnToricVarieties doc_cohomCalgInterface doc_H0Approximator doc_SheafCohomologyOnToricVarieties doc_SparseMatrices doc_SpasmInterface doc_ToolsForFPGradedModules doc_ToricVarieties doc_TruncationsOfFPGradedModules
+doc: doc_AdditionsForToricVarieties doc_CoherentSheavesOnToricVarieties doc_cohomCalgInterface doc_H0Approximator doc_SheafCohomologyOnToricVarieties doc_SparseMatrices doc_SpasmInterface doc_ToolsForFPGradedModules doc_ToricVarieties doc_TruncationsOfFPGradedModules doc_QSMExplorer doc_JConvex
 
 doc_AdditionsForToricVarieties:
 	$(MAKE) -C AdditionsForToricVarieties doc
@@ -169,5 +186,11 @@ doc_ToricVarieties:
 
 doc_TruncationsOfFPGradedModules:
 	$(MAKE) -C TruncationsOfFPGradedModules doc
+
+doc_QSMExplorer:
+	$(MAKE) -C QSMExplorer doc
+
+doc_JConvex:
+	$(MAKE) -C JConvex doc
 
 # END PACKAGE JANITOR
