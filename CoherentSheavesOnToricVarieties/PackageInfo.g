@@ -15,8 +15,8 @@ PackageName := "CoherentSheavesOnToricVarieties",
 
 Subtitle := "A package to model coherent toric sheaves as elements in a Serre quotient category.",
 
-Version :=  Maximum( [
-  "2021.04.19", # Martins version
+Version := Maximum( [
+   "2021.05.04",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/CoherentSheavesOnToricVarieties/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-04-25/CoherentSheavesOnToricVarieties.zip",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-05-04/CoherentSheavesOnToricVarieties",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
