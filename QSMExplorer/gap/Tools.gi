@@ -333,6 +333,59 @@ InstallMethod( PrintDualGraph, [ IsRecord ],
         
 end );
 
+##############################################################################################
+##
+##  Section Plot dual graph
+##
+##############################################################################################
+
+
+InstallMethod( BaseSpaceOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return BaseSpace( data );
+        fi;
+        
+end );
+
+InstallMethod( BaseSpaceOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return BaseSpace( data );
+        fi;
+        
+end );
+
+
+InstallMethod( BaseSpace, [ IsRecord ],
+    function( data )
+        local rays, max_cones, B3;
+        
+        # read-out rays and max_cones
+        rays := EvalString( String( data.RayGeneratorsOfB3 ) );
+        max_cones := EvalString( String( data.TriangulationOfB3 ) );
+        
+        # return the result
+        return ToricVariety( Fan( rays, max_cones ) );
+        
+end );
+
 
 
 ##############################################################################################
