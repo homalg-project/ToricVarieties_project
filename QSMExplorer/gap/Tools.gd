@@ -103,6 +103,27 @@ DeclareOperation( "PrintDualGraph", [ IsRecord ] );
 
 ##############################################################################################
 ##
+#! @Section 3-fold base space
+##
+##############################################################################################
+
+#! @Description
+#! This function constructs a 3-fold base space for this QSM.
+#! @Returns a toric variety
+#! @Arguments Integer i
+DeclareOperation( "BaseSpaceOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function constructs a 3-fold base space for this QSM.
+#! @Returns a toric variety
+#! @Arguments Integer i
+DeclareOperation( "BaseSpaceOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "BaseSpace", [ IsRecord ] );
+
+
+##############################################################################################
+##
 #! @Section Count limit roots
 ##
 ##############################################################################################
