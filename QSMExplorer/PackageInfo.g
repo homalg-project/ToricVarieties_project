@@ -18,7 +18,7 @@ SetPackageInfo( rec(
 
 PackageName := "QSMExplorer",
 
-Subtitle := "A package to explor one Quadrillion F-theory Standard Models",
+Subtitle := "A package to explore one Quadrillion F-theory Standard Models",
 
 Version := Maximum( [
    "2021.05.04",
@@ -80,7 +80,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A package to explor one Quadrillion F-theory Standard Models",
+  LongTitle := "A package to explore one Quadrillion F-theory Standard Models",
 ),
 
 
