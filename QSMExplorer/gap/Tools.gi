@@ -399,6 +399,172 @@ end );
 
 ##############################################################################################
 ##
+##  Information of non-trivial curve components
+##
+##############################################################################################
+
+InstallMethod( GeneraOfCurvesInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return GeneraOfCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( GeneraOfCurvesInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return GeneraOfCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( GeneraOfCurves, [ IsRecord ],
+    function( data )
+        
+        return EvalString( String( data.GenusVxiAndKbar ) );
+        
+end );
+
+
+InstallMethod( DegreeOfKbarOnCurvesInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DegreeOfKbarOnCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( DegreeOfKbarOnCurvesInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DegreeOfKbarOnCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( DegreeOfKbarOnCurves, [ IsRecord ],
+    function( data )
+        
+        return EvalString( String( data.DegreeOfKbarOnVxiAndKbar ) );
+        
+end );
+
+
+InstallMethod( IntersectionNumbersOfCurvesInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return IntersectionNumbersOfCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( IntersectionNumbersOfCurvesInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return IntersectionNumbersOfCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( IntersectionNumbersOfCurves, [ IsRecord ],
+    function( data )
+        
+        return EvalString( String( data.IntersectionAmongVxiAndKbarWithVxjAndKbar ) );
+        
+end );
+
+
+InstallMethod( IndicesOfTrivialCurvesInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return IndicesOfTrivialCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( IndicesOfTrivialCurvesInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return IndicesOfTrivialCurves( data );
+        fi;
+        
+end );
+
+InstallMethod( IndicesOfTrivialCurves, [ IsRecord ],
+    function( data )
+        
+        return EvalString( String( data.IndexFacetInteriorDivisors ) );
+        
+end );
+
+
+##############################################################################################
+##
 ##  Count limit roots
 ##
 ##############################################################################################

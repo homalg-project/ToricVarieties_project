@@ -124,6 +124,73 @@ DeclareOperation( "BaseSpace", [ IsRecord ] );
 
 ##############################################################################################
 ##
+#! @Section Information of all curve components
+##
+##############################################################################################
+
+#! @Description
+#! This function returns the genera of the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GeneraOfCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the genera of the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GeneraOfCurvesInQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "GeneraOfCurves", [ IsRecord ] );
+
+
+#! @Description
+#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnCurvesInQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "DegreeOfKbarOnCurves", [ IsRecord ] );
+
+
+#! @Description
+#! This function returns the intersection numbers among the non-trivial curves in a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumbersOfCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the non-trivial curves in a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumbersOfCurvesInQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "IntersectionNumbersOfCurves", [ IsRecord ] );
+
+
+#! @Description
+#! This function returns the indices of all trivial curves.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IndicesOfTrivialCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the indices of all trivial curves.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "IndicesOfTrivialCurves", [ IsRecord ] );
+
+
+
+##############################################################################################
+##
 #! @Section Count limit roots
 ##
 ##############################################################################################
