@@ -140,8 +140,6 @@ DeclareOperation( "GeneraOfCurvesInQSM", [ IsInt ] );
 #! @Arguments Integer i
 DeclareOperation( "GeneraOfCurvesInQSMByPolytope", [ IsInt ] );
 
-DeclareOperation( "GeneraOfCurves", [ IsRecord ] );
-
 
 #! @Description
 #! This function returns the degree of Kbar on the non-trivial curves in a QSM.
@@ -154,8 +152,6 @@ DeclareOperation( "DegreeOfKbarOnCurvesInQSM", [ IsInt ] );
 #! @Returns a list of integers
 #! @Arguments Integer i
 DeclareOperation( "DegreeOfKbarOnCurvesInQSMByPolytope", [ IsInt ] );
-
-DeclareOperation( "DegreeOfKbarOnCurves", [ IsRecord ] );
 
 
 #! @Description
@@ -170,8 +166,6 @@ DeclareOperation( "IntersectionNumbersOfCurvesInQSM", [ IsInt ] );
 #! @Arguments Integer i
 DeclareOperation( "IntersectionNumbersOfCurvesInQSMByPolytope", [ IsInt ] );
 
-DeclareOperation( "IntersectionNumbersOfCurves", [ IsRecord ] );
-
 
 #! @Description
 #! This function returns the indices of all trivial curves.
@@ -184,9 +178,6 @@ DeclareOperation( "IndicesOfTrivialCurvesInQSM", [ IsInt ] );
 #! @Returns a list of lists of integers
 #! @Arguments Integer i
 DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
-
-DeclareOperation( "IndicesOfTrivialCurves", [ IsRecord ] );
-
 
 
 ##############################################################################################

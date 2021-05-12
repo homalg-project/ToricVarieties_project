@@ -414,7 +414,7 @@ InstallMethod( GeneraOfCurvesInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return GeneraOfCurves( data );
+            return EvalString( String( data.GenusVxiAndKbar ) );
         fi;
         
 end );
@@ -430,15 +430,8 @@ InstallMethod( GeneraOfCurvesInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return GeneraOfCurves( data );
+            return EvalString( String( data.GenusVxiAndKbar ) );
         fi;
-        
-end );
-
-InstallMethod( GeneraOfCurves, [ IsRecord ],
-    function( data )
-        
-        return EvalString( String( data.GenusVxiAndKbar ) );
         
 end );
 
@@ -454,7 +447,7 @@ InstallMethod( DegreeOfKbarOnCurvesInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return DegreeOfKbarOnCurves( data );
+            return EvalString( String( data.DegreeOfKbarOnVxiAndKbar ) );
         fi;
         
 end );
@@ -470,15 +463,8 @@ InstallMethod( DegreeOfKbarOnCurvesInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return DegreeOfKbarOnCurves( data );
+            return EvalString( String( data.DegreeOfKbarOnVxiAndKbar ) );
         fi;
-        
-end );
-
-InstallMethod( DegreeOfKbarOnCurves, [ IsRecord ],
-    function( data )
-        
-        return EvalString( String( data.DegreeOfKbarOnVxiAndKbar ) );
         
 end );
 
@@ -494,7 +480,7 @@ InstallMethod( IntersectionNumbersOfCurvesInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return IntersectionNumbersOfCurves( data );
+            return EvalString( String( data.IntersectionAmongVxiAndKbarWithVxjAndKbar ) );
         fi;
         
 end );
@@ -510,15 +496,8 @@ InstallMethod( IntersectionNumbersOfCurvesInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return IntersectionNumbersOfCurves( data );
+            return EvalString( String( data.IntersectionAmongVxiAndKbarWithVxjAndKbar ) );
         fi;
-        
-end );
-
-InstallMethod( IntersectionNumbersOfCurves, [ IsRecord ],
-    function( data )
-        
-        return EvalString( String( data.IntersectionAmongVxiAndKbarWithVxjAndKbar ) );
         
 end );
 
@@ -534,7 +513,7 @@ InstallMethod( IndicesOfTrivialCurvesInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return IndicesOfTrivialCurves( data );
+            return EvalString( String( data.IndexFacetInteriorDivisors ) );
         fi;
         
 end );
@@ -550,15 +529,8 @@ InstallMethod( IndicesOfTrivialCurvesInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return IndicesOfTrivialCurves( data );
+            return EvalString( String( data.IndexFacetInteriorDivisors ) );
         fi;
-        
-end );
-
-InstallMethod( IndicesOfTrivialCurves, [ IsRecord ],
-    function( data )
-        
-        return EvalString( String( data.IndexFacetInteriorDivisors ) );
         
 end );
 
