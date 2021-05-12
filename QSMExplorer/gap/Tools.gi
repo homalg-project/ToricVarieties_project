@@ -388,7 +388,7 @@ InstallMethod( BaseSpace, [ IsRecord ],
         weights := EntriesOfHomalgMatrixAsListList( MatrixOfMap( epi ) );
         
         # and variables names
-        vars := JoinStringsWithSeparator( List( [ 1 .. NrCols( m ) ], i -> Concatenation( "x", String( i ) ) ), "," );
+        vars := JoinStringsWithSeparator( List( [ 1 .. NrCols( m ) ], i -> Concatenation( "x", String( i-1 ) ) ), "," );
         
         # then construct the variety
         return ToricVariety( rays, max_cones, weights, vars );
