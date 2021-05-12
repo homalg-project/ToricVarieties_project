@@ -373,6 +373,25 @@ DeclareOperation( "SimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
 DeclareOperation( "PlotSimplifiedDualGraph", [ IsRecord ] );
 
 
+##############################################################################################
+##
+#! @Section Toric ambient space 5-fold
+##
+##############################################################################################
+
+#! @Description
+#! This function return the ray generators of the toric ambient space 5-fold of a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function return the ray generators of the toric ambient space 5-fold of a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope", [ IsInt ] );
+
+
 
 ##############################################################################################
 ##
