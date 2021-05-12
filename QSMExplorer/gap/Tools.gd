@@ -82,28 +82,6 @@ DeclareOperation( "PrintQSM", [ IsRecord ] );
 
 ##############################################################################################
 ##
-#! @Section Plot dual graph
-##
-##############################################################################################
-
-#! @Description
-#! This function prints the dual graph of a QSM.
-#! @Returns true or fail
-#! @Arguments Integer i
-DeclareOperation( "DualGraphOfQSM", [ IsInt ] );
-
-#! @Description
-#! This function prints the dual graph of a QSM.
-#! @Returns true or fail
-#! @Arguments Integer i
-DeclareOperation( "DualGraphOfQSMByPolytope", [ IsInt ] );
-
-DeclareOperation( "PrintDualGraph", [ IsRecord ] );
-
-
-
-##############################################################################################
-##
 #! @Section Information about polytope and its triangulation
 ##
 ##############################################################################################
@@ -296,6 +274,48 @@ DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSM", [ IsInt ] );
 #! @Returns a list of lists of integers
 #! @Arguments Integer i
 DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
+
+
+##############################################################################################
+##
+#! @Section Plot dual graph
+##
+##############################################################################################
+
+#! @Description
+#! This function prints the dual graph of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "DualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function prints the dual graph of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "DualGraphOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "PlotDualGraph", [ IsRecord ] );
+
+
+##############################################################################################
+##
+#! @Section Plot simplified dual graph
+##
+##############################################################################################
+
+#! @Description
+#! This function prints the simplified dual graph of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "SimplifiedDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function prints the simplified dual graph of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "SimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "PlotSimplifiedDualGraph", [ IsRecord ] );
 
 
 

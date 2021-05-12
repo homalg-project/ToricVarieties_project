@@ -267,76 +267,6 @@ end );
 
 ##############################################################################################
 ##
-##  Section Plot dual graph
-##
-##############################################################################################
-
-
-InstallMethod( DualGraphOfQSM,
-               "an integer",
-               [ IsInt ],
-    function( index )
-        local data;
-        
-        # read the data
-        data := ReadQSM( index );
-        
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return PrintDualGraph( data );
-        fi;
-        
-end );
-
-InstallMethod( DualGraphOfQSMByPolytope,
-               "an integer",
-               [ IsInt ],
-    function( index )
-        local data;
-        
-        # read the data
-        data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return PrintDualGraph( data );
-        fi;
-        
-end );
-
-
-InstallMethod( PrintDualGraph, [ IsRecord ],
-    function( data )
-        local script, output_string, output, input_string, input, genera, edges, options;
-        
-        # find the python script
-        script := FindDualGraphScript();
-        
-        # prepare empty streams
-        output_string := "";
-        output := OutputTextString( output_string, true );
-        input_string := "";
-        input := InputTextString( input_string );
-        
-        # options conveys the necessary information about the graph
-        genera := String( data.CiGenus );
-        RemoveCharacters( genera, " " );
-        edges := String( data.EdgeList );
-        RemoveCharacters( edges, " " );
-        options := Concatenation( String( genera ), " ", String( edges ) );
-
-        # issue the script
-        Process( DirectoryCurrent(), script, input, output, [ options ] );
-        
-        # return success
-        return true;
-        
-end );
-
-
-
-##############################################################################################
-##
 ##  Information about polytope and its triangulation
 ##
 ##############################################################################################
@@ -810,6 +740,165 @@ InstallMethod( IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope,
         if ( data <> fail ) then
             return EvalString( String( data.IntersectionNumberOfComponentsOfDualGraph ) );
         fi;
+        
+end );
+
+
+##############################################################################################
+##
+##  Plot dual graph
+##
+##############################################################################################
+
+
+InstallMethod( DualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotDualGraph( data );
+        fi;
+        
+end );
+
+InstallMethod( DualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotDualGraph( data );
+        fi;
+        
+end );
+
+
+InstallMethod( PlotDualGraph, [ IsRecord ],
+    function( data )
+        local genera, names, int, num_comp, edges, i, j, script, options, output_string, output, input_string, input;
+        
+        # read-out the genera
+        genera := String( data.GenusOfComponentsOfDualGraph );
+        RemoveCharacters( genera, " " );
+        
+        # read-out the names of the curves
+        names := ReplacedString( String( data.ComponentsOfDualGraph ), "\'", "" );
+        RemoveCharacters( names, " " );
+        # Convenience method - add the degree of Kbar to the right power?
+        # Add dual graph of nodal Higgs curve eventually?
+        
+        # compute edge-list
+        int := EvalString( String( data.IntersectionNumberOfComponentsOfDualGraph ) );
+        num_comp := Length( EvalString( String( data.GenusOfComponentsOfDualGraph ) ) );
+        edges := [];
+        for i in [ 1 .. num_comp ] do
+            for j in [ i + 1 .. num_comp ] do
+                if ( int[ i ][ j ] <> 0 ) then
+                    Append( edges, [[ i-1, j-1 ]] );
+                fi;
+            od;
+        od;
+        edges := String( edges );
+        RemoveCharacters( edges, " " );
+        
+        # find the python script and transmit data by the options
+        script := FindDualGraphScript();
+        options := Concatenation( String( genera ), " ", String( edges ), " ", String( names ) );
+        
+        # execute this script
+        output_string := "";
+        output := OutputTextString( output_string, true );
+        input_string := "";
+        input := InputTextString( input_string );
+        Process( DirectoryCurrent(), script, input, output, [ options ] );
+        
+        # return success
+        return true;
+        
+end );
+
+
+
+##############################################################################################
+##
+##  Plot simplified dual graph
+##
+##############################################################################################
+
+
+InstallMethod( SimplifiedDualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotSimplifiedDualGraph( data );
+        fi;
+        
+end );
+
+InstallMethod( SimplifiedDualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotSimplifiedDualGraph( data );
+        fi;
+        
+end );
+
+
+InstallMethod( PlotSimplifiedDualGraph, [ IsRecord ],
+    function( data )
+        local genera, edges, names, script, options, output_string, output, input_string, input;
+        
+        # extract genera
+        genera := String( data.CiGenus );
+        RemoveCharacters( genera, " " );
+        
+        # extract the edges
+        edges := String( data.EdgeList );
+        RemoveCharacters( edges, " " );
+        
+        # read-out the names
+        names := ReplacedString( String( data.ComponentsOfSimplifiedDualGraph ), "\'", "" );
+        RemoveCharacters( names, " " );
+        
+        # find the python script and transmit data by the options
+        script := FindDualGraphScript();
+        options := Concatenation( String( genera ), " ", String( edges ), " ", String( names ) );
+        
+        # execute this script
+        output_string := "";
+        output := OutputTextString( output_string, true );
+        input_string := "";
+        input := InputTextString( input_string );
+        Process( DirectoryCurrent(), script, input, output, [ options ] );
+        
+        # return success
+        return true;
         
 end );
 

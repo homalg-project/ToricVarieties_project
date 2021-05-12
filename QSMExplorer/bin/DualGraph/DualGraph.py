@@ -13,6 +13,7 @@ data = sys.argv[ 1 ].split( " " )
 genus_list = convert_string_to_list_of_ints( data[ 0 ] ) # genera
 edge_list = data[ 1 ].replace( '[[', '[' ).replace( ']]', ']' ).split( '],' )
 edge_list = [ convert_string_to_list_of_ints( x ) for x in edge_list ]
+C_i_name = [ str( i ) for i in data[ 2 ].replace( '[', '' ).replace( ']', '' ).split( ',' ) ]
 
 # create colour scheme
 C_i_genus_color=[]
@@ -25,9 +26,6 @@ for i in range(len(genus_list)):
         C_i_genus_color.append("g")
     if genus_list[i]>1:
         C_i_genus_color.append("r")
-
-# create names for the curves
-C_i_name = [ "C" + str( i ) for i in range( len( genus_list ) ) ]
 
 # try to proceed
 try:
