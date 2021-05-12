@@ -182,9 +182,23 @@ DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section Information about triangulation
+#! @Section Information about polytope and its triangulation
 ##
 ##############################################################################################
+
+
+#! @Description
+#! This function returns the polytopes whose FRSTs define the base spaces of the QSM in question.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "PolytopeOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the polytopes whose FRSTs define the base spaces of the QSM in question.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "PolytopeOfQSMByPolytope", [ IsInt ] );
+
 
 #! @Description
 #! This function returns the triangulation estimate for a QSM.
