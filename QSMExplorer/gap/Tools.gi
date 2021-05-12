@@ -375,14 +375,23 @@ end );
 
 InstallMethod( BaseSpace, [ IsRecord ],
     function( data )
-        local rays, max_cones, B3;
+        local rays, max_cones, m, map, epi, weights, vars;
         
         # read-out rays and max_cones
         rays := EvalString( String( data.RayGeneratorsOfB3 ) );
         max_cones := EvalString( String( data.TriangulationOfB3 ) );
         
-        # return the result
-        return ToricVariety( Fan( rays, max_cones ) );
+        # fix the grading
+        m := Involution( HomalgMatrix( rays, HOMALG_MATRICES.ZZ ) );
+        map := HomalgMap( m, NrRows( m ) * HOMALG_MATRICES.ZZ, NrCols( m ) * HOMALG_MATRICES.ZZ );
+        epi := ByASmallerPresentation( CokernelEpi( map ) );
+        weights := EntriesOfHomalgMatrixAsListList( MatrixOfMap( epi ) );
+        
+        # and variables names
+        vars := JoinStringsWithSeparator( List( [ 1 .. NrCols( m ) ], i -> Concatenation( "x", String( i ) ) ), "," );
+        
+        # then construct the variety
+        return ToricVariety( rays, max_cones, weights, vars );
         
 end );
 
