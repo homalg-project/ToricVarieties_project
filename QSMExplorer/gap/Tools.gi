@@ -565,6 +565,111 @@ end );
 
 ##############################################################################################
 ##
+##  Information about triangulation
+##
+##############################################################################################
+
+InstallMethod( TriangulationEstimateInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangulationEstimate ) );
+        fi;
+        
+end );
+
+InstallMethod( TriangulationEstimateInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangulationEstimate ) );
+        fi;
+        
+end );
+
+
+InstallMethod( MaxLatticePtsInFacetInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.MaxLatticePtsInFacet ) );
+        fi;
+        
+end );
+
+InstallMethod( MaxLatticePtsInFacetInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.MaxLatticePtsInFacet ) );
+        fi;
+        
+end );
+
+
+InstallMethod( TriangulationQuickForQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangQuick ) );
+        fi;
+        
+end );
+
+InstallMethod( TriangulationQuickForQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( LowercaseString( String( data.TriangQuick ) ) );
+        fi;
+        
+end );
+
+
+##############################################################################################
+##
 ##  Count limit roots
 ##
 ##############################################################################################
