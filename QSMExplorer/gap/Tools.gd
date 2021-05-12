@@ -223,7 +223,7 @@ DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section Dual graph
+#! @Section Properties of the dual graph
 ##
 ##############################################################################################
 
@@ -278,7 +278,7 @@ DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope", [ 
 
 ##############################################################################################
 ##
-#! @Section Plot dual graph
+#! @Section Plotting the dual graph
 ##
 ##############################################################################################
 
@@ -299,7 +299,62 @@ DeclareOperation( "PlotDualGraph", [ IsRecord ] );
 
 ##############################################################################################
 ##
-#! @Section Plot simplified dual graph
+#! @Section Properties of the simplified dual graph
+##
+##############################################################################################
+
+#! @Description
+#! This function returns the list of the names of the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of strings
+#! @Arguments Integer i
+DeclareOperation( "ComponentsOfSimplifiedDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the genera of the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of strings
+#! @Arguments Integer i
+DeclareOperation( "ComponentsOfSimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the names of the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GenusOfComponentsOfSimplifiedDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the genera of the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GenusOfComponentsOfSimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the degrees of the anticanonical bundle on the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnComponentsOfSimplifiedDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the degrees of the anticanonical bundle on the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnComponentsOfSimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "EdgeListOfSimplifiedDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the (non-trivial) components of the simplified dual graph.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "EdgeListOfSimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
+
+
+##############################################################################################
+##
+#! @Section Plotting the simplified dual graph
 ##
 ##############################################################################################
 
