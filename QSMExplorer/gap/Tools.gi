@@ -607,7 +607,7 @@ end );
 
 ##############################################################################################
 ##
-##  Dual graph
+##  Properties of the dual graph
 ##
 ##############################################################################################
 
@@ -746,7 +746,7 @@ end );
 
 ##############################################################################################
 ##
-##  Plot dual graph
+##  Plotting the dual graph
 ##
 ##############################################################################################
 
@@ -829,10 +829,148 @@ InstallMethod( PlotDualGraph, [ IsRecord ],
 end );
 
 
+##############################################################################################
+##
+##  Properties of the simplified dual graph
+##
+##############################################################################################
+
+
+InstallMethod( ComponentsOfSimplifiedDualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( ReplacedString( String( data.ComponentsOfSimplifiedDualGraph ), "\'", "\"" ) );
+        fi;
+        
+end );
+
+InstallMethod( ComponentsOfSimplifiedDualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( ReplacedString( String( data.ComponentsOfSimplifiedDualGraph ), "\'", "\"" ) );
+        fi;
+        
+end );
+
+
+InstallMethod( GenusOfComponentsOfSimplifiedDualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.CiGenus ) );
+        fi;
+        
+end );
+
+InstallMethod( GenusOfComponentsOfSimplifiedDualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.CiGenus ) );
+        fi;
+        
+end );
+
+
+InstallMethod( DegreeOfKbarOnComponentsOfSimplifiedDualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.CiDegreeKbar ) );
+        fi;
+        
+end );
+
+InstallMethod( DegreeOfKbarOnComponentsOfSimplifiedDualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.CiDegreeKbar ) );
+        fi;
+        
+end );
+
+
+InstallMethod( EdgeListOfSimplifiedDualGraphOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.EdgeList ) );
+        fi;
+        
+end );
+
+InstallMethod( EdgeListOfSimplifiedDualGraphOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.EdgeList ) );
+        fi;
+        
+end );
+
 
 ##############################################################################################
 ##
-##  Plot simplified dual graph
+##  Plotting the simplified dual graph
 ##
 ##############################################################################################
 
