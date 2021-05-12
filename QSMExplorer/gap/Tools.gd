@@ -101,84 +101,6 @@ DeclareOperation( "DualGraphOfQSMByPolytope", [ IsInt ] );
 DeclareOperation( "PrintDualGraph", [ IsRecord ] );
 
 
-##############################################################################################
-##
-#! @Section 3-fold base space
-##
-##############################################################################################
-
-#! @Description
-#! This function constructs a 3-fold base space for this QSM.
-#! @Returns a toric variety
-#! @Arguments Integer i
-DeclareOperation( "BaseSpaceOfQSM", [ IsInt ] );
-
-#! @Description
-#! This function constructs a 3-fold base space for this QSM.
-#! @Returns a toric variety
-#! @Arguments Integer i
-DeclareOperation( "BaseSpaceOfQSMByPolytope", [ IsInt ] );
-
-DeclareOperation( "BaseSpace", [ IsRecord ] );
-
-
-##############################################################################################
-##
-#! @Section Information of all curve components
-##
-##############################################################################################
-
-#! @Description
-#! This function returns the genera of the non-trivial curves in a QSM.
-#! @Returns a list of integers
-#! @Arguments Integer i
-DeclareOperation( "GeneraOfCurvesInQSM", [ IsInt ] );
-
-#! @Description
-#! This function returns the genera of the non-trivial curves in a QSM.
-#! @Returns a list of integers
-#! @Arguments Integer i
-DeclareOperation( "GeneraOfCurvesInQSMByPolytope", [ IsInt ] );
-
-
-#! @Description
-#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
-#! @Returns a list of integers
-#! @Arguments Integer i
-DeclareOperation( "DegreeOfKbarOnCurvesInQSM", [ IsInt ] );
-
-#! @Description
-#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
-#! @Returns a list of integers
-#! @Arguments Integer i
-DeclareOperation( "DegreeOfKbarOnCurvesInQSMByPolytope", [ IsInt ] );
-
-
-#! @Description
-#! This function returns the intersection numbers among the non-trivial curves in a QSM.
-#! @Returns a list of lists of integers
-#! @Arguments Integer i
-DeclareOperation( "IntersectionNumbersOfCurvesInQSM", [ IsInt ] );
-
-#! @Description
-#! This function returns the intersection numbers among the non-trivial curves in a QSM.
-#! @Returns a list of lists of integers
-#! @Arguments Integer i
-DeclareOperation( "IntersectionNumbersOfCurvesInQSMByPolytope", [ IsInt ] );
-
-
-#! @Description
-#! This function returns the indices of all trivial curves.
-#! @Returns a list of lists of integers
-#! @Arguments Integer i
-DeclareOperation( "IndicesOfTrivialCurvesInQSM", [ IsInt ] );
-
-#! @Description
-#! This function returns the indices of all trivial curves.
-#! @Returns a list of lists of integers
-#! @Arguments Integer i
-DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
-
 
 ##############################################################################################
 ##
@@ -237,6 +159,143 @@ DeclareOperation( "TriangulatonQuickForQSM", [ IsInt ] );
 #! @Returns true or false
 #! @Arguments Integer i
 DeclareOperation( "TriangulationQuickForQSMByPolytope", [ IsInt ] );
+
+
+
+##############################################################################################
+##
+#! @Section 3-fold base space
+##
+##############################################################################################
+
+#! @Description
+#! This function constructs a 3-fold base space for this QSM.
+#! @Returns a toric variety
+#! @Arguments Integer i
+DeclareOperation( "BaseSpaceOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function constructs a 3-fold base space for this QSM.
+#! @Returns a toric variety
+#! @Arguments Integer i
+DeclareOperation( "BaseSpaceOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "BaseSpace", [ IsRecord ] );
+
+
+
+##############################################################################################
+##
+#! @Section All curve components
+##
+##############################################################################################
+
+#! @Description
+#! This function returns the genera of the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GeneraOfCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the genera of the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GeneraOfCurvesInQSMByPolytope", [ IsInt ] );
+
+
+#! @Description
+#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the degree of Kbar on the non-trivial curves in a QSM.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnCurvesInQSMByPolytope", [ IsInt ] );
+
+
+#! @Description
+#! This function returns the intersection numbers among the non-trivial curves in a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumbersOfCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the non-trivial curves in a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumbersOfCurvesInQSMByPolytope", [ IsInt ] );
+
+
+#! @Description
+#! This function returns the indices of all trivial curves.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IndicesOfTrivialCurvesInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the indices of all trivial curves.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
+
+
+
+##############################################################################################
+##
+#! @Section Dual graph
+##
+##############################################################################################
+
+#! @Description
+#! This function returns the list of the names of the (non-trivial) components of the dual graph.
+#! @Returns a list of strings
+#! @Arguments Integer i
+DeclareOperation( "ComponentsOfDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the genera of the (non-trivial) components of the dual graph.
+#! @Returns a list of strings
+#! @Arguments Integer i
+DeclareOperation( "ComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the names of the (non-trivial) components of the dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GenusOfComponentsOfDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the genera of the (non-trivial) components of the dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "GenusOfComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the degrees of the anticanonical bundle on the (non-trivial) components of the dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnComponentsOfDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the list of the degrees of the anticanonical bundle on the (non-trivial) components of the dual graph.
+#! @Returns a list of integers
+#! @Arguments Integer i
+DeclareOperation( "DegreeOfKbarOnComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the (non-trivial) components of the dual graph.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the intersection numbers among the (non-trivial) components of the dual graph.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
 
 
 
