@@ -9,34 +9,45 @@ LoadPackage( "QSMExplorer" );
 #! In the QSM-Explorer, we obtain information about the QSM associated to the 8-th polytope in the Kreuzer-Skarke list as follows:
 
 #! @Log
-DisplayQSMByPolytope( 8 );
+FullInformationOfQSMByPolytope( 8 );
 #!
 #! The QSM defined by FRSTs of the 8th 3-dimensional polytope in the Kreuzer-Skarke list
 #! ----------------------------------------------------------------------------------------
 #!
-#! Information on the 3-fold:
-#! (*) Kbar^3: 6
-#! (*) Estimated number of triangulations: 25780000000000
+#! Information on the 3-dimensional polytope:
+#! (*) Vertices: [[-1, -1, -1], [1, -1, -1], [-1, 5, -1], [-1, -1, 5]]
+#! (*) Maximal number of lattice points in facets: 28
+#! (*) Estimated number of FRSTs: 25780000000000
+#! (*) Can be computed in short time: False
 #!
-#! Information on the elliptic 4-fold:
+#! Information of ONE particular 3-fold:
+#! (*) Kbar^3: 6
+#! (*) Number of homogeneous variables: 38
+#! (*) Picard group: Z^35
+#!
+#! Information about elliptic 4-fold:
 #! (*) h11: 40
 #! (*) h12: 16
 #! (*) h13: 31
 #! (*) h22: 296
-#! 
-#! Information on the 3-dimensional polytope:
-#! (*) Vertices: [[-1, -1, -1], [1, -1, -1], [-1, 5, -1], [-1, -1, 5]]
 #!
 #! Information on the nodal quark-doublet curve:
 #! (*) Genus: 4
-#! (*) Looking for 12th root of line bundle M
-#! (*) Total number of root bundles: 429981696
+#! (*) Number of components: 22
+#! (*) Components: ["C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C14", "C15", "C19", "C20", "C23", "C24", "C26", "C27", "C28", "C29", "C32", "C37"]
+#! (*) Genera: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#! (*) Degree of Kbar: [1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 #!
-#! Information on reduce dual graph of this nodal curve:
+#! Information on simplified dual graph:
 #! (*) Number of components: 4
+#! (*) Components: ["C0", "C1", "C2", "C3"]
 #! (*) Genera: [0, 1, 0, 0]
 #! (*) Edge list of dual graph: [[3, 0], [2, 0], [2, 3], [0, 1], [1, 3], [1, 2]]
+#!
+#! Root bundles:
+#! (*) Looking for 12th root of line bundle M
 #! (*) Degrees of line bundle M: [ 12, 36, 12, 12 ]
+#! (*) Total number of root bundles: 429981696
 #!
 #! true
 #! @EndLog
@@ -44,34 +55,45 @@ DisplayQSMByPolytope( 8 );
 #! Given the index i of polytope in our database.csv file, DisplayQSM( i ) shows the important information of the QSMs built from this polytope. For example, below is the important information of the QSMs from the 1st polytope in our list, which corresponds to the 3th polytope in the Kreuzer and Skarke list. 
 
 #! @Log
-DisplayQSM( 1 );
+FullInformationOfQSM( 1 );
 #!
-#! The QSM defined by FRSTs of the 3th 3-dimensional polytope in the Kreuzer-Skarke list
+#! The QSM defined by FRSTs of the 4th 3-dimensional polytope in the Kreuzer-Skarke list
 #! ----------------------------------------------------------------------------------------
 #!
-#! Information on the 3-fold:
-#! (*) Kbar^3: 6
-#! (*) Estimated number of triangulations: 212533333333.333
+#! Information on the 3-dimensional polytope:
+#! (*) Vertices: [[-1, -1, -1], [2, -1, -1], [-1, 2, -1], [-1, -1, 5]]
+#! (*) Maximal number of lattice points in facets: 16
+#! (*) Estimated number of FRSTs: 212533333333.333
+#! (*) Can be computed in short time: True
 #!
-#! Information on the elliptic 4-fold:
+#! Information of ONE particular 3-fold:
+#! (*) Kbar^3: 6
+#! (*) Number of homogeneous variables: 29
+#! (*) Picard group: Z^26
+#!
+#! Information about elliptic 4-fold:
 #! (*) h11: 31
 #! (*) h12: 10
 #! (*) h13: 34
 #! (*) h22: 284
 #!
-#! Information on the 3-dimensional polytope:
-#! (*) Vertices: [[-1, -1, -1], [2, -1, -1], [-1, 2, -1], [-1, -1, 5]]
-#!
 #! Information on the nodal quark-doublet curve:
 #! (*) Genus: 4
-#! (*) Looking for 12th root of line bundle M 
-#! (*) Total number of root bundles: 429981696
+#! (*) Number of components: 21
+#! (*) Components: ["C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C13", "C14", "C16", "C17", "C21", "C24-0", "C24-1", "C25", "C27", "C28-0", "C28-1"]
+#! (*) Genera: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#! (*) Degree of Kbar: [1, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 #!
-#! Information on reduce dual graph of this nodal curve:
+#! Information on simplified dual graph:
 #! (*) Number of components: 4
+#! (*) Components: ["C0", "C1", "C2", "C3"]
 #! (*) Genera: [0, 0, 0, 0]
 #! (*) Edge list of dual graph: [[3, 0], [2, 0], [2, 3], [1, 0], [1, 3], [1, 2], [1, 2]]
+#!
+#! Root bundles:
+#! (*) Looking for 12th root of line bundle M
 #! (*) Degrees of line bundle M: [ 12, 24, 24, 12 ]
+#! (*) Total number of root bundles: 429981696
 #!
 #! true
 #! @EndLog
