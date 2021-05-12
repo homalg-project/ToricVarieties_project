@@ -333,9 +333,149 @@ InstallMethod( PrintDualGraph, [ IsRecord ],
         
 end );
 
+
+
 ##############################################################################################
 ##
-##  Section Plot dual graph
+##  Information about polytope and its triangulation
+##
+##############################################################################################
+
+InstallMethod( PolytopeOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+        fi;
+        
+end );
+
+InstallMethod( PolytopeOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+        fi;
+        
+end );
+
+
+InstallMethod( TriangulationEstimateInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangulationEstimate ) );
+        fi;
+        
+end );
+
+InstallMethod( TriangulationEstimateInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangulationEstimate ) );
+        fi;
+        
+end );
+
+
+InstallMethod( MaxLatticePtsInFacetInQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.MaxLatticePtsInFacet ) );
+        fi;
+        
+end );
+
+InstallMethod( MaxLatticePtsInFacetInQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.MaxLatticePtsInFacet ) );
+        fi;
+        
+end );
+
+
+InstallMethod( TriangulatonQuickForQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.TriangQuick ) );
+        fi;
+        
+end );
+
+InstallMethod( TriangulationQuickForQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( LowercaseString( String( data.TriangQuick ) ) );
+        fi;
+        
+end );
+
+
+##############################################################################################
+##
+##  Section Base space
 ##
 ##############################################################################################
 
@@ -399,7 +539,7 @@ end );
 
 ##############################################################################################
 ##
-##  Information of non-trivial curve components
+##  All curve components
 ##
 ##############################################################################################
 
@@ -537,11 +677,12 @@ end );
 
 ##############################################################################################
 ##
-##  Information about polytope and its triangulation
+##  Dual graph
 ##
 ##############################################################################################
 
-InstallMethod( PolytopeOfQSM,
+
+InstallMethod( ComponentsOfDualGraphOfQSM,
                "an integer",
                [ IsInt ],
     function( index )
@@ -552,12 +693,12 @@ InstallMethod( PolytopeOfQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+            return EvalString( ReplacedString( String( data.ComponentsOfDualGraph ), "\'", "\"" ) );
         fi;
         
 end );
 
-InstallMethod( PolytopeOfQSMByPolytope,
+InstallMethod( ComponentsOfDualGraphOfQSMByPolytope,
                "an integer",
                [ IsInt ],
     function( index )
@@ -565,16 +706,16 @@ InstallMethod( PolytopeOfQSMByPolytope,
         
         # read the data
         data := ReadQSMByPolytope( index );
-        
+
         # check if the data is meaningful
         if ( data <> fail ) then
-            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+            return EvalString( ReplacedString( String( data.ComponentsOfDualGraph ), "\'", "\"" ) );
         fi;
         
 end );
 
 
-InstallMethod( TriangulationEstimateInQSM,
+InstallMethod( GenusOfComponentsOfDualGraphOfQSM,
                "an integer",
                [ IsInt ],
     function( index )
@@ -585,12 +726,12 @@ InstallMethod( TriangulationEstimateInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.TriangulationEstimate ) );
+            return EvalString( String( data.GenusOfComponentsOfDualGraph ) );
         fi;
         
 end );
 
-InstallMethod( TriangulationEstimateInQSMByPolytope,
+InstallMethod( GenusOfComponentsOfDualGraphOfQSMByPolytope,
                "an integer",
                [ IsInt ],
     function( index )
@@ -601,13 +742,13 @@ InstallMethod( TriangulationEstimateInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.TriangulationEstimate ) );
+            return EvalString( String( data.GenusOfComponentsOfDualGraph ) );
         fi;
         
 end );
 
 
-InstallMethod( MaxLatticePtsInFacetInQSM,
+InstallMethod( DegreeOfKbarOnComponentsOfDualGraphOfQSM,
                "an integer",
                [ IsInt ],
     function( index )
@@ -618,12 +759,12 @@ InstallMethod( MaxLatticePtsInFacetInQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.MaxLatticePtsInFacet ) );
+            return EvalString( String( data.DegreeOfKbarOnComponentsOfDualGraph ) );
         fi;
         
 end );
 
-InstallMethod( MaxLatticePtsInFacetInQSMByPolytope,
+InstallMethod( DegreeOfKbarOnComponentsOfDualGraphOfQSMByPolytope,
                "an integer",
                [ IsInt ],
     function( index )
@@ -634,13 +775,13 @@ InstallMethod( MaxLatticePtsInFacetInQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.MaxLatticePtsInFacet ) );
+            return EvalString( String( data.DegreeOfKbarOnComponentsOfDualGraph ) );
         fi;
         
 end );
 
 
-InstallMethod( TriangulatonQuickForQSM,
+InstallMethod( IntersectionNumberOfComponentsOfDualGraphOfQSM,
                "an integer",
                [ IsInt ],
     function( index )
@@ -651,12 +792,12 @@ InstallMethod( TriangulatonQuickForQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.TriangQuick ) );
+            return EvalString( String( data.IntersectionNumberOfComponentsOfDualGraph ) );
         fi;
         
 end );
 
-InstallMethod( TriangulationQuickForQSMByPolytope,
+InstallMethod( IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope,
                "an integer",
                [ IsInt ],
     function( index )
@@ -667,7 +808,7 @@ InstallMethod( TriangulationQuickForQSMByPolytope,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( LowercaseString( String( data.TriangQuick ) ) );
+            return EvalString( String( data.IntersectionNumberOfComponentsOfDualGraph ) );
         fi;
         
 end );
