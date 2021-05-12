@@ -236,7 +236,7 @@ InstallMethod( PrintQSM,
         Print( "\n");
         Print( "Information on the 3-fold:\n" );
         Print( Concatenation( "(*) Kbar^3: ", String( data.Kbar3 ), "\n" ) );
-        Print( Concatenation( "(*) Estimated number of triangulations: ", String( data.TriangulationEstimation ), "\n" ) );
+        Print( Concatenation( "(*) Estimated number of triangulations: ", String( data.TriangulationEstimate ), "\n" ) );
         Print( "\n");
         Print( "Information on the elliptic 4-fold:\n" );
         Print( Concatenation( "(*) h11: ", String( data.h11 ), "\n" ) );
@@ -245,7 +245,7 @@ InstallMethod( PrintQSM,
         Print( Concatenation( "(*) h22: ", String( data.h22 ), "\n" ) );
         Print( "\n");
         Print( "Information on the 3-dimensional polytope:\n" );
-        Print( Concatenation( "(*) Vertices: ", String( data.PolytopeVerices ), "\n" ) );
+        Print( Concatenation( "(*) Vertices: ", String( data.PolytopeVertices ), "\n" ) );
         Print( "\n");
         Print( "Information on the nodal quark-doublet curve:\n" );
         Print( Concatenation( "(*) Genus: ", String( Int( data.Kbar3/2 + 1 ) ), "\n" ) );
@@ -537,9 +537,42 @@ end );
 
 ##############################################################################################
 ##
-##  Information about triangulation
+##  Information about polytope and its triangulation
 ##
 ##############################################################################################
+
+InstallMethod( PolytopeOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+        fi;
+        
+end );
+
+InstallMethod( PolytopeOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return Polytope( EvalString( String( data.PolytopeVertices ) ) );
+        fi;
+        
+end );
+
 
 InstallMethod( TriangulationEstimateInQSM,
                "an integer",
