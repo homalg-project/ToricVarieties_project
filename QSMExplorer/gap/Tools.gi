@@ -607,7 +607,7 @@ InstallMethod( MaxLatticePtsInFacetInQSMByPolytope,
 end );
 
 
-InstallMethod( TriangulationQuickForQSM,
+InstallMethod( TriangulatonQuickForQSM,
                "an integer",
                [ IsInt ],
     function( index )
