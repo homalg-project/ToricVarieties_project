@@ -345,17 +345,24 @@ DeclareOperation( "PlotSimplifiedDualGraph", [ IsRecord ] );
 ##############################################################################################
 
 #! @Description
-#! This function return the ray generators of the toric ambient space 5-fold of a QSM.
-#! @Returns a list of lists of integers
-#! @Arguments Integer i
-DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSM", [ IsInt ] );
+#! This function returns the toric variety PF11, i.e. the fibre ambient space.
+#! @Returns a toric variety
+#! @Arguments
+DeclareOperation( "PF11", [ ] );
 
 #! @Description
 #! This function return the ray generators of the toric ambient space 5-fold of a QSM.
 #! @Returns a list of lists of integers
 #! @Arguments Integer i
-DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope", [ IsInt ] );
+DeclareOperation( "ToricAmbientSpaceOfQSM", [ IsInt ] );
 
+#! @Description
+#! This function return the ray generators of the toric ambient space 5-fold of a QSM.
+#! @Returns a list of lists of integers
+#! @Arguments Integer i
+DeclareOperation( "ToricAmbientSpaceOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "ConstructX5", [ IsToricVariety ] );
 
 ##############################################################################################
 ##

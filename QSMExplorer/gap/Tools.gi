@@ -968,35 +968,81 @@ end );
 ##############################################################################################
 
 
-InstallMethod( RayGeneratorsOfToricAmbientSpaceOfQSM,
-               "an integer",
-               [ IsInt ],
-    function( index )
-        local data;
+InstallMethod( PF11, [ ],
+    function( )
+        local rays, max_cones, weights, names;
         
-        # read the data
-        data := ReadQSM( index );
+        rays := [[0,-1],[-1,-1],[-1,0],[-1,1],[-1,2],[0,1],[1,0]];
+        max_cones := [[1, 2], [1, 7], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]];
+        weights := [ [1,0,-1,-1,0], [0,0,0,1,0], [0,0,1,-1,0], [1,-1,-1,0,-1], [0,0,0,0,1], [0,1,0,0,-1], [1,-1,0,0,0] ];
+        names := "v,e3,e2,u,e4,e1,w";
         
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return EvalString( String( data.RaysX5 ) );
-        fi;
+        return ToricVariety( rays, max_cones, weights, names );
         
 end );
 
-InstallMethod( RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope,
+
+InstallMethod( ToricAmbientSpaceOfQSM,
                "an integer",
                [ IsInt ],
     function( index )
-        local data;
         
-        # read the data
-        data := ReadQSMByPolytope( index );
+        return ConstructX5( BaseSpaceOfQSM( index ) );
         
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return EvalString( String( data.RaysX5 ) );
-        fi;
+end );
+
+InstallMethod( ToricAmbientSpaceOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        
+        return ConstructX5( BaseSpaceOfQSMByPolytope( index ) );
+        
+end );
+
+InstallMethod( ConstructX5,
+               [ IsToricVariety ],
+    function( B3 )
+        local varsB3, raysB3, fibre, varsFibre, raysFibre, T, rays, max_cones, weights, names, i, test_ray, pos;
+        
+        # identify the rays and variables of the base
+        varsB3 := List( IndeterminatesOfPolynomialRing( CoxRing( B3 ) ), i -> String( i ) );
+        raysB3 := RayGenerators( FanOfVariety( B3 ) );
+        
+        # repeat for the fibre
+        fibre := PF11();
+        varsFibre := List( IndeterminatesOfPolynomialRing( CoxRing( fibre ) ), i -> String( i ) );
+        raysFibre := RayGenerators( FanOfVariety( fibre ) );
+        
+        # compute direct product of the varieties
+        T := B3 * fibre;
+        rays := RayGenerators( FanOfVariety( T ) );
+        max_cones := List( RaysInMaximalCones( FanOfVariety( T ) ), i -> Positions( i, 1 ) );
+        weights := List( WeightsOfIndeterminates( CoxRing( T ) ), i -> UnderlyingListOfRingElements( i ) );
+        
+        # assign the variables names to match those of B3 and fibre
+        names := List( [ 1 .. Length( varsB3 ) + Length( varsFibre ) ], i -> "" );
+        
+        # identify the variables of the base
+        for i in [ 1 .. Length( varsB3 ) ] do
+            
+            test_ray := Concatenation( raysB3[ i ], [ 0,0 ] );
+            pos := Position( rays, test_ray );
+            names[ pos ] := varsB3[ i ];
+            
+        od;
+        
+        # identify the variables of the fibre
+        for i in [ 1 .. Length( varsFibre ) ] do
+            
+            test_ray := Concatenation( [ 0,0,0 ], raysFibre[ i ] );
+            pos := Position( rays, test_ray );
+            names[ pos ] := varsFibre[ i ];
+            
+        od;
+        
+        # return the result
+        return ToricVariety( rays, max_cones, weights, JoinStringsWithSeparator( names, "," ) );
         
 end );
 
