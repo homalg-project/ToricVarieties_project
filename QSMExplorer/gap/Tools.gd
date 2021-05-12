@@ -10,7 +10,7 @@
 ##
 ##  Copyright 2021
 ##
-##  A package to explor one Quadrillion F-theory Standard Models
+##  A package to explore one Quadrillion F-theory Standard Models
 ##
 #! @Chapter Tools for investigation of one Quadrillion F-theory Standard Models
 ##
@@ -61,7 +61,7 @@ DeclareOperation( "ReadQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section Information about polytope and its triangulation
+#! @Section The 708 polytopes and their triangulations
 ##
 ##############################################################################################
 
@@ -121,7 +121,7 @@ DeclareOperation( "TriangulationQuickForQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section 3-fold base space
+#! @Section The toric 3-folds obtained from FRSTs of the 708 polytopes
 ##
 ##############################################################################################
 
@@ -143,7 +143,7 @@ DeclareOperation( "BaseSpace", [ IsRecord ] );
 
 ##############################################################################################
 ##
-#! @Section All curve components
+#! @Section The components of the nodal quark-doublet curve
 ##
 ##############################################################################################
 
@@ -202,7 +202,7 @@ DeclareOperation( "IndicesOfTrivialCurvesInQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section Properties of the dual graph
+#! @Section The dual graph of the nodal quark-doublet curve
 ##
 ##############################################################################################
 
@@ -254,13 +254,6 @@ DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSM", [ IsInt ] );
 #! @Arguments Integer i
 DeclareOperation( "IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope", [ IsInt ] );
 
-
-##############################################################################################
-##
-#! @Section Plotting the dual graph
-##
-##############################################################################################
-
 #! @Description
 #! This function prints the dual graph of a QSM.
 #! @Returns true or fail
@@ -278,7 +271,7 @@ DeclareOperation( "PlotDualGraph", [ IsRecord ] );
 
 ##############################################################################################
 ##
-#! @Section Properties of the simplified dual graph
+#! @Section The simplified dual graph of the nodal quark-doublet curve
 ##
 ##############################################################################################
 
@@ -330,13 +323,6 @@ DeclareOperation( "EdgeListOfSimplifiedDualGraphOfQSM", [ IsInt ] );
 #! @Arguments Integer i
 DeclareOperation( "EdgeListOfSimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
 
-
-##############################################################################################
-##
-#! @Section Plotting the simplified dual graph
-##
-##############################################################################################
-
 #! @Description
 #! This function prints the simplified dual graph of a QSM.
 #! @Returns true or fail
@@ -354,7 +340,7 @@ DeclareOperation( "PlotSimplifiedDualGraph", [ IsRecord ] );
 
 ##############################################################################################
 ##
-#! @Section Toric ambient space 5-fold
+#! @Section The toric ambient space of the elliptic 4-fold
 ##
 ##############################################################################################
 
@@ -373,7 +359,7 @@ DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope", [ IsInt ] )
 
 ##############################################################################################
 ##
-#! @Section Display information about a QSM
+#! @Section Data summary of Quadrillion F-theory Standard Model build from given polytope
 ##
 ##############################################################################################
 
@@ -396,7 +382,7 @@ DeclareOperation( "DisplayFullInformationOfQSM", [ IsRecord, IsBool ] );
 
 ##############################################################################################
 ##
-#! @Section Count limit roots
+#! @Section Counting limit roots with minimal number of global sections
 ##
 ##############################################################################################
 
