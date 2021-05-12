@@ -1,4 +1,2 @@
-(*) Add one triangulation of X5 corresponding to the recorded base triangulation/construct it
-(*) Add constructor for X5
 (*) Extend functionality to canonical nodal Higgs and RHQ-curve
 (*) Extend root counter to counts of h0 = 4
