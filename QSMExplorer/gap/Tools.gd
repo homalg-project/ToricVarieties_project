@@ -61,27 +61,6 @@ DeclareOperation( "ReadQSMByPolytope", [ IsInt ] );
 
 ##############################################################################################
 ##
-#! @Section Display information about a QSM
-##
-##############################################################################################
-
-#! @Description
-#! This function prints important information about the i-th QSM (if it exists).
-#! @Returns true or fail
-#! @Arguments Integer i
-DeclareOperation( "DisplayQSM", [ IsInt ] );
-
-#! @Description
-#! This function prints important information about the QSM defined by the i-th polytope in the Kreuzer-Skarke list (if it exists and gives rise to a QSM).
-#! @Returns true or fail
-#! @Arguments Integer i
-DeclareOperation( "DisplayQSMByPolytope", [ IsInt ] );
-
-DeclareOperation( "PrintQSM", [ IsRecord ] );
-
-
-##############################################################################################
-##
 #! @Section Information about polytope and its triangulation
 ##
 ##############################################################################################
@@ -391,6 +370,28 @@ DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSM", [ IsInt ] );
 #! @Arguments Integer i
 DeclareOperation( "RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope", [ IsInt ] );
 
+
+##############################################################################################
+##
+#! @Section Display information about a QSM
+##
+##############################################################################################
+
+#! @Description
+#! This function prints important information about the i-th QSM in our list.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "FullInformationOfQSM", [ IsInt ] );
+DeclareOperation( "FullInformationOfQSM", [ IsInt, IsBool ] );
+
+#! @Description
+#! This function prints important information about the QSM constructed from polytope i in our list.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "FullInformationOfQSMByPolytope", [ IsInt ] );
+DeclareOperation( "FullInformationOfQSMByPolytope", [ IsInt, IsBool ] );
+
+DeclareOperation( "DisplayFullInformationOfQSM", [ IsRecord, IsBool ] );
 
 
 ##############################################################################################
