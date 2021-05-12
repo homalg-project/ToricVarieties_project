@@ -1043,6 +1043,46 @@ end );
 
 ##############################################################################################
 ##
+##  Toric ambient space 5-fold
+##
+##############################################################################################
+
+
+InstallMethod( RayGeneratorsOfToricAmbientSpaceOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.RaysX5 ) );
+        fi;
+        
+end );
+
+InstallMethod( RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return EvalString( String( data.RaysX5 ) );
+        fi;
+        
+end );
+
+
+##############################################################################################
+##
 ##  Count limit roots
 ##
 ##############################################################################################
