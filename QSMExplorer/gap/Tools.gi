@@ -187,86 +187,6 @@ end );
 
 ##############################################################################################
 ##
-##  Display information about a QSM
-##
-##############################################################################################
-
-
-InstallMethod( DisplayQSM,
-               "an integer",
-               [ IsInt ],
-    function( index )
-        local data;
-        
-        # read the data
-        data := ReadQSM( index );
-        
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return PrintQSM( data );
-        fi;
-        
-end );
-
-InstallMethod( DisplayQSMByPolytope,
-               "an integer",
-               [ IsInt ],
-    function( index )
-        local data;
-        
-        # read the data
-        data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
-        if ( data <> fail ) then
-            return PrintQSM( data );
-        fi;
-        
-end );
-
-InstallMethod( PrintQSM,
-               "a record",
-               [ IsRecord ],
-    function( data )
-        
-        # print details about this vacuum
-        Print( "\n" );
-        Print( Concatenation( "The QSM defined by FRSTs of the ", String( data.PolyInx ), "th 3-dimensional polytope in the Kreuzer-Skarke list\n" ) );
-        Print( "----------------------------------------------------------------------------------------\n" );
-        Print( "\n");
-        Print( "Information on the 3-fold:\n" );
-        Print( Concatenation( "(*) Kbar^3: ", String( data.Kbar3 ), "\n" ) );
-        Print( Concatenation( "(*) Estimated number of triangulations: ", String( data.TriangulationEstimate ), "\n" ) );
-        Print( "\n");
-        Print( "Information on the elliptic 4-fold:\n" );
-        Print( Concatenation( "(*) h11: ", String( data.h11 ), "\n" ) );
-        Print( Concatenation( "(*) h12: ", String( data.h12 ), "\n" ) );
-        Print( Concatenation( "(*) h13: ", String( data.h13 ), "\n" ) );
-        Print( Concatenation( "(*) h22: ", String( data.h22 ), "\n" ) );
-        Print( "\n");
-        Print( "Information on the 3-dimensional polytope:\n" );
-        Print( Concatenation( "(*) Vertices: ", String( data.PolytopeVertices ), "\n" ) );
-        Print( "\n");
-        Print( "Information on the nodal quark-doublet curve:\n" );
-        Print( Concatenation( "(*) Genus: ", String( Int( data.Kbar3/2 + 1 ) ), "\n" ) );
-        Print( Concatenation( "(*) Looking for ", String( 2 * data.Kbar3 ), "th root of line bundle M \n" ) );
-        Print( Concatenation( "(*) Total number of root bundles: ", String( ( 2 * data.Kbar3 )^(2 * Int( data.Kbar3/2 + 1 )) ), "\n" ) );
-        Print( "\n" );
-        Print( "Information on reduce dual graph of this nodal curve:\n" );
-        Print( Concatenation( "(*) Number of components: ", String( Length( EvalString( data.CiGenus ) ) ), "\n" ) );
-        Print( Concatenation( "(*) Genera: ", String( data.CiGenus ), "\n" ) );
-        Print( Concatenation( "(*) Edge list of dual graph: ", String( data.EdgeList ), "\n" ) );
-        Print( Concatenation( "(*) Degrees of line bundle M: ", String( ( 6 + data.Kbar3 ) * EvalString( data.CiDegreeKbar ) ), "\n" ) );
-        Print( "\n" );
-        
-        # return success
-        return true;
-        
-end );
-
-
-##############################################################################################
-##
 ##  Information about polytope and its triangulation
 ##
 ##############################################################################################
@@ -1077,6 +997,145 @@ InstallMethod( RayGeneratorsOfToricAmbientSpaceOfQSMByPolytope,
         if ( data <> fail ) then
             return EvalString( String( data.RaysX5 ) );
         fi;
+        
+end );
+
+
+##############################################################################################
+##
+##  Display information about a QSM
+##
+##############################################################################################
+
+
+InstallMethod( FullInformationOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DisplayFullInformationOfQSM( data, false );
+        fi;
+        
+end );
+
+InstallMethod( FullInformationOfQSM,
+               "an integer",
+               [ IsInt, IsBool ],
+    function( index, details )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DisplayFullInformationOfQSM( data, details );
+        fi;
+        
+end );
+
+InstallMethod( FullInformationOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DisplayFullInformationOfQSM( data, false );
+        fi;
+        
+end );
+
+InstallMethod( FullInformationOfQSMByPolytope,
+               "an integer",
+               [ IsInt, IsBool ],
+    function( index, details )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return DisplayFullInformationOfQSM( data, details );
+        fi;
+        
+end );
+
+
+InstallMethod( DisplayFullInformationOfQSM,
+               "a record",
+               [ IsRecord, IsBool ],
+    function( data, details )
+        
+        # print details about this vacuum
+        Print( "\n" );
+        Print( Concatenation( "The QSM defined by FRSTs of the ", String( data.PolyInx ), "th 3-dimensional polytope in the Kreuzer-Skarke list\n" ) );
+        Print( "----------------------------------------------------------------------------------------\n" );
+        Print( "\n");
+        Print( "Information on the 3-dimensional polytope:\n" );
+        Print( Concatenation( "(*) Vertices: ", String( data.PolytopeVertices ), "\n" ) );
+        Print( Concatenation( "(*) Maximal number of lattice points in facets: ", String( data.MaxLatticePtsInFacet ), "\n" ) );
+        Print( Concatenation( "(*) Estimated number of FRSTs: ", String( data.TriangulationEstimate ), "\n" ) );
+        Print( Concatenation( "(*) Can be computed in short time: ", String( data.TriangQuick ), "\n" ) );
+        
+        Print( "\n");
+        Print( "Information of ONE particular 3-fold:\n" );
+        Print( Concatenation( "(*) Kbar^3: ", String( data.Kbar3 ), "\n" ) );
+        Print( Concatenation( "(*) Number of homogeneous variables: ", String( Length( EvalString( data.RayGeneratorsOfB3 ) ) ), "\n" ) );
+        Print( Concatenation( "(*) Picard group: Z^", String( Length( EvalString( data.RayGeneratorsOfB3 ) ) - 3 ), "\n" ) );
+        if details then
+            Print( Concatenation( "(*) Ray generators: ", String( data.RayGeneratorsOfB3 ), "\n" ) );
+            Print( Concatenation( "(*) Max cones: ", String( data.TriangulationOfB3 ), "\n" ) );
+        fi;
+        
+        Print( "\n");
+        Print( "Information about elliptic 4-fold:\n" );
+        Print( Concatenation( "(*) h11: ", String( data.h11 ), "\n" ) );
+        Print( Concatenation( "(*) h12: ", String( data.h12 ), "\n" ) );
+        Print( Concatenation( "(*) h13: ", String( data.h13 ), "\n" ) );
+        Print( Concatenation( "(*) h22: ", String( data.h22 ), "\n" ) );
+        if details then
+            Print( Concatenation( "(*) Ray generators: ", String( data.RaysX5 ), "\n" ) );
+        fi;
+        Print( "\n");
+        
+        Print( "Information on the nodal quark-doublet curve:\n" );
+        Print( Concatenation( "(*) Genus: ", String( Int( data.Kbar3/2 + 1 ) ), "\n" ) );
+        Print( Concatenation( "(*) Number of components: ", String( Length( EvalString( ReplacedString( String( data.ComponentsOfDualGraph ), "\'", "\"" ) ) ) ), "\n" ) );
+        Print( Concatenation( "(*) Components: ", ReplacedString( String( data.ComponentsOfDualGraph ), "\'", "\"" ), "\n" ) );
+        Print( Concatenation( "(*) Genera: ", String( data.GenusOfComponentsOfDualGraph ), "\n" ) );
+        Print( Concatenation( "(*) Degree of Kbar: ", String( data.DegreeOfKbarOnComponentsOfDualGraph ), "\n" ) );
+        if details then
+            Print( Concatenation( "(*) Intersection numbers of components: ", String( data.IntersectionNumberOfComponentsOfDualGraph ), "\n" ) );
+        fi;
+        Print( "\n");
+        
+        Print( "Information on simplified dual graph:\n" );
+        Print( Concatenation( "(*) Number of components: ", String( Length( EvalString( data.CiGenus ) ) ), "\n" ) );
+        Print( Concatenation( "(*) Components: ", ReplacedString( String( data.ComponentsOfSimplifiedDualGraph ), "\'", "\"" ), "\n" ) );
+        Print( Concatenation( "(*) Genera: ", String( data.CiGenus ), "\n" ) );
+        Print( Concatenation( "(*) Edge list of dual graph: ", String( data.EdgeList ), "\n" ) );
+        Print( "\n");
+        
+        Print( "Root bundles:\n" );
+        Print( Concatenation( "(*) Looking for ", String( 2 * data.Kbar3 ), "th root of line bundle M\n" ) );
+        Print( Concatenation( "(*) Degrees of line bundle M: ", String( ( 6 + data.Kbar3 ) * EvalString( data.CiDegreeKbar ) ), "\n" ) );
+        Print( Concatenation( "(*) Total number of root bundles: ", String( ( 2 * data.Kbar3 )^(2 * Int( data.Kbar3/2 + 1 )) ), "\n" ) );
+        Print( "\n" );
+        
+        # return success
+        return true;
         
 end );
 
