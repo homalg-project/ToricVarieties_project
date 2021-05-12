@@ -191,6 +191,52 @@ DeclareOperation( "IndicesOfTrivialCurves", [ IsRecord ] );
 
 ##############################################################################################
 ##
+#! @Section Information about triangulation
+##
+##############################################################################################
+
+#! @Description
+#! This function returns the triangulation estimate for a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "TriangulationEstimateInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the triangulation estimate for a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "TriangulationEstimateInQSMByPolytope", [ IsInt ] );
+
+
+#! @Description
+#! This function returns the maximal number of lattice points in the facets of the polytope of a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "MaxLatticePtsInFacetInQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the maximal number of lattice points in the facets of the polytope of a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "MaxLatticePtsInFacetInQSMByPolytope", [ IsInt ] );
+
+
+#! @Description
+#! This function returns if the triangulations can be computed in a reasonable time for a QSM.
+#! @Returns true or false
+#! @Arguments Integer i
+DeclareOperation( "TriangulatonQuickForQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns if the triangulations can be computed in a reasonable time for a QSM.
+#! @Returns true or false
+#! @Arguments Integer i
+DeclareOperation( "TriangulationQuickForQSMByPolytope", [ IsInt ] );
+
+
+
+##############################################################################################
+##
 #! @Section Count limit roots
 ##
 ##############################################################################################
