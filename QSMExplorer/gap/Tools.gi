@@ -1151,9 +1151,6 @@ InstallMethod( DisplayFullInformationOfQSM,
         Print( Concatenation( "(*) h12: ", String( data.h12 ), "\n" ) );
         Print( Concatenation( "(*) h13: ", String( data.h13 ), "\n" ) );
         Print( Concatenation( "(*) h22: ", String( data.h22 ), "\n" ) );
-        if details then
-            Print( Concatenation( "(*) Ray generators: ", String( data.RaysX5 ), "\n" ) );
-        fi;
         Print( "\n");
         
         Print( "Information on the nodal quark-doublet curve:\n" );
