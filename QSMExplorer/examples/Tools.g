@@ -170,11 +170,36 @@ CountLimitRootsOfQSM( 1 );
 #! 11110
 #! @EndLog
 
-#! @Example for short, below display the root counting of the 7th polytope in the Kreuzer and Skarke list and the 702 nd polytope in our list.
+#! Let us display the root counting of the 8th polytope in the Kreuzer and Skarke list and the first polytope in our list.
+
+#! @Example
 n := CountLimitRootsOfQSMByPolytope( 8 );;
 n;
 #! 142560
 n := CountLimitRootsOfQSM( 1 );;
 n;
 #! 11110
+#! @EndExample
+
+#! We can also perform a sufficient test to tell if the K3s are elliptic. To this end, it suffices to find an element of Pic( K3 ) with vanishing self-intersection number
+#! (i.e. is a g = 1 curve).
+
+#! @Example
+IsK3OfQSMByPolytopeElliptic( 8 );
+#! true
+IsK3OfQSMElliptic( 2 );
+#! true
+IsK3OfQSMElliptic( 1 );
+#! false
+#! @EndExample
+
+#! Also, we can compute a lower bound to the rank of the Picard lattice of the K3.
+
+#! @Example
+LowerBoundForRankForPicardLatticeOfK3OfQSM( 2 );
+#! 19
+LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope( 8 );
+#! 19
+LowerBoundForRankForPicardLatticeOfK3OfQSM( 1 );
+#! 18
 #! @EndExample
