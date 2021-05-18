@@ -139,6 +139,18 @@ DeclareOperation( "BaseSpaceOfQSMByPolytope", [ IsInt ] );
 
 DeclareOperation( "BaseSpace", [ IsRecord ] );
 
+#! @Description
+#! This function returns the triple intersection number Kbar^3 of the base space of this QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "Kbar3OfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns the triple intersection number Kbar^3 of the base space of this QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "Kbar3OfQSMByPolytope", [ IsInt ] );
+
 
 
 ##############################################################################################
