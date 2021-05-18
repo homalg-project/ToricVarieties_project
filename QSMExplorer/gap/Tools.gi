@@ -1094,29 +1094,21 @@ InstallMethod( IsK3OfQSMByPolytopeElliptic,
         
 end );
 
-InstallMethod( LowerBoundForRankForPicardLatticeOfK3OfQSM,
+InstallMethod( RankOfPicardLatticeOfK3OfQSM,
                "an integer",
                [ IsInt ],
     function( index )
-        local int, m, s;
         
-        int := IntersectionNumberOfComponentsOfDualGraphOfQSM( index );
-        m := HomalgMatrix( int, HomalgFieldOfRationals() );
-        s := SyzygiesOfRows( m );
-        return NrCols( s ) - NrRows( s );
+        return Length( ComponentsOfDualGraphOfQSM( index ) ) - 3;
         
 end );
 
-InstallMethod( LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope,
+InstallMethod( RankOfPicardLatticeOfK3OfQSMByPolytope,
                "an integer",
                [ IsInt ],
     function( index )
-        local int, m, s;
         
-        int := IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope( index );
-        m := HomalgMatrix( int, HomalgFieldOfRationals() );
-        s := SyzygiesOfRows( m );
-        return NrCols( s ) - NrRows( s );
+        return Length( ComponentsOfDualGraphOfQSMByPolytope( index ) ) - 3;
         
 end );
 
@@ -1234,11 +1226,9 @@ InstallMethod( DisplayFullInformationOfQSM,
         if Position( self_int, 0 ) <> fail then
             Print( "(*) IsElliptic: True\n" );
         else
-            Print( "(*) IsElliptic: Unknown\n" );
+            Print( "(*) IsElliptic: No\n" );
         fi;
-        m := HomalgMatrix( int, HomalgFieldOfRationals() );
-        s := SyzygiesOfRows( m );
-        Print( Concatenation( "(*) Lower bound for rank of Picard lattice: ", String( NrCols( s ) - NrRows( s ) ), "\n" ) );
+        Print( Concatenation( "(*) Rank of Picard lattice: ", String( Length( int[ 1 ] ) - 3 ), "\n" ) );
         Print( "\n");
         
         Print( "Information on the nodal quark-doublet curve:\n" );

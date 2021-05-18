@@ -372,28 +372,28 @@ DeclareOperation( "ConstructX5", [ IsToricVariety ] );
 ##############################################################################################
 
 #! @Description
-#! This function returns true if it detects that the K3 is elliptic and false otherwise.
+#! This function returns true if the K3 is elliptic and false otherwise.
 #! @Returns true or false
 #! @Arguments Integer i
 DeclareOperation( "IsK3OfQSMElliptic", [ IsInt ] );
 
 #! @Description
-#! This function returns true if it detects that the K3 is elliptic and false otherwise.
+#! This function returns true if the K3 is elliptic and false otherwise.
 #! @Returns true or false
 #! @Arguments Integer i
 DeclareOperation( "IsK3OfQSMByPolytopeElliptic", [ IsInt ] );
 
 #! @Description
-#! This function returns a lower bound to the rank of the K3 in a QSM.
+#! This function returns the rank of the K3 in a QSM.
 #! @Returns an integer
 #! @Arguments Integer i
-DeclareOperation( "LowerBoundForRankForPicardLatticeOfK3OfQSM", [ IsInt ] );
+DeclareOperation( "RankOfPicardLatticeOfK3OfQSM", [ IsInt ] );
 
 #! @Description
-#! This function returns a lower bound to the rank of the K3 in a QSM.
+#! This function returns the rank of the K3 in a QSM.
 #! @Returns an integer
 #! @Arguments Integer i
-DeclareOperation( "LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope", [ IsInt ] );
+DeclareOperation( "RankOfPicardLatticeOfK3OfQSMByPolytope", [ IsInt ] );
 
 
 ##############################################################################################
