@@ -364,6 +364,38 @@ DeclareOperation( "ToricAmbientSpaceOfQSMByPolytope", [ IsInt ] );
 
 DeclareOperation( "ConstructX5", [ IsToricVariety ] );
 
+
+##############################################################################################
+##
+#! @Section The Picard lattice of the K3
+##
+##############################################################################################
+
+#! @Description
+#! This function returns true if it detects that the K3 is elliptic and false otherwise.
+#! @Returns true or false
+#! @Arguments Integer i
+DeclareOperation( "IsK3OfQSMElliptic", [ IsInt ] );
+
+#! @Description
+#! This function returns true if it detects that the K3 is elliptic and false otherwise.
+#! @Returns true or false
+#! @Arguments Integer i
+DeclareOperation( "IsK3OfQSMByPolytopeElliptic", [ IsInt ] );
+
+#! @Description
+#! This function returns a lower bound to the rank of the K3 in a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "LowerBoundForRankForPicardLatticeOfK3OfQSM", [ IsInt ] );
+
+#! @Description
+#! This function returns a lower bound to the rank of the K3 in a QSM.
+#! @Returns an integer
+#! @Arguments Integer i
+DeclareOperation( "LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope", [ IsInt ] );
+
+
 ##############################################################################################
 ##
 #! @Section Data summary of Quadrillion F-theory Standard Model build from given polytope
