@@ -204,10 +204,10 @@ IsK3OfQSMElliptic( 1 );
 #! Also, we can compute a lower bound to the rank of the Picard lattice of the K3.
 
 #! @Example
-LowerBoundForRankForPicardLatticeOfK3OfQSM( 2 );
+RankOfPicardLatticeOfK3OfQSM( 2 );
 #! 19
-LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope( 8 );
+RankOfPicardLatticeOfK3OfQSMByPolytope( 8 );
 #! 19
-LowerBoundForRankForPicardLatticeOfK3OfQSM( 1 );
+RankOfPicardLatticeOfK3OfQSM( 1 );
 #! 18
 #! @EndExample
