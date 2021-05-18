@@ -1049,6 +1049,80 @@ end );
 
 ##############################################################################################
 ##
+##  The Picard lattice of the K3
+##
+##############################################################################################
+
+
+InstallMethod( IsK3OfQSMElliptic,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local int, self_int, i;
+        
+        # read the data
+        int := IntersectionNumberOfComponentsOfDualGraphOfQSM( index );
+        self_int := List( [ 1 .. Length( int ) ], i -> int[ i ][ i ] );
+        
+        # check if we detect that this K3 is elliptic
+        if Position( self_int, 0 ) <> fail then
+            return true;
+        fi;
+        
+        # test failed, so return false
+        return false;
+        
+end );
+
+InstallMethod( IsK3OfQSMByPolytopeElliptic,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local int, self_int, i;
+        
+        # read the data
+        int := IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope( index );
+        self_int := List( [ 1 .. Length( int ) ], i -> int[ i ][ i ] );
+        
+        # check if we detect that this K3 is elliptic
+        if Position( self_int, 0 ) <> fail then
+            return true;
+        fi;
+        
+        # test failed, so return false
+        return false;
+        
+end );
+
+InstallMethod( LowerBoundForRankForPicardLatticeOfK3OfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local int, m, s;
+        
+        int := IntersectionNumberOfComponentsOfDualGraphOfQSM( index );
+        m := HomalgMatrix( int, HomalgFieldOfRationals() );
+        s := SyzygiesOfRows( m );
+        return NrCols( s ) - NrRows( s );
+        
+end );
+
+InstallMethod( LowerBoundForRankForPicardLatticeOfK3OfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local int, m, s;
+        
+        int := IntersectionNumberOfComponentsOfDualGraphOfQSMByPolytope( index );
+        m := HomalgMatrix( int, HomalgFieldOfRationals() );
+        s := SyzygiesOfRows( m );
+        return NrCols( s ) - NrRows( s );
+        
+end );
+
+
+##############################################################################################
+##
 ##  Display information about a QSM
 ##
 ##############################################################################################
