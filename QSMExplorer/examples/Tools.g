@@ -31,6 +31,10 @@ FullInformationOfQSMByPolytope( 8 );
 #! (*) h13: 31
 #! (*) h22: 296
 #!
+#! Information about the K3-surface:
+#! (*) IsElliptic: True
+#! (*) Lower bound for rank of Picard lattice: 19
+#!
 #! Information on the nodal quark-doublet curve:
 #! (*) Genus: 4
 #! (*) Number of components: 22
@@ -76,6 +80,10 @@ FullInformationOfQSM( 1 );
 #! (*) h12: 10
 #! (*) h13: 34
 #! (*) h22: 284
+#!
+#! Information about the K3-surface:
+#! (*) IsElliptic: Unknown
+#! (*) Lower bound for rank of Picard lattice: 18
 #!
 #! Information on the nodal quark-doublet curve:
 #! (*) Genus: 4
