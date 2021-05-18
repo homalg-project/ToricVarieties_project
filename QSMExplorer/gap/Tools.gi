@@ -386,6 +386,39 @@ InstallMethod( BaseSpace, [ IsRecord ],
 end );
 
 
+InstallMethod( Kbar3OfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return data.Kbar3;
+        fi;
+        
+end );
+
+InstallMethod( Kbar3OfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return data.Kbar3;
+        fi;
+        
+end );
+
+
 
 ##############################################################################################
 ##

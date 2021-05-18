@@ -211,3 +211,14 @@ RankOfPicardLatticeOfK3OfQSMByPolytope( 8 );
 RankOfPicardLatticeOfK3OfQSM( 1 );
 #! 18
 #! @EndExample
+
+#! Similarly, we can easily access the triple intersection number of the anti-canonical class of the base space.
+
+#! @Example
+Kbar3OfQSM( 2 );
+#! 6
+Kbar3OfQSMByPolytope( 8 );
+#! 6
+Kbar3OfQSMByPolytope( 40 );
+#! 18
+#! @EndExample
