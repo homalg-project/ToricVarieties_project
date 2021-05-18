@@ -1197,6 +1197,7 @@ InstallMethod( DisplayFullInformationOfQSM,
                "a record",
                [ IsRecord, IsBool ],
     function( data, details )
+        local int, self_int, m, s;
         
         # print details about this vacuum
         Print( "\n" );
@@ -1225,6 +1226,19 @@ InstallMethod( DisplayFullInformationOfQSM,
         Print( Concatenation( "(*) h12: ", String( data.h12 ), "\n" ) );
         Print( Concatenation( "(*) h13: ", String( data.h13 ), "\n" ) );
         Print( Concatenation( "(*) h22: ", String( data.h22 ), "\n" ) );
+        Print( "\n");
+        
+        Print( "Information about the K3-surface:\n" );
+        int := EvalString( String( data.IntersectionNumberOfComponentsOfDualGraph ) );
+        self_int := List( [ 1 .. Length( int ) ], i -> int[ i ][ i ] );
+        if Position( self_int, 0 ) <> fail then
+            Print( "(*) IsElliptic: True\n" );
+        else
+            Print( "(*) IsElliptic: Unknown\n" );
+        fi;
+        m := HomalgMatrix( int, HomalgFieldOfRationals() );
+        s := SyzygiesOfRows( m );
+        Print( Concatenation( "(*) Lower bound for rank of Picard lattice: ", String( NrCols( s ) - NrRows( s ) ), "\n" ) );
         Print( "\n");
         
         Print( "Information on the nodal quark-doublet curve:\n" );
