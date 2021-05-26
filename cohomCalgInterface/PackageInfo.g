@@ -16,7 +16,7 @@ PackageName := "cohomCalgInterface",
 Subtitle := "A package to communicate with the software cohomCalg",
 
 Version := Maximum( [
-   "2021.05.04",
+   "2021.05.26",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/cohomCalgInterface/",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-05-04/cohomCalgInterface",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-05-26/cohomCalgInterface",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
