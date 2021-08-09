@@ -1,1 +1,1 @@
-rm -r -f topcom-*
+rm -r -f topcom
