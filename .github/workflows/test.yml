@@ -87,29 +87,10 @@ jobs:
           cd CddInterface/
           ./install.sh /home/gap/inst/gap*
           cd ..
-          echo "(*) Install cohomCalgInterface"
+          echo "(*) Install software in ToricVarieties_project"
           echo ""
-          cd ToricVarieties_project/cohomCalgInterface
-          ./installCohomCalg.sh
-          cd ..
-          echo ""
-          echo "(*) Install SpasmInterface"
-          echo ""
-          cd SpasmInterface
-          ./installSpasm.sh
-          cd ..
-          echo ""
-          echo "(*) Install H0Approximator"
-          echo ""
-          cd H0Approximator
-          ./install.sh
-          cd ..
-          echo ""
-          echo "(*) Install QSMExplorer"
-          echo ""
-          cd QSMExplorer
-          ./install.sh
-          cd ..
+          cd ToricVarieties_project
+          ./build.sh
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
