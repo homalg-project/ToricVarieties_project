@@ -12,7 +12,7 @@ echo ""
 echo "Build topcom"
 echo ""
 
-cd topcom-0.17.8
+cd topcom-*
 ./configure CFLAGS="-m64" CXXFLAGS="-m64"
 make -j $(nproc)
 make check
