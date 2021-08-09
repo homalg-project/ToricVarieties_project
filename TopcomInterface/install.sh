@@ -16,6 +16,6 @@ echo ""
 cd topcom
 ./configure CFLAGS="-m64" CXXFLAGS="-m64"
 make -j $(nproc)
-make check
-make install
-make clean
+#make check
+#make install
+#make clean
