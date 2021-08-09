@@ -108,7 +108,7 @@ AvailabilityTest := function()
                         ];
     
     # by default, check if we have locally installed topcom
-    # then use its src directory as TopcomDirectory
+    # if we cannot find it, look for a global installation
     
     dir := DirectoriesPackageLibrary( "TopcomInterface",  ""  )[ 1 ];
     dir := Directory( Concatenation( Filename( dir, "" ), "topcom/src" ) );    
@@ -119,9 +119,9 @@ AvailabilityTest := function()
     fi;
 
     # check if all binaries are available
-    bool := ForAll( topcom_binaries, name -> ( not Filename(DirectoriesSystemPrograms(), name ) = fail ) );
+    bool := ForAll( topcom_binaries, name -> ( not Filename(dir, name ) = fail ) );
     
-    # inform
+    # inform about the result
     if not bool then
         LogPackageLoadingMessage( PACKAGE_WARNING,
                 [ "At least one of the topcom binaries",
@@ -130,7 +130,7 @@ AvailabilityTest := function()
                   "topcom can be downloaded from http://www.rambau.wm.uni-bayreuth.de/TOPCOM/" ] );
     fi;
     
-    # and return
+    # and return availability
     return bool;
     
 end,
