@@ -25,3 +25,10 @@ echo ""
 cd QSMExplorer
 ./install.sh
 cd ..
+
+echo ""
+echo "(*) Install TopcomInterface"
+echo ""
+cd TopcomInterface
+./install.sh
+cd ..
