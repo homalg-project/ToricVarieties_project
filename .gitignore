@@ -24,12 +24,12 @@
 /tmp/
 /gh-pages/
 
-cohomCalgInterface/cohomCalg/*
+cohomCalgInterface/cohomCalg/
 cohomCalgInterface/binAndMonomialFiles/*
 ! cohomCalgInterface/binAndMonomialFiles/Info.txt
 
 SpasmInterface/gap/SpasmDirectory.txt
-SpasmInterface/spasm/*
+SpasmInterface/spasm/
 
 H0Approximator/bin/*
 ! H0Approximator/bin/counter
