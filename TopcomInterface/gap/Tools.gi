@@ -21,8 +21,20 @@ InstallMethod( FindTopcomDirectory,
                "a string -- name of TopcomBinary",
                [ ],
   function( )  
-  local sys_programs, which, path, output, input, path_steps, directory;
+  local dir, file, sys_programs, which, path, output, input, path_steps, directory;
   
+    # by default, check if we have locally installed topcom
+    # then use its src directory as TopcomDirectory
+    
+    dir := DirectoriesPackageLibrary( "TopcomInterface",  ""  )[ 1 ];
+    dir := Directory( Concatenation( Filename( dir, "" ), "topcom/src" ) );    
+    file := Filename( dir, "points2chiro" );
+    if IsExistingFile( file ) then    
+        return dir;
+    fi;
+    
+    # if this fails, we check if there is another installation in the system
+    
     # find the program "which"
     sys_programs := DirectoriesSystemPrograms();
     which := Filename( sys_programs, "which" );
