@@ -1,33 +1,29 @@
 #############################################################################
 ##
-##  PackageInfo.g       TopcomInterface package
-##                      Martin Bies
+##  makedoc.g           TopcomInterface package
 ##
-##  Copyright 2020      University of Oxford
+##                      Martin Bies
+##                      University of Pennsylvania
+##
+##  Copyright 2021
 ##
 ##  A package to communicate with the software Topcom
 ##
 #############################################################################
 
-LoadPackage( "AutoDoc" );
+# This file is a script which compiles the package manual.
 
-AutoDoc( "TopcomInterface" : scaffold := true, autodoc :=
-             rec( files := [ "doc/Intros.autodoc",
-                         "gap/Tools.gd",
-                         "gap/Functions.gd",
-                         "examples/examples.g"
-                         ],
-             scan_dirs := []
-             ),
-         maketest := rec( folder := ".",
-                          commands :=
-                            [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"TopcomInterface\" );",
-                              "HOMALG_IO.show_banners := false;",
-                              "HOMALG_IO.suppress_PID := true;",
-                              "HOMALG_IO.use_common_stream := true;",
-                             ]
-                           )
-);
+if fail = LoadPackage("AutoDoc", "2019.05.20") then
+    Error("AutoDoc version 2019.05.20 or newer is required.");
+fi;
+
+AutoDoc(rec(
+    scaffold := true,
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+        scan_dirs := [ "gap", "examples" ]
+    ),
+    extract_examples := rec( units := "Single" ),
+));
 
 QUIT;
