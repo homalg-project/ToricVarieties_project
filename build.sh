@@ -31,10 +31,4 @@ echo "(*) Install TopcomInterface"
 echo ""
 cd TopcomInterface
 ./install.sh
-ls -a
-cd topcom
-ls -a
-cd src
-ls -a
-cd ../..
 cd ..
