@@ -74,8 +74,9 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-    local topcom_binaries, bool;
+    local topcom_binaries, dir, file, bool;
     
+    # the binaries that should be available
     topcom_binaries := [ "points2chiro",
                          "chiro2dual",
                          "chiro2circuits",
@@ -106,8 +107,21 @@ AvailabilityTest := function()
                          "points2nallfinetriangs"
                         ];
     
+    # by default, check if we have locally installed topcom
+    # then use its src directory as TopcomDirectory
+    
+    dir := DirectoriesPackageLibrary( "TopcomInterface",  ""  )[ 1 ];
+    dir := Directory( Concatenation( Filename( dir, "" ), "topcom/src" ) );    
+    file := Filename( dir, "points2chiro" );
+    if not IsExistingFile( file ) then
+        LogPackageLoadingMessage( PACKAGE_WARNING, [ "Need to look for global installation" ] );
+        dir := DirectoriesSystemPrograms();
+    fi;
+
+    # check if all binaries are available
     bool := ForAll( topcom_binaries, name -> ( not Filename(DirectoriesSystemPrograms(), name ) = fail ) );
     
+    # inform
     if not bool then
         LogPackageLoadingMessage( PACKAGE_WARNING,
                 [ "At least one of the topcom binaries",
@@ -116,6 +130,7 @@ AvailabilityTest := function()
                   "topcom can be downloaded from http://www.rambau.wm.uni-bayreuth.de/TOPCOM/" ] );
     fi;
     
+    # and return
     return bool;
     
 end,
