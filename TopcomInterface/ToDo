@@ -1,10 +1,7 @@
 - Currently, Topcom produces lots of output in the console, which is not nice when using gap. 
   => To alter this we need to adjust the actual topcom implementation
 - Docu not yet nice output too large
-- Add script which allows to install topcom more easily for the user?
 - Make full functionality of topcom accessible. In particular support command line options -d, -h, -v, cardinality[k], frequency[k]...
 => Thereby reproduce and test all examples in the topcom documentation
 - Add gap-category wrappers for chiros and points used as input and output for topcom
 - Banner upon loading which says "based on topcom" or alike
-- Contact author Jörg Rambau to inform on this package, once the major steps have been taken
-- At some point we might want to use directly build an interface on C++ level, i.e. we use gap to construct a C++ object, that we can then hand over to topcom. This is a performance issue - right now the computations are fast enough, so that we do not need this (yet).
