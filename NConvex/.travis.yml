@@ -1,0 +1,46 @@
+dist: xenial
+language: c
+
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+      - libreadline-dev
+      - zlib1g-dev
+      - libcdd-dev
+      - libboost-dev
+matrix:
+  include:
+    - env: GAPBRANCH=master
+    - env: GAPBRANCH=stable-4.10
+    - env: GAPBRANCH=stable-4.9
+
+branches:
+  only:
+    - master
+
+before_script:
+  - gaproot="/home/travis/gap"
+  - git clone https://github.com/gap-system/pkg-ci-scripts.git scripts
+  - scripts/build_gap.sh
+  - cd .. 
+  - mkdir -p $gaproot/pkg/
+  - git clone https://github.com/homalg-project/CddInterface
+  - cd CddInterface
+  - ./install.sh $gaproot
+  - cd ..
+  - ln -f -s $(pwd)/CddInterface $gaproot/pkg/
+  - git clone https://github.com/gap-packages/NormalizInterface
+  - cd NormalizInterface
+  - ./build-normaliz.sh $gaproot
+  - ./autogen.sh
+  - ./configure --with-gaproot=$gaproot
+  - make
+  - cd ..
+  - ln -f -s $(pwd)/NormalizInterface $gaproot/pkg/
+  - cd NConvex
+script:
+  - scripts/run_tests.sh
+after_script:
+  - scripts/gather-coverage.sh
+  - bash <(curl -s https://codecov.io/bash)
