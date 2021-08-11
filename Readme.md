@@ -1,5 +1,8 @@
 # ToricVarieties_project
 
+[![CI](https://github.com/homalg-project/ToricVarieties_project/actions/workflows/test.yml/badge.svg)](https://github.com/homalg-project/ToricVarieties_project/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/homalg-project/ToricVarieties_project/branch/master/graph/badge.svg?token=u1sCmn53Sg)](https://codecov.io/gh/homalg-project/ToricVarieties_project)
+
 The *ToricVarieties_project* aimes for high performance algorithms to compute sheaf cohomologies of coherent (toric) sheaves.
 
 
@@ -17,7 +20,7 @@ Package|Description
 [CoherentSheavesOnToricVarieties](/CoherentSheavesOnToricVarieties)|This package models coherent sheaves as objects in a Serre quotient category of f.p. graded modules.
 [SheafCohomologyOnToricVarieties](/SheafCohomologyOnToricVarieties)|Implementation of fast algorithms for the computation of sheaf cohomologies of coherent (toric) sheaves. The algorithms are described in my [PhD thesis](https://arxiv.org/abs/1802.08860). These algorithms have been used in the context of [F-theory](https://en.wikipedia.org/wiki/F-theory) in the article [1706.04616](https://arxiv.org/abs/1706.04616).
 [H0Approximator](/H0Approximator)|This package is the result of recent collaboration with [Mirjam Cvetič](https://live-sas-physics.pantheon.sas.upenn.edu/people/standing-faculty/mirjam-cvetic), [Ron Donagi](https://www.math.upenn.edu/~donagi/), [Ling Lin](https://theory.cern/roster/lin-ling), [Muyang Liu](https://github.com/lmyreg2017) and [Fabian Rühle](https://github.com/ruehlef). The preprint is available [here](https://arxiv.org/abs/2007.00009).
-[QSMExporer](/QSMExporer)|This package is the result of recent collaboration with [Mirjam Cvetič](https://live-sas-physics.pantheon.sas.upenn.edu/people/standing-faculty/mirjam-cvetic) and [Muyang Liu](https://github.com/lmyreg2017). The preprint is be available on the arxiv very soon.
+[QSMExporer](/QSMExporer)|This package is the result of recent collaboration with [Mirjam Cvetič](https://live-sas-physics.pantheon.sas.upenn.edu/people/standing-faculty/mirjam-cvetic) and [Muyang Liu](https://github.com/lmyreg2017). The preprint is be available on the arxiv [2104.08297](https://arxiv.org/abs/2104.08297).
 
 
 ## Installation
