@@ -25,7 +25,7 @@ Package|Description
 
 ## Installation
 
-Detailed instructions for the installation can be found [here](https://martinbies.github.io/software/). For Ubuntu and Debian systems, I provide an installation script, with attempts to set up all of the above packages. This script is available [here](https://martinbies.github.io/Install.sh).
+Detailed instructions for the installation can be found [here](https://martinbies.github.io/software/). For Ubuntu and Debian systems, I provide an installation script, with attempts to set up all of the above packages. This script is available [here](https://martinbies.github.io/Install.sh). *This script is outdated. Update very soon.*
 
 
 ## Funding
