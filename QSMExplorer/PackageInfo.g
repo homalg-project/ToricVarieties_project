@@ -21,7 +21,7 @@ PackageName := "QSMExplorer",
 Subtitle := "A package to explore one Quadrillion F-theory Standard Models",
 
 Version := Maximum( [
-   "2021.05.26",
+   "2021.08.12",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
