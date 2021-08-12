@@ -1,3 +1,11 @@
+//                      Martin Bies
+//                      University of Pennsylvania
+//
+//                      Muyang Liu
+//                      University of Pennsylvania
+//
+//  Copyright 2021
+//
 // A program to compute all effective descendants of a curve class in dP3 upon splitting-off rigid divisors
 
 #include <algorithm>
