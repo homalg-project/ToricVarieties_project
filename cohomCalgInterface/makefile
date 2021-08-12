@@ -17,7 +17,7 @@ test:	doc
 
 install: uninstall
 	git clone https://github.com/HereAround/cohomCalg
-	cd cohomCalg;	git fetch origin prepared:prepared && git checkout prepared; make -j$(nproc)
+	cd cohomCalg;	git fetch origin prepared:prepared && git checkout prepared; make -j$$(nproc)
 	cp cohomCalg/bin/cohomcalg binAndMonomialFiles
 
 uninstall: 
