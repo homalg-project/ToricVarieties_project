@@ -1,5 +1,5 @@
 # cohomCalgInterface
-A gap package to communicate with the software cohomCalg
+A gap package to communicate with the software `cohomCalg` (https://github.com/BenjaminJurke/cohomCalg).
 
 
 ## Installation
