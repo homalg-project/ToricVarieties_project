@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  PackageInfo.g       SpasmInterface package
-##                      Martin Bies
+##                                Martin Bies
 ##
 ##  Copyright 2021      University of Pennsylvania
 ##

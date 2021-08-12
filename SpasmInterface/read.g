@@ -1,9 +1,9 @@
 #############################################################################
 ##
 ##  PackageInfo.g       SpasmInterface package
-##                      Martin Bies
+##                                Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##  Copyright 2021      University of Pennsylvania
 ##
 ##  A package to communicate with the software Spasm
 ##
