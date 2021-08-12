@@ -1,12 +1,11 @@
 #############################################################################
 ##
 ##  PackageInfo.g       cohomCalgInterface package
-##                      Martin Bies
+##                               Martin Bies
 ##
-##  Copyright 2020      University of Oxford
+##  Copyright 2021      University of Pennsylvania
 ##
-##  A package to communicate with the software Topcom
-##
+##  A package to communicate with the software cohomCalg
 #############################################################################
 
 # This file is a script which compiles the package manual.
