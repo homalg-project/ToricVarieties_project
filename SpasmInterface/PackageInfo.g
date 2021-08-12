@@ -16,7 +16,7 @@ PackageName := "SpasmInterface",
 Subtitle := "A package to communicate with the software Spasm",
 
 Version := Maximum( [
-   "2021.05.26",
+   "2021.08.12",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
