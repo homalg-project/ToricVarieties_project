@@ -57,3 +57,4 @@ QSMExplorer/bin/RootCounter/counter
 QSMExplorer/bin/RootCounter/main.o
 
 TopcomInterface/topcom*
+TopcomInterface/tst/topcom*
