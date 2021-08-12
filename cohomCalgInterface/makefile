@@ -15,6 +15,15 @@ docclean:
 test:	doc
 	gap tst/testall.g
 
+install: uninstall
+	git clone https://github.com/HereAround/cohomCalg
+	cd cohomCalg;	git fetch origin prepared:prepared && git checkout prepared; make -j$(nproc)
+	cp cohomCalg/bin/cohomcalg binAndMonomialFiles
+
+uninstall: 
+	rm -r -f cohomCalg
+	rm -f binAndMonomialFiles/cohomcalg 
+
 test-with-coverage:	doc
 	/usr/bin/time --quiet --format="%U %S\n%e" --output=performance.out gap --quitonbreak --cover stats tst/testall.g
 	echo 'LoadPackage("profiling"); OutputJsonCoverage("stats", "coverage.json");' | gap
