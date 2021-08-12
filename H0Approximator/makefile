@@ -12,6 +12,12 @@ doc/manual.six: makedoc.g \
 docclean:
 	(cd doc ; ./clean)
 
+install:
+	(cd bin/; g++ -o counter main.cpp; g++ -o counterH2 mainH2.cpp)
+
+uninstall:
+	(cd bin/; rm -f counter; rm -f counterH2 )
+	
 test:	doc
 	gap tst/testall.g
 
