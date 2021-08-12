@@ -1,8 +1,13 @@
 #############################################################################
 ##
-##  FunctorsTorVar.gd     ToricVarieties       Sebastian Gutsche
+##  FunctorsTorVar.gd     ToricVarieties
 ##
-##  Copyright 2011 Lehrstuhl B für Mathematik, RWTH Aachen
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
 ##
 ##  Functors for toric varieties.
 ##

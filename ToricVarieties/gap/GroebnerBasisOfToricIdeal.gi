@@ -1,10 +1,15 @@
 #############################################################################
 ##
-##  GroebnerBasisOfToricIdeal.gd     ToricVarieties       Sebastian Gutsche
+##  GroebnerBasisOfToricIdeal.gd     ToricVarieties
 ##
-##  Copyright 2012 Lehrstuhl B für Mathematik, RWTH Aachen
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
 ##
-##  Functors for toric varieties.
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
+##
+##  Groebner Basis computations of toric ideals.
 ##
 #############################################################################
 

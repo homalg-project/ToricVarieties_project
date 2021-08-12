@@ -1,10 +1,10 @@
 #############################################################################
 ##
 ##  init.g              ToricVarieties package
-##                      Sebastian Gutsche
-##                      Martin Bies
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
 ##
-##  Copyright 2011-2016 Lehrstuhl B für Mathematik, RWTH Aachen
+##  Copyright 2011-2021
 ##
 ##  A package to handle toric varieties
 ##

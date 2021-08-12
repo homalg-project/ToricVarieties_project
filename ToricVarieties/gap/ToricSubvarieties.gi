@@ -2,7 +2,12 @@
 ##
 ##  ToricSubarieties.gi         ToricVarieties package         Sebastian Gutsche
 ##
-##  Copyright 2011 Lehrstuhl B für Mathematik, RWTH Aachen
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
 ##
 ##  The Category of toric Varieties
 ##

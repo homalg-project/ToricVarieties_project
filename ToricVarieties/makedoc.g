@@ -1,5 +1,14 @@
-#
-# ToricVarieties
+#############################################################################
+##
+##  makedoc.g     ToricVarieties package
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
+##
+#############################################################################
 #
 # This file is a script which compiles the package manual.
 #

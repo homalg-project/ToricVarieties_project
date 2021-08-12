@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  PackageInfo.g       ToricVarieties package
-##                      Martin Bies
+##  PackageInfo.g        ToricVarieties package
+##                                Martin Bies
 ##
 ##  Copyright 2021      University of Pennsylvania
 ##
