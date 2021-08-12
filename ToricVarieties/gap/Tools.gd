@@ -1,8 +1,13 @@
 #############################################################################
 ##
-##  Tools.gd         ToricVarieties package         Sebastian Gutsche
+##  Tools.gd         ToricVarieties package
 ##
-##  Copyright 2011 Lehrstuhl B für Mathematik, RWTH Aachen
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
 ##
 ##  Tools for toric varieties
 ##

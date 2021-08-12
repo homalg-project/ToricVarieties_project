@@ -2,7 +2,11 @@
 ##
 ##  BlowupsOfToricVarieties.gd        ToricVarieties package
 ##
-##  Copyright 2019                    Martin Bies,       ULB Brussels
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
 ##
 #! @Chapter Blowups of toric varieties
 ##

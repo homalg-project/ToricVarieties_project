@@ -2,8 +2,12 @@
 ##
 ##  ToricVarieties.gi         ToricVarieties package
 ##
-##  Copyright 2011-2016, Sebastian Gutsche, TU Kaiserslautern
-##                        Martin Bies, ITP Heidelberg
+##                        Sebastian Gutsche
+##                        Martin Bies - University of Pennsylvania
+##
+##  Copyright 2011-2021
+##
+##  A package to handle toric varieties
 ##
 ##  The category of toric varieties
 ##
