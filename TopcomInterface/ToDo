@@ -1,7 +1,4 @@
-- Currently, Topcom produces lots of output in the console, which is not nice when using gap. 
-  => To alter this we need to adjust the actual topcom implementation
-- Docu not yet nice output too large
 - Make full functionality of topcom accessible. In particular support command line options -d, -h, -v, cardinality[k], frequency[k]...
-=> Thereby reproduce and test all examples in the topcom documentation
-- Add gap-category wrappers for chiros and points used as input and output for topcom
-- Banner upon loading which says "based on topcom" or alike
+=> Thereby reproduce and test all examples in the topcom documentation.
+- Add gap-category wrappers for chiros and points used as input and output for topcom.
+- Banner upon loading which says "based on topcom" or alike would be nice.
