@@ -1,11 +1,9 @@
 #############################################################################
 ##
-##  makedoc.g           TopcomInterface package
+##  makedoc.g             TopcomInterface package
+##                                Martin Bies
 ##
-##                      Martin Bies
-##                      University of Pennsylvania
-##
-##  Copyright 2021
+##  Copyright 2021      University of Pennsylvania
 ##
 ##  A package to communicate with the software Topcom
 ##
