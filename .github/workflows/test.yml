@@ -90,7 +90,7 @@ jobs:
           echo "(*) Install software in ToricVarieties_project"
           echo ""
           cd ToricVarieties_project
-          ./build.sh
+          make install
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"

@@ -1,10 +1,23 @@
 all: doc test
 
-.PHONY: test
+.PHONY: test clean install uninstall
 
 clean:
 	clean_all
 
+install: uninstall
+	( cd cohomCalgInterface; make install; cd .. )
+	( cd SpasmInterface; make install; cd .. )
+	( cd H0Approximator; make install; cd .. )
+	( cd QSMExplorer; make install; cd .. )
+	( cd TopcomInterface; make install; cd .. )
+
+uninstall:
+	( cd cohomCalgInterface; make uninstall; cd .. )
+	( cd SpasmInterface; make uninstall; cd .. )
+	( cd H0Approximator; make uninstall; cd .. )
+	( cd QSMExplorer; make uninstall; cd .. )
+	( cd TopcomInterface; make uninstall; cd .. )
 
 AdditionsForToricVarieties_clean_tst:
 	cd AdditionsForToricVarieties/tst && ./clean
