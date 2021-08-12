@@ -16,7 +16,7 @@ PackageName := "ToricVarieties",
 Subtitle := "A package to handle toric varieties",
 
 Version := Maximum( [
-   "2021.05.26",
+   "2021.08.12",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
