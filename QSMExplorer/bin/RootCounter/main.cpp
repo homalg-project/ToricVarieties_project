@@ -12,6 +12,7 @@
 #include <stack>
 #include "WDiagram.h"
 #include "MinRootCounter.cpp"
+#include "FlexRootCounter.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
