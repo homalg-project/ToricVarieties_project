@@ -1,20 +1,4 @@
-//#include <algorithm>
-//#include<iostream>
-//#include <vector>
-//#include <numeric>
-//#include <stdexcept>
-//#include <thread>
-//#include <functional>
-//#include <mutex>
-//#include <chrono>
-//#include <stack>
-//#include <iterator>
 #include "WDiagram.h"
-
-//############################################################
-//#################### (5) Count roots #######################
-//############################################################
-
 
 // Global variable for counting diagrams // thread-safe addition
 unsigned long long int total;
@@ -28,7 +12,7 @@ void IncreaseTotal( int s )
 
 // Count the minimal roots
 // Count the minimal roots
-int RootCounter( WeightedDiagram dia, int w0 )
+int MinRootCounter( WeightedDiagram dia, int w0 )
 {
     
     // save total number of roots found
@@ -113,7 +97,7 @@ void Distributer( WeightedDiagram dia, std::vector<int> ws )
     
     // find roots for different weight assignments
     for ( int i = 0; i < ws.size(); i++ ){
-        sum = sum + RootCounter( dia, ws[ i ] );
+        sum = sum + MinRootCounter( dia, ws[ i ] );
     }
     
     // increase the total number of roots found

@@ -11,7 +11,7 @@
 #include <chrono>
 #include <stack>
 #include "WDiagram.h"
-#include "RootCounter.cpp"
+#include "MinRootCounter.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
