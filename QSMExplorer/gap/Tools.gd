@@ -441,14 +441,38 @@ DeclareOperation( "DisplayFullInformationOfQSM", [ IsRecord, IsBool ] );
 #! This function computes the number of limit roots in the i-th QSM.
 #! @Returns integer or fail
 #! @Arguments Integer i
-DeclareOperation( "CountLimitRootsOfQSM", [ IsInt ] );
-DeclareOperation( "CountLimitRootsOfQSM", [ IsInt, IsInt ] );
+DeclareOperation( "CountMinimalLimitRootsOfQSM", [ IsInt ] );
+DeclareOperation( "CountMinimalLimitRootsOfQSM", [ IsInt, IsInt ] );
 
 #! @Description
 #! This function computes the number of limit roots in the QSM defined by polytope i.
 #! @Returns integer or fail
 #! @Arguments Integer i
-DeclareOperation( "CountLimitRootsOfQSMByPolytope", [ IsInt ] );
-DeclareOperation( "CountLimitRootsOfQSMByPolytope", [ IsInt, IsInt ] );
+DeclareOperation( "CountMinimalLimitRootsOfQSMByPolytope", [ IsInt ] );
+DeclareOperation( "CountMinimalLimitRootsOfQSMByPolytope", [ IsInt, IsInt ] );
 
-DeclareOperation( "CountLimitRoots", [ IsRecord, IsInt ] );
+DeclareOperation( "CountMinimalLimitRoots", [ IsRecord, IsInt ] );
+
+
+##############################################################################################
+##
+#! @Section Counting distribution of limit roots
+##
+##############################################################################################
+
+
+#! @Description
+#! This function computes the number of limit roots in the i-th QSM with at most L global sections.
+#! @Returns integer or fail
+#! @Arguments Integer i, integer L
+DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt ] );
+DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt ] );
+
+#! @Description
+#! This function computes the number of limit roots in the QSM defined by polytope i  with at most L global sections.
+#! @Returns integer or fail
+#! @Arguments Integer i, integer L
+DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt ] );
+DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
+
+DeclareOperation( "CountLimitRootDistribution", [ IsRecord, IsInt, IsInt ] );
