@@ -111,7 +111,7 @@ FullInformationOfQSM( 1 );
 #! We can compute the limit counting of selected polytope by issuing CountLimitRootsOfQSMByPolytope( i ) that corresponds to the i-th polytope in the Kreuzer and Skarke list. Below is the root counting for the 7-th polytope.
 
 #! @Log
-CountLimitRootsOfQSMByPolytope( 8 );
+CountMinimalLimitRootOfQSMByPolytope( 8 );
 #!
 #! Received diagram:
 #! -----------------
@@ -146,7 +146,7 @@ CountLimitRootsOfQSMByPolytope( 8 );
 #! Alternatively, we can compute the limit counting of selected polytope by issuing CountLimitRootsOfQSM( i ) that corresponds to the i-th polytope in our list. Below is the root counting for the 1st polytope.
 
 #! @Log
-CountLimitRootsOfQSM( 1 );
+CountMinimalLimitRootsOfQSM( 1 );
 #!
 #! Received diagram:
 #! -----------------
@@ -181,12 +181,22 @@ CountLimitRootsOfQSM( 1 );
 #! Let us display the root counting of the 8th polytope in the Kreuzer and Skarke list and the first polytope in our list.
 
 #! @Example
-n := CountLimitRootsOfQSMByPolytope( 8 );;
+n := CountMinimalLimitRootsOfQSMByPolytope( 8 );;
 n;
 #! 142560
-n := CountLimitRootsOfQSM( 1 );;
+n := CountMinimalLimitRootsOfQSM( 1 );;
 n;
 #! 11110
+#! @EndExample
+
+#! We can also wonder how many limit roots exist with number of global sections at most L. For example, this is achieved by the following:
+#! @Example
+n1 := CountLimitRootDistributionOfQSMByPolytope( 8, 4 );;
+n1;
+#! [ 142560, 0 ]
+n2 := CountLimitRootDistributionOfQSM( 10, 6 );;
+n2;
+#! [ 781680888, 25196800, 106800, 0 ]
 #! @EndExample
 
 #! We can also perform a sufficient test to tell if the K3s are elliptic. To this end, it suffices to find an element of Pic( K3 ) with vanishing self-intersection number
