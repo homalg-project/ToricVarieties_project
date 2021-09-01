@@ -13,10 +13,12 @@ docclean:
 	(cd doc ; ./clean)
 
 install:
-	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main.cpp) -lpthread; g++ -o counter WDiagram.o main.o -lpthread )
+	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main-MinimalRootCounter.cpp) -lpthread; g++ -o min-counter WDiagram.o main-MinimalRootCounter.o -lpthread )
+	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main-DistributionCounter.cpp) -lpthread; g++ -o distribution-counter WDiagram.o main-DistributionCounter.o -lpthread )
 	
 uninstall:
-	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f counter )
+	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f min-counter )
+	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f distribution-counter )
 	
 test:	doc
 	gap tst/testall.g
