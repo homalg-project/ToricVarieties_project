@@ -276,8 +276,9 @@ int WeightedDiagram::get_mult( std::vector<int> weights )
 //############### (4) Test weight assignment #################
 //############################################################
 
+
 // set weights and test if this assignment is ok
-bool WeightedDiagram::test_weights( std::vector<int> weights )
+bool WeightedDiagram::test_weights( std::vector<int> weights, int h0_target )
 {
     
     // find the number of weights
@@ -287,11 +288,24 @@ bool WeightedDiagram::test_weights( std::vector<int> weights )
         return -1;
     }
     
+    // h0_target must be non-negative
+    if ( h0_target < 0 ){
+        std::cout << "h0_target must be a non-negative integer\n";
+        return -1;
+    }
+    
     // set the weigths, check how many weights are assigned per vertex and compute the incident for each vertex
     int number_of_assigned_weights[ vertices.size() ]{ 0 };
     int incidents_of_vertices[ vertices.size() ]{ 0 };
+    int non_initialized = 0;
     for ( int i = 0; i < w_total; i++ ){
         
+        // count the number of not initialized weights
+        if ( weights[ i ] == 0 ){
+            non_initialized ++;
+        }
+        
+        // compute incidents for good weights
         if ( weights[ i ] > 0 ){
             
             number_of_assigned_weights[ edges[ i ][ 0 ] ]++;
@@ -329,14 +343,112 @@ bool WeightedDiagram::test_weights( std::vector<int> weights )
                 h0_total = h0_total + h0;
                 
                 // check if this is ok
-                if ( h0_total > h0_min ){
+                if ( h0_total > h0_target ){
+                //if ( h0_total > 100 ){
+                    //std::cout << "Fail \n";
                     return false;
                 }
             }
         }
     }
-    
+    //std::cout << h0_total << "\n";
+    // consistency check -- this should NEVER happen
+    if ( ( ( h0_total > h0_target ) || ( h0_total < h0_min ) ) && ( non_initialized == 0 ) ){
+        std::cout << "\n";
+        std::cout << "THIS SHOULD NOT HAPPEN! PLEASE REPORT ISSUE IMMEDIATELY ON GITHUB. THANK YOU!\n";
+        std::cout << h0_total << " vs. min " << h0_min << " and max " << h0_target << "\n";
+        std::cout << "number of weights provided: " << weights.size() << "\n";
+        std::cout << "number of edges" << edges.size() << "\n";
+        for ( int i = 0; i < weights.size()-1; i++ ){
+            std::cout << weights[ i ] << ",";
+            }
+        std::cout << weights[ weights.size() - 1 ] << "\n\n";
+    }
+
     // all successful
     return true;
     
+}
+
+// set weights and test if this assignment is ok
+bool WeightedDiagram::test_weights( std::vector<int> weights )
+{
+    
+    return test_weights( weights, h0_min );
+    
+}
+
+//############################################################
+//################### (5) Compute h0 from given weights ###################
+//############################################################
+
+// set weights and test if this assignment is ok
+int WeightedDiagram::h0_from_weights( std::vector<int> weights )
+{
+    
+    // find the number of weights
+    int w_total = weights.size();
+    if ( w_total < edges.size() ){
+        std::cout << "Length of provided weight vector does not match number of edges\n";
+        return -1;
+    }
+    
+    // set the weigths, check how many weights are assigned per vertex and compute the incident for each vertex
+    int number_of_assigned_weights[ vertices.size() ]{ 0 };
+    int incidents_of_vertices[ vertices.size() ]{ 0 };
+    int non_initialized = 0;
+    for ( int i = 0; i < w_total; i++ ){
+        
+        // count the number of not initialized weights
+        if ( weights[ i ] == 0 ){
+            non_initialized ++;
+        }
+        
+        // compute incidents for good weights
+        if ( weights[ i ] > 0 ){
+            
+            number_of_assigned_weights[ edges[ i ][ 0 ] ]++;
+            incidents_of_vertices[ edges[ i ][ 0 ] ] = incidents_of_vertices[ edges[ i ][ 0 ] ] + weights[ i ];
+            
+            number_of_assigned_weights[ edges[ i ][ 1 ] ]++;
+            incidents_of_vertices[ edges[ i ][ 1 ] ] = incidents_of_vertices[ edges[ i ][ 1 ] ] + root - weights[ i ];
+            
+        }
+        
+    }
+
+    // if some weights are not initialized, we cannot perform this operation
+    if ( non_initialized > 0 ){
+        throw std::invalid_argument("Some weights are not initialized! Cannot compute h0." );
+        return -1;
+    }
+    
+    // iterate over all vertices
+    int h0_total = 0;
+    for ( int i = 0; i < vertices.size(); i++ ){
+        
+        // check if mod condition is satisfied
+        if ( ( degrees[ i ] - incidents_of_vertices[ i ] ) % root != 0 ){
+                throw std::invalid_argument("Likely, the provided weights do not define a root bundle. Check weights!" );
+                return -1;
+        }
+        
+        // determine h0
+        int deg = (int) ( degrees[ i ] - incidents_of_vertices[ i ] ) / root;
+        int h0 = 0;
+        if ( deg >= 0 ){
+                h0 = deg;
+                if ( genera[ i ] == 0 ){
+                    h0 = h0 + 1;
+                }
+        }
+        
+        // increase h0_total
+        h0_total = h0_total + h0;
+        
+    }
+    
+    // return h0_total
+    return h0_total;
+
 }
