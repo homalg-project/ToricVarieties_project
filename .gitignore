@@ -53,8 +53,8 @@ H0Approximator/bin/*
 */performance*
 
 QSMExplorer/bin/RootCounter/WDiagram.o
-QSMExplorer/bin/RootCounter/counter
-QSMExplorer/bin/RootCounter/main.o
+QSMExplorer/bin/RootCounter/min-counter
+QSMExplorer/bin/RootCounter/main-MinimalRootCounter.o
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
