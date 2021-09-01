@@ -1296,11 +1296,11 @@ end );
 
 ##############################################################################################
 ##
-##  Count limit roots
+##  Count minimal limit roots
 ##
 ##############################################################################################
 
-InstallMethod( CountLimitRootsOfQSM, [ IsInt ],
+InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt ],
     function( index )
         local str, a, dir, nproc;
         
@@ -1316,11 +1316,11 @@ InstallMethod( CountLimitRootsOfQSM, [ IsInt ],
         Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
         
         # str now contains the number of processors upon evaluation of this string
-        return CountLimitRootsOfQSM( index, EvalString( str ) );
+        return CountMinimalLimitRootsOfQSM( index, EvalString( str ) );
         
 end );
 
-InstallMethod( CountLimitRootsOfQSM, [ IsInt, IsInt ],
+InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt, IsInt ],
     function( index, number_processes )
         local data;
         
@@ -1328,12 +1328,12 @@ InstallMethod( CountLimitRootsOfQSM, [ IsInt, IsInt ],
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRoots( data, number_processes );
+            return CountMinimalLimitRoots( data, number_processes );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootsOfQSMByPolytope, [ IsInt ],
+InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt ],
     function( index )
         local str, a, dir, nproc;
         
@@ -1349,11 +1349,11 @@ InstallMethod( CountLimitRootsOfQSMByPolytope, [ IsInt ],
         Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
         
         # issue the run
-        return CountLimitRootsOfQSMByPolytope( index, EvalString( str ) );
+        return CountMinimalLimitRootsOfQSMByPolytope( index, EvalString( str ) );
         
 end );
 
-InstallMethod( CountLimitRootsOfQSMByPolytope, [ IsInt, IsInt ],
+InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt, IsInt ],
     function( index, number_processes )
         local data;
         
@@ -1361,22 +1361,22 @@ InstallMethod( CountLimitRootsOfQSMByPolytope, [ IsInt, IsInt ],
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRoots( data, number_processes );
+            return CountMinimalLimitRoots( data, number_processes );
         fi;
         
 end );
 
-InstallMethod( CountLimitRoots, [ IsRecord, IsInt ],
+InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsInt ],
     function( data, number_processes )
         local dir, bin, result_file, output_string, output, input_string, input, index, Kbar3, genera, degrees, edges, total_genus, root, options, i, nr;
         
         # find the counter binary
         dir := FindRootCounterDirectory();
-        bin := Filename( dir, "./counter" );
+        bin := Filename( dir, "./min-counter" );
         
         # check if the binary exists
         if not IsExistingFile( bin ) then
-            Error( "./counter is not available in designed folder" );
+            Error( "./min-counter is not available in designed folder" );
         fi;
         
         # prepare empty streams
@@ -1435,5 +1435,154 @@ InstallMethod( CountLimitRoots, [ IsRecord, IsInt ],
         
         # return success
         return nr;
+        
+end );
+
+
+##############################################################################################
+##
+##  Count distribution of limit roots
+##
+##############################################################################################
+
+InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt ],
+    function( index, limit )
+        local str, a, dir, nproc;
+        
+        # set up output stream
+        str := "";
+        a := OutputTextString(str,true);
+        
+        # path to nproc
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        
+        # execute nproc to find number of processors
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        
+        # str now contains the number of processors upon evaluation of this string
+        return CountLimitRootDistributionOfQSM( index, limit, EvalString( str ) );
+        
+end );
+
+InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt ],
+    function( index, limit, number_processes )
+        local data;
+        
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return CountLimitRootDistribution( data, limit, number_processes );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt ],
+    function( index, limit )
+        local str, a, dir, nproc;
+        
+        # set up output stream
+        str := "";
+        a := OutputTextString(str,true);
+        
+        # path to nproc
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        
+        # execute nproc to find number of processors
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        
+        # issue the run
+        return CountLimitRootDistributionOfQSMByPolytope( index, limit, EvalString( str ) );
+        
+end );
+
+InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt ],
+    function( index, limit, number_processes )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return CountLimitRootDistribution( data, limit, number_processes );
+        fi;
+        
+end );
+
+
+InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
+    function( data, limit, number_processes )
+        local dir, bin, result_file, output_string, output, input_string, input, index, Kbar3, genera, degrees, edges, total_genus, root, options, i, nr, nr_truncated;
+        
+        # find the counter binary
+        dir := FindRootCounterDirectory();
+        bin := Filename( dir, "./distribution-counter" );
+        
+        # check if the binary exists
+        if not IsExistingFile( bin ) then
+            Error( "./distribution-counter is not available in designed folder" );
+        fi;
+        
+        # prepare empty streams
+        output_string := "";
+        output := OutputTextUser();
+        input_string := "";
+        input := InputTextString( input_string );
+        
+        # trigger warning if needed
+        index := Int( data.PolyInx );
+        if ( Position( [ 8, 4, 134, 128, 130, 136, 236, 88, 110, 272, 274, 387, 798, 808, 810, 812, 254, 52, 302, 786, 762, 417, 838, 782, 377, 499, 503, 1348, 882, 1340, 1879, 1384, 856 ], index ) = fail ) then
+            
+            Print( "\n\n" );
+            Print( "WARNING:\n" );
+            Print( "The root counting data for this polytope has not (yet) been optimized. The computation may take a long time.\n" );
+            Print( "WARNING:\n\n" );
+            
+        fi;
+        
+        # read-out the record for the required data
+        Kbar3 := Int( data.Kbar3 );
+        genera := EvalString( data.CiGenus );
+        degrees := ( 6 + Kbar3 ) * EvalString( data.CiDegreeKbar );
+        edges := EvalString( data.EdgeList );
+        total_genus := Int( Kbar3/2 + 1 );
+        root := 2 * Kbar3;
+        
+        # options conveys the necessary information about the graph
+        options := Concatenation( String( Length( genera ) ), " " );
+        for i in [ 1 .. Length( degrees ) ] do
+            options := Concatenation( options, String( degrees[ i ] ), " " );
+        od;
+        for i in [ 1 .. Length( genera ) ] do
+            options := Concatenation( options, String( genera[ i ] ), " " );
+        od;
+        options := Concatenation( options, String( Length( edges ) ), " " );
+        for i in [ 1 .. Length( edges ) ] do
+            options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
+        od;
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( limit ) );
+        
+        # triggerthe binary
+        Process( DirectoryCurrent(), bin, input, output, [ options ] );
+        
+        # check if the result file exists
+        result_file := Filename( dir, "result.txt" );
+        if not IsExistingFile( result_file ) then
+            Error( "result.txt is not available in designed folder" );
+        fi;
+        
+        # if yes, read the content
+        input := InputTextFile(result_file);
+        nr := List( SplitString( ReadAll( input ), "\n" ), i -> EvalString( i ) );
+        CloseStream(input);
+        RemoveFile( result_file );
+        
+        # truncate result to display the values desired by the user
+        nr_truncated := List( [ 1 .. limit - 2 ], i -> nr[ i ] );
+        
+        # return result
+        return nr_truncated;
         
 end );
