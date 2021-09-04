@@ -1023,11 +1023,11 @@ InstallMethod( ithBettiNumber,
     
     k := i / 2;
     
-    f_vector := FVector( FanOfVariety( variety ) );
+    f_vector := Concatenation( [ 1 ], FVector( FanOfVariety( variety ) ) );
     
     dim := Dimension( variety );
     
-    betti_number := Sum( [ k .. dim ], i -> ( -1 )^( i - k ) * Binomial( i, k ) * f_vector[ dim - i ] );
+    betti_number := Sum( [ k .. dim ], i -> ( -1 )^( i - k ) * Binomial( i, k ) * f_vector[ dim - i + 1 ] );
     
     return betti_number;
     
