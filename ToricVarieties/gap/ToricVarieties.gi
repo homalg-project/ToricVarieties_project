@@ -1371,9 +1371,9 @@ InstallMethod( NrOfqRationalPoints,
     
     dim := Dimension( variety );
     
-    f_vector := FVector( FanOfVariety( variety ) );
+    f_vector := Concatenation( [ 0 ], FVector( FanOfVariety( variety ) ) );
     
-    nr_of_points := ( card_of_field - 1 )^dim + Sum( [ 0 .. dim - 1 ], i -> ( card_of_field - 1 )^( i ) * f_vector( dim - i ) );
+    nr_of_points := ( card_of_field - 1 )^dim + Sum( [ 0 .. dim - 1 ], i -> ( card_of_field - 1 )^( i ) * f_vector[ dim - i ] );
     
     return nr_of_points;
     
