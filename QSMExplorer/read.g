@@ -16,3 +16,4 @@
 #############################################################################
 
 ReadPackage( "QSMExplorer", "gap/Tools.gi" );
+ReadPackage( "QSMExplorer", "gap/WDiagram.gi" );
