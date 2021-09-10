@@ -1518,13 +1518,13 @@ InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
         
         # find the counter binary
         dir := FindRootCounterDirectory();
-        bin := Filename( dir, "./distribution-counter" );
+        bin := Filename( dir, "./distribution-with-external-legs-counter" );
         
         # check if the binary exists
         if not IsExistingFile( bin ) then
-            Error( "./distribution-counter is not available in designed folder" );
+            Error( "./distribution-with-external-legs-counter is not available in designed folder" );
         fi;
-        
+
         # prepare empty streams
         output_string := "";
         output := OutputTextUser();
@@ -1562,6 +1562,7 @@ InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
         for i in [ 1 .. Length( edges ) ] do
             options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
         od;
+        options := Concatenation( options, "0 " );
         options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( limit ) );
         
         # triggerthe binary
