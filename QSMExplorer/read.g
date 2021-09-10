@@ -17,3 +17,4 @@
 
 ReadPackage( "QSMExplorer", "gap/Tools.gi" );
 ReadPackage( "QSMExplorer", "gap/WDiagram.gi" );
+ReadPackage( "QSMExplorer", "gap/WDiagramWithExternalLegs.gi" );
