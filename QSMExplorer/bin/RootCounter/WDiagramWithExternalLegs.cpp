@@ -192,9 +192,11 @@ void WeightedDiagramWithExternalLegs::print_complete_information()
     print_degrees();
     print_genera();
     print_edges();
-    print_external_legs();
-    print_external_weights();
-    print_external_leg_reductions();
+    if ( external_weights.size() > 0 ){
+        print_external_legs();
+        print_external_weights();
+        print_external_leg_reductions();
+    }
     print_degree();
     print_root();
     print_genus();
