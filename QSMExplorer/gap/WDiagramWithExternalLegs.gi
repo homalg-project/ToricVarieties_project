@@ -51,11 +51,6 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
             return -1;
         fi;
         
-        # in case we do not receive any external legs, call simpler method
-        if Length( external_legs ) = 0 then
-            return CountDistribution( genera, degrees, edges, total_genus, root, limit );
-        fi;
-        
         # check that all external weights are meaningful
         for i in [ 1 .. Length( external_weights ) ] do
             if ( external_weights[ i ] < 1 ) or ( external_weights[ i ] > root - 1 ) then
