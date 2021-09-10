@@ -14,7 +14,6 @@ docclean:
 
 install:
 	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main-MinimalRootCounter.cpp) -lpthread; g++ -o min-counter WDiagram.o main-MinimalRootCounter.o -lpthread )
-	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main-DistributionCounter.cpp) -lpthread; g++ -o distribution-counter WDiagram.o main-DistributionCounter.o -lpthread )
 	(cd bin/RootCounter; g++ -c WDiagramWithExternalLegs.cpp; g++ -c $$(realpath main-DistributionWithExternalLegsCounter.cpp) -lpthread; g++ -o distribution-with-external-legs-counter WDiagramWithExternalLegs.o main-DistributionWithExternalLegsCounter.o -lpthread )
 	
 uninstall:
