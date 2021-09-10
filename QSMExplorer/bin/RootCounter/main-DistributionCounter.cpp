@@ -11,7 +11,6 @@
 #include <chrono>
 #include <stack>
 #include "WDiagram.h"
-#include "MinimalRootCounter.cpp"
 #include "RootDistributionCounter.cpp"
 
 // Optimizations for speedup
@@ -45,6 +44,7 @@ int main(int argc, char* argv[]) {
     // (5) genus (int)
     // (6) root (int)
     // (7) number of threads (int) - optional
+    // (8) h0-target
     // So expect the following input:
     // { #Vertices, degrees, genera, #Edges, edge-information, genus, root, threads }
     
