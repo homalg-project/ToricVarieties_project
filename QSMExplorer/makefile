@@ -18,7 +18,7 @@ install:
 	(cd bin/RootCounter; g++ -c WDiagramWithExternalLegs.cpp; g++ -c $$(realpath main-DistributionWithExternalLegsCounter.cpp) -lpthread; g++ -o distribution-with-external-legs-counter WDiagramWithExternalLegs.o main-DistributionWithExternalLegsCounter.o -lpthread )
 	
 uninstall:
-	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f min-counter; rm -f distribution-counter; rm -f distribution-with-external-legs-counter )
+	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f main-DistributionWithExternalLegsCounter.o; rm -f main-MinimalRootCounter.o; rm -f WDiagramWithExternalLegs.o; rm -f min-counter; rm -f distribution-counter; rm -f distribution-with-external-legs-counter )
 	
 test:	doc
 	gap tst/testall.g
