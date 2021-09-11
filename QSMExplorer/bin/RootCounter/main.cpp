@@ -10,7 +10,7 @@
 #include <mutex>
 #include <chrono>
 #include <stack>
-#include "RootDistributionWithExternalLegsCounter.cpp"
+#include "RootDistributionCounter.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
