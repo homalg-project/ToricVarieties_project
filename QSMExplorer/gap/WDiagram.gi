@@ -99,10 +99,10 @@ end );
 ##############################################################################################
 
 
-InstallMethod( CountDistribution, [ IsList, IsList, IsList, IsInt, IsInt, IsInt ],
-  function( genera, degrees, edges, total_genus, root, limit )
+InstallMethod( CountDistribution, [ IsList ],
+  function( data )
         
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, limit, [], [] ] );
+        return CountDistributionWithExternalLegs( [ data[ 1 ], data[ 2 ], data[ 3 ], data[ 4 ], data[ 5 ], data[ 6 ], data[ 7 ], [], [] ] );
         
 end );
 
@@ -112,7 +112,7 @@ InstallMethod( CountSimpleDistribution,
                [ ],
   function( )
         
-        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 8, [], [] ] );
+        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 0, 8, [], [] ] );
         
 end );
 

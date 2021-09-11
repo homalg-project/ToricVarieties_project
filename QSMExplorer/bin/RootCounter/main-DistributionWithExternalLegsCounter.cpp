@@ -45,7 +45,8 @@ int main(int argc, char* argv[]) {
     // (6) genus (int)
     // (7) root (int)
     // (8) number of threads (int) - optional
-    // (9) h0 target
+    // (9) h0Min (int)
+    // (10) h0_h0Max (int)
     // So expect the following input:
     // { #Vertices, degrees, genera, #Edges, edge-information, genus, root, threads }
     
@@ -79,7 +80,8 @@ int main(int argc, char* argv[]) {
     int genus = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 1 ];
     int root = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 2 ];
     int number_threads = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 3 ];
-    int limit = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 4 ];
+    int h0Min = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 4 ];
+    int h0Max = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 5 ];
         
     // check if curve class and bundle class are of correct length
     if ( ( genus < 0 ) ){
@@ -90,17 +92,25 @@ int main(int argc, char* argv[]) {
         std::cout << "Root must be at least 2.\n";
         return -1;
     }
+    if ( h0Min > h0Max ){
+        std::cout << "h0Min should not be larger than h0Max\n";
+    }
     
     // construct diagram
     WeightedDiagramWithExternalLegs dia = WeightedDiagramWithExternalLegs( vertices, degrees, genera, edges, external_legs, external_weights, genus, root );
     
+    int h0MinUsed = h0Min;
+    if (h0MinUsed < dia.get_h0_min() ){
+            h0MinUsed = dia.get_h0_min();
+    }
+    
     // count root distribution
-    std::vector<unsigned long long int> n;
+    std::vector<unsigned long long int> n( h0Max - h0MinUsed + 1, 0 );
     if ( number_threads > 0 ){
-        n = countRootDistribution( dia, number_threads, limit );
+        countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n );
     }
     else{
-        n = countRootDistribution( dia, limit );
+        countRootDistribution( dia, h0MinUsed, h0Max, n );
     }
     
     // save the result to a dummy file next to main.cpp, so gap can read it out
@@ -108,7 +118,10 @@ int main(int argc, char* argv[]) {
     std::string file_path = __FILE__;
     std::string dir_path = file_path.substr(0, file_path.rfind("/"));
     ofile.open( dir_path + "/result.txt" );
-    for ( int i = 0; i < n.size(); i ++ ){
+    for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){
+        ofile << "0" << std::endl;
+    }
+    for ( int i = 0; i < h0Max - h0MinUsed + 1; i ++ ){
         ofile << n[ i ] << std::endl;
     }
     ofile.close();
