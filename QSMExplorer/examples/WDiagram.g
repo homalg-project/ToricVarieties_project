@@ -6,7 +6,7 @@
 #! @Example
 n := CountSimpleMinimals( );;
 n;
-#! 7
+#! [ 7 ]
 n := CountSimpleDistribution( );;
 n;
 #! [ 0, 0, 0, 0, 0, 0, 7, 0, 0 ]
@@ -17,7 +17,7 @@ n;
 #! @Example
 n := CountMinimals( [ 0, 0 ], [ 4, 4 ], [ [ 0, 1 ], [ 0, 1 ] ], 1, 2 );;
 n;
-#! 1
+#! [ 1 ]
 #! @EndExample
 
 #! Likewise, we can compute the distribution. For this, we need so set also a limit $$L$$, so that we only count limit roots with at most $$L$$ global sections. Hence, we modify the above code as follows to count up to $$h^0 = 20$$:
