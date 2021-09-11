@@ -337,20 +337,20 @@ int WeightedDiagramWithExternalLegs::get_mult( std::vector<int> weights )
 
 
 // set weights and test if this assignment is ok
-bool WeightedDiagramWithExternalLegs::test_weights( std::vector<int> weights, int h0_target )
+bool WeightedDiagramWithExternalLegs::test_weights( std::vector<int> weights, int h0Min, int h0Max )
 {
     
     // find the number of weights
     int w_total = weights.size();
     if ( w_total < edges.size() ){
         std::cout << "Length of provided weight vector does not match number of edges\n";
-        return -1;
+        return false;
     }
     
-    // h0_target must be non-negative
-    if ( h0_target < 0 ){
-        std::cout << "h0_target must be a non-negative integer\n";
-        return -1;
+    // h0Max must be non-negative
+    if ( h0Max < 0 ){
+        std::cout << "h0Max must be a non-negative integer\n";
+        return false;
     }
     
     // set the weigths, check how many weights are assigned per vertex and compute the incident for each vertex
@@ -402,16 +402,16 @@ bool WeightedDiagramWithExternalLegs::test_weights( std::vector<int> weights, in
                 h0_total = h0_total + h0;
                 
                 // check if this is ok
-                if ( h0_total > h0_target ){
+                if ( h0_total > h0Max ) {
                     return false;
                 }
             }
         }
     }
-    if ( ( ( h0_total > h0_target ) || ( h0_total < h0_min ) ) && ( non_initialized == 0 ) ){
+    if ( ( ( h0_total > h0Max ) || ( h0_total < h0_min ) ) && ( non_initialized == 0 ) ){
         std::cout << "\n";
         std::cout << "THIS SHOULD NOT HAPPEN! PLEASE REPORT ISSUE IMMEDIATELY ON GITHUB. THANK YOU!\n";
-        std::cout << h0_total << " vs. min " << h0_min << " and max " << h0_target << "\n";
+        std::cout << h0_total << " vs. min " << h0_min << " and max " << h0Max << "\n";
         std::cout << "number of weights provided: " << weights.size() << "\n";
         std::cout << "number of edges" << edges.size() << "\n";
         for ( int i = 0; i < weights.size()-1; i++ ){
@@ -429,7 +429,7 @@ bool WeightedDiagramWithExternalLegs::test_weights( std::vector<int> weights, in
 bool WeightedDiagramWithExternalLegs::test_weights( std::vector<int> weights )
 {
     
-    return test_weights( weights, h0_min );
+    return test_weights( weights, h0_min, h0_min );
     
 }
 

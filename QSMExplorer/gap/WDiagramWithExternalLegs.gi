@@ -26,14 +26,14 @@
 InstallMethod( CountSimpleDistributionWithExternalLegs, [ ],
   function( )
         
-        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 8, [ 0, 0, 1 ], [ 2, 2, 4 ] ] );
+        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 1, 8, [ 0, 0, 1 ], [ 2, 2, 4 ] ] );
         
 end );
 
 
 InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
   function( data )
-        local genera, degrees, edges, total_genus, root, limit, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, index, options, i, nr, nr_truncated;
+        local genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, index, options, i, nr, nr_truncated;
         
         # extract data
         genera := data[ 1 ];
@@ -41,9 +41,10 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         edges := data[ 3 ];
         total_genus := data[ 4 ];
         root := data[ 5 ];
-        limit := data[ 6 ];
-        external_legs := data[ 7 ];
-        external_weights := data[ 8 ];
+        min := data[ 6 ];
+        max := data[ 7 ];
+        external_legs := data[ 8 ];
+        external_weights := data[ 9 ];
         
         # check that we receive as many external legs as weights
         if Length( external_legs ) <> Length( external_weights ) then
@@ -58,6 +59,12 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
                 return -1;
             fi;
         od;
+        
+        # check if min is meaningful
+        if ( min < 0 ) then
+            Print( "Min must not be negative. Replaced by 0 in order to proceed.\n" );
+            min := 0;
+        fi;
         
         # check for degenerate case, i.e. where there are no roots
         if not IsInt( ( Sum( degrees ) - Sum( external_weights ) ) / root ) then
@@ -102,7 +109,7 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
             options := Concatenation( options, String( external_legs[ i ] ), " " );
             options := Concatenation( options, String( external_weights[ i ] ), " " );
         od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( limit ) );
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ) );
         
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
@@ -120,7 +127,7 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         RemoveFile( result_file );
         
         # truncate the result and return it
-        nr_truncated := List( [ 1 .. limit - 2 ], i -> nr[ i ] );
-        return nr_truncated;
+        #nr_truncated := List( [ 1 .. limit - 2 ], i -> nr[ i ] );
+        return nr;
   
 end );

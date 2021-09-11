@@ -69,7 +69,7 @@ class WeightedDiagramWithExternalLegs
     int get_mult(std::vector<int> weights);
     
     // set and test weight configurations
-    bool test_weights(std::vector<int> weights, int h0_target);
+    bool test_weights(std::vector<int> weights, int h0Min, int h0Max );
     bool test_weights(std::vector<int> weights);
     int h0_from_weights( std::vector<int> weights );
     
