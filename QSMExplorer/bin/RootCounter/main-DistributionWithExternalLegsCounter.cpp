@@ -10,7 +10,6 @@
 #include <mutex>
 #include <chrono>
 #include <stack>
-#include "WDiagram.h"
 #include "RootDistributionWithExternalLegsCounter.cpp"
 
 // Optimizations for speedup
