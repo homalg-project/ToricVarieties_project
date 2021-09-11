@@ -53,13 +53,8 @@ H0Approximator/bin/*
 */performance*
 
 QSMExplorer/bin/RootCounter/WDiagram.o
-QSMExplorer/bin/RootCounter/WDiagramWithExternalLegs.o
-QSMExplorer/bin/RootCounter/min-counter
-QSMExplorer/bin/RootCounter/main-MinimalRootCounter.o
-QSMExplorer/bin/RootCounter/distribution-counter
-QSMExplorer/bin/RootCounter/main-DistributionCounter.o
-QSMExplorer/bin/RootCounter/distribution-with-external-legs-counter
-QSMExplorer/bin/RootCounter/main-DistributionWithExternalLegsCounter.o
+QSMExplorer/bin/RootCounter/main.o
+QSMExplorer/bin/RootCounter/distributionCounter
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
