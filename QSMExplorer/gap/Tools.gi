@@ -1368,22 +1368,7 @@ end );
 
 InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsInt ],
     function( data, number_processes )
-        local dir, bin, result_file, output_string, output, input_string, input, index, Kbar3, genera, degrees, edges, total_genus, root, options, i, nr;
-        
-        # find the counter binary
-        dir := FindRootCounterDirectory();
-        bin := Filename( dir, "./min-counter" );
-        
-        # check if the binary exists
-        if not IsExistingFile( bin ) then
-            Error( "./min-counter is not available in designed folder" );
-        fi;
-        
-        # prepare empty streams
-        output_string := "";
-        output := OutputTextUser();
-        input_string := "";
-        input := InputTextString( input_string );
+        local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
         index := Int( data.PolyInx );
@@ -1404,37 +1389,9 @@ InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsInt ],
         total_genus := Int( Kbar3/2 + 1 );
         root := 2 * Kbar3;
         
-        # options conveys the necessary information about the graph
-        options := Concatenation( String( Length( genera ) ), " " );
-        for i in [ 1 .. Length( degrees ) ] do
-            options := Concatenation( options, String( degrees[ i ] ), " " );
-        od;
-        for i in [ 1 .. Length( genera ) ] do
-            options := Concatenation( options, String( genera[ i ] ), " " );
-        od;
-        options := Concatenation( options, String( Length( edges ) ), " " );
-        for i in [ 1 .. Length( edges ) ] do
-            options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
-        od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ) );
-        
-        # triggerthe binary
-        Process( DirectoryCurrent(), bin, input, output, [ options ] );
-        
-        # check if the result file exists
-        result_file := Filename( dir, "result.txt" );
-        if not IsExistingFile( result_file ) then
-            Error( "result.txt is not available in designed folder" );
-        fi;
-        
-        # if yes, read the content
-        input := InputTextFile(result_file);
-        nr := EvalString( ReadAll(input) );
-        CloseStream(input);
-        RemoveFile( result_file );
-        
-        # return success
-        return nr;
+        # compute minimal roots
+        min := Int( Sum( degrees ) / root - total_genus + 1 );
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, min, min, [], [] ] );
         
 end );
 
@@ -1514,22 +1471,7 @@ end );
 
 InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsInt ],
     function( data, h0Min, h0Max, number_processes )
-        local dir, bin, result_file, output_string, output, input_string, input, index, Kbar3, genera, degrees, edges, total_genus, root, options, i, nr, nr_truncated;
-        
-        # find the counter binary
-        dir := FindRootCounterDirectory();
-        bin := Filename( dir, "./distribution-with-external-legs-counter" );
-        
-        # check if the binary exists
-        if not IsExistingFile( bin ) then
-            Error( "./distribution-with-external-legs-counter is not available in designed folder" );
-        fi;
-
-        # prepare empty streams
-        output_string := "";
-        output := OutputTextUser();
-        input_string := "";
-        input := InputTextString( input_string );
+        local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
         index := Int( data.PolyInx );
