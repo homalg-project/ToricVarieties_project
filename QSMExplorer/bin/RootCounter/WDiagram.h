@@ -5,8 +5,8 @@
 #include <numeric>
 #include <stdexcept>
 
-#ifndef WDIAGRAMWITHEXTERNALLEGS_H
-#define WDIAGRAMWITHEXTERNALLEGS_H
+#ifndef WDIAGRAM_H
+#define WDIAGRAM_H
 
 // Define a class for weighted diagrams
 // Define a class for weighted diagrams

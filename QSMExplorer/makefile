@@ -13,10 +13,10 @@ docclean:
 	(cd doc ; ./clean)
 
 install:
-	(cd bin/RootCounter; g++ -c WDiagramWithExternalLegs.cpp; g++ -c $$(realpath main-DistributionWithExternalLegsCounter.cpp) -lpthread; g++ -o distribution-with-external-legs-counter WDiagramWithExternalLegs.o main-DistributionWithExternalLegsCounter.o -lpthread )
+	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main.cpp) -lpthread; g++ -o distributionCounter WDiagram.o main.o -lpthread )
 	
 uninstall:
-	( cd bin/RootCounter; rm -f main-DistributionWithExternalLegsCounter.o; rm -f WDiagramWithExternalLegs.o; rm -f distribution-with-external-legs-counter )
+	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f distributionCounter )
 	
 test:	doc
 	gap tst/testall.g

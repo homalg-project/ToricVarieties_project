@@ -1,6 +1,6 @@
 // A program to compute the number of minimal limit roots on full blowups of nodal curves
 
-#include "WDiagramWithExternalLegs.h"
+#include "WDiagram.h"
 
 
 //###########################################

@@ -81,9 +81,9 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         
         # find the counter binary (and check if it exists)
         dir := FindRootCounterDirectory();
-        bin := Filename( dir, "./distribution-with-external-legs-counter" );
+        bin := Filename( dir, "./distributionCounter" );
         if not IsExistingFile( bin ) then
-            Error( "./distribution-with-external-legs-counter is not available in designed folder" );
+            Error( "./distributionCounter is not available in designed folder" );
         fi;
         
         # prepare empty streams

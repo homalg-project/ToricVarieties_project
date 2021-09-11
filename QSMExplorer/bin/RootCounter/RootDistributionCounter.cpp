@@ -1,4 +1,4 @@
-#include "WDiagramWithExternalLegs.h"
+#include "WDiagram.h"
 
 
 // Global variable for counting diagrams // thread-safe addition
