@@ -57,36 +57,12 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         std::cout << "\n\n";
     }
     
-    // CHECK 1: Do we have exactly one component
-    // CHECK 1: Do we have exactly one component
+    // CHECK 1: C+ = empty
+    // CHECK 1: C+ = empty
 
     if ( details ){
         std::cout << "-----------------------------------------\n";
-        std::cout << "(Check 1) Exactly one component?\n";
-        std::cout << "-----------------------------------------\n\n";
-    }
-
-    if ( degrees.size() == 1 ){
-        if( degrees[ 0 ] < 0 ){
-            if ( details ){
-                std::cout << "YES! Deg( Ci ) < 0, so non-special\n";
-            }
-            return false;
-        }
-        else{
-            if ( details ){
-                std::cout << "YES! Deg( Ci ) >= 0, so special\n";
-            }
-            return true;
-        }
-    }
-
-    // CHECK 2: C+ = empty
-    // CHECK 2: C+ = empty
-
-    if ( details ){
-        std::cout << "-----------------------------------------\n";
-        std::cout << "(Check 2) Is I+ empty?\n";
+        std::cout << "(Check 1) Is I+ empty?\n";
         std::cout << "-----------------------------------------\n\n";
     }
 
@@ -115,12 +91,12 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         return false;
     }
 
-    // CHECK 3: Form ( C+, L+) and repeat
-    // CHECK 3: Form ( C+, L+) and repeat
-    
+    // CHECK 2: Does C+ have one isolated component?
+    // CHECK 2: Does C+ have one isolated component?
+
     if ( details ){
         std::cout << "-----------------------------------------\n";
-        std::cout << "(Check 3) Is (C+,L+) special?\n";
+        std::cout << "(Check 2) Isolated component with di >= 0?\n";
         std::cout << "-----------------------------------------\n\n";
     }
     
@@ -156,6 +132,40 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         
     }
     
+    // make checks
+    if ( details ){
+        std::cout << "Check for isolated Ci with di >= 0\n";
+    }
+    for ( int i = 0; i < degrees.size(); i ++ ){
+        if ( degrees[ i ] > -1 ){
+            
+            // check if it is isolated
+            bool isolated = true;
+            for ( int j = 0; j < degrees.size(); j ++ ){
+                if ( intersections[ i ][ j ] != 0 ){
+                    isolated = false;
+                }
+            }
+            
+            // in case it is isolated, (C,L) is special
+            if ( isolated ){
+                if ( details ){
+                    std::cout << "Found isolated Ci with di >= 0. (C,L) is special.\n";
+                }
+                return true;
+            }
+        }
+    }
+    
+    // CHECK 3: Form ( C+, L+) and repeat
+    // CHECK 3: Form ( C+, L+) and repeat
+    
+    if ( details ){
+        std::cout << "-----------------------------------------\n";
+        std::cout << "(Check 3) Is (C+,L+) special?\n";
+        std::cout << "-----------------------------------------\n\n";
+    }
+        
     // Form (C,L) -> (C+,L+) dictionary
     std::vector<int> dictionary( degrees.size(), -1 );
     std::vector<int> new_degrees;
