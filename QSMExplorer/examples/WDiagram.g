@@ -12,7 +12,7 @@ n;
 #! [ 0, 0, 0, 0, 0, 0, 7, 0, 0 ]
 #! @EndExample
 
-#! In addition, we can compute the number of minimal weights and their distributions efficiently. Say for example that we have two genus $$g = 0$$ curves joined by two edges. On both curves, the line bundle has degree 4 and we want 2 roots. Then we count the minimal roots as follows:
+#! In addition, we can compute the number of minimal weights and their distributions efficiently. Say for example that we have two genus $g = 0$ curves joined by two edges. On both curves, the line bundle has degree 4 and we want 2 roots. Then we count the minimal roots as follows:
 
 #! @Example
 n := CountMinimals( [ 0, 0 ], [ 4, 4 ], [ [ 0, 1 ], [ 0, 1 ] ], 1, 2 );;
@@ -20,7 +20,7 @@ n;
 #! [ 1 ]
 #! @EndExample
 
-#! Likewise, we can compute the distribution. For this, we need so set also a limit $$L$$, so that we only count limit roots with at most $$L$$ global sections. Hence, we modify the above code as follows to count up to $$h^0 = 20$$:
+#! Likewise, we can compute the distribution. For this, we need so set also a limit $L$, so that we only count limit roots with at most $L$ global sections. Hence, we modify the above code as follows to count up to $h^0 = 20$:
 
 #! @Example
 n := CountDistribution( [ [ 0, 0 ], [ 4, 4 ], [ [ 0, 1 ], [ 0, 1 ] ], 1, 2, 4, 6 ] );;

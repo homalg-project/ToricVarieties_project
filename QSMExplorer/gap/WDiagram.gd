@@ -47,7 +47,7 @@ DeclareOperation( "CountMinimals", [ IsList, IsList, IsList, IsInt, IsInt ] );
 DeclareOperation( "CountSimpleDistribution", [ ] );
 
 #! @Description
-#! This operation constructs a nodal curve based on the user input, which consists of a list of the genera, the list of the line bundle degrees, a list of the edges, the total genus, the radicant (i.e. telling us which roots to consider - 2 for 2nd roots, 3 for 3rd roots etc.) and finally an integer $$L$$, telling us to focus on limit roots with number of global sections not larger than $$L$$.
+#! This operation constructs a nodal curve based on the user input, which consists of a list of the genera, the list of the line bundle degrees, a list of the edges, the total genus, the radicant (i.e. telling us which roots to consider - 2 for 2nd roots, 3 for 3rd roots etc.) and finally an integer $L$, telling us to focus on limit roots with number of global sections not larger than $L$.
 #! @Returns A list
 #! @Arguments none
 DeclareOperation( "CountDistribution", [ IsList ] );
