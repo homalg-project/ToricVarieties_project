@@ -26,7 +26,7 @@
 InstallMethod( Speciality, [ IsList, IsList ],
   function( degrees, edges )
         
-        return Speciality( degrees, list, false );
+        return Speciality( degrees, edges, false );
         
 end );
 
