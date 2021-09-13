@@ -1,4 +1,4 @@
-#include "WDiagram.h"
+#include <numeric>
 
 // Declaration of functions
 bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details );
