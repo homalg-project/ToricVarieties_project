@@ -10,12 +10,12 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
     // CHECK 0: Inform the user
         
     if ( details ){
-        std::cout << "\n";
-        std::cout << "######################################################\n";
-        std::cout << "######################################################\n";
+        std::cout << "\n\n";
+        std::cout << "##################################################################\n";
+        std::cout << "##################################################################\n";
         std::cout << "Performing check for curve and bundle of degree >= -1 \n" ;
-        std::cout << "######################################################\n";
-        std::cout << "######################################################\n\n";
+        std::cout << "##################################################################\n";
+        std::cout << "##################################################################\n\n";
         std::cout << "Degrees: (";
         for ( int i = 0; i < degrees.size()-1; i++ ){
             std::cout << degrees[ i ] << ", ";
@@ -27,7 +27,10 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
                 std::cout << "(" << edges[ i ][ 0 ] << ", " << edges[ i ][ 1 ] << "), ";
             }
             std::cout << "( " << edges[ edges.size()-1 ][ 0 ] << " , " << edges[ edges.size()-1 ][ 1 ] << " )";
-        };
+        }
+        else{
+            std:: cout << "( )";
+        }
         std::cout << "\n\n";
     }
     
@@ -35,9 +38,9 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
     // CHECK 1: Is one di < -1? If yes, then (C,L) is special.
     
     if ( details ){
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 1) Any degrees smaller than -1?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
     
     for ( int i = 0; i < degrees.size(); i ++ ){
@@ -56,9 +59,9 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
     // CHECK 2: Is Iminus empty? If yes, then (C,L) is not special.
     
     if ( details ){
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 2) Is Iminus trivial?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
     
     // Form Iminus
@@ -69,6 +72,19 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
         }
     }
     
+    // Check if I_+ is empty
+    if ( Iminus.size() > 0 ){
+        if (details ){
+            std::cout << "I- is not empty.\n";
+        }
+    }
+    else{
+        if (details ){
+            std::cout << "I- IS EMPTY! (C,L) is not special!\n\n";
+        }
+        return false;
+    }
+
     // Print Iminus
     if ( Iminus.size() > 0 ){
         if ( details ){
@@ -76,15 +92,8 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
             for ( int i = 0; i < Iminus.size() - 1; i ++ ){
                 std::cout << Iminus[ i ] << ", ";
             }
-            std::cout << Iminus[ Iminus.size() - 1 ] << ")\n";
-            std::cout << "non-trivial\n\n";
+            std::cout << Iminus[ Iminus.size() - 1 ] << ")\n\n";
         }
-    }
-    else{
-        if ( details ){
-            std::cout << "TRIVIAL! (C,L) is non-special!\n\n";
-        }
-        return false;
     }
     
     // CHECK 3: Do any two Ci with negative degree intersect? If yes, then (C,L) is special.
@@ -98,7 +107,7 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
     
     // Form intersection matrix
     if ( details ){
-        std::cout << "Work out intersection matrix:\n";
+        std::cout << "Intersection matrix:\n";
     }
     
     std::vector<std::vector<int>> intersections;
@@ -127,12 +136,12 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
         }
         
     }
-        
     // Check if any two Ci with negative degrees do intersect
     for ( int i = 0; i < Iminus.size(); i ++ ){
         for ( int j = i+1; j < Iminus.size(); j ++ ){
             if ( intersections[ Iminus[ i ] ][ Iminus[ j ] ] > 0 ){
                 if ( details ){
+                    std::cout << "\n";
                     std::cout << "FOUND INTERSECTION AMONG " << Iminus[ i ] << " AND " << Iminus[ j ] << "! (C,L) is special!\n\n";
                 }
                 return true;
@@ -140,16 +149,17 @@ bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std:
         }
     }
     if ( details ){
-        std::cout << "No intersections found\n\n";
+        std::cout << "\n";
+        std::cout << "No intersections found.\n\n";
     }
     
     // CHECK 4: Is (C+,L+) special?
     // CHECK 4: Is (C+,L+) special?
     
     if ( details ){
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 4) Is (C+,L+) special?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
 
     // Form (C,L) -> (C+,L+) dictionary
