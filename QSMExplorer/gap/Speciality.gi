@@ -37,8 +37,9 @@ InstallMethod( Speciality, [ IsList, IsList, IsBool ],
         
         # display important information about this algorithm
         if details then
-            Print( "This method only works for tree-like curves.\n");
-            Print( "NO CHECK FOR BEING TREE-LIKE ARE CURRENTLY BEING PERFORMED. THE USER IS RESPONSIBLE FOR PROVIDING VALID INPUT.\n");
+            Print( "\n" );
+            Print( "This method works ONLY for tree-like curves.\n");
+            Print( "NO CHECK FOR BEING TREE-LIKE IS CURRENTLY CONDUCTED. THE USER IS RESPONSIBLE FOR PROVIDING VALID INPUT.\n");
             Print( "\n" );
             Print( "This algorithm was first formulated and its accuracy proven by Prof. Dr. Ron Donagi.\n" );
         fi;
@@ -93,6 +94,23 @@ InstallMethod( Speciality, [ IsList, IsList, IsBool ],
         special := EvalString( ReadAll( input ) );
         CloseStream(input);
         RemoveFile( result_file );
+        
+        # nicely output the result
+        if details then
+            Print( "\n\n" );
+            Print( "##################################################################\n");
+            Print( "##################################################################\n");
+            Print( "Result\n" );
+            Print( "##################################################################\n");
+            Print( "##################################################################\n\n");
+            if special then
+                Print( "(C,L) is SPECIAL.\n\n" );
+            else
+                Print( "(C,L) is NON-SPECIAL.\n\n" );
+            fi;
+        fi;
+        
+        # return the result
         return special;
         
 end );

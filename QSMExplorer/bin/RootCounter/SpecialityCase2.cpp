@@ -11,11 +11,11 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         
     if ( details ){
         std::cout << "\n";
-        std::cout << "######################################################\n";
-        std::cout << "######################################################\n";
+        std::cout << "##################################################################\n";
+        std::cout << "##################################################################\n";
         std::cout << "Performing check for curve and bundle of degree < -1 \n" ;
-        std::cout << "######################################################\n";
-        std::cout << "######################################################\n\n";
+        std::cout << "##################################################################\n";
+        std::cout << "##################################################################\n\n";
         std::cout << "Degrees: (";
         for ( int i = 0; i < degrees.size()-1; i++ ){
             std::cout << degrees[ i ] << ", ";
@@ -27,7 +27,10 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
                 std::cout << "(" << edges[ i ][ 0 ] << ", " << edges[ i ][ 1 ] << "), ";
             }
             std::cout << "( " << edges[ edges.size()-1 ][ 0 ] << " , " << edges[ edges.size()-1 ][ 1 ] << " )";
-        };
+        }
+        else{
+            std:: cout << "( )";
+        }
         std::cout << "\n\n";
     }
     
@@ -35,9 +38,9 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
     // CHECK 1: C+ = empty
 
     if ( details ){
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 1) Is I+ empty?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
 
     // Form Iplus
@@ -56,7 +59,7 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
     }
     else{
         if (details ){
-            std::cout << "I+ IS EMPTY! (C,L) is not special!\n";
+            std::cout << "I+ IS EMPTY! (C,L) is not special!\n\n";
         }
         return false;
     }
@@ -67,22 +70,21 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         for ( int i = 0; i < Iplus.size() - 1; i ++ ){
             std::cout << Iplus[ i ] << ", ";
         }
-        std::cout << Iplus[ Iplus.size() - 1 ] << ")\n";
+        std::cout << Iplus[ Iplus.size() - 1 ] << ").\n\n";
     }
     
     // CHECK 2: Does C+ have one isolated component?
     // CHECK 2: Does C+ have one isolated component?
 
     if ( details ){
-        std::cout << "\n";
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 2) Isolated component with di >= 0?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
     
     // Form intersection matrix
     if ( details ){
-        std::cout << "Work out intersection matrix:\n";
+        std::cout << "Intersection matrix:\n";
     }
     
     std::vector<std::vector<int>> intersections;
@@ -112,10 +114,7 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         
     }
     
-    // make checks
-    if ( details ){
-        std::cout << "Check for isolated Ci with di >= 0\n";
-    }
+    // perform check
     for ( int i = 0; i < degrees.size(); i ++ ){
         if ( degrees[ i ] > -1 ){
             
@@ -130,7 +129,8 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
             // in case it is isolated, (C,L) is special
             if ( isolated ){
                 if ( details ){
-                    std::cout << "Found isolated Ci with di >= 0. (C,L) is special.\n";
+                    std::cout << "\n";
+                    std::cout << "Found isolated Ci with di >= 0! (C,L) is special.\n\n";
                 }
                 return true;
             }
@@ -139,7 +139,8 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
     
     // no isolated Ci found
     if ( details ){
-      std::cout << "None found\n";  
+        std::cout << "\n";
+        std::cout << "None found\n";  
     }
     
     // CHECK 3: Form ( C+, L+) and repeat
@@ -147,9 +148,9 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
     
     if ( details ){
         std::cout << "\n";
-        std::cout << "-----------------------------------------\n";
+        std::cout << "------------------------------------------------------------------\n";
         std::cout << "(Check 3) Is (C+,L+) special?\n";
-        std::cout << "-----------------------------------------\n\n";
+        std::cout << "------------------------------------------------------------------\n\n";
     }
     
     // Form Iminus
