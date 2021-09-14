@@ -12,6 +12,26 @@
 #pragma GCC optimize("Ofast")
 #pragma GCC target("avx,avx2,fma")
 
+
+
+// Check speciality of (C,L) by making a case distinction
+bool checkSpeciality( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details )
+{
+    
+    // compute the total degree
+    int d_total = std::accumulate( degrees.begin(), degrees.end(), 0 );
+    
+    // distinguish two cases
+    if ( d_total < -1 ){
+        return checkSpecialitySmallerMinusOne( degrees, edges, details );
+    }
+    else{
+        return checkSpecialityGreaterMinusTwo( degrees, edges, details );
+    }
+    
+}
+
+
 // The main routine
 int main(int argc, char* argv[]) {
     
