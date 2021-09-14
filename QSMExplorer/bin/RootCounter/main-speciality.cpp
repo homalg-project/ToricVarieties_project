@@ -55,8 +55,7 @@ int main(int argc, char* argv[]) {
     }
     int details = input[ numberVertices + 2 * numberEdges + 2 ];
     
-    // special speciality
-    bool special;
+    // determine speciality
     bool display_details;
     if ( details < 0 ){
         display_details = false;
@@ -65,7 +64,7 @@ int main(int argc, char* argv[]) {
     {
         display_details = true;
     }
-    special = checkSpeciality( degrees, edges, display_details );
+    bool special = checkSpeciality( degrees, edges, display_details );
     
     // save the result to a dummy file next to main.cpp, so gap can read it out
     std::ofstream ofile;
