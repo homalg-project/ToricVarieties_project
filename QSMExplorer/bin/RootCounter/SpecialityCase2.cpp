@@ -40,35 +40,41 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         std::cout << "-----------------------------------------\n\n";
     }
 
-    // Form Iminus
-    std::vector<int> Iminus;
+    // Form Iplus
+    std::vector<int> Iplus;
     for ( int i = 0; i < degrees.size(); i++ ){
-        if ( degrees[ i ] < 0 ){
-            Iminus.push_back( i );
+        if ( degrees[ i ] > -1 ){
+            Iplus.push_back( i );
         }
-    }
-    
-    // Print Iminus
-    if ( details ){
-        std::cout << "Iminus = (";
-        for ( int i = 0; i < Iminus.size() - 1; i ++ ){
-            std::cout << Iminus[ i ] << ", ";
-        }
-        std::cout << Iminus[ Iminus.size() - 1 ] << ")\n";
     }
     
     // Check if I_+ is empty
-    if ( Iminus.size() == degrees.size() ){
+    if ( Iplus.size() > 0 ){
+        if (details ){
+            std::cout << "I+ is not empty.\n";
+        }
+    }
+    else{
         if (details ){
             std::cout << "I+ IS EMPTY! (C,L) is not special!\n";
         }
         return false;
     }
 
+    // Print Iplus
+    if ( details ){
+        std::cout << "Iplus = (";
+        for ( int i = 0; i < Iplus.size() - 1; i ++ ){
+            std::cout << Iplus[ i ] << ", ";
+        }
+        std::cout << Iplus[ Iplus.size() - 1 ] << ")\n";
+    }
+    
     // CHECK 2: Does C+ have one isolated component?
     // CHECK 2: Does C+ have one isolated component?
 
     if ( details ){
+        std::cout << "\n";
         std::cout << "-----------------------------------------\n";
         std::cout << "(Check 2) Isolated component with di >= 0?\n";
         std::cout << "-----------------------------------------\n\n";
@@ -131,15 +137,29 @@ bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std:
         }
     }
     
+    // no isolated Ci found
+    if ( details ){
+      std::cout << "None found\n";  
+    }
+    
     // CHECK 3: Form ( C+, L+) and repeat
     // CHECK 3: Form ( C+, L+) and repeat
     
     if ( details ){
+        std::cout << "\n";
         std::cout << "-----------------------------------------\n";
         std::cout << "(Check 3) Is (C+,L+) special?\n";
         std::cout << "-----------------------------------------\n\n";
     }
-        
+    
+    // Form Iminus
+    std::vector<int> Iminus;
+    for ( int i = 0; i < degrees.size(); i++ ){
+        if ( degrees[ i ] < 0 ){
+            Iminus.push_back( i );
+        }
+    }
+    
     // Form (C,L) -> (C+,L+) dictionary
     std::vector<int> dictionary( degrees.size(), -1 );
     std::vector<int> new_degrees;
