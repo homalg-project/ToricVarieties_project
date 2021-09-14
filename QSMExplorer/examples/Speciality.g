@@ -41,4 +41,9 @@ degrees := [ 1, 1, -1, -1, -1, -1, -1 ];;
 s8 := Speciality( degrees, edges, false );;
 s8;
 #! false
+degrees := [-1, -5, 3, -2, 3];;
+edges := [[0, 1], [1, 2], [2, 3], [3, 4]];;
+s9 := Speciality( degrees, edges, false );;
+s9;
+#! true
 #! @EndExample
