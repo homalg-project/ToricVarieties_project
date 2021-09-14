@@ -4,29 +4,6 @@
 // Declaration of functions
 bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details );
 bool checkSpecialityGreaterMinusTwo( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details );
-bool checkSpeciality( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details );
-
-
-// Check speciality of (C,L) by following an algorithm invented by Prof. Ron Donagi (University of Pennsylvania)
-bool checkSpeciality( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details )
-{
-    
-    // compute the total degree
-    int d_total = std::accumulate( degrees.begin(), degrees.end(), 0 );
-    
-    // distinguish two cases
-    if ( d_total < -1 ){
-        return checkSpecialitySmallerMinusOne( degrees, edges, details );
-    }
-    else{
-        return checkSpecialityGreaterMinusTwo( degrees, edges, details );
-    }
-    
-    // Something must have gone wrong!
-    std::cout << "SOMETHING WENT WRONG! PLEASE REPORT THIS ON GITHUB!\n";
-    return false;
-    
-}
 
 
 // CASE 1: Total degree is smaller than -1
