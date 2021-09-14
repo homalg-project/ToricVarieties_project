@@ -6,7 +6,8 @@
 #include <numeric>
 #include <sstream> 
 #include <vector>
-#include "SpecialityChecker.cpp"
+#include "SpecialityCase1.cpp"
+#include "SpecialityCase2.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
@@ -22,11 +23,11 @@ bool checkSpeciality( const std::vector<int>& degrees, const std::vector<std::ve
     int d_total = std::accumulate( degrees.begin(), degrees.end(), 0 );
     
     // distinguish two cases
-    if ( d_total < -1 ){
-        return checkSpecialitySmallerMinusOne( degrees, edges, details );
+    if ( d_total > -2 ){
+        return checkSpecialityGreaterMinusTwo( degrees, edges, details );
     }
     else{
-        return checkSpecialityGreaterMinusTwo( degrees, edges, details );
+        return checkSpecialitySmallerMinusOne( degrees, edges, details );
     }
     
 }
