@@ -1,15 +1,11 @@
-// A program to compute the number of minimal limit roots on full blowups of nodal curves
+// A program to decide if (C,L) - C a nodal, tree-like curve and L a line bundle on C - is special, i.e. if h0( C, L ) jumps as we deform C to a smooth curve.
+// This algorithm was first formulated and proven by Prof. Dr. Ron Donagi (Universtiy of Pennsylvania).
 
-#include <algorithm>
-#include<iostream>
 #include<fstream>
+#include<iostream>
+#include <numeric>
 #include <sstream> 
 #include <vector>
-#include <thread>
-#include <functional>
-#include <mutex>
-#include <chrono>
-#include <stack>
 #include "SpecialityChecker.cpp"
 
 // Optimizations for speedup

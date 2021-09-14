@@ -1,4 +1,5 @@
-#include <numeric>
+// A program to decide if (C,L) - C a nodal, tree-like curve and L a line bundle on C - is special, i.e. if h0( C, L ) jumps as we deform C to a smooth curve.
+// This algorithm was first formulated and proven by Prof. Dr. Ron Donagi (Universtiy of Pennsylvania).
 
 // Declaration of functions
 bool checkSpecialitySmallerMinusOne( const std::vector<int>& degrees, const std::vector<std::vector<int>>& edges, bool& details );
