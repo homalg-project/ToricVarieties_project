@@ -1583,3 +1583,125 @@ InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsInt ],
         return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, [], [] ] );
         
 end );
+
+
+##############################################################################################
+##
+##  Counting distribution of limit roots with external legs
+##
+##############################################################################################
+
+
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, IsInt, IsList ],
+    function( index, h0Min, h0Max, external_weights )
+        local str, a, dir, nproc;
+        
+        # set up output stream
+        str := "";
+        a := OutputTextString(str,true);
+        
+        # path to nproc
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        
+        # execute nproc to find number of processors
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        
+        # str now contains the number of processors upon evaluation of this string
+        return CountLimitRootDistributionWithExternalLegsOfQSM( index, h0Min, h0Max, EvalString( str ), external_weights );
+        
+end );
+
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, IsInt, IsInt, IsList ],
+    function( index, h0Min, h0Max, number_processes, external_weights )
+        local data;
+        
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, number_processes, external_weights );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsList ],
+    function( index, h0Min, h0Max, external_weights )
+        local str, a, dir, nproc;
+        
+        # set up output stream
+        str := "";
+        a := OutputTextString(str,true);
+        
+        # path to nproc
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        
+        # execute nproc to find number of processors
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        
+        # issue the run
+        return CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( index, h0Min, h0Max, EvalString( str ), external_weights );
+        
+end );
+
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsInt, IsList ],
+    function( index, h0Min, h0Max, number_processes, external_weights )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, number_processes, external_weights );
+        fi;
+        
+end );
+
+
+InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsInt, IsList ],
+    function( data, h0Min, h0Max, number_processes, external_weights )
+        local index, Kbar3, genera, degrees, edges, total_genus, root, count, external_legs, external_edges, i, j;
+        
+        # trigger warning if needed
+        index := Int( data.PolyInx );
+        if ( Position( [ 8, 4, 134, 128, 130, 136, 236, 88, 110, 272, 274, 387, 798, 808, 810, 812, 254, 52, 302, 786, 762, 417, 838, 782, 377, 499, 503, 1348, 882, 1340, 1879, 1384, 856 ], index ) = fail ) then
+            
+            Print( "\n\n" );
+            Print( "WARNING:\n" );
+            Print( "The root counting data for this polytope has not (yet) been optimized. The computation may take a long time.\n" );
+            Print( "WARNING:\n\n" );
+            
+        fi;
+        
+        # read-out the record for the required data
+        Kbar3 := Int( data.Kbar3 );
+        genera := EvalString( data.CiGenus );
+        degrees := ( 6 + Kbar3 ) * EvalString( data.CiDegreeKbar );
+        edges := EvalString( data.EdgeList );
+        total_genus := Int( Kbar3/2 + 1 );
+        root := 2 * Kbar3;
+        
+        # construct the external legs
+        external_legs := EvalString( data.CiDegreeKbar );
+        external_edges := [];
+        for i in [ 1 .. Length( external_legs ) ] do
+            for j in [ 1 .. external_legs[ i ] ] do
+                external_edges := Concatenation( external_edges, [i-1] );
+            od;
+        od;
+        
+        # check if the external legs are meaningful
+        if ( Length( external_weights ) <> Length( external_edges ) ) then
+            Error( "You must specify exactly as many external weights as there are external legs." );
+        fi;
+        for i in [ 1 .. Length( external_weights ) ] do
+            if ( ( external_weights[ i ] < 1 ) or ( external_weights[ i ] > root - 1 ) ) then
+                Error( Concatenation( "The weights are integers that are at least 1 and at most ", String( root ), " - 1." ) );
+            fi;
+        od;
+        
+        # call other function to compute this root distribution
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, external_weights ] );
+        
+end );
