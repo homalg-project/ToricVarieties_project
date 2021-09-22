@@ -68,7 +68,7 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         
         # check for degenerate case, i.e. where there are no roots
         if not IsInt( ( Sum( degrees ) - Sum( external_weights ) ) / root ) then
-            return List( [ 1 .. 100 ], i -> 0);
+            return List( [ min .. max ], i -> 0);
         fi;
         
         # determine the number of processors to determine how many threads we will initiate
