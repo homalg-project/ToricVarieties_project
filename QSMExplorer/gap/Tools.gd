@@ -349,6 +349,20 @@ DeclareOperation( "SimplifiedDualGraphOfQSMByPolytope", [ IsInt ] );
 
 DeclareOperation( "PlotSimplifiedDualGraph", [ IsRecord ] );
 
+#! @Description
+#! This function prints the simplified dual graph with external legs of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "SimplifiedDualGraphWithExternalLegsOfQSM", [ IsInt ] );
+
+#! @Description
+#! This function prints the simplified dual graph with external legs of a QSM.
+#! @Returns true or fail
+#! @Arguments Integer i
+DeclareOperation( "SimplifiedDualGraphWithExternalLegsOfQSMByPolytope", [ IsInt ] );
+
+DeclareOperation( "PlotSimplifiedDualGraphWithExternalLegs", [ IsRecord ] );
+
 
 ##############################################################################################
 ##

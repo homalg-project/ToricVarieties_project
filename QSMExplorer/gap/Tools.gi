@@ -994,6 +994,93 @@ InstallMethod( PlotSimplifiedDualGraph, [ IsRecord ],
 end );
 
 
+InstallMethod( SimplifiedDualGraphWithExternalLegsOfQSM,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSM( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotSimplifiedDualGraphWithExternalLegs( data );
+        fi;
+        
+end );
+
+InstallMethod( SimplifiedDualGraphWithExternalLegsOfQSMByPolytope,
+               "an integer",
+               [ IsInt ],
+    function( index )
+        local data;
+        
+        # read the data
+        data := ReadQSMByPolytope( index );
+        
+        # check if the data is meaningful
+        if ( data <> fail ) then
+            return PlotSimplifiedDualGraphWithExternalLegs( data );
+        fi;
+        
+end );
+
+InstallMethod( PlotSimplifiedDualGraphWithExternalLegs, [ IsRecord ],
+    function( data )
+        local genera, edges, names, external_legs, count, i, j, script, options, output_string, output, input_string, input;
+        
+        # extract genera
+        genera := EvalString( String( data.CiGenus ) );
+        
+        # extract the edges
+        edges := EvalString( String( data.EdgeList ) );
+
+        # read-out the names
+        names := ReplacedString( String( data.ComponentsOfSimplifiedDualGraph ), "\'", "" );
+        RemoveCharacters( names, " " );
+        RemoveCharacters( names, "[" );
+        RemoveCharacters( names, "]" );
+        names := SplitString( names, "," );
+        
+        # append external legs
+        external_legs := EvalString( String( data.CiDegreeKbar ) );
+        count := Length( genera );
+        for i in [ 1 .. Length( external_legs ) ] do
+            for j in [ 1 .. external_legs[ i ] ] do
+                Append( names, [ Concatenation( "E", String( count ) ) ] );
+                edges := Concatenation( edges, [[ i-1, count ]] );
+                Append( genera, [ -100 ] );
+                count := count + 1;
+            od;
+        od;
+        
+        # convert to strings
+        names := ReplacedString( String( names ), "\"", "" );
+        RemoveCharacters( names, " " );
+        edges := String( edges );
+        RemoveCharacters( edges, " " );
+        genera := String( genera );
+        RemoveCharacters( genera, " " );
+        
+        # find the python script and transmit data by the options
+        script := FindDualGraphScript();
+        options := Concatenation( String( genera ), " ", String( edges ), " ", String( names ) );
+        
+        # execute this script
+        output_string := "";
+        output := OutputTextString( output_string, true );
+        input_string := "";
+        input := InputTextString( input_string );
+        Process( DirectoryCurrent(), script, input, output, [ options ] );
+        
+        # return success
+        return true;
+        
+end );
+
+
+
 ##############################################################################################
 ##
 ##  Toric ambient space 5-fold
