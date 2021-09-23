@@ -81,18 +81,29 @@ int main(int argc, char* argv[]) {
     int number_threads = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 3 ];
     int h0Min = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 4 ];
     int h0Max = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 5 ];
-        
+    int details = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 6 ];
+    bool display_details = true;
+    if ( details < 0 ){
+            display_details = false;
+    }
+    
     // check if curve class and bundle class are of correct length
     if ( ( genus < 0 ) ){
-        std::cout << "Genus must not be negative.\n";
+        if ( display_details ){
+            std::cout << "Genus must not be negative.\n";
+        }
         return -1;
     }
     if ( ( root <= 1 ) ){
-        std::cout << "Root must be at least 2.\n";
+        if ( display_details ){
+            std::cout << "Root must be at least 2.\n";
+        }
         return -1;
     }
     if ( h0Min > h0Max ){
-        std::cout << "h0Min should not be larger than h0Max\n";
+        if ( display_details ){
+            std::cout << "h0Min should not be larger than h0Max\n";
+        }
     }
     
     // construct diagram
@@ -106,10 +117,10 @@ int main(int argc, char* argv[]) {
     // count root distribution
     std::vector<unsigned long long int> n( h0Max - h0MinUsed + 1, 0 );
     if ( number_threads > 0 ){
-        countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n );
+        countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n, display_details );
     }
     else{
-        countRootDistribution( dia, h0MinUsed, h0Max, n );
+        countRootDistribution( dia, h0MinUsed, h0Max, n, display_details );
     }
     
     // save the result to a dummy file next to main.cpp, so gap can read it out

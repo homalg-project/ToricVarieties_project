@@ -99,7 +99,7 @@ std::vector<unsigned long long int> RootDistributionCounter( WeightedDiagramWith
     
 }
 
-void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<int> ws, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution )
+void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<int> ws, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
 {
     
     // initialize sum
@@ -126,12 +126,14 @@ void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<i
     }
     
     // signal end of thread
-    std::cout<<"Thread complete. Total roots found: " << total << "\n";
+    if ( display_details ){
+        std::cout<<"Thread complete. Total roots found: " << total << "\n";
+    }
     
 }
 
 
-void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution )
+void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
 {
     
     // throw error if the number of threads is indicated as anything less than 1
@@ -140,19 +142,25 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
     }
     
     // inform about the diagram in question
-    dia.print_complete_information();
+    if ( display_details ){
+        dia.print_complete_information();
+    }
     
     // check if the h0Max is meaningful
     if ( dia.get_h0_min() > h0Max ){
+        if ( display_details ){
             std::cout<<"There are no roots with h0 smaller than " << dia.get_h0_min() << "\n";
+        }
     }
     
     // take time for counting
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     
     // inform what we are about to do
-    std::cout<<"Executing...\n";
-    std::cout<<"------------\n";
+    if ( display_details ){
+        std::cout<<"Executing...\n";
+        std::cout<<"------------\n";
+    }
     
     // distribute weight assignments on first edge into NUM_THREADS packages -- each for one thread
     std::vector<std::vector<int>> packages;
@@ -194,12 +202,14 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
     }
     
     // signal and start the threads
-    std::cout<<"Wait for " << packages.size() << " worker threads \n";
+    if ( display_details ){
+        std::cout<<"Wait for " << packages.size() << " worker threads \n";
+    }
     std::vector<std::thread> threadList;
     for (int i = 0; i < packages.size(); i++)
     {
         WeightedDiagramWithExternalLegs new_dia = dia;
-        threadList.push_back( std::thread( DistributionDistributer, new_dia, packages[ i ], h0Min, h0Max, std::ref( distribution ) ) );
+        threadList.push_back( std::thread( DistributionDistributer, new_dia, packages[ i ], h0Min, h0Max, std::ref( distribution ), std::ref( display_details ) ) );
     }
     
     // Now wait for the results of the worker threads (i.e. call the join() function on each of the std::thread objects) and inform the user
@@ -212,25 +222,27 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
     }
     
     // print results nicely
-    std::cout << "\n";
-    std::cout << "Found distribution:\n";
-    std::cout << "--------------------------\n";
-    for ( int i = 0; i < h0Max - h0Min + 1; i++ ){
-        if ( total_number > 0 ){
-            std::cout << "Found " << distribution[ i ] << " roots with h0 = " << h0Min + i << " (" << 100 * distribution[ i ] / total_number << "%)\n";
-        }
-        else{
-            std::cout << "Found " << distribution[ i ] << " roots with h0 = " << h0Min + i << "\n";
-        }
-    }
-    std::cout << "\n";
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]\n\n";
+    if ( display_details ){
+        std::cout << "\n";
+        std::cout << "Found distribution:\n";
+        std::cout << "--------------------------\n";
+        for ( int i = 0; i < h0Max - h0Min + 1; i++ ){
+            if ( total_number > 0 ){
+                std::cout << "Found " << distribution[ i ] << " roots with h0 = " << h0Min + i << " (" << 100 * distribution[ i ] / total_number << "%)\n";
+            }
+            else{
+                std::cout << "Found " << distribution[ i ] << " roots with h0 = " << h0Min + i << "\n";
+            }
+        }
+        std::cout << "\n";
+        std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]\n\n";
+    }
     
 }
 
 // default/convenience method
-void countRootDistribution( WeightedDiagramWithExternalLegs dia, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution )
+void countRootDistribution( WeightedDiagramWithExternalLegs dia, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
 {
-    return countRootDistribution( dia, dia.get_root() - 1, h0Min, h0Max, distribution );
+    return countRootDistribution( dia, dia.get_root() - 1, h0Min, h0Max, distribution, display_details );
 }

@@ -32,3 +32,4 @@ DeclareOperation( "CountSimpleDistributionWithExternalLegs", [ ] );
 #! @Returns A list
 #! @Arguments none
 DeclareOperation( "CountDistributionWithExternalLegs", [ IsList ] );
+DeclareOperation( "CountDistributionWithExternalLegs", [ IsList, IsBool ] );
