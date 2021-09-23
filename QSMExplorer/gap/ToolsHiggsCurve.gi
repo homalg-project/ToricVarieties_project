@@ -132,7 +132,11 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
                 
                 # compute distribution
                 dist := CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, w ], false );
-                Append( result_list, [ dist ] );
+                if ForAll( dist, IsZero ) then
+                    Append( result_list, "t" );
+                else
+                    Append( result_list, [ dist ] );
+                fi;
                 
                 # update progress
                 i := i +1;
@@ -145,6 +149,6 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
         od;
         
         # return all results
-        return result_list;
+        return [ w, result_list ];
         
 end );
