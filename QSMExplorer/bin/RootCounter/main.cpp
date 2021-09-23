@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include<iostream>
-#include<fstream>
 #include <sstream> 
 #include <vector>
 #include <thread>
@@ -123,19 +122,14 @@ int main(int argc, char* argv[]) {
         countRootDistribution( dia, h0MinUsed, h0Max, n, display_details );
     }
     
-    // save the result to a dummy file next to main.cpp, so gap can read it out
-    std::ofstream ofile;
-    std::string file_path = __FILE__;
-    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
-    ofile.open( dir_path + "/result.txt" );
+    // print result
     for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){
-        ofile << "0" << std::endl;
+        std::cout << "0\n";
     }
     for ( int i = 0; i < h0Max - h0MinUsed + 1; i ++ ){
-        ofile << n[ i ] << std::endl;
+        std::cout << n[ i ] << "\n";
     }
-    ofile.close();
-        
+    
     // return success
     return 0;
     

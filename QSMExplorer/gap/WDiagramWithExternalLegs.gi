@@ -39,7 +39,7 @@ end );
 
 InstallMethod( CountDistributionWithExternalLegs, [ IsList, IsBool ],
   function( data, display_details )
-        local genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, index, options, i, nr, nr_truncated;
+        local genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, index, options, i, nr, nr_truncated, pos;
         
         # extract data
         genera := data[ 1 ];
@@ -94,7 +94,7 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList, IsBool ],
         
         # prepare empty streams
         output_string := "";
-        output := OutputTextUser();
+        output := OutputTextString( output_string, true );
         input_string := "";
         input := InputTextString( input_string );
                 
@@ -127,17 +127,17 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList, IsBool ],
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
-        # check if the result file exists
-        result_file := Filename( dir, "result.txt" );
-        if not IsExistingFile( result_file ) then
-            Error( "result.txt is not available in designed folder" );
+        # extract result from output_string
+        if display_details then
+            output_string := SplitString( output_string, ']' )[ 2 ];
         fi;
-        
-        # if yes, read the content and then remove this file
-        input := InputTextFile(result_file);
-        nr := List( SplitString( ReadAll( input ), "\n" ), i -> EvalString( i ) );
-        CloseStream(input);
-        RemoveFile( result_file );
+        output_string := SplitString( output_string, "\n" );
+        nr := [];
+        for i in [ 1 .. Length( output_string ) ] do
+            if Length( output_string[ i ] ) > 0 then
+                Append( nr, [ EvalString( output_string[ i ] ) ] );
+            fi;
+        od;
         
         # return result
         return nr;
