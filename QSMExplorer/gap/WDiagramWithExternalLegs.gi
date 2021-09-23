@@ -30,9 +30,15 @@ InstallMethod( CountSimpleDistributionWithExternalLegs, [ ],
         
 end );
 
-
 InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
-  function( data )
+    function( data )
+        
+        return CountDistributionWithExternalLegs( data, true );
+        
+end );
+
+InstallMethod( CountDistributionWithExternalLegs, [ IsList, IsBool ],
+  function( data, display_details )
         local genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, index, options, i, nr, nr_truncated;
         
         # extract data
@@ -111,6 +117,13 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         od;
         options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ) );
         
+        # display details?
+        if display_details then
+            options := Concatenation( options, " ", String( 1 ) );
+        else
+            options := Concatenation( options, " ", String( -1 ) );
+        fi;
+        
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
@@ -126,8 +139,7 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
         CloseStream(input);
         RemoveFile( result_file );
         
-        # truncate the result and return it
-        #nr_truncated := List( [ 1 .. limit - 2 ], i -> nr[ i ] );
+        # return result
         return nr;
   
 end );
