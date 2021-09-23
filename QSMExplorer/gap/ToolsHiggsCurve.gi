@@ -91,7 +91,7 @@ end );
 
 InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsInt ],
     function( data, h0Min, h0Max, number_processes )
-        local index, Kbar3, genera, degrees, edges, total_genus, root, count, external_legs, external_edges, i, j, external_weights;
+        local index, Kbar3, genera, degrees, edges, total_genus, root, external_legs, external_edges, i, j, result_list, weights, w, dist;
         
         # trigger warning if needed
         index := Int( data.PolyInx );
@@ -121,10 +121,14 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
             od;
         od;
         
-        # generate list of weights
-        external_weights := List( [ 1 .. Length( external_edges ) ], i -> 1 );
+        result_list := [];
+        weights := Tuples( [ 1 .. root-1 ], Length( external_edges ) );
+        for w in weights do
+                dist := CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, w ] );
+                Append( result_list, [ dist ] );
+        od;
         
-        # call other function to compute this root distribution
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, external_weights ] );
+        # return all results
+        return result_list;
         
 end );
