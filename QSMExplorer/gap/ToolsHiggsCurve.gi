@@ -149,6 +149,6 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
         od;
         
         # return all results
-        return [ w, result_list ];
+        return [ weights, result_list ];
         
 end );
