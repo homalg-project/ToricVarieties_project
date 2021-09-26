@@ -108,19 +108,26 @@ InstallMethod( ToricImageObject,
                [ IsToricMorphism ],
                
   function( morphism )
-    local cones_of_source, cones_of_image, toric_image;
+    local cones_of_source, cones_of_image, i, dummy, j, toric_image;
     
     cones_of_source := SourceObject( morphism );
     
-    cones_of_source := RayGenerators( MaximalCones ( FanOfVariety( cones_of_source ) ) );
+    cones_of_source := List( MaximalCones ( FanOfVariety( cones_of_source ) ), i -> RayGenerators( i ) );
     
-    cones_of_image := List( cones_of_source, i -> List( j -> List( k -> k * UnderlyingListList( morphism ) ) ) );
+    cones_of_image := [];
+    for i in [ 1 .. Length( cones_of_source ) ] do
+        dummy := [];
+        for j in [ 1 .. Length( cones_of_source[ i ] ) ] do
+            Append( dummy, [ cones_of_source[ i ][ j ] * UnderlyingListList( morphism ) ] ); 
+        od;
+        Append( cones_of_image, [ dummy ] );
+    od;
     
     cones_of_image := Fan( cones_of_image );
     
     toric_image := ToricVariety( cones_of_image );
     
-    SetRangeObject( toric_image );
+    SetRangeObject( morphism, toric_image );
     
     return toric_image;
     
@@ -385,12 +392,33 @@ InstallMethod( ToricMorphism,
                [ IsToricVariety, IsList ],
                
   function( variety, matrix )
-    local morphism;
+    local morphism, cones_of_source, cones_of_image, i, dummy, j, toric_image;
     
+    # define the morphism
     morphism := rec( matrix := matrix );
     
+    # compute the image
+    cones_of_source := List( MaximalCones ( FanOfVariety( variety ) ), i -> RayGenerators( i ) );
+    
+    # compute the image cones
+    cones_of_image := [];
+    for i in [ 1 .. Length( cones_of_source ) ] do
+        dummy := [];
+        for j in [ 1 .. Length( cones_of_source[ i ] ) ] do
+            Append( dummy, [ cones_of_source[ i ][ j ] * matrix ] ); 
+        od;
+        Append( cones_of_image, [ dummy ] );
+    od;
+    
+    # construct the image fan
+    cones_of_image := Fan( cones_of_image );
+    
+    # and construct the toric image
+    toric_image := ToricVariety( cones_of_image );
+    
     ObjectifyWithAttributes( morphism, TheTypeToricMorphism,
-                             Source, variety
+                             Source, variety,
+                             Range, toric_image
     );
     
     return morphism;

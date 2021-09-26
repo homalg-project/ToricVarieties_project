@@ -604,7 +604,7 @@ InstallMethod( MonomsOfCoxRingOfDegree,
     
     pos := UnderlyingListOfRingElements( elem );
     
-    pos := CreateDivisor( pos, vari );
+    pos := DivisorOfGivenClass( vari, pos );
     
     return MonomsOfCoxRingOfDegree( pos );
     

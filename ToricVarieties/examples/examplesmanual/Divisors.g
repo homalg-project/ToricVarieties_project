@@ -51,8 +51,40 @@ MonomsOfCoxRingOfDegree(D);
 #!   x_1*x_3*x_4^7, x_3*x_4^8 ]
 D2:=D-2*P[2];
 #! <A divisor of a toric variety with coordinates ( 1, -1, 0, 0 )>
+D = D2;
+#! false
 IsBasepointFree(D2);
 #! false
 IsAmple(D2);
 #! false
+#! @EndExample
+
+#! @Example
+P2 := ProjectiveSpace( 2 );
+#! <A projective toric variety of dimension 2>
+CoxRing( P2 );
+#! Q[x_1,x_2,x_3]
+#! (weights: [ 1, 1, 1 ])
+DA := AmpleDivisor( P2 );
+#! <A divisor of a toric variety with coordinates ( 1, 0, 0 )>
+IsPrincipal( DA );
+#! false
+IsPrimedivisor( DA );
+#! true
+IsAmple( DA );
+#! true
+IsToricDivisor( DA );
+#! true
+IsBasepointFree( DA );
+#! true
+IntegerForWhichIsSureVeryAmple( DA );
+#! 1
+UnderlyingToricVariety( DA );
+#! <A toric subvariety of dimension 1>
+DegreeOfDivisor( DA );
+#! 1
+Display( DA );
+#! An ample basepoint free Cartier divisor of a toric variety.
+ViewObj( DA );
+#! <An ample basepoint free Cartier prime divisor of a toric variety with coordinates ( 1, 0, 0 )>
 #! @EndExample
