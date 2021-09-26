@@ -21,6 +21,27 @@ IsWellDefined( IR );
 resolution := MinimalFreeResolutionForCAP( IR );
 #! <An object in Complex category of Category of graded
 #! rows over Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
+FullInformation( resolution );
+#! [ [ -1, 3 ] ]
+#!  ^ 
+#!  | 
+#! 0,   -x_3,x_2,
+#! -x_3,0,   x_1,
+#! -x_2,x_1, 0   
+#! (over a graded ring)
+#!  | 
+#! [ [ -2, 3 ] ]
+#!  ^ 
+#!  | 
+#! x_1,-x_2,x_3
+#! (over a graded ring)
+#!  | 
+#! [ [ -3, 1 ] ]
+#!
+IR_right := TurnIntoFpGradedRightModule( IR );;
+resolution_right := MinimalFreeResolutionForCAP( IR_right );
+#! <An object in Complex category of Category of graded
+#! columns over Q[x_1,x_2,x_3] (with weights [ 1, 1, 1 ])>
 differential_function :=
                     UnderlyingZFunctorCell( resolution )!.differential_func;
 #! function( i ) ... end
