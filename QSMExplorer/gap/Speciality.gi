@@ -98,11 +98,7 @@ InstallMethod( Speciality, [ IsList, IsList, IsBool ],
         # nicely output the result
         if details then
             Print( "\n\n" );
-            Print( "##################################################################\n");
-            Print( "##################################################################\n");
             Print( "Result\n" );
-            Print( "##################################################################\n");
-            Print( "##################################################################\n\n");
             if special then
                 Print( "(C,L) is SPECIAL.\n\n" );
             else

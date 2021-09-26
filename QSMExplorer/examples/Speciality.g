@@ -7,6 +7,26 @@ LoadPackage( "QSMExplorer" );
 #! A line bundle $L$ on a tree-like, rational, nodal curve $C$ is special iff its cohomologies jump under deformation of $C$. This algorithm, invented by Prof. Dr. Ron Donagi (University of Pennsylvania) decides if $(L,C)$ is special. Here are examples.
 
 #! @Example
+s1 := Speciality( [ 1, 1, 1, -1, -1, -1, -1 ], [ [0,1], [1,2], [0,3], [0,4], [1,5], [1,6] ] );
+#! 
+#! This method works ONLY for tree-like curves.
+#! NO CHECK FOR BEING TREE-LIKE IS CURRENTLY CONDUCTED. THE USER IS RESPONSIBLE F\
+#! OR PROVIDING VALID INPUT.
+#! 
+#! This algorithm was first formulated and its accuracy proven by Prof. Dr. Ron D\
+#! onagi.
+#! 
+#! 
+#! Result
+#! 
+#! (C,L) is SPECIAL.
+#! 
+#! true
+#! @EndExample
+
+#! We can decide to not display all this output by passing "false" as third argument:
+
+#! @Example
 s1 := Speciality( [ 1, 1, 1, -1, -1, -1, -1 ], [ [0,1], [1,2], [0,3], [0,4], [1,5], [1,6] ], false );;
 s1;
 #! true
