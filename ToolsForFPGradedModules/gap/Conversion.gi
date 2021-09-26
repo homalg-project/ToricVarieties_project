@@ -95,7 +95,7 @@ InstallMethod( SaveToFileAsOldGradedModule,
 
     # set up the filename
     # by default we save the file in the folder of the package SheafCohomologyOnToricVarieties
-    name := Filename( DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "" )[ 1 ], 
+    name := Filename( DirectoriesPackageLibrary( "ToolsForFPGradedModules", "" )[ 1 ], 
                                                                  Concatenation( filename, ".gi" ) );
 
     # check if the file exists
@@ -122,7 +122,7 @@ InstallMethod( SaveToFileAsOldGradedModule,
     AppendTo( output, "LoadPackage( \"GradedModules\" ); \n" );
 
     # write the non-graded ring to the file
-    ring := UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) );
+    ring := UnderlyingHomalgGradedRing( RelationMorphism( module ) );
     vars := IndeterminatesOfPolynomialRing( ring );
     s := "ring := HomalgFieldOfRationalsInSingular() * \"";
     for i in [ 1 .. Length( vars ) - 1 ] do
@@ -142,7 +142,7 @@ InstallMethod( SaveToFileAsOldGradedModule,
     AppendTo( output, "SetWeightsOfIndeterminates( ring, weights ); \n" );
 
     # write the generator_degrees to the file
-    generator_degrees := DegreeList( Range( UnderlyingMorphism( module ) ) );
+    generator_degrees := DegreeList( Range( RelationMorphism( module ) ) );
     new_gens := [];
     for i in [ 1 .. Length( generator_degrees ) ] do
       Append( new_gens, ListWithIdenticalEntries( generator_degrees[ i ][ 2 ], 
@@ -152,7 +152,7 @@ InstallMethod( SaveToFileAsOldGradedModule,
     AppendTo( output, s );
 
     # write the matrix to the file
-    matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( UnderlyingMorphism( module ) ) );
+    matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( module ) ) );
     for i in [ 1 .. Length( matrix_entries ) ] do
       help_list := List( matrix_entries[ i ], k -> String( k ) );
       matrix_entries[ i ] := help_list;
@@ -179,7 +179,7 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     local name, output, generator_degrees, s, relations_degrees, matrix_entries, i, help_list;
 
     # set up the filename
-    name := Filename( DirectoriesPackageLibrary( "SheafCohomologyOnToricVarieties", "" )[ 1 ], 
+    name := Filename( DirectoriesPackageLibrary( "ToolsForFPGradedModules", "" )[ 1 ], 
                                                                          Concatenation( filename, ".gi" ) );;
 
     # check if the file exists
@@ -203,7 +203,7 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     fi;
 
     # write the generator_degrees to the file
-    generator_degrees := DegreeList( Range( UnderlyingMorphism( module ) ) );
+    generator_degrees := DegreeList( Range( RelationMorphism( module ) ) );
     generator_degrees := List( generator_degrees, k -> [ UnderlyingListOfRingElements( k[ 1 ] ), k[ 2 ] ] );
     s := Concatenation( "generators_degrees :=",
                         String( generator_degrees ),
@@ -214,7 +214,7 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     AppendTo( output, s );
 
     # write the relations_degrees to the file
-    relations_degrees := DegreeList( Source( UnderlyingMorphism( module ) ) );
+    relations_degrees := DegreeList( Source( RelationMorphism( module ) ) );
     relations_degrees := List( relations_degrees, k -> [ UnderlyingListOfRingElements( k[ 1 ] ), k[ 2 ] ] );
     s := Concatenation( "relations_degrees :=",
                         String( relations_degrees ),
@@ -225,7 +225,7 @@ InstallMethod( SaveToFileAsCAPGradedModule,
     AppendTo( output, s );
 
     # write the matrix to the file
-    matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( UnderlyingMorphism( module ) ) );
+    matrix_entries := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( RelationMorphism( module ) ) );
     for i in [ 1 .. Length( matrix_entries ) ] do
       help_list := List( matrix_entries[ i ], k -> String( k ) );
       matrix_entries[ i ] := help_list;

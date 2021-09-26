@@ -35,9 +35,30 @@ graded_row2 := TurnIntoGradedRow( graded_col );;
 IsEqualForObjects( graded_row, graded_row2 );
 #! true
 irP1xP1_right := TurnIntoFpGradedRightModule( irP1xP1 );;
+TurnIntoOldGradedModule( irP1xP1_right );;
 irP1xP1_2 := TurnIntoFpGradedLeftModule( irP1xP1_right );;
 IsEqualForObjects( irP1xP1, irP1xP1_2 );
 #! true
+#! @EndExample
+
+#! After long computations, we can also save modules to files.
+
+#! @Example
+SaveToFileAsOldGradedModule( "old_Ideal", irP1xP1 );;
+SaveToFileAsCAPGradedModule( "new_Ideal", irP1xP1 );;
+#! @EndExample
+
+#! These files are located in the package folder of "ToolsForFPGradedModules":
+
+#! @Example
+name := Filename( DirectoriesPackageLibrary( "ToolsForFPGradedModules", "" )[ 1 ], "old_Ideal.gi" );;
+IsExistingFile( name );
+#! true
+RemoveFile( name );;
+name := Filename( DirectoriesPackageLibrary( "ToolsForFPGradedModules", "" )[ 1 ], "new_Ideal.gi" );;
+IsExistingFile( name );
+#! true
+RemoveFile( name );;
 #! @EndExample
 
 #! Likewise, we can turn morphisms of left modules into morphisms of right modules and vice versa:
