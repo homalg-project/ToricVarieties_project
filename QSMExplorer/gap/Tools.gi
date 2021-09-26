@@ -301,7 +301,7 @@ InstallMethod( TriangulatonQuickForQSM,
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return EvalString( String( data.TriangQuick ) );
+            return EvalString( LowercaseString( String( data.TriangQuick ) ) );
         fi;
         
 end );
