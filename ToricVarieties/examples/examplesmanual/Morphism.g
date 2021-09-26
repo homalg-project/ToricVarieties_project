@@ -47,4 +47,16 @@ Display(ClassGroup(M));
 #!   [  1,  0 ] ]
 #! 
 #! the map is currently represented by the above 2 x 2 matrix
+ToricImageObject( M );
+#! <A toric variety of dimension 3>
+UnderlyingGridMorphism( M );
+#! <A homomorphism of left modules>
+MorphismOnCartierDivisorGroup( M );
+#! <A homomorphism of left modules>
+M2 := ToricMorphism( P1P2, [[0,0,1],[1,0,0],[0,1,0]] );
+#! <A "homomorphism" of right objects>
+IsMorphism( M2 );
+#! true
+M = M2;
+#! false
 #! @EndExample

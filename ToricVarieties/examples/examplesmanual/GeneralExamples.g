@@ -79,6 +79,29 @@ Display( H5 );
 #! The class group is <object> and the Cox ring is RingWithOne( ... ).
 #! @EndExample
 
+#! Another example
+
+#! @Example
+P2 := ProjectiveSpace( 2 );
+#! <A projective toric variety of dimension 2>
+IsNormalVariety( P2 );
+#! true
+AffineCone( P2 );
+#! <An affine normal toric variety of dimension 3>
+PolytopeOfVariety( P2 );
+#! <A polytope in |R^2 with 3 vertices>
+IsIsomorphicToProjectiveSpace( P2 );
+#! true
+IsIsomorphicToProjectiveSpace( H5 );
+#! false
+Length( MonomsOfCoxRingOfDegree( P2, [1,2,3] ) );
+#! 28
+IsDirectProductOfPNs( P2 * P2 );
+#! true
+IsDirectProductOfPNs( P2 * H5 );
+#! false
+#! @EndExample
+
 #! @Chunk nonprojective
 
 #! @Example
