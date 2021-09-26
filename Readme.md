@@ -13,6 +13,7 @@ Package|Description
 [ToricVarieties](ToricVarieties)|Support for toric varieties in gap.
 [AdditionsForToricVarieties](AdditionsForToricVarieties)|Additional algorithms for toric varieties (soon to be joined with the toric varieties package)
 [cohomCalgInterface](cohomCalgInterface)|An interface to [cohomcalg](https://github.com/BenjaminJurke/cohomCalg)
+[TopcomInterface](/TopcomInterface)|An interface to [topcom](http://www.rambau.wm.uni-bayreuth.de/TOPCOM/)
 [SpasmInterface](/SpasmInterface)|An interface to [spasm](https://github.com/cbouilla/spasm)
 [SparseMatrices](/SparseMatrices)|Elemtary support for sparse matries. This packages uses [SpasmInterface](/SpasmInterface)
 [TruncationsOfFPGradedModules](/TruncationsOfFPGradedModules)|We model coherent sheaves a f.p. graded modules via [FreydCategories](https://github.com/homalg-project/CAP_project/tree/master/FreydCategoriesForCAP). This package installs truncations for these modules.
