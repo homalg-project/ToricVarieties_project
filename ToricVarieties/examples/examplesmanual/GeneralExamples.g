@@ -7,12 +7,24 @@ H5 := ToricVariety( H5 );
 #! <A toric variety of dimension 2>
 IsComplete( H5 );
 #! true
+IsSimplicial( H5 );
+#! true
 IsAffine( H5 );
 #! false
 IsOrbifold( H5 );
 #! true
 IsProjective( H5 );
 #! true
+ithBettiNumber( H5, 0 );
+#! 1
+DimensionOfTorusfactor( H5 );
+#! 0
+Length( AffineOpenCovering( H5 ) );
+#! 4
+MorphismFromCoxVariety( H5 );
+#! <A "homomorphism" of right objects>
+CartierTorusInvariantDivisorGroup( H5 );
+#! <A free left submodule given by 8 generators>
 TorusInvariantPrimeDivisors( H5 );
 #! [ <A prime divisor of a toric variety with coordinates ( 1, 0, 0, 0 )>,
 #!   <A prime divisor of a toric variety with coordinates ( 0, 1, 0, 0 )>,
@@ -29,6 +41,9 @@ A;
 #! <A divisor of a toric variety with coordinates ( 1, -1, 4, 0 )>
 IsAmple( A );
 #! false
+WeilDivisorsOfVariety( H5 );;
+CoordinateRingOfTorus( H5 );
+#! Q[x1,x1_,x2,x2_]/( x1*x1_-1, x2*x2_-1 )
 CoordinateRingOfTorus( H5,"x" );
 #! Q[x1,x1_,x2,x2_]/( x1*x1_-1, x2*x2_-1 )
 D:=CreateDivisor( [ 0,0,0,0 ],H5 );
@@ -46,8 +61,23 @@ divi := DivisorOfCharacter( [ 1,2 ],H5 );
 #! <A principal divisor of a toric variety with coordinates ( 9, -2, 2, 1 )>
 BasisOfGlobalSections( divi );
 #! [ |[ x1_*x2_^2 ]| ]
+ZariskiCotangentSheafViaPoincareResidueMap( H5 );;
+ZariskiCotangentSheafViaEulerSequence( H5 );;
+EQ( H5, ProjectiveSpace( 2 ) );
+#! false
+H5B1 := BlowUpOnIthMinimalTorusOrbit( H5, 1 );
+#! <A toric variety of dimension 2>
+H5_version2 := DeriveToricVarietiesFromGrading( [[0,1,1,0],[1,0,-5,1]], false );
+#! [ <A toric variety of dimension 2> ]
+H5_version3 := ToricVarietyFromGrading( [[0,1,1,0],[1,0,-5,1]] );
+#! <A toric variety of dimension 2>
+NameOfVariety( H5 );
+#! "H_5"
+Display( H5 );
+#! A projective normal toric variety of dimension 2.
+#! The torus of the variety is RingWithOne( ... ).
+#! The class group is <object> and the Cox ring is RingWithOne( ... ).
 #! @EndExample
-
 
 #! @Chunk nonprojective
 
