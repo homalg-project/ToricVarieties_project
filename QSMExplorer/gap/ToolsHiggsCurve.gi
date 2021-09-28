@@ -91,7 +91,7 @@ end );
 
 InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsInt ],
     function( data, h0Min, h0Max, number_processes )
-        local index, Kbar3, genera, degrees, edges, total_genus, root, external_legs, external_edges, i, j, result_list, weights, total, r, r_new, w, dist;
+        local index, Kbar3, genera, degrees_H1, degrees_H2, degrees_H3, edges, total_genus, root, external_legs, external_edges, i, j, dist_H1, dist_H2, dist_H3, weights, total, r, r_new, w, dist;
         
         # trigger warning if needed
         index := Int( data.PolyInx );
@@ -107,7 +107,9 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
         # read-out the record for the required data
         Kbar3 := Int( data.Kbar3 );
         genera := EvalString( data.CiGenus );
-        degrees := ( 6 + Kbar3 ) * EvalString( data.CiDegreeKbar );
+        degrees_H1 := ( 12 + 3 * Kbar3 ) * EvalString( data.CiDegreeKbar );
+        degrees_H2 := ( -18 + 3 * Kbar3 ) * EvalString( data.CiDegreeKbar );
+        degrees_H3 := ( 12 + 3 * Kbar3 ) * EvalString( data.CiDegreeKbar );
         edges := EvalString( data.EdgeList );
         total_genus := Int( Kbar3/2 + 1 );
         root := 2 * Kbar3;
@@ -121,21 +123,21 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
             od;
         od;
         
-        # start the loop
-        result_list := [];
+        # start the loop over the roots on H1 (and H3)
+        dist_H1 := [];
         weights := Tuples( [ 1 .. root-1 ], Length( external_edges ) );
         i := 0;
         r := -1;
         total := Length( weights );
-        Print( Concatenation( "Total number of external weight assignments: ", String( total ), "\n" ) );
+        Print( Concatenation( "Total number of external weight assignments on H1: ", String( total ), "\n" ) );
         for w in weights do
                 
                 # compute distribution
-                dist := CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, w ], false );
+                dist := CountDistributionWithExternalLegs( [ genera, degrees_H1, edges, total_genus, root, h0Min, h0Max, external_edges, w ], false );
                 if ForAll( dist, IsZero ) then
-                    Append( result_list, "t" );
+                    Append( dist_H1, "t" );
                 else
-                    Append( result_list, [ dist ] );
+                    Append( dist_H1, [ dist ] );
                 fi;
                 
                 # update progress
@@ -147,8 +149,33 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
                 fi;
                 
         od;
+        dist_H3 := dist_H1;
+        
+        # start the loop over the roots on H2
+        dist_H2 := [];
+        Print( Concatenation( "Total number of external weight assignments on H2: ", String( total ), "\n" ) );
+        for w in weights do
+                
+                # compute distribution
+                dist := CountDistributionWithExternalLegs( [ genera, degrees_H2, edges, total_genus, root, h0Min, h0Max, external_edges, w ], false );
+                if ForAll( dist, IsZero ) then
+                    Append( dist_H2, "t" );
+                else
+                    Append( dist_H2, [ dist ] );
+                fi;
+                
+                # update progress
+                i := i +1;
+                r_new := Int( Float( i * 100 / total ) );
+                if ( r_new > r ) then
+                    r := r_new;
+                    Print( Concatenation( String( r ), "%\n" ) );
+                fi;
+                
+        od;
+
         
         # return all results
-        return [ weights, result_list ];
+        return [ weights, dist_H1, dist_H2, dist_H3 ];
         
 end );
