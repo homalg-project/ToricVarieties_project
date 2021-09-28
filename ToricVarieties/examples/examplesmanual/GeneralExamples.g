@@ -67,10 +67,12 @@ EQ( H5, ProjectiveSpace( 2 ) );
 #! false
 H5B1 := BlowUpOnIthMinimalTorusOrbit( H5, 1 );
 #! <A toric variety of dimension 2>
+#! #@if IsPackageMarkedForLoading( "TopcomInterface", ">= 2021.08.12" )
 H5_version2 := DeriveToricVarietiesFromGrading( [[0,1,1,0],[1,0,-5,1]], false );
 #! [ <A toric variety of dimension 2> ]
 H5_version3 := ToricVarietyFromGrading( [[0,1,1,0],[1,0,-5,1]] );
 #! <A toric variety of dimension 2>
+#! #@fi
 NameOfVariety( H5 );
 #! "H_5"
 Display( H5 );
