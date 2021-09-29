@@ -36,3 +36,26 @@ DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSMByPolytope", [
 DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSMByPolytope", [ IsInt, IsInt, IsInt, IsInt ] );
 
 DeclareOperation( "LimitRootDistributionWithExternalLegs", [ IsRecord, IsInt, IsInt, IsInt ] );
+
+
+##############################################################################################
+##
+#! @Section Find root distribution for all influxes on quark-doublet curve
+##
+##############################################################################################
+
+#! @Description
+#! This operation return a list of lists. For each influx on each component fo the quark-doublet curve, this list contains the distribution of limit root line distribution.
+#! @Returns a list of lists of integers
+#! @Arguments 
+DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSM", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSM", [ IsInt, IsInt, IsInt, IsInt ] );
+
+#! @Description
+#! This operation return a list of lists. For each influx on each component fo the quark-doublet curve, this list contains the distribution of limit root line distribution.
+#! @Returns a list of lists of integers
+#! @Arguments 
+DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSMByPolytope", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSMByPolytope", [ IsInt, IsInt, IsInt, IsInt ] );
+
+DeclareOperation( "LimitRootDistributionForAllInfluxes", [ IsRecord, IsInt, IsInt, IsInt ] );
