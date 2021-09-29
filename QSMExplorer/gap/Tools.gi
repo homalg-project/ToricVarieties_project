@@ -1044,7 +1044,7 @@ InstallMethod( PlotSimplifiedDualGraphWithExternalLegs, [ IsRecord ],
         names := SplitString( names, "," );
         
         # append external legs
-        external_legs := EvalString( String( data.CiDegreeKbar ) );
+        external_legs := 2 * EvalString( String( data.CiDegreeKbar ) );
         count := Length( genera );
         for i in [ 1 .. Length( external_legs ) ] do
             for j in [ 1 .. external_legs[ i ] ] do
