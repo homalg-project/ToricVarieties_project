@@ -115,7 +115,7 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
         root := 2 * Kbar3;
         
         # construct the external legs
-        external_legs := EvalString( data.CiDegreeKbar );
+        external_legs := 2 * EvalString( data.CiDegreeKbar );
         external_edges := [];
         for i in [ 1 .. Length( external_legs ) ] do
             for j in [ 1 .. external_legs[ i ] ] do
@@ -173,7 +173,6 @@ InstallMethod( LimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, 
                 fi;
                 
         od;
-
         
         # return all results
         return [ weights, dist_H1, dist_H2, dist_H3 ];
