@@ -113,7 +113,15 @@ int main(int argc, char* argv[]) {
             h0MinUsed = dia.get_h0_min();
     }
     
-    // count root distribution
+    // check for degenerate (= trivial) situation
+    if ( h0Max < h0MinUsed ){
+        for ( int i = 0; i < h0Max - h0Min + 1; i++ ){
+            std::cout << "0\n";
+        }
+        return 0;
+    }
+    
+    // proceed for non-trivial situation, i.e. h0Max >= h0MinUsed
     std::vector<unsigned long long int> n( h0Max - h0MinUsed + 1, 0 );
     if ( number_threads > 0 ){
         countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n, display_details );
