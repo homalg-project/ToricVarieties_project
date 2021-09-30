@@ -79,6 +79,9 @@ WeightedDiagramWithExternalLegs::WeightedDiagramWithExternalLegs( std::vector<in
         
         // compute h0_min
         h0_min = (int) degree/root - genus + 1;
+        if ( h0_min < 0 ){
+            h0_min = 0;
+        }
         
     }
         
