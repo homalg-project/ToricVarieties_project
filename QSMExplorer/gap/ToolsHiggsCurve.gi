@@ -301,7 +301,7 @@ InstallMethod( LimitRootDistributionForAllInfluxes, [ IsRecord, IsInt, IsInt, Is
             all_influxes_on_component := [ min .. max ];
             
             # generate possible weight assignments, which cover all influxes
-            some_external_weights := UnorderedTuples( [ 1 .. root ], nr_external );
+            some_external_weights := UnorderedTuples( [ 1 .. root-1 ], nr_external );
             
             # compute the influxes for each of these external_weights
             influxes_for_some_external_weights := List( [ 1 .. Length( some_external_weights ) ], j -> Sum( some_external_weights[ j ] ) );
