@@ -8,10 +8,12 @@ on:
 
 jobs:
   test:
+    name: GAP ${{ matrix.image }} - ${{ matrix.os }}          
     strategy:
       matrix:
         image: [gapsystem/gap-docker, gapsystem/gap-docker-master]
-    runs-on: ubuntu-latest
+        os: [ ubuntu-18.04, ubuntu-20.04, ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
     container:
       image: ${{ matrix.image }}
     steps:
@@ -21,10 +23,8 @@ jobs:
           echo "------------------------------------------------------------------------"
           echo "Step 1: Install system dependencies"
           echo "------------------------------------------------------------------------"
-          sudo apt update
-          sudo apt dist-upgrade -y
-          sudo apt-get install -y texlive-latex-extra texlive-science time python-pathlib
-          sudo apt-get install -y --fix-broken autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
+          sudo apt-get install -y -f --fix-broken texlive-latex-extra time python-pathlib texlive-science time python-pathlib
+          sudo apt-get install -y -f --fix-broken autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
           echo "------------------------------------------------------------------------"
           echo "Step 2: Copy branch"
           echo "------------------------------------------------------------------------"
