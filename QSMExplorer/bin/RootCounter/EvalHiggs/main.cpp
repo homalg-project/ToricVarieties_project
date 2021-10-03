@@ -78,8 +78,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Start thread " << i << "\n";
         
         // Start the thread
-        compute_distribution( outfluxes_H1filtered, outfluxes_H2filtered, dist_H1filtered, dist_H2filtered, number_components, legs_per_component, root, std::ref( final_dist ), start, stop );
-        //threadList.push_back( std::thread( compute_distribution, outfluxes_H1filtered, outfluxes_H2filtered, dist_H1filtered, dist_H2filtered, number_components, legs_per_component, root, std::ref( final_dist ), start, stop ) );
+        threadList.push_back( std::thread( compute_distribution, outfluxes_H1filtered, outfluxes_H2filtered, dist_H1filtered, dist_H2filtered, legs_per_component, root, std::ref( final_dist ), start, stop ) );
         
     }
     
