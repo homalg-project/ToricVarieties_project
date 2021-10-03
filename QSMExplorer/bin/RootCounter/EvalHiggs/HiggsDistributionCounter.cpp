@@ -32,16 +32,14 @@ void UpdateDistributionThreadSafe( std::vector<unsigned long long int>& central,
     
 }
 
-void UpdateStatusThreadSafe( std::vector<int>& status, std::vector<int> & change )
+void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
+    status[ pos ] = progress;
     std::string output = "Status: (";    
-    for ( int i = 0; i < change.size(); i ++ ){
-        status[ i ] = status[ i ] + change[ i ];
-        if ( i < change.size() - 1 ){
-            output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
-        }
+    for ( int i = 0; i < status.size() - 1; i ++ ){
+        output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
     }
     output = output + std::__cxx11::to_string( status[ status.size() - 1 ] ) + ")";
     std::cout << output << "\r" << std::flush;
@@ -84,8 +82,7 @@ void compute_distribution(
         // (3.1) Signal progress
         if ( progress < int ( 100 * ( i - start ) / ( stop - start ) ) ){
             progress = int ( 100 * ( i - start ) / ( stop - start ) );
-            change[ thread_number ] = progress;
-            UpdateStatusThreadSafe( status, change );
+            UpdateStatusThreadSafe( status, progress, thread_number );
         }
 
         // (3.2) Loop over H2 fluxes
