@@ -1,27 +1,16 @@
 // A program to compute the number of minimal limit roots on full blowups of nodal curves
 
-#include <algorithm>
-#include<iostream>
-#include <sstream> 
-#include <vector>
-#include <thread>
-#include <functional>
-#include <mutex>
 #include <chrono>
-#include <stack>
 #include <fstream>
-#include <string>
-#include <numeric>
+#include<iostream>
 #include <map>
+#include <mutex>
+#include <sstream> 
 #include <thread>
-#include <cstddef>
-#include <cstdint>
+#include <vector>
 
 #include "Partitions.cpp"
 #include "Read.cpp"
-#include "Cartesian.cpp"
-
-
 
 
 // Optimizations for speedup
@@ -197,7 +186,7 @@ int main(int argc, char* argv[]) {
     data_package_iterators[ number_threads - 1 ] = dummy;
     
     // start the threads
-    std::vector<std::thread> threadList;
+    /*std::vector<std::thread> threadList;
     for (int i = 0; i < number_threads; i++)
     {
         std::cout << "Start thread " << i << "\n";
@@ -209,7 +198,7 @@ int main(int argc, char* argv[]) {
     //compute_distribution( external_fluxes_proper_H1, external_fluxes_proper_H2, dist_H1_proper, dist_H2_proper, number_components, legs_per_component, root, std::ref( final_dist ), 0, external_fluxes_proper_H1.size() -1 );
     
     // Now wait for the results of the worker threads (i.e. call the join() function on each of the std::thread objects) and inform the user
-    std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
+    std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));*/
     
     // print final distribution
     std::cout << "Root_dist: ";
