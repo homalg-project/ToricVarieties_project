@@ -1,119 +1,131 @@
-void UpdateDistribution( std::vector<unsigned long long int>& distribution, std::vector<unsigned long long int> & s );
+// Thread-safe iterator over H1fluxes, guarded methods to update central variables and status_updater
+// Thread-safe iterator over H1fluxes, guarded methods to update central variables and status_updater
+
+void UpdateDistributionThreadSafe( std::vector<unsigned long long int>& central, std::vector<unsigned long long int> & change );
+void UpdateStatusThreadSafe( std::vector<int>& central, std::vector<int> & change );
 void compute_distribution(
-        std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H1,
-        std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H2,
-        std::vector<std::vector<unsigned long long int>> dist_H1_proper,
-        std::vector<std::vector<unsigned long long int>> dist_H2_proper,
-        std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop );
+        std::vector<std::vector<unsigned long long int>> outfluxes_H1filtered,
+        std::vector<std::vector<unsigned long long int>> outfluxes_H2filtered,
+        std::vector<std::vector<unsigned long long int>> dist_H1filtered,
+        std::vector<std::vector<unsigned long long int>> dist_H2filtered,
+        std::vector<int> legs_per_component_halved,
+        int root,
+        int start,
+        int stop,
+        std::vector<unsigned long long int> & final_dist,
+        int thread_number,
+        std::vector<int> & status
+        );
+void status_updater( std::vector<int> & status );
 
 
-// guard watching modifications of final_dist
+// Guarded methods
+// Guarded methods
 std::mutex myMutexFlex;
-void UpdateDistribution( std::vector<unsigned long long int>& distribution, std::vector<unsigned long long int> & s )
+void UpdateDistributionThreadSafe( std::vector<unsigned long long int>& central, std::vector<unsigned long long int> & change )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
-    for ( int i = 0; i < s.size(); i ++ ){
-        distribution[ i ] = distribution[ i ] + s[ i ];
+    for ( int i = 0; i < change.size(); i ++ ){
+        central[ i ] = central[ i ] + change[ i ];
     }
     
 }
 
+void UpdateStatusThreadSafe( std::vector<int>& status, std::vector<int> & change )
+{
+    
+    std::lock_guard<std::mutex> guard(myMutexFlex);
+    std::string output = "Status: (";    
+    for ( int i = 0; i < change.size(); i ++ ){
+        status[ i ] = status[ i ] + change[ i ];
+        if ( i < change.size() - 1 ){
+            output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
+        }
+    }
+    output = output + std::__cxx11::to_string( status[ status.size() - 1 ] ) + ")";
+    std::cout << output << "\r" << std::flush;
+    
+}
 
-// function to be run in thread
+
+// H1-iterator
+// H1-iterator
 void compute_distribution( 
-        std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H1,
-        std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H2,
-        std::vector<std::vector<unsigned long long int>> dist_H1_proper,
-        std::vector<std::vector<unsigned long long int>> dist_H2_proper,
-        std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop ){
-    
-    int number_components = legs_per_component.size();
-    
-    // form maps
-    std::map<std::vector<unsigned long long int>, std::vector<unsigned long long int>> mapH1;
-    for ( int i = 0; i < external_fluxes_proper_H1.size(); i ++ ){
-        mapH1.insert( std::make_pair( external_fluxes_proper_H1[ i ], dist_H1_proper[ i ] ) );
-    }
-    
-    // start loop <- main routine
-    std::vector<int> f1, f2, f3;
-    std::vector<unsigned long long int> d1, d2, d3;
+        std::vector<std::vector<unsigned long long int>> outfluxes_H1filtered,
+        std::vector<std::vector<unsigned long long int>> outfluxes_H2filtered,
+        std::vector<std::vector<unsigned long long int>> dist_H1filtered,
+        std::vector<std::vector<unsigned long long int>> dist_H2filtered,
+        std::vector<int> legs_per_component_halved,
+        int root,
+        int start,
+        int stop,
+        std::vector<unsigned long long int> & final_dist,
+        int thread_number,
+        std::vector<int> & status ){
+        
+    // (1) Set variables
     std::vector<unsigned long long int> res( 31, 0 );
-    /*for ( int b = 0; b < res.size(); b++ ){
-        res[ b ] = 0;
-        std::cout << res[ b ] << ", ";
-    }
-    std::cout << res.size() << "\n";*/
     int progress = 0;
+    int number_components = legs_per_component_halved.size();
+    std::vector<unsigned long long int> f1, f2, f3;
+    std::vector<unsigned long long int> d1, d2, d3;
+    std::vector<int> change ( status.size(), 0 );
     
+    // (2) Form H1 map for quick access (-> Hash table)
+    std::map<std::vector<unsigned long long int>, std::vector<unsigned long long int>> mapH1;
+    for ( int i = 0; i < outfluxes_H1filtered.size(); i ++ ){
+        mapH1.insert( std::make_pair( outfluxes_H1filtered[ i ], dist_H1filtered[ i ] ) );
+    }
+    
+    // (3) Loop over H1-fluxes
     for ( int i = start; i <= stop; i++ ){
 
-        // (1) inform about progress
+        // (3.1) Signal progress
         if ( progress < int ( 100 * ( i - start ) / ( stop - start ) ) ){
             progress = int ( 100 * ( i - start ) / ( stop - start ) );
-            std::cout << "i = " << i << " (" << progress << "%)\n";
+            change[ thread_number ] = progress;
+            UpdateStatusThreadSafe( status, change );
         }
 
-        // (2) loops over H2 fluxes
-        for ( int j = 0; j < external_fluxes_proper_H2.size(); j++ ){
+        // (3.2) Loop over H2 fluxes
+        for ( int j = 0; j < outfluxes_H2filtered.size(); j++ ){
             
-            // (3) form flux f3
+            // (3.2.1) Compute H3 flux f3
             std::vector<unsigned long long int> f3;
             for ( int c = 0; c < number_components; c++ ){
-                f3.push_back( (unsigned long long int) ( ( 3 *  legs_per_component[ c ] * root ) / 2 - external_fluxes_proper_H1[ i ][ c ] - external_fluxes_proper_H2[ j ][ c ] ) );
+                f3.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H2filtered[ j ][ c ] ) );
             }
             
-            // (4) skip if this does not define a "good" flux or distribution is trivial
+            // (3.2.2) Only proceed if H3 flux f3 has non-trivial distribution
             if ( mapH1.find( f3 ) != mapH1.end() ){
 
-                // (5) find combinatorics factor
+                // Compute combinatorial factor
                 unsigned long long int factor = 1;
                 for ( int c = 0; c < number_components; c++ ){
-                    factor = factor * comb_factor( external_fluxes_proper_H1[ i ][ c ], external_fluxes_proper_H2[ j ][ c ], (int) ( legs_per_component[ c ] / 2 ), root );
+                    factor = factor * comb_factor( outfluxes_H1filtered[ i ][ c ], outfluxes_H2filtered[ j ][ c ], legs_per_component_halved[ c ], root );
                 }
-                //std::cout << "Computed combinatorial factor: " << factor << "\n";
                 
-                // (6) identify contribution
-                d1 = dist_H1_proper[ i ];
-                d2 = dist_H2_proper[ j ];
+                // Update resulting distribution
+                d1 = dist_H1filtered[ i ];
+                d2 = dist_H2filtered[ j ];
                 d3 = mapH1[ f3 ];
                 for ( int a1 = 0; a1 < d1.size(); a1++ ){
                     for ( int a2 = 0; a2 < d2.size(); a2++ ){
                         for ( int a3 = 0; a3 < d3.size(); a3++ ){
                             if ( ( d1[ a1 ] != 0 ) && ( d2[ a2 ] != 0 ) && ( d3[ a3 ] != 0 ) ){
                                 res[ a1 + a2 + a3 ] = res[ a1 + a2 + a3 ] + factor * d1[ a1 ] * d2[ a2 ] * d3[ a3 ];
-                                /*for ( int b = 0; b <res.size(); b++ ){
-                                    std::cout << res[ b ] << ", ";
-                                }
-                                std::cout << res.size() << "\n";*/
                             }
                         }
                     }
                 }
             }
             
-            // inform about status in j-loop
-            //std::cout << "j = " << j << " out of " << external_fluxes_proper_H2.size() << "\n";
-            
         }
-        
-        // inform about status in i-loop
-        /*std::cout << "i = " << i << " out of " << stop << "\n";
-        for ( int b = 0; b <res.size(); b++ ){
-            std::cout << res[ b ] << ", ";
-        }
-        std::cout << res.size() << "\n";*/
         
     }
 
-    // update the final distribution found
-    UpdateDistribution( final_dist, res );
-
-    std::cout << "Thread complete. Found distribution: (";
-    for ( int b = 0; b <res.size(); b++ ){
-        std::cout << res[ b ] << ", ";
-    }
-    std::cout << ")\n\n";
-    
+    // (4) Update central distribution result
+    UpdateDistributionThreadSafe( final_dist, res );
+        
 }

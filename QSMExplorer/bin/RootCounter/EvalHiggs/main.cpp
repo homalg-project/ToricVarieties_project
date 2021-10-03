@@ -9,6 +9,7 @@
 #include <mutex>
 #include <sstream> 
 #include <thread>
+#include <unistd.h>
 #include <vector>
 
 #include "Read.cpp"
@@ -24,11 +25,12 @@
 int main(int argc, char* argv[]) {
 
     // (1) Set constants
-    int number_threads = 1;
+    int number_threads = 2;
     int root = 12;
-    std::vector<int> legs_per_component = { 2,4,4,2 };
-    int number_components = legs_per_component.size();
+    std::vector<int> legs_per_component_halved = { 1,2,2,1 };
+    int number_components = legs_per_component_halved.size();
     std::vector<unsigned long long int> final_dist( 31, 0 );
+    std::vector<int> status( number_threads, 0 );
     
     // (2) Read data
     std::vector<std::vector<unsigned long long int>> outfluxes;
@@ -77,12 +79,24 @@ int main(int argc, char* argv[]) {
         // Signal that we start this thread
         std::cout << "Start thread " << i << "\n";
         
-        // Start the thread
-        threadList.push_back( std::thread( compute_distribution, outfluxes_H1filtered, outfluxes_H2filtered, dist_H1filtered, dist_H2filtered, legs_per_component, root, std::ref( final_dist ), start, stop ) );
+        // Start the worker threads
+        threadList.push_back( std::thread(   compute_distribution, 
+                                                                    outfluxes_H1filtered,
+                                                                    outfluxes_H2filtered,
+                                                                    dist_H1filtered,
+                                                                    dist_H2filtered,
+                                                                    legs_per_component_halved,
+                                                                    root,
+                                                                    start,
+                                                                    stop,
+                                                                    std::ref( final_dist ),
+                                                                    i,
+                                                                    std::ref( status )
+                                                                ) );
         
     }
     
-    // (5) Wait for threads to complete
+    // (5) Wait for all threads to complete
     std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
     
     // (6) Print result
