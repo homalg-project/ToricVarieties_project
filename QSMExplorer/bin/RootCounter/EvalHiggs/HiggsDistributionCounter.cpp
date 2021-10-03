@@ -4,7 +4,7 @@ void compute_distribution(
         std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H2,
         std::vector<std::vector<unsigned long long int>> dist_H1_proper,
         std::vector<std::vector<unsigned long long int>> dist_H2_proper,
-        int number_components, std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop );
+        std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop );
 
 
 // guard watching modifications of final_dist
@@ -26,7 +26,9 @@ void compute_distribution(
         std::vector<std::vector<unsigned long long int>> external_fluxes_proper_H2,
         std::vector<std::vector<unsigned long long int>> dist_H1_proper,
         std::vector<std::vector<unsigned long long int>> dist_H2_proper,
-        int number_components, std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop ){
+        std::vector<int> legs_per_component, int root, std::vector<unsigned long long int> & final_dist, int start, int stop ){
+    
+    int number_components = legs_per_component.size();
     
     // form maps
     std::map<std::vector<unsigned long long int>, std::vector<unsigned long long int>> mapH1;
