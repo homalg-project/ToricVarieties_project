@@ -1,13 +1,6 @@
-// print vector
-void print (std::vector<int>& v, int level){
-    for(int i=0;i<=level;i++)
-        std::cout << v[i] << " ";
-    std::cout << std::endl;
-}
-
 // compute number of partitions
 unsigned long long int part( const int & n, std::vector<int>& v, int level, const int & r, const int & max){
-    int first; /* first is before last */
+    int first;
     unsigned long long int count = 0;
     
     // check degenerate case
@@ -38,9 +31,6 @@ unsigned long long int part( const int & n, std::vector<int>& v, int level, cons
             return 0;
         }
         
-        // if output necessary/desired
-        // print( v, level );
-        
     }
     
     // set level appropriately
@@ -53,7 +43,7 @@ unsigned long long int part( const int & n, std::vector<int>& v, int level, cons
     
     // perform recursion
     for(int i=first;i<=n/2;i++){
-        v[level]=i; /* replace last */
+        v[level]=i;
         count = count + part( n-i, v, level+1, r, max );
     }
     
