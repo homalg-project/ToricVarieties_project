@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     }
     
     // Required input:
-    // (1) vertices (std::vector<int>)
+    // (1) # vertices (int)
     // (2) degrees_H1 (std::vector<int>)
     // (3) degrees_H2 (std::vector<int>)
     // (4) genera (std::vector<int>)
@@ -50,8 +50,8 @@ int main(int argc, char* argv[]) {
     // (7) genus (int)
     // (8) root (int)
     // (9) number of threads (int) - optional
-    // (10) h0Min (int)
-    // (11) h0_h0Max (int)
+    // (10) h0_h0Max (int)
+    // (11) details (int)
     // So expect the following input:
     // { #Vertices, degrees, genera, #Edges, edge-information, genus, root, threads }
     
