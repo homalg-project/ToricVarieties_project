@@ -35,4 +35,4 @@ DeclareOperation( "LimitRootDistributionForHiggsCurveInQSM", [ IsInt, IsInt, IsI
 DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt ] );
 DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt, IsInt ] );
 
-DeclareOperation( "LimitRootDistributionHiggs", [ IsRecord, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionHiggs", [ IsRecord, IsInt, IsInt, IsBool ] );
