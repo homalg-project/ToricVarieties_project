@@ -57,6 +57,8 @@ QSMExplorer/bin/RootCounter/main.o
 QSMExplorer/bin/RootCounter/distributionCounter
 QSMExplorer/bin/RootCounter/main-speciality.o
 QSMExplorer/bin/RootCounter/specialityChecker
+QSMExplorer/bin/RootCounter/HiggsMain.o
+QSMExplorer/bin/RootCounter/distributionCounterHiggsCurve
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
