@@ -3,7 +3,6 @@
 
 // Global variable for counting diagrams // thread-safe addition
 //std::vector<unsigned long long int> distribution (100, 0);
-std::mutex myMutexFlex;
 void UpdateDistribution( std::vector<unsigned long long int>& distribution, std::vector<unsigned long long int> & s )
 {
     
