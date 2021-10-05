@@ -36,7 +36,7 @@ void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
     status[ pos ] = progress;
-    std::string output = "Status: (";    
+    std::string output = "Status [%]: (";    
     for ( int i = 0; i < status.size() - 1; i ++ ){
         output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
     }
