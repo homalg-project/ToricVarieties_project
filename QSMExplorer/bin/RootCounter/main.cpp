@@ -9,6 +9,10 @@
 #include <mutex>
 #include <chrono>
 #include <stack>
+
+// guard for thread-safe operations
+std::mutex myMutexFlex;
+
 #include "RootDistributionCounter.cpp"
 
 // Optimizations for speedup
