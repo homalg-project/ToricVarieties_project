@@ -126,6 +126,7 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
             WeightedDiagramWithExternalLegs dia_H2 = WeightedDiagramWithExternalLegs( vertices, degrees_H2, genera, edges, external_legs, external_weights, genus, root );
             
             // Only proceed if situation is not automatically degenerate
+            h0MinUsed = dia_H2.get_h0_min();
             if ( h0Max >= h0MinUsed ){
                 
                 // Compute distribution
