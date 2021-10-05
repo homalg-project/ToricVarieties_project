@@ -15,8 +15,10 @@ docclean:
 install:
 	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath main.cpp) -lpthread; g++ -o distributionCounter WDiagram.o main.o -lpthread )
 	(cd bin/RootCounter; g++ -c $$(realpath main-speciality.cpp) -lpthread; g++ -o specialityChecker WDiagram.o main-speciality.o -lpthread )
+	(cd bin/RootCounter; g++ -c WDiagram.cpp; g++ -c $$(realpath HiggsMain.cpp) -lpthread; g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -lpthread )
+	
 uninstall:
-	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f distributionCounter; rm -f specialityChecker )
+	( cd bin/RootCounter; rm -f main.o; rm -f WDiagram.o; rm -f distributionCounter; rm -f specialityChecker; rm -f distributionCounterHiggsCurve )
 	
 test:	doc
 	gap tst/testall.g
