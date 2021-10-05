@@ -50,7 +50,7 @@ InstallMethod( LimitRootDistributionForHiggsCurveInQSM, [ IsInt, IsInt, IsInt ],
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return LimitRootDistributionHiggs( data, h0Max, number_processes );
+            return LimitRootDistributionHiggs( data, h0Max, number_processes, true );
         fi;
         
 end );
@@ -83,15 +83,15 @@ InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt
         
         # check if the data is meaningful
         if ( data <> fail ) then
-            return LimitRootDistributionHiggs( data, h0Max, number_processes );
+            return LimitRootDistributionHiggs( data, h0Max, number_processes, true );
         fi;
         
 end );
 
 
-InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt ],
-    function( data, h0Max, number_processes )
-        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, display_details;
+InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt, IsBool ],
+    function( data, h0Max, number_processes, display_details )
+        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options;
         
         # read-out the record for the required data
         Kbar3 := Int( data.Kbar3 );
@@ -104,12 +104,6 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt ],
         
         # construct the external legs
         external_legs := 2 * EvalString( data.CiDegreeKbar );
-        external_edges := [];
-        for i in [ 1 .. Length( external_legs ) ] do
-            for j in [ 1 .. external_legs[ i ] ] do
-                external_edges := Concatenation( external_edges, [i-1] );
-            od;
-        od;
         
         # find the counter binary (and check if it exists)
         dir := FindRootCounterDirectory();
@@ -139,7 +133,6 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt ],
         for i in [ 1 .. Length( edges ) ] do
             options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
         od;
-        options := Concatenation( options, String( Length( external_legs ) ), " " );
         for i in [ 1 .. Length( external_legs ) ] do
             options := Concatenation( options, String( external_legs[ i ] ), " " );
         od;
@@ -149,7 +142,7 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt ],
         else
             options := Concatenation( options, " ", String( -1 ) );
         fi;
-    
+        
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
