@@ -198,26 +198,15 @@ int main(int argc, char* argv[]) {
     // (3) Scan all outfluxes to compute "min-distributions"
     if ( display_details ){
         std::cout << "Total number of outfluxes to be studied: " << all_outfluxes.size() << "\n\n";
-        if ( number_threads > 0 ){
-            std::cout << "Perform scan in " << number_threads << " parallel threads...\n";
-        }
-        else {
-            std::cout << "Perform scan in single threads...\n\n";
-        }
+        std::cout << "Perform scan in " << number_threads << " parallel threads...\n";
     }
 
     // (3.1) Prepare scan
     std::vector<std::vector<unsigned long long int>> outfluxes_H1, outfluxes_H2;
     std::vector<std::vector<unsigned long long int>> dist_H1, dist_H2;
     int h0MinUsed;
-    std::vector<int> status;
-    if ( number_threads > 0 ){
-        for ( int i = 0; i < number_threads; i++ ){
-            status.push_back( 0 );
-        }
-    }
-    else{
-        status.push_back( 0 );
+    for ( int i = 0; i < status.size(); i ++ ){
+        status[ i ] = 0;
     }
     
     // (3.2) Partition workload and start threads
@@ -231,9 +220,6 @@ int main(int argc, char* argv[]) {
         start = i * package_size;
         if ( i < number_threads - 1 ){ stop = ( i + 1 ) * package_size - 1; }
         else{ stop = (int) outfluxes_H1.size() -1; }
-        
-        // Signal that we start this thread
-        std::cout << "Start thread " << i << "\n";
         
         // Start the worker threads
         threadList.push_back( std::thread(   FluxScanner, 
@@ -276,12 +262,7 @@ int main(int argc, char* argv[]) {
         legs_per_component_halved[ i ] = legs_per_component[ i ] / 2;
     }
     std::vector<unsigned long long int> final_dist( 3 * h0Max , 0 );
-    if ( number_threads > 0 ){
-        for ( int i = 0; i < number_threads; i++ ){
-            status.push_back( 0 );
-        }
-    }
-    else{
+    for ( int i = 0; i < status.size(); i++ ){
         status.push_back( 0 );
     }
     
@@ -295,9 +276,6 @@ int main(int argc, char* argv[]) {
         start = i * package_size;
         if ( i < number_threads - 1 ){ stop = ( i + 1 ) * package_size - 1; }
         else{ stop = (int) outfluxes_H1.size() -1; }
-        
-        // Signal that we start this thread
-        std::cout << "Start thread " << i << "\n";
         
         // Start the worker threads
         threadList2.push_back( std::thread(   compute_distribution, 
