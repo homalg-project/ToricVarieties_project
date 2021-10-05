@@ -17,45 +17,22 @@
 
 ##############################################################################################
 ##
-#! @Section Find root distribution for all external weights on quark-doublet curve
+#! @Section Find root distribution on Higgs curve
 ##
 ##############################################################################################
 
 #! @Description
-#! This operation return a record. For each weight assignment on the external legs on the quark-doublet curve of the i-th QSM, this record contains the root distribution.
-#! @Returns a record
+#! This operation returns a list corresponding to the limit root distribution on the Higgs curve in the i-th QSM.
+#! @Returns a list
 #! @Arguments 
-DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSM", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSM", [ IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSM", [ IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSM", [ IsInt, IsInt, IsInt ] );
 
 #! @Description
-#! This operation return a record. For each weight assignment on the external legs on the quark-doublet curve of the QSM of the i-th polytope, this record contains the root distribution.
-#! @Returns a record
+#! This operation returns a list corresponding to the limit root distribution on the Higgs curve in the QSM of the i-th polytope.
+#! @Returns a list
 #! @Arguments 
-DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSMByPolytope", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "LimitRootDistributionForAllExternalWeightsInQSMByPolytope", [ IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt, IsInt ] );
 
-DeclareOperation( "LimitRootDistributionWithExternalLegs", [ IsRecord, IsInt, IsInt, IsInt ] );
-
-
-##############################################################################################
-##
-#! @Section Find root distribution for all influxes on quark-doublet curve
-##
-##############################################################################################
-
-#! @Description
-#! This operation return a list of lists. For each influx on each component fo the quark-doublet curve, this list contains the distribution of limit root line distribution.
-#! @Returns a list of lists of integers
-#! @Arguments 
-DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSM", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSM", [ IsInt, IsInt, IsInt, IsInt ] );
-
-#! @Description
-#! This operation return a list of lists. For each influx on each component fo the quark-doublet curve, this list contains the distribution of limit root line distribution.
-#! @Returns a list of lists of integers
-#! @Arguments 
-DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSMByPolytope", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "LimitRootDistributionForAllExternalInfluxesInQSMByPolytope", [ IsInt, IsInt, IsInt, IsInt ] );
-
-DeclareOperation( "LimitRootDistributionForAllInfluxes", [ IsRecord, IsInt, IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionHiggs", [ IsRecord, IsInt, IsInt ] );

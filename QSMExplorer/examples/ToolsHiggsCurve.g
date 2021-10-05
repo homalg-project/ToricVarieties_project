@@ -4,8 +4,8 @@
 
 LoadPackage( "QSMExplorer" );
 
-#! We can compute the root distribution for all possible weight assignments on the external legs of a quark-doublet curve with the following command.
+#! We can compute the root distribution also on the Higgs curve. These computations typically require an extended amount of computational power. It would proceed as follows:
 
 #! @Log
-LimitRootDistributionForAllExternalWeightsInQSM( 1, 0, 4 );
+LimitRootDistributionForHiggsCurveInQSM( 1, 4 );
 #! @EndLog
