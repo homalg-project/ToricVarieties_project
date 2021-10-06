@@ -15,6 +15,7 @@ The corresponding preprint is available at [2104.08297](https://arxiv.org/pdf/21
 
 To get the latest version of this GAP 4 package pull the corresponding repository from github. Subsequently issue `make install` inside the package folder. It will compile `C++`-code and place the resutling binary `counter` in the subfolder `/bin/RootCounter`. This completes the installation of this package.
 
+To handle large integers (10^20 and higher), we use the [boost library](https://www.boost.org/).
 
 ## Documentation and tests
 
