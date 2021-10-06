@@ -155,6 +155,9 @@ int main(int argc, char* argv[]) {
     
     // (1) Construct all outfluxes values
     // (1) Construct all outfluxes values
+
+    // measure time for complete operation
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     
     int min_outflux, max_outflux;
     std::vector<std::vector<int>> outflux_values;
@@ -204,8 +207,9 @@ int main(int argc, char* argv[]) {
     // (3.1) Prepare scan
     std::vector<std::vector<unsigned long long int>> outfluxes_H1, outfluxes_H2;
     std::vector<std::vector<unsigned long long int>> dist_H1, dist_H2;
+    std::vector<int> status( number_threads );
     int h0MinUsed;
-    for ( int i = 0; i < status.size(); i ++ ){
+    for ( int i = 0; i < number_threads; i ++ ){
         status[ i ] = 0;
     }
     
@@ -249,10 +253,12 @@ int main(int argc, char* argv[]) {
     std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
     
     // Inform what we have achieved
+    std::chrono::steady_clock::time_point middle = std::chrono::steady_clock::now();
     if ( display_details ){
         std::cout << "\n\n";
         std::cout << "Outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
         std::cout << "Outfluxes H2: " << outfluxes_H2.size() << ", " << dist_H2.size() << "\n";
+        std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(middle - begin).count() << "[s]\n\n";
         std::cout << "Now start to piece the local data together... \n\n";
     }
     
@@ -262,9 +268,6 @@ int main(int argc, char* argv[]) {
         legs_per_component_halved[ i ] = legs_per_component[ i ] / 2;
     }
     std::vector<unsigned long long int> final_dist( 3 * h0Max , 0 );
-    for ( int i = 0; i < status.size(); i++ ){
-        status.push_back( 0 );
-    }
     
     // (5) Partition workload and start threads
     package_size = outfluxes_H1.size() / number_threads;
@@ -278,7 +281,7 @@ int main(int argc, char* argv[]) {
         else{ stop = (int) outfluxes_H1.size() -1; }
         
         // Start the worker threads
-        threadList2.push_back( std::thread(   compute_distribution, 
+        threadList2.push_back( std::thread( compute_distribution,
                                                                     outfluxes_H1,
                                                                     outfluxes_H2,
                                                                     dist_H1,
@@ -296,12 +299,15 @@ int main(int argc, char* argv[]) {
     std::for_each(threadList2.begin(),threadList2.end(), std::mem_fn(&std::thread::join));
     
     // (6) Print result
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "##############\n";
     std::cout << "Found root distribution:\n";
     std::cout << "##############\n";
     for ( int i = 0; i < final_dist.size(); i++ ){
         std::cout << "H0 = " << i << ":\t" << final_dist[ i ] << "\n";
     }
+    std::cout << "\n";
+    std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     
     // (7) Signal success
     return 0;

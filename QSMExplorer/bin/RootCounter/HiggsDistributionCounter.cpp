@@ -120,11 +120,7 @@ void compute_distribution(
         }
         
     }
-
-    // Final status update - scan thread is complete
-    progress = 100;
-    UpdateStatusThreadSafe( status, progress, thread_number );
-
+    
     // (4) Update central distribution result
     UpdateDistributionThreadSafe( final_dist, res );
         
