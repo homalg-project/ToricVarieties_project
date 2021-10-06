@@ -10,6 +10,7 @@
 #include <stack>
 #include <thread>
 #include <vector>
+#include <boost/multiprecision/cpp_int.hpp>
 
 // guard for thread-safe operations
 std::mutex myMutexFlex;

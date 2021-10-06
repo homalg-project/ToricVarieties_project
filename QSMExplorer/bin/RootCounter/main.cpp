@@ -9,6 +9,7 @@
 #include <mutex>
 #include <chrono>
 #include <stack>
+#include <boost/multiprecision/cpp_int.hpp>
 
 // guard for thread-safe operations
 std::mutex myMutexFlex;
