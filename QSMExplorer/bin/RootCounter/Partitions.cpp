@@ -1,6 +1,6 @@
 // Combinatorial factors for root bundle counting
-unsigned long long int comb_factor( const int & a, const int & b, const int & n_half, const int & r );
-unsigned long long int number_partitions( const int & f, const int & n, const int & r );
+boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const int & n_half, const int & r );
+boost::multiprecision::int128_t number_partitions( const int & f, const int & n, const int & r );
 
 
 // Task: Combinatorial factor for root bundle counting
@@ -9,10 +9,10 @@ unsigned long long int number_partitions( const int & f, const int & n, const in
 //           Number of edges among V( xi, s1 ) and V( si, s2 ): n_half = n/2
 //           ( The total number of edges of V( xi, s1 ) in H1 is n. Same for V( xi, s2 ) inside of H2. )
 //           We are looking for r-th roots
-unsigned long long int comb_factor( const int & a, const int & b, const int & n_half, const int & r ){
+boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const int & n_half, const int & r ){
 
     // Initialize counter as 0
-    unsigned long long int count = 0;
+    boost::multiprecision::int128_t count = 0;
     
     // Partition flux a = f12 + f13, where f12 is the outflow towards V( xi, s2 ).
     // Consequence: f12 can only cover a certain range of values, namely...
@@ -32,9 +32,9 @@ unsigned long long int comb_factor( const int & a, const int & b, const int & n_
             // N1: Number of partitions of flux f12 (from V( xi, s1) to V( xi, s2 )) into n_half weights, each with admissible ranges being between 1 and r-1.
             // N2: Number of partitions of flux f13 = a - f12 (from V( xi, s1 ) to V( xi, s3 )) into n_half weights, each with admissible ranges being between 1 and r-1.
             // N3: Number of partitions of flux f23 (from V( xi, s2 ) to V( xi, s3 )) into n_half weights, each with admissible ranges being between 1 and r-1.
-            unsigned long long int N1 = number_partitions( f12, n_half, r-1 );
-            unsigned long long int N2 = number_partitions( a - f12, n_half, r-1 );
-            unsigned long long int N3 = number_partitions( f23, n_half, r-1 );
+            boost::multiprecision::int128_t N1 = number_partitions( f12, n_half, r-1 );
+            boost::multiprecision::int128_t N2 = number_partitions( a - f12, n_half, r-1 );
+            boost::multiprecision::int128_t N3 = number_partitions( f23, n_half, r-1 );
             
             // Increase counter accordingly
             count = count + N1 * N2 * N3;
@@ -52,8 +52,8 @@ unsigned long long int comb_factor( const int & a, const int & b, const int & n_
 // Input: Integer f to be partitioned.
 //           Integers r, n.
 // Output: The number of partitions of f into a sum of exactly n integers w1, ... wn with 1 <= w1, ..., wn < r.
-unsigned long long int number_partitions( const int & f, const int & n, const int & r ){
-    unsigned long long int count = 0;
+boost::multiprecision::int128_t number_partitions( const int & f, const int & n, const int & r ){
+    boost::multiprecision::int128_t count = 0;
     
     // Only one value to set?
     if( n == 1 ) {

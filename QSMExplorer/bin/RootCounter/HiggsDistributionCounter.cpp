@@ -1,18 +1,18 @@
 // Thread-safe iterator over H1fluxes, guarded methods to update central variables and status_updater
 // Thread-safe iterator over H1fluxes, guarded methods to update central variables and status_updater
 
-void UpdateDistributionThreadSafe( std::vector<unsigned long long int>& central, std::vector<unsigned long long int> & change );
+void UpdateDistributionThreadSafe( std::vector<boost::multiprecision::int128_t>& central, std::vector<boost::multiprecision::int128_t> & change );
 void UpdateStatusThreadSafe( std::vector<int>& central, std::vector<int> & change );
 void compute_distribution(
         std::vector<std::vector<unsigned long long int>> outfluxes_H1filtered,
         std::vector<std::vector<unsigned long long int>> outfluxes_H2filtered,
-        std::vector<std::vector<unsigned long long int>> dist_H1filtered,
-        std::vector<std::vector<unsigned long long int>> dist_H2filtered,
+        std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1filtered,
+        std::vector<std::vector<boost::multiprecision::int128_t>> dist_H2filtered,
         std::vector<int> legs_per_component_halved,
         int root,
         int start,
         int stop,
-        std::vector<unsigned long long int> & final_dist,
+        std::vector<boost::multiprecision::int128_t> & final_dist,
         int thread_number,
         std::vector<int> & status
         );
@@ -21,7 +21,7 @@ void status_updater( std::vector<int> & status );
 
 // Guarded methods
 // Guarded methods
-void UpdateDistributionThreadSafe( std::vector<unsigned long long int>& central, std::vector<unsigned long long int> & change )
+void UpdateDistributionThreadSafe( std::vector<boost::multiprecision::int128_t>& central, std::vector<boost::multiprecision::int128_t> & change )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
@@ -51,26 +51,26 @@ void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
 void compute_distribution( 
         std::vector<std::vector<unsigned long long int>> outfluxes_H1filtered,
         std::vector<std::vector<unsigned long long int>> outfluxes_H2filtered,
-        std::vector<std::vector<unsigned long long int>> dist_H1filtered,
-        std::vector<std::vector<unsigned long long int>> dist_H2filtered,
+        std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1filtered,
+        std::vector<std::vector<boost::multiprecision::int128_t>> dist_H2filtered,
         std::vector<int> legs_per_component_halved,
         int root,
         int start,
         int stop,
-        std::vector<unsigned long long int> & final_dist,
+        std::vector<boost::multiprecision::int128_t> & final_dist,
         int thread_number,
         std::vector<int> & status ){
         
     // (1) Set variables
-    std::vector<unsigned long long int> res( 31, 0 );
+    std::vector<boost::multiprecision::int128_t> res( 31, 0 );
     int progress = 0;
     int number_components = legs_per_component_halved.size();
     std::vector<unsigned long long int> f1, f2, f3;
-    std::vector<unsigned long long int> d1, d2, d3;
+    std::vector<boost::multiprecision::int128_t> d1, d2, d3;
     std::vector<int> change ( status.size(), 0 );
     
     // (2) Form H1 map for quick access (-> Hash table)
-    std::map<std::vector<unsigned long long int>, std::vector<unsigned long long int>> mapH1;
+    std::map<std::vector<unsigned long long int>, std::vector<boost::multiprecision::int128_t>> mapH1;
     for ( int i = 0; i < outfluxes_H1filtered.size(); i ++ ){
         mapH1.insert( std::make_pair( outfluxes_H1filtered[ i ], dist_H1filtered[ i ] ) );
     }
@@ -97,7 +97,7 @@ void compute_distribution(
             if ( mapH1.find( f3 ) != mapH1.end() ){
 
                 // Compute combinatorial factor
-                unsigned long long int factor = 1;
+                boost::multiprecision::int128_t factor = 1;
                 for ( int c = 0; c < number_components; c++ ){
                     factor = factor * comb_factor( outfluxes_H1filtered[ i ][ c ], outfluxes_H2filtered[ j ][ c ], legs_per_component_halved[ c ], root );
                 }

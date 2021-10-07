@@ -4,6 +4,7 @@
 #include <vector>
 #include <numeric>
 #include <stdexcept>
+#include <boost/multiprecision/cpp_int.hpp>
 
 #ifndef WDIAGRAM_H
 #define WDIAGRAM_H
@@ -66,7 +67,7 @@ class WeightedDiagramWithExternalLegs
     int get_root();
     int get_genus();
     int get_h0_min();
-    int get_mult(std::vector<int> weights);
+    boost::multiprecision::int128_t get_mult(std::vector<int> weights);
     
     // set and test weight configurations
     bool test_weights(std::vector<int> weights, int h0Min, int h0Max );
