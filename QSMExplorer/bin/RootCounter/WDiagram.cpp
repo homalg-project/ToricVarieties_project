@@ -273,7 +273,7 @@ boost::multiprecision::int128_t WeightedDiagramWithExternalLegs::get_mult( std::
     }
     
     // initialize multiplier variable
-    boost::multiprecision::int128_t m;
+    boost::multiprecision::int128_t m = 1;
     
     // check if one component is g = 1 - if not, then the multiplicity will be 1
     bool test = true;
