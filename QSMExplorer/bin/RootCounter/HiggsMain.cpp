@@ -277,7 +277,10 @@ int main(int argc, char* argv[]) {
     // (5) Partition workload and start threads
     package_size = outfluxes_H1.size() / number_threads;
     std::vector<std::thread> threadList2;
-    for (int i = 0; i < number_threads; i++)
+    for ( int i = 0; i < status.size(); i++ ){
+        status[ i ] = 0;
+    }
+    for ( int i = 0; i < number_threads; i++)
     {
 
         // Find start and stop position for thread
