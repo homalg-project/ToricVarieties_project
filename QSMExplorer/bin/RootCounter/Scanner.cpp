@@ -10,7 +10,7 @@ void UpdateCollectedData( std::vector<std::vector<unsigned long long int>>& coll
     
 }
 
-void UpdateStatus( std::vector<int>& status, int thread_number, int progress, int numb_H1_outfluxes, int numb_H2_outfluxes )
+void UpdateStatus( std::vector<int>& status, int thread_number, int progress )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
@@ -19,7 +19,7 @@ void UpdateStatus( std::vector<int>& status, int thread_number, int progress, in
     for ( int i = 0; i < status.size() - 1; i ++ ){
         output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
     }
-    output = output + std::__cxx11::to_string( status[ status.size() - 1 ] ) + ") -- ( " + std::__cxx11::to_string( numb_H1_outfluxes ) + ", " + std::__cxx11::to_string( numb_H2_outfluxes ) + ")";
+    output = output + std::__cxx11::to_string( status[ status.size() - 1 ] ) + ")";
     std::cout << output << "\r" << std::flush;
     
 }
@@ -59,7 +59,7 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
         // (3.0) Display status
         if ( ( i - start ) * 100 / ( stop - start ) > progress ){
             progress = ( i - start ) * 100 / ( stop - start );
-            UpdateStatus( status, thread_number, progress, outfluxes_H1.size(), outfluxes_H2.size() );
+            UpdateStatus( status, thread_number, progress );
         }
         
         // (3.1) Compute total outflux
