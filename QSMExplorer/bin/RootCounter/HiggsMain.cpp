@@ -25,17 +25,47 @@ std::mutex myMutexFlex;
 #pragma GCC optimize("Ofast")
 #pragma GCC target("avx,avx2,fma")
 
+
+void print_data( std::vector<int> degrees_H1, std::vector<int> degrees_H2, int root, std::vector<int> external_legs, std::vector<int> legs_per_component ){
+    
+    std:: cout << "\n";
+    std:: cout << "Received the following data:\n";
+    std:: cout << "----------------------------------------\n";
+    std::cout << "Degrees H1: ";
+    for ( int j = 0; j < degrees_H1.size(); j++ ){
+        std::cout << degrees_H1[ j ] << ", ";
+    }
+    std::cout << "\n";
+    std::cout << "Degrees H2: ";
+    for ( int j = 0; j < degrees_H2.size(); j++ ){
+        std::cout << degrees_H2[ j ] << ", ";
+    }
+    std::cout << "\n";
+    std::cout << "Root: " << root << "\n";
+    std::cout << "External legs: (";
+    for ( int i = 0; i < external_legs.size() - 1; i++ ){
+        std::cout << external_legs[ i ] << ", ";
+    }
+    std::cout << external_legs[ external_legs.size() - 1 ] << ")\n";
+    std::cout << "Legs per component: (";
+    for ( int i = 0; i < legs_per_component.size(); i++ ){
+        std::cout << legs_per_component[ i ] << ", ";
+    }
+    std::cout << ")\n\n";
+    
+}
+
 // The main routine
 int main(int argc, char* argv[]) {
     
-    // check if we have the correct number of arguments
+    // Check if we have the correct number of arguments
     if (argc != 2) {
         std::cout << "Error - number of arguments must be exactly 1 and not " << argc << "\n";
         std::cout << argv[ 0 ] << "\n";
         return 0;
     }
     
-    // parse input
+    // Parse input
     std::string myString = argv[1];
     std::stringstream iss( myString );
     std::vector<int> input;
@@ -56,12 +86,8 @@ int main(int argc, char* argv[]) {
     // (9) number of threads (int) - optional
     // (10) h0_h0Max (int)
     // (11) details (int)
-    // So expect the following input:
-    // { #Vertices, degrees, genera, #Edges, edge-information, genus, root, threads }
     
-    // TODO Handle number of threads better!
-    
-    // convert the input data accordingly
+    // Convert the input data accordingly
     int numberVertices = input[ 0 ];
     std::vector<int> vertices( numberVertices );
     std::vector<int> degrees_H1( numberVertices );
@@ -100,35 +126,12 @@ int main(int argc, char* argv[]) {
             display_details = false;
     }
     
-    // Display what we obtained
+    // Display what data we received
     if ( display_details ){
-        std:: cout << "\n";
-        std:: cout << "Received the following data:\n";
-        std:: cout << "----------------------------------------\n";
-        std::cout << "Degrees H1: ";
-        for ( int j = 0; j < degrees_H1.size(); j++ ){
-            std::cout << degrees_H1[ j ] << ", ";
-        }
-        std::cout << "\n";
-        std::cout << "Degrees H2: ";
-        for ( int j = 0; j < degrees_H2.size(); j++ ){
-            std::cout << degrees_H2[ j ] << ", ";
-        }
-        std::cout << "\n";
-        std::cout << "Root: " << root << "\n";
-        std::cout << "External legs: (";
-        for ( int i = 0; i < external_legs.size() - 1; i++ ){
-            std::cout << external_legs[ i ] << ", ";
-        }
-        std::cout << external_legs[ external_legs.size() - 1 ] << ")\n";
-        std::cout << "Legs per component: (";
-        for ( int i = 0; i < numberVertices; i++ ){
-            std::cout << legs_per_component[ i ] << ", ";
-        }
-        std::cout << ")\n\n";
+        print_data( degrees_H1, degrees_H2, root, external_legs, legs_per_component );
     }
     
-    // Check if curve class and bundle class are of correct length
+    // Perform consistency checks
     if ( ( genus < 0 ) ){
         if ( display_details ){
             std::cout << "Genus must not be negative.\n";
@@ -147,37 +150,41 @@ int main(int argc, char* argv[]) {
         }
         return -1;
     }
+        
     
+    
+    // (1) Construct all outfluxes values
+    // (1) Construct all outfluxes values
+    
+    // Take time for operation
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    
+    // Inform that we are about to construct all outfluxes
     if ( display_details ){
         std::cout << "Find minimal and maximal outfluxes...\n";
     }
     
-    
-    
-    // (1) Construct all outfluxes values
-    // (1) Construct all outfluxes values
-
-    // measure time for complete operation
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    
+    // Initialize variables
     int min_outflux, max_outflux;
     std::vector<std::vector<int>> outflux_values;
+    
+    // Perform scan
     for ( int i = 0; i < vertices.size(); i++ ){
         
-        // find minimal and maximal outfluxes
+        // Find minimal and maximal outfluxes
         min_outflux = legs_per_component[ i ];
         max_outflux = legs_per_component[ i ] * ( root - 1 );
         if ( display_details ){
             std::cout << "Component " << i << ": (" << min_outflux << ", " << max_outflux << ")\n";
         }
         
-        // construct the possible flux values explicitly
+        // Construct the possible flux values explicitly
         std::vector<int> possible_values;
         for ( int j = 0; j < max_outflux - min_outflux + 1; j++ ){
             possible_values.push_back( min_outflux + j );
         }
         
-        // and add this list of values to outflux_values
+        // And add this list of values to outflux_values
         outflux_values.push_back( possible_values );
     }
     std::cout << "\n";
@@ -207,17 +214,14 @@ int main(int argc, char* argv[]) {
 
     // (3.1) Prepare scan
     std::vector<std::vector<unsigned long long int>> outfluxes_H1, outfluxes_H2;
-    std::vector<std::vector<unsigned long long int>> dist_H1, dist_H2;
-    std::vector<int> status( number_threads );
+    std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1, dist_H2;
+    std::vector<int> status( number_threads, 0 );
     int h0MinUsed;
-    for ( int i = 0; i < number_threads; i ++ ){
-        status[ i ] = 0;
-    }
-    
-    // (3.2) Partition workload and start threads
     int package_size = all_outfluxes.size() / number_threads;
     std::vector<std::thread> threadList;
     int start, stop;
+    
+    // (3.2) Partition workload and start threads
     for (int i = 0; i < number_threads; i++)
     {
 
@@ -268,7 +272,7 @@ int main(int argc, char* argv[]) {
     for ( int i = 0; i < legs_per_component.size(); i++ ){
         legs_per_component_halved[ i ] = legs_per_component[ i ] / 2;
     }
-    std::vector<unsigned long long int> final_dist( 3 * h0Max , 0 );
+    std::vector<boost::multiprecision::int128_t> final_dist( 3 * h0Max , 0 );
     
     // (5) Partition workload and start threads
     package_size = outfluxes_H1.size() / number_threads;
@@ -278,8 +282,12 @@ int main(int argc, char* argv[]) {
 
         // Find start and stop position for thread
         start = i * package_size;
-        if ( i < number_threads - 1 ){ stop = ( i + 1 ) * package_size - 1; }
-        else{ stop = (int) outfluxes_H1.size() -1; }
+        if ( i < number_threads - 1 ){
+            stop = ( i + 1 ) * package_size - 1;
+        }
+        else{
+            stop = (int) outfluxes_H1.size() -1;
+        }
         
         // Start the worker threads
         threadList2.push_back( std::thread( compute_distribution,
@@ -311,6 +319,6 @@ int main(int argc, char* argv[]) {
     std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     
     // (7) Signal success
-    return 0;
+    return 0; 
     
 }

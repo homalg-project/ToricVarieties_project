@@ -262,7 +262,7 @@ int WeightedDiagramWithExternalLegs::get_h0_min()
 {
     return h0_min;
 }
-int WeightedDiagramWithExternalLegs::get_mult( std::vector<int> weights )
+boost::multiprecision::int128_t WeightedDiagramWithExternalLegs::get_mult( std::vector<int> weights )
 {
     
     // find the number of weights
@@ -273,7 +273,7 @@ int WeightedDiagramWithExternalLegs::get_mult( std::vector<int> weights )
     }
     
     // initialize multiplier variable
-    int m;
+    boost::multiprecision::int128_t m;
     
     // check if one component is g = 1 - if not, then the multiplicity will be 1
     bool test = true;
@@ -316,10 +316,10 @@ int WeightedDiagramWithExternalLegs::get_mult( std::vector<int> weights )
                 int deg = (int) ( degrees[ i ] - incidents_of_vertices[ i ] ) / root;
                 if ( genera[ i ] == 1 ){
                     if ( deg == 0 ){
-                        m = root * root - 1;
+                        m = m * (boost::multiprecision::int128_t) ( root * root - 1 );
                     }
                     else{
-                        m = root * root;
+                        m = m * (boost::multiprecision::int128_t) ( root * root );
                     }
                 }
                 

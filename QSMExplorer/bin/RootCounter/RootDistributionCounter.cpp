@@ -1,9 +1,8 @@
 #include "WDiagram.h"
 
 
-// Global variable for counting diagrams // thread-safe addition
-//std::vector<unsigned long long int> distribution (100, 0);
-void UpdateDistribution( std::vector<unsigned long long int>& distribution, std::vector<unsigned long long int> & s )
+// Thread-safe addition
+void UpdateDistribution( std::vector<boost::multiprecision::int128_t>& distribution, std::vector<boost::multiprecision::int128_t> & s )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
@@ -16,11 +15,11 @@ void UpdateDistribution( std::vector<unsigned long long int>& distribution, std:
 
 // Count root distribution
 // Count root distribution
-std::vector<unsigned long long int> RootDistributionCounter( WeightedDiagramWithExternalLegs dia, int w0, int h0Min, int h0Max )
+std::vector<boost::multiprecision::int128_t> RootDistributionCounter( WeightedDiagramWithExternalLegs dia, int w0, int h0Min, int h0Max )
 {
     
     // save total number of roots found
-    std::vector<unsigned long long int> sum ( h0Max - dia.get_h0_min() + 1, 0 );
+    std::vector<boost::multiprecision::int128_t> sum ( h0Max - dia.get_h0_min() + 1, 0 );
     
     // Upper bound for the number of weights to be set
     int number_weights = dia.get_edges().size();
@@ -81,7 +80,7 @@ std::vector<unsigned long long int> RootDistributionCounter( WeightedDiagramWith
             
             // all weights set, find out h0 and multiplicity
             new_dia = dia;
-            int mult = new_dia.get_mult( currentSnapshot.w );
+            boost::multiprecision::int128_t mult = new_dia.get_mult( currentSnapshot.w );
             int pos = new_dia.h0_from_weights( currentSnapshot.w ) - h0Min;
             
             // check if we are to record these roots
@@ -98,12 +97,12 @@ std::vector<unsigned long long int> RootDistributionCounter( WeightedDiagramWith
     
 }
 
-void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<int> ws, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
+void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<int> ws, int h0Min, int h0Max, std::vector<boost::multiprecision::int128_t>& distribution, bool& display_details )
 {
     
     // initialize sum
-    std::vector<unsigned long long int> sum ( h0Max - h0Min + 1, 0 );
-    std::vector<unsigned long long int> result;
+    std::vector<boost::multiprecision::int128_t> sum ( h0Max - h0Min + 1, 0 );
+    std::vector<boost::multiprecision::int128_t> result;
     
     // find roots for different weight assignments
     for ( int i = 0; i < ws.size(); i++ ){
@@ -119,7 +118,7 @@ void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<i
     UpdateDistribution( distribution, sum );
     
     // determine total number of roots found
-    unsigned long long int total = 0;
+    boost::multiprecision::int128_t total = 0;
     for ( int i = 0; i < sum.size(); i++ ){
         total = total + sum[ i ];
     }
@@ -132,7 +131,7 @@ void DistributionDistributer( WeightedDiagramWithExternalLegs dia, std::vector<i
 }
 
 
-void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
+void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS, int h0Min, int h0Max, std::vector<boost::multiprecision::int128_t>& distribution, bool& display_details )
 {
     
     // throw error if the number of threads is indicated as anything less than 1
@@ -215,7 +214,7 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
     std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
     
     // determine the total number of roots found
-    int total_number = 0;
+    boost::multiprecision::int128_t total_number = 0;
     for ( int i = 0; i < h0Max - h0Min + 1; i++ ){
         total_number = total_number + distribution[ i ];
     }
@@ -241,7 +240,7 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
 }
 
 // default/convenience method
-void countRootDistribution( WeightedDiagramWithExternalLegs dia, int h0Min, int h0Max, std::vector<unsigned long long int>& distribution, bool& display_details )
+void countRootDistribution( WeightedDiagramWithExternalLegs dia, int h0Min, int h0Max, std::vector<boost::multiprecision::int128_t>& distribution, bool& display_details )
 {
     return countRootDistribution( dia, dia.get_root() - 1, h0Min, h0Max, distribution, display_details );
 }

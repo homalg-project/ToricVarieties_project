@@ -1,7 +1,7 @@
 void UpdateCollectedData( std::vector<std::vector<unsigned long long int>>& collector1,
-                                            std::vector<std::vector<unsigned long long int>>& collector2,
+                                            std::vector<std::vector<boost::multiprecision::int128_t>>& collector2,
                                             std::vector<unsigned long long int> & change1,
-                                            std::vector<unsigned long long int> & change2 )
+                                            std::vector<boost::multiprecision::int128_t> & change2 )
 {
     
     std::lock_guard<std::mutex> guard(myMutexFlex);
@@ -27,8 +27,8 @@ void UpdateStatus( std::vector<int>& status, int thread_number, int progress, in
 void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outfluxes,
                                 std::vector<std::vector<unsigned long long int>> & outfluxes_H1, 
                                 std::vector<std::vector<unsigned long long int>> & outfluxes_H2,
-                                std::vector<std::vector<unsigned long long int>> & dist_H1,
-                                std::vector<std::vector<unsigned long long int>> & dist_H2,
+                                std::vector<std::vector<boost::multiprecision::int128_t>> & dist_H1,
+                                std::vector<std::vector<boost::multiprecision::int128_t>> & dist_H2,
                                 int start,
                                 int stop,
                                 std::vector<int> & status,
@@ -57,11 +57,10 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     for ( int i = start; i < stop; i++ ){
 
         // (3.0) Display status
-        if ( i * 100 / all_outfluxes.size() > progress ){
+        if ( ( i - start ) * 100 / ( stop - start ) > progress ){
             progress = ( i - start ) * 100 / ( stop - start );
             UpdateStatus( status, thread_number, progress, outfluxes_H1.size(), outfluxes_H2.size() );
         }
-        
         
         // (3.1) Compute total outflux
         int total_flux = std::accumulate( all_outfluxes[ i ].begin(), all_outfluxes[ i ].end(), 0 );
@@ -96,17 +95,17 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
             if ( h0Max >= h0MinUsed ){
                 
                 // Compute distribution
-                std::vector<unsigned long long int> n( h0Max - h0MinUsed + 1, 0 );
+                std::vector<boost::multiprecision::int128_t> n( h0Max - h0MinUsed + 1, 0 );
                 countRootDistribution( dia_H1, number_sub_threads, h0MinUsed, h0Max, n, display );
                 
                 // Check if distribution is not trivial
-                bool zeros = std::all_of( n.begin(), n.end(), [](int j) { return j==0; } );
+                bool zeros = std::all_of( n.begin(), n.end(), [](boost::multiprecision::int128_t j) { return j==0; } );
                 
                 // Append if the result is not trivial
                 if ( ! zeros ){
                     
                     // Prepare result
-                    std::vector<unsigned long long int> dist( h0Max + 1, 0 );
+                    std::vector<boost::multiprecision::int128_t> dist( h0Max + 1, 0 );
                     for ( int j = 0; j < n.size(); j++ ){
                         dist[ j + h0MinUsed ] = n[ j ];
                     }
@@ -130,17 +129,17 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
             if ( h0Max >= h0MinUsed ){
                 
                 // Compute distribution
-                std::vector<unsigned long long int> n( h0Max - h0MinUsed + 1, 0 );
+                std::vector<boost::multiprecision::int128_t> n( h0Max - h0MinUsed + 1, 0 );
                 countRootDistribution( dia_H2, number_sub_threads, h0MinUsed, h0Max, n, display );
                 
                 // Check if distribution is not trivial
-                bool zeros = std::all_of( n.begin(), n.end(), [](int j) { return j==0; } );
+                bool zeros = std::all_of( n.begin(), n.end(), [](boost::multiprecision::int128_t j) { return j==0; } );
                 
                 // Append if the result is not trivial
                 if ( ! zeros ){
                     
                     // Prepare distribution
-                    std::vector<unsigned long long int> dist( h0Max + 1, 0 );
+                    std::vector<boost::multiprecision::int128_t> dist( h0Max + 1, 0 );
                     for ( int j = 0; j < n.size(); j++ ){
                         dist[ j + h0MinUsed ] = n[ j ];
                     }
