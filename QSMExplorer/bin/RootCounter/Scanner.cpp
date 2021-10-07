@@ -157,6 +157,6 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     
     // Final update - scan thread is complete
     progress = 100;
-    UpdateStatus( status, thread_number, progress, outfluxes_H1.size(), outfluxes_H2.size() );
+    UpdateStatus( status, thread_number, progress );
     
 }
