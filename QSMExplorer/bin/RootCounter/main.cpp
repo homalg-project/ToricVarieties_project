@@ -128,12 +128,7 @@ int main(int argc, char* argv[]) {
     
     // proceed for non-trivial situation, i.e. h0Max >= h0MinUsed
     std::vector<boost::multiprecision::int128_t> n( h0Max - h0MinUsed + 1, 0 );
-    if ( number_threads > 0 ){
-        countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n, display_details );
-    }
-    else{
-        countRootDistribution( dia, h0MinUsed, h0Max, n, display_details );
-    }
+    countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n, display_details );
     
     // print result
     for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){

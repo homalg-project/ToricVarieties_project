@@ -1389,72 +1389,28 @@ end );
 
 InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt ],
     function( index )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # str now contains the number of processors upon evaluation of this string
-        return CountMinimalLimitRootsOfQSM( index, EvalString( str ) );
-        
-end );
-
-InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt, IsInt ],
-    function( index, number_processes )
         local data;
         
         data := ReadQSM( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, number_processes );
+            return CountMinimalLimitRoots( data );
         fi;
         
 end );
 
 InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt ],
     function( index )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # issue the run
-        return CountMinimalLimitRootsOfQSMByPolytope( index, EvalString( str ) );
-        
-end );
-
-InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt, IsInt ],
-    function( index, number_processes )
         local data;
         
         data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, number_processes );
+            return CountMinimalLimitRoots( data );
         fi;
-        
+    
 end );
 
-InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsInt ],
-    function( data, number_processes )
+InstallMethod( CountMinimalLimitRoots, [ IsRecord ],
+    function( data )
         local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
@@ -1491,73 +1447,28 @@ end );
 
 InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt ],
     function( index, h0Min, h0Max )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # str now contains the number of processors upon evaluation of this string
-        return CountLimitRootDistributionOfQSM( index, h0Min, h0Max, EvalString( str ) );
-        
-end );
-
-InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt, IsInt ],
-    function( index, h0Min, h0Max, number_processes )
         local data;
         
         data := ReadQSM( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, number_processes );
+            return CountLimitRootDistribution( data, h0Min, h0Max );
         fi;
         
 end );
 
 InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt ],
     function( index, h0Min, h0Max )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # issue the run
-        return CountLimitRootDistributionOfQSMByPolytope( index, h0Min, h0Max, EvalString( str ) );
-        
-end );
-
-InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsInt ],
-    function( index, h0Min, h0Max, number_processes )
         local data;
         
         data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, number_processes );
+            return CountLimitRootDistribution( data, h0Min, h0Max );
         fi;
         
 end );
 
-
-InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsInt ],
-    function( data, h0Min, h0Max, number_processes )
+InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
+    function( data, h0Min, h0Max )
         local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
@@ -1594,73 +1505,28 @@ end );
 
 InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, IsInt, IsList ],
     function( index, h0Min, h0Max, external_weights )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # str now contains the number of processors upon evaluation of this string
-        return CountLimitRootDistributionWithExternalLegsOfQSM( index, h0Min, h0Max, EvalString( str ), external_weights );
-        
-end );
-
-InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, IsInt, IsInt, IsList ],
-    function( index, h0Min, h0Max, number_processes, external_weights )
         local data;
         
         data := ReadQSM( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, number_processes, external_weights );
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights );
         fi;
         
 end );
 
 InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsList ],
     function( index, h0Min, h0Max, external_weights )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # issue the run
-        return CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( index, h0Min, h0Max, EvalString( str ), external_weights );
-        
-end );
-
-InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsInt, IsList ],
-    function( index, h0Min, h0Max, number_processes, external_weights )
         local data;
         
         data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, number_processes, external_weights );
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights );
         fi;
         
 end );
 
-
-InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsInt, IsList ],
-    function( data, h0Min, h0Max, number_processes, external_weights )
+InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsList ],
+    function( data, h0Min, h0Max, external_weights )
         local index, Kbar3, genera, degrees, edges, total_genus, root, count, external_legs, external_edges, i, j;
         
         # trigger warning if needed

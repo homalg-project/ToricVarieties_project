@@ -21,77 +21,31 @@
 ##
 ##############################################################################################
 
-
 InstallMethod( LimitRootDistributionForHiggsCurveInQSM, [ IsInt, IsInt ],
     function( index, h0Max )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # str now contains the number of processors upon evaluation of this string
-        return LimitRootDistributionForHiggsCurveInQSM( index, h0Max, EvalString( str ) );
-        
-end );
-
-InstallMethod( LimitRootDistributionForHiggsCurveInQSM, [ IsInt, IsInt, IsInt ],
-    function( index, h0Max, number_processes )
         local data;
         
         data := ReadQSM( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return LimitRootDistributionHiggs( data, h0Max, number_processes, true );
+            return LimitRootDistributionHiggs( data, h0Max, true );
         fi;
         
 end );
 
 InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt ],
     function( index, h0Max )
-        local str, a, dir, nproc;
-        
-        # set up output stream
-        str := "";
-        a := OutputTextString(str,true);
-        
-        # path to nproc
-        dir := Directory( "/usr/bin" );
-        nproc := Filename( dir, "nproc" );
-        
-        # execute nproc to find number of processors
-        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
-        
-        # issue the run
-        return LimitRootDistributionForHiggsCurveInQSMByPolytope( index, h0Max, EvalString( str ) );
-        
-end );
-
-InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt, IsInt ],
-    function( index, h0Max, number_processes )
         local data;
         
         data := ReadQSMByPolytope( index );
-        
-        # check if the data is meaningful
         if ( data <> fail ) then
-            return LimitRootDistributionHiggs( data, h0Max, number_processes, true );
+            return LimitRootDistributionHiggs( data, h0Max, true );
         fi;
         
 end );
 
-
-InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt, IsBool ],
-    function( data, h0Max, number_processes, display_details )
-        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options;
+InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsBool ],
+    function( data, h0Max, display_details )
+        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes;
         
         # read-out the record for the required data
         Kbar3 := Int( data.Kbar3 );
@@ -105,6 +59,20 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt, IsBool ],
         # construct the external legs
         external_legs := 2 * EvalString( data.CiDegreeKbar );
         
+        # find the number of processes
+        str := "";
+        a := OutputTextString(str,true);
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        number_processes := EvalString( str );
+        
+        # prepare empty streams for communication with Cpp
+        output_string := "";
+        output := OutputTextString( output_string, true );
+        input_string := "";
+        input := InputTextString( input_string );        
+        
         # find the counter binary (and check if it exists)
         dir := FindRootCounterDirectory();
         bin := Filename( dir, "./distributionCounterHiggsCurve" );
@@ -112,12 +80,6 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsInt, IsBool ],
             Error( "./distributionCounterHiggsCurve is not available in designed folder" );
         fi;
         
-        # prepare empty streams
-        output_string := "";
-        output := OutputTextString( output_string, true );
-        input_string := "";
-        input := InputTextString( input_string );
-                
         # options convey the necessary information about the nodal curve
         options := Concatenation( String( Length( genera ) ), " " );
         for i in [ 1 .. Length( degrees_H1 ) ] do
