@@ -32,6 +32,17 @@ InstallMethod( LimitRootDistributionForHiggsCurveInQSM, [ IsInt, IsInt ],
         
 end );
 
+InstallMethod( LimitRootDistributionForHiggsCurveInQSM, [ IsInt, IsInt, IsBool ],
+    function( index, h0Max, display_details )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, display_details );
+        fi;
+        
+end );
+
 InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt ],
     function( index, h0Max )
         local data;
@@ -43,9 +54,20 @@ InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt
         
 end );
 
+InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt, IsBool ],
+    function( index, h0Max, display_details )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, display_details );
+        fi;
+        
+end );
+
 InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsBool ],
     function( data, h0Max, display_details )
-        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes;
+        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes, result_file, nr;
         
         # read-out the record for the required data
         Kbar3 := Int( data.Kbar3 );
@@ -69,9 +91,9 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsBool ],
         
         # prepare empty streams for communication with Cpp
         output_string := "";
-        output := OutputTextString( output_string, true );
+        output := OutputTextUser();
         input_string := "";
-        input := InputTextString( input_string );        
+        input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
         dir := FindRootCounterDirectory();
@@ -108,22 +130,19 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsBool ],
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
-        # TODO: Cast output string to list of integers...
-        return output_string;
+        # check if the result file exists
+        result_file := Filename( dir, "result.txt" );
+        if not IsExistingFile( result_file ) then
+            Error( "result.txt is not available in designed folder" );
+        fi;
         
-        #if display_details then
-        #    output_string := SplitString( output_string, ']' )[ 2 ];
-        #fi;
-        #output_string := SplitString( output_string, "\n" );
-        #nr := [];
-        #for i in [ 1 .. Length( output_string ) ] do
-        #    if Length( output_string[ i ] ) > 0 then
-        #        Append( nr, [ EvalString( output_string[ i ] ) ] );
-        #    fi;
-        #od;
+        # if yes, read the content and then remove this file
+        input := InputTextFile(result_file);
+        nr := EvalString( ReadAll( input ) );
+        CloseStream(input);
+        RemoveFile( result_file );
         
         # return result
-        #return nr;
-        
+        return nr;        
         
 end );

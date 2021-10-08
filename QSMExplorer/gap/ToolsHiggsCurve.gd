@@ -26,11 +26,13 @@
 #! @Returns a list
 #! @Arguments 
 DeclareOperation( "LimitRootDistributionForHiggsCurveInQSM", [ IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSM", [ IsInt, IsInt, IsBool ] );
 
 #! @Description
 #! This operation returns a list corresponding to the limit root distribution on the Higgs curve in the QSM of the i-th polytope.
 #! @Returns a list
 #! @Arguments 
 DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt ] );
+DeclareOperation( "LimitRootDistributionForHiggsCurveInQSMByPolytope", [ IsInt, IsInt, IsBool ] );
 
 DeclareOperation( "LimitRootDistributionHiggs", [ IsRecord, IsInt, IsBool ] );
