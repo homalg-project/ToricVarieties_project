@@ -1,1 +1,1 @@
-(*) Extend functionality to canonical nodal Higgs and RHQ-curve
+(*) Write-up theory behind Higgs root counter
