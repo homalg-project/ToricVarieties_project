@@ -1,4 +1,4 @@
-#! @Chapter Tools for investigation of the Higgs curve in one Quadrillion F-theory Standard Models
+#! @Chapter Tools for investigation of the Higgs and RDQ curve in one Quadrillion F-theory Standard Models
 
 #! @Section Examples
 
@@ -14,4 +14,11 @@ LimitRootDistributionForHiggsCurveInQSM( 1, 4 );
 
 #! @Log
 LimitRootDistributionForHiggsCurveInQSM( 1, 4, false );
+#! @EndLog
+
+#! Similarly, we can compute the limit root distribution for the RDQ-curve, which is by construction identical to the distribution on the Higgs curve.
+
+#! @Log
+LimitRootDistributionForRDQCurveInQSM( 1, 4 );;
+LimitRootDistributionForRDQCurveInQSM( 1, 4, false );
 #! @EndLog
