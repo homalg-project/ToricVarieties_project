@@ -19,7 +19,7 @@ install: uninstall
 	( cd bin/RootCounter; g++ -c -I boost_1_77_0 $$(realpath main.cpp) -lpthread; g++ -o distributionCounter WDiagram.o main.o -lpthread )
 	( cd bin/RootCounter; g++ -c -I boost_1_77_0 $$(realpath HiggsMain.cpp) -lpthread; g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -lpthread )
 	
-install-with-boost: uninstall-without-boost
+install-without-boost: uninstall-without-boost
 	( cd bin/RootCounter; g++ -c $$(realpath main-speciality.cpp) -lpthread; g++ -o specialityChecker main-speciality.o -lpthread )
 	( cd bin/RootCounter; g++ -c -I boost_1_77_0 WDiagram.cpp; )
 	( cd bin/RootCounter; g++ -c -I boost_1_77_0 $$(realpath main.cpp) -lpthread; g++ -o distributionCounter WDiagram.o main.o -lpthread )
