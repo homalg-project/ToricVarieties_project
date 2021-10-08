@@ -1,5 +1,7 @@
 #! @Chapter Computation of minimal roots and their distribution for arbitrary nodal curves with external legs.
 
+LoadPackage( "QSMExplorer" );
+
 #! @Section Examples
 
 #! You can also specify external legs and counts the roots on a nodal curve subject to these external legs. The following code executes this computation for a simple example:
