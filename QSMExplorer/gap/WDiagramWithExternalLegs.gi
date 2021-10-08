@@ -44,27 +44,120 @@ InstallMethod( CountDistributionWithExternalLegs, [ IsList, IsBool ],
         external_legs := data[ 8 ];
         external_weights := data[ 9 ];
         
-        # check that we receive as many external legs as weights
+        # Check that we receive as many degrees as genera
+        if Length( degrees ) <> Length( genera ) then
+            Error( "The number of degrees must match the number of genera." );
+            return -1;
+        fi;
+        
+        # Check that the genera and degrees are suitable integers
+        for i in [ 1 .. Length( degrees ) ] do
+            if not IsInt( degrees[ i ] ) then
+                Error( "The degrees must be integers." );
+                return -1;
+            fi;
+            if not IsInt( genera[ i ] ) then
+                Error( "The genera must be integers." );
+                return -1;
+            fi;
+            if genera[ i ] < 0 then
+                Error( "The genera must be non-negative." );
+                return -1;
+            fi;
+        od;
+        
+        # Check edges
+        for i in [ 1 .. Length( edges ) ] do
+            if ( not IsList( edges[ i ] ) ) then
+                Error( "Each edges must be a list." );
+                return -1;
+            fi;
+            if ( ( Length( edges[ i ] ) > 2 ) or ( Length( edges[ i ] ) < 2 ) ) then                
+                Error( "Each edges must consist of exactly two integers." );
+                return -1;
+            fi;
+            if ( not IsInt( edges[ i ][ 1 ] ) ) or ( not IsInt( edges[ i ][ 2 ] ) ) then
+                Error( "Each edge must consist of exactly two integers." );
+                return -1;            
+            fi;
+            if ( ( edges[ i ][ 1 ] < 0 ) or ( edges[ i ][ 1 ] >= Length( genera ) ) ) then
+                Error( Concatenation( "Vertices are labeled from 0 to ", String( Length( genera ) - 1 ), "." ) );
+                return -1;            
+            fi;
+            if ( ( edges[ i ][ 2 ] < 0 ) or ( edges[ i ][ 2 ] >= Length( genera ) ) ) then
+                Error( Concatenation( "Vertices are labeled from 0 to ", String( Length( genera ) - 1 ), "." ) );
+                return -1;            
+            fi;
+        od;
+        
+        # Check total genus
+        if not IsInt( total_genus ) then
+            Error( "Total genus must be a non-negative integer." );
+            return -1;                    
+        fi;
+        if ( total_genus < 0 ) then
+            Error( "Total genus must be a non-negative integer." );
+            return -1;                    
+        fi;
+        
+        # Check root
+        if not IsInt( root ) then
+            Error( "Root must be a non-negative integer." );
+            return -1;                    
+        fi;
+        if ( root < 0 ) then
+            Error( "Root must be a non-negative integer." );
+            return -1;                    
+        fi;
+        
+        # Check min, max
+        if ( ( not IsInt( min ) ) or ( not IsInt( max ) ) ) then
+            Error( "Min and max must be non-negative integers." );
+            return -1;                    
+        fi;
+        if ( max < min ) then
+            Error( "Min must not exceed max." );
+            return -1;                    
+        fi;
+        
+        # Check that we received well-defined external_legs and external_weights
         if Length( external_legs ) <> Length( external_weights ) then
             Error( "The number of external legs and the number of provided external weights are different." );
             return -1;
         fi;
-        
-        # check that all external weights are meaningful
+        for i in [ 1 .. Length( external_legs ) ] do
+            if ( not IsInt( external_legs[ i ] ) ) then
+                Error( Concatenation( "External legs are specified by integers corresponding to vertices of the diagram, i.e. must be integers between 0 and ", String( Length( genera) - 1 ), ")" ) );
+                return -1;            
+            fi;
+            if ( ( external_legs[ i ] < 0 ) or ( external_legs[ i ] > Length( genera ) - 1 ) ) then
+                Error( Concatenation( "External legs are specified by integers corresponding to vertices of the diagram, i.e. must be integers between 0 and ", String( Length( genera) - 1 ), ")" ) );
+                return -1;
+            fi;        
+        od;
         for i in [ 1 .. Length( external_weights ) ] do
+            if ( not IsInt( external_weights[ i ] ) ) then
+                Error( "The external weights are integers." );
+                return -1;
+            fi;        
             if ( external_weights[ i ] < 1 ) or ( external_weights[ i ] > root - 1 ) then
                 Error( Concatenation( "The external weights must not be smaller than 1 and not be bigger than the root (here ", String( root ), ")" ) );
                 return -1;
             fi;
         od;
         
-        # check if min is meaningful
+        # Check if min and max are meaningful
         if ( min < 0 ) then
             Print( "Min must not be negative. Replaced by 0 in order to proceed.\n" );
             min := 0;
         fi;
+        if ( max < 0 ) then
+            Print( "Max must not be negative. Therefore, min and max are replaced by 0 in order to proceed.\n" );
+            min := 0;
+            max := 0;
+        fi;
         
-        # check for degenerate case, i.e. where there are no roots
+        # Check for degenerate case, i.e. where there are no roots
         if not IsInt( ( Sum( degrees ) - Sum( external_weights ) ) / root ) then
             return List( [ min .. max ], i -> 0);
         fi;
