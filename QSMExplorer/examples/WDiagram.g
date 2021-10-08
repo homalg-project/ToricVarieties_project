@@ -1,5 +1,7 @@
 #! @Chapter Computation of minimal roots and their distribution for arbitrary nodal curves.
 
+LoadPackage( "QSMExplorer" );
+
 #! @Section Examples
 
 #! We can compute the number of minimal weights and their distributions efficiently. Say for example that we have two genus $g = 0$ curves joined by two edges. On both curves, the line bundle has degree 4 and we want 2 roots. Then we count the minimal roots as follows:
