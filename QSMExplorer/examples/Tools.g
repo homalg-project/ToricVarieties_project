@@ -188,33 +188,33 @@ CountMinimalLimitRootsOfQSM( 1 );
 #! 11110
 #! @EndLog
 
-#! Let us display the root counting of the 8th polytope in the Kreuzer and Skarke list and the first polytope in our list.
+#! Let us compute the number of minimal roots for the 8th polytope in the Kreuzer and Skarke list and the first polytope in our list. We pass as 2nd argument "false" to not display intermediate results of the C++ run.
 
 #! @Example
-n := CountMinimalLimitRootsOfQSMByPolytope( 8 );;
+n := CountMinimalLimitRootsOfQSMByPolytope( 8, false );;
 n;
 #! [ 142560 ]
-n := CountMinimalLimitRootsOfQSM( 1 );;
+n := CountMinimalLimitRootsOfQSM( 1, false );;
 n;
 #! [ 11110 ]
 #! @EndExample
 
 #! We can also wonder how many limit roots exist with number of global sections at most L. For example, this is achieved by the following:
 #! @Example
-n1 := CountLimitRootDistributionOfQSMByPolytope( 8, 3, 4 );;
+n1 := CountLimitRootDistributionOfQSMByPolytope( 8, 3, 4, false );;
 n1;
 #! [ 142560, 0 ]
-n2 := CountLimitRootDistributionOfQSM( 10, 3, 6 );;
+n2 := CountLimitRootDistributionOfQSM( 10, 3, 6, false );;
 n2;
 #! [ 781680888, 25196800, 106800, 0 ]
 #! @EndExample
 
 #! We can also compute the root distribution with weights on external legs of the quark doublet curve. Here is an example:
 #! @Example
-dist := CountLimitRootDistributionWithExternalLegsOfQSM( 1, 0, 4, [ 1,1,11,11,11,1 ] );;
+dist := CountLimitRootDistributionWithExternalLegsOfQSM( 1, 0, 4, [ 1,1,11,11,11,1 ], false );;
 dist;
 #! [ 1716, 8325, 1260, 0, 0 ]
-dist2 := CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( 8, 0, 4, [ 1, 11, 11, 11, 1, 1 ] );
+dist2 := CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( 8, 0, 4, [ 1, 11, 11, 11, 1, 1 ], false );
 #! [ 1573, 110160, 36288, 0, 0 ]
 #! @EndExample
 

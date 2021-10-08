@@ -44,13 +44,25 @@ InstallMethod( CountMinimals, [ IsList, IsList, IsList, IsInt, IsInt ],
         
 end );
 
+InstallMethod( CountMinimals, [ IsList, IsList, IsList, IsInt, IsInt, IsBool ],
+  function( genera, degrees, edges, total_genus, root, display_details )
+        local min;
 
-InstallMethod( CountSimpleMinimals,
-               "",
-               [ ],
-  function( )
+        # check for meaninful input
+        if not IsInt( Sum( degrees ) / root ) then
+            Error( "These roots do not exist. Check degrees and root.\n" );
+            return -1;
+        fi;
         
-        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 6, 6, [], [] ] );
+        # proceed
+        if ( Sum( degrees ) / root - total_genus + 1 > 0 ) then
+            min := Int( Sum( degrees ) / root - total_genus + 1 );
+        else
+            min := 0;
+        fi;
+        
+        # count the minimal roots
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, min, min, [], [] ], display_details );
         
 end );
 
@@ -69,13 +81,9 @@ InstallMethod( CountDistribution, [ IsList ],
         
 end );
 
-
-InstallMethod( CountSimpleDistribution,
-               "",
-               [ ],
-  function( )
+InstallMethod( CountDistribution, [ IsList, IsBool ],
+  function( data, display_details )
         
-        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 0, 8, [], [] ] );
+        return CountDistributionWithExternalLegs( [ data[ 1 ], data[ 2 ], data[ 3 ], data[ 4 ], data[ 5 ], data[ 6 ], data[ 7 ], [], [] ], display_details );
         
 end );
-
