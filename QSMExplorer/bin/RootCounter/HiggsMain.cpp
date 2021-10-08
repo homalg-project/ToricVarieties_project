@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <functional>
+#include<fstream>
 #include<iostream>
 #include <map>
 #include <mutex>
@@ -312,16 +313,30 @@ int main(int argc, char* argv[]) {
     
     // (6) Print result
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "##############\n";
-    std::cout << "Found root distribution:\n";
-    std::cout << "##############\n";
-    for ( int i = 0; i < final_dist.size(); i++ ){
-        std::cout << "H0 = " << i << ":\t" << final_dist[ i ] << "\n";
+    if ( display_details ){
+        std::cout << "##############\n";
+        std::cout << "Found root distribution:\n";
+        std::cout << "##############\n";
+        for ( int i = 0; i < final_dist.size(); i++ ){
+            std::cout << "H0 = " << i << ":\t" << final_dist[ i ] << "\n";
+        }
+        std::cout << "\n";
+        std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     }
-    std::cout << "\n";
-    std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     
-    // (7) Signal success
+    // (7) Save the result to a dummy file next to main.cpp, so gap can read it out and display intermediate process details
+    std::ofstream ofile;
+    std::string file_path = __FILE__;
+    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
+    ofile.open( dir_path + "/result.txt" );
+    ofile << "[ ";
+    for ( int i = 0; i < final_dist.size() - 1; i ++ ){
+        ofile << final_dist[ i ] << " ,";
+    }
+    ofile << final_dist[ final_dist.size() - 1 ] << " ];";
+    ofile.close();
+    
+    // (8) Signal success
     return 0; 
     
 }

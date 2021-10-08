@@ -9,3 +9,9 @@ LoadPackage( "QSMExplorer" );
 #! @Log
 LimitRootDistributionForHiggsCurveInQSM( 1, 4 );
 #! @EndLog
+
+#! Alternatively, we can also decide to not display intermediate output from the C++ runs:
+
+#! @Log
+LimitRootDistributionForHiggsCurveInQSM( 1, 4, false );
+#! @EndLog
