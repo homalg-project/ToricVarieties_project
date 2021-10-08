@@ -1393,7 +1393,18 @@ InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt ],
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data );
+            return CountMinimalLimitRoots( data, true );
+        fi;
+        
+end );
+
+InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt, IsBool ],
+    function( index, display_details )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return CountMinimalLimitRoots( data, display_details );
         fi;
         
 end );
@@ -1404,13 +1415,24 @@ InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt ],
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data );
+            return CountMinimalLimitRoots( data, true );
         fi;
     
 end );
 
-InstallMethod( CountMinimalLimitRoots, [ IsRecord ],
-    function( data )
+InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt, IsBool ],
+    function( index, display_details )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return CountMinimalLimitRoots( data, display_details );
+        fi;
+    
+end );
+
+InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsBool ],
+    function( data, display_details )
         local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
@@ -1434,7 +1456,7 @@ InstallMethod( CountMinimalLimitRoots, [ IsRecord ],
         
         # compute minimal roots
         min := Int( Sum( degrees ) / root - total_genus + 1 );
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, min, min, [], [] ] );
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, min, min, [], [] ], display_details );
         
 end );
 
@@ -1451,7 +1473,18 @@ InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt ],
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max );
+            return CountLimitRootDistribution( data, h0Min, h0Max, true );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt, IsBool ],
+    function( index, h0Min, h0Max, display_details )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return CountLimitRootDistribution( data, h0Min, h0Max, display_details );
         fi;
         
 end );
@@ -1462,13 +1495,24 @@ InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt 
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max );
+            return CountLimitRootDistribution( data, h0Min, h0Max, true );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
-    function( data, h0Min, h0Max )
+InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsBool ],
+    function( index, h0Min, h0Max, display_details )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return CountLimitRootDistribution( data, h0Min, h0Max, display_details );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsBool ],
+    function( data, h0Min, h0Max, display_details )
         local index, Kbar3, genera, degrees, edges, total_genus, root, min;
         
         # trigger warning if needed
@@ -1491,7 +1535,7 @@ InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt ],
         root := 2 * Kbar3;
 
         # call other function to compute this root distribution
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, [], [] ] );
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, [], [] ], display_details );
         
 end );
 
@@ -1509,7 +1553,18 @@ InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, 
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights );
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights, true );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSM, [ IsInt, IsInt, IsInt, IsList, IsBool ],
+    function( index, h0Min, h0Max, external_weights, display_details )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights, display_details );
         fi;
         
 end );
@@ -1520,13 +1575,24 @@ InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsIn
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights );
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights, true );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsList ],
-    function( data, h0Min, h0Max, external_weights )
+InstallMethod( CountLimitRootDistributionWithExternalLegsOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsList, IsBool ],
+    function( index, h0Min, h0Max, external_weights, display_details )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return CountLimitRootDistributionWithExternalLegs( data, h0Min, h0Max, external_weights, display_details );
+        fi;
+        
+end );
+
+InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, IsInt, IsList, IsBool ],
+    function( data, h0Min, h0Max, external_weights, display_details )
         local index, Kbar3, genera, degrees, edges, total_genus, root, count, external_legs, external_edges, i, j;
         
         # trigger warning if needed
@@ -1568,6 +1634,6 @@ InstallMethod( CountLimitRootDistributionWithExternalLegs, [ IsRecord, IsInt, Is
         od;
         
         # call other function to compute this root distribution
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, external_weights ] );
+        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, external_edges, external_weights ], display_details );
         
 end );

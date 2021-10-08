@@ -22,14 +22,6 @@
 ##
 ##############################################################################################
 
-
-InstallMethod( CountSimpleDistributionWithExternalLegs, [ ],
-  function( )
-        
-        return CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], [2,0] ], 1, 8, 1, 8, [ 0, 0, 1 ], [ 2, 2, 4 ] ] );
-        
-end );
-
 InstallMethod( CountDistributionWithExternalLegs, [ IsList ],
     function( data )
         
