@@ -12,7 +12,7 @@ CountDistributionWithExternalLegs( [ [ 0,0,0 ], [ 16, 16, 16 ], [ [0,1], [1,2], 
 # The 2nd but last argument tells us that there is an external leg attached to the vertex $0$, another external leg is also attached to the vertex $0$ and there is one external leg attached to vertex $1$. The last argument lists the weights along these legs. Let us modify this example slightly:
 
 #! @Example
-n := CountDistributionWithExternalLegs( [ [ 0,0,0,1 ], [ 16, 16, 16, 16 ], [ [0,1], [1,2], [2,0], [0,3], [1,3], [0,4], [4,2] ], 5, 8, 0, 8, [ 0, 0, 3 ], [ 2, 2, 4 ] ], false );;
+n := CountDistributionWithExternalLegs( [ [ 0,0,0,1,0 ], [ 16, 16, 16, 16, 0 ], [ [0,1], [1,2], [2,0], [0,3], [1,3], [0,4], [4,2] ], 5, 8, 0, 8, [ 0, 0, 3 ], [ 2, 2, 4 ] ], false );;
 n;
 #! [ 0, 0, 0, 0, 13652, 64, 0, 0, 0 ]
 #! @EndExample
