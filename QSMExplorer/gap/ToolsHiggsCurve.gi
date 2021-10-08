@@ -12,12 +12,12 @@
 ##
 ##  A package to explore one Quadrillion F-theory Standard Models
 ##
-##  Tools for investigation of the Higgs curve in one Quadrillion F-theory Standard Models
+##  Tools for investigation of the Higgs and RDQ curve in one Quadrillion F-theory Standard Models
 ##
 
 ##############################################################################################
 ##
-##  Find root distribution on Higgs curve
+##  Find root distribution on Higgs curve and RDQ-curve
 ##
 ##############################################################################################
 
@@ -55,6 +55,50 @@ InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt
 end );
 
 InstallMethod( LimitRootDistributionForHiggsCurveInQSMByPolytope, [ IsInt, IsInt, IsBool ],
+    function( index, h0Max, display_details )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, display_details );
+        fi;
+        
+end );
+
+InstallMethod( LimitRootDistributionForRDQCurveInQSM, [ IsInt, IsInt ],
+    function( index, h0Max )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, true );
+        fi;
+        
+end );
+
+InstallMethod( LimitRootDistributionForRDQCurveInQSM, [ IsInt, IsInt, IsBool ],
+    function( index, h0Max, display_details )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, display_details );
+        fi;
+        
+end );
+
+InstallMethod( LimitRootDistributionForRDQCurveInQSMByPolytope, [ IsInt, IsInt ],
+    function( index, h0Max )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return LimitRootDistributionHiggs( data, h0Max, true );
+        fi;
+        
+end );
+
+InstallMethod( LimitRootDistributionForRDQCurveInQSMByPolytope, [ IsInt, IsInt, IsBool ],
     function( index, h0Max, display_details )
         local data;
         
