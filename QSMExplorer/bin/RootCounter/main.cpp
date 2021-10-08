@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include<iostream>
+#include<fstream>
 #include <sstream> 
 #include <vector>
 #include <thread>
@@ -131,12 +132,29 @@ int main(int argc, char* argv[]) {
     countRootDistribution( dia, number_threads, h0MinUsed, h0Max, n, display_details );
     
     // print result
+    if ( display_details ){
+        for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){
+            std::cout << "h0 = " << i << ": 0\n";
+        }
+        for ( int i = 0; i < h0Max - h0MinUsed + 1; i ++ ){
+            std::cout << "h0 = " << i + dia.get_h0_min() - h0Min << ": " << n[ i ] << "\n";
+        }
+    }
+    
+    // save the result to a dummy file next to main.cpp, so gap can read it out and display intermediate process details
+    std::ofstream ofile;
+    std::string file_path = __FILE__;
+    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
+    ofile.open( dir_path + "/result.txt" );
+    ofile << "[ ";
     for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){
-        std::cout << "0\n";
+        ofile << "0, ";
     }
-    for ( int i = 0; i < h0Max - h0MinUsed + 1; i ++ ){
-        std::cout << n[ i ] << "\n";
+    for ( int i = 0; i < n.size() - 1; i ++ ){
+        ofile << n[ i ] << " ,";
     }
+    ofile << n[ n.size() - 1 ] << " ];";
+    ofile.close();
     
     // return success
     return 0;
