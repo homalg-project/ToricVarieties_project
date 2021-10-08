@@ -360,3 +360,82 @@ SimplifiedDualGraphOfQSMByPolytope( 8 );;
 SimplifiedDualGraphWithExternalLegsOfQSM( 1 );;
 SimplifiedDualGraphWithExternalLegsOfQSMByPolytope( 8 );;
 #! @EndLog
+
+#! We verify that the results computed in our PRD letter for the spaces with Kbar^3 = 6 are still reproduced by this software:
+#! @Example
+CountMinimalLimitRootsOfQSMByPolytope( 8, false );
+#! [ 142560 ]
+CountMinimalLimitRootsOfQSMByPolytope( 4, false );
+#! [ 11110 ]
+CountMinimalLimitRootsOfQSMByPolytope( 134, false );
+#! [ 10010 ]
+CountMinimalLimitRootsOfQSMByPolytope( 128, false );
+#! [ 8910 ]
+CountMinimalLimitRootsOfQSMByPolytope( 130, false );
+#! [ 8910 ]
+CountMinimalLimitRootsOfQSMByPolytope( 136, false );
+#! [ 8910 ]
+CountMinimalLimitRootsOfQSMByPolytope( 236, false );
+#! [ 8910 ]
+#! @EndExample
+
+#! Finally, we also verify that the results computed in our PRD letter for some spaces with Kbar^3 = 10 are still reproduced by this software:
+#! @Example
+CountMinimalLimitRootsOfQSMByPolytope( 88, false );
+#! [ 781680888 ]
+CountMinimalLimitRootsOfQSMByPolytope( 110, false );
+#! [ 738662983 ]
+CountMinimalLimitRootsOfQSMByPolytope( 272, false );
+#! [ 736011640 ]
+CountMinimalLimitRootsOfQSMByPolytope( 274, false );
+#! [ 736011640 ]
+CountMinimalLimitRootsOfQSMByPolytope( 387, false );
+#! [ 733798300 ]
+#! @EndExample
+
+#! The remaining results can be checked analogousyl as follows:
+
+#! @Log
+CountMinimalLimitRootsOfQSMByPolytope( 798, false );
+#! [ 690950608 ]
+CountMinimalLimitRootsOfQSMByPolytope( 808, false );
+#! [ 690950608 ]
+CountMinimalLimitRootsOfQSMByPolytope( 810, false );
+#! [ 690950608 ]
+CountMinimalLimitRootsOfQSMByPolytope( 812, false );
+#! [ 690950608 ]
+CountMinimalLimitRootsOfQSMByPolytope( 254, false );
+#! [ 35004914 ]
+CountMinimalLimitRootsOfQSMByPolytope( 52, false );
+#! [ 34980351 ]
+CountMinimalLimitRootsOfQSMByPolytope( 302, false );
+#! [ 34980682 ]
+CountMinimalLimitRootsOfQSMByPolytope( 786, false );
+#! [ 32860461 ]
+CountMinimalLimitRootsOfQSMByPolytope( 762, false );
+#! [ 32858151 ]
+CountMinimalLimitRootsOfQSMByPolytope( 417, false );
+#! [ 32857596 ]
+CountMinimalLimitRootsOfQSMByPolytope( 838, false );
+#! [ 32845047 ]
+CountMinimalLimitRootsOfQSMByPolytope( 782, false );
+#! [ 32844379 ]
+CountMinimalLimitRootsOfQSMByPolytope( 377, false );
+#! [ 30846440 ]
+CountMinimalLimitRootsOfQSMByPolytope( 499, false );
+#! [ 30846440 ]
+CountMinimalLimitRootsOfQSMByPolytope( 503, false );
+#! [ 30846440 ]
+CountMinimalLimitRootsOfQSMByPolytope( 1348, false );
+#! [ 30845702 ]
+CountMinimalLimitRootsOfQSMByPolytope( 882, false );
+#! [ 30840098 ]
+CountMinimalLimitRootsOfQSMByPolytope( 1340, false );
+#! [ 28954543 ]
+CountMinimalLimitRootsOfQSMByPolytope( 1879, false );
+#! [ 28950852 ]
+CountMinimalLimitRootsOfQSMByPolytope( 1384, false );
+#! [ 27178020 ]
+CountMinimalLimitRootsOfQSMByPolytope( 856, false );
+#! [ 22807749 ]
+#! @EndLog
