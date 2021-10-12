@@ -118,12 +118,26 @@ int main(int argc, char* argv[]) {
     if (h0MinUsed < dia.get_h0_min() ){
             h0MinUsed = dia.get_h0_min();
     }
+
+    // set up variables to write to the result file
+    std::ofstream ofile;
+    std::string file_path = __FILE__;
+    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
     
     // check for degenerate (= trivial) situation
     if ( h0Max < h0MinUsed ){
+        ofile.open( dir_path + "/result.txt" );
+        ofile << "[ ";
         for ( int i = 0; i < h0Max - h0Min + 1; i++ ){
-            std::cout << "0\n";
+            std::cout << "h0 = " << i << ": 0\n";
+            if ( i < h0Max - h0Min ){
+                ofile << "0, ";
+            }
+            else{
+                ofile << "0 ];";
+            }
         }
+        ofile.close();
         return 0;
     }
     
@@ -142,9 +156,6 @@ int main(int argc, char* argv[]) {
     }
     
     // save the result to a dummy file next to main.cpp, so gap can read it out and display intermediate process details
-    std::ofstream ofile;
-    std::string file_path = __FILE__;
-    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
     ofile.open( dir_path + "/result.txt" );
     ofile << "[ ";
     for ( int i = 0; i < dia.get_h0_min() - h0Min; i ++ ){
