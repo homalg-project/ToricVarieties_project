@@ -78,22 +78,16 @@ void compute_distribution(
     // (3) Loop over H1-fluxes
     for ( int i = start; i <= stop; i++ ){
 
-        // (3.1) Signal progress
-        if ( progress < int ( 100 * ( i - start ) / ( stop - start ) ) ){
-            progress = int ( 100 * ( i - start ) / ( stop - start ) );
-            UpdateStatusThreadSafe( status, progress, thread_number );
-        }
-
-        // (3.2) Loop over H2 fluxes
+        // (3.1) Loop over H2 fluxes
         for ( int j = 0; j < outfluxes_H2filtered.size(); j++ ){
             
-            // (3.2.1) Compute H3 flux f3
+            // (3.1.1) Compute H3 flux f3
             std::vector<unsigned long long int> f3;
             for ( int c = 0; c < number_components; c++ ){
                 f3.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H2filtered[ j ][ c ] ) );
             }
             
-            // (3.2.2) Only proceed if H3 flux f3 has non-trivial distribution
+            // (3.1.2) Only proceed if H3 flux f3 has non-trivial distribution
             if ( mapH1.find( f3 ) != mapH1.end() ){
 
                 // Compute combinatorial factor
@@ -119,6 +113,18 @@ void compute_distribution(
             
         }
         
+        // (3.2) Signal progress
+        if ( start == stop ){
+            progress = 100;
+            UpdateStatusThreadSafe( status, progress, thread_number );
+        }
+        else{
+            if ( progress < int ( 100 * ( i - start ) / ( stop - start ) ) ){
+                progress = int ( 100 * ( i - start ) / ( stop - start ) );
+                UpdateStatusThreadSafe( status, progress, thread_number );
+            }
+        }
+
     }
     
     // (4) Update central distribution result
