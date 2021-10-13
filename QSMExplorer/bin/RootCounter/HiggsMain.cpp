@@ -49,10 +49,10 @@ void print_data( std::vector<int> degrees_H1, std::vector<int> degrees_H2, int r
     }
     std::cout << external_legs[ external_legs.size() - 1 ] << ")\n";
     std::cout << "Legs per component: (";
-    for ( int i = 0; i < legs_per_component.size(); i++ ){
+    for ( int i = 0; i < legs_per_component.size() - 1; i++ ){
         std::cout << legs_per_component[ i ] << ", ";
     }
-    std::cout << ")\n\n";
+    std::cout << legs_per_component[ legs_per_component.size() - 1 ] << ")\n\n";
     
 }
 
