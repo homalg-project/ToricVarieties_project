@@ -50,3 +50,5 @@ DeclareOperation( "LimitRootDistributionForRDQCurveInQSMByPolytope", [ IsInt, Is
 DeclareOperation( "LimitRootDistributionForRDQCurveInQSMByPolytope", [ IsInt, IsInt, IsBool ] );
 
 DeclareOperation( "LimitRootDistributionHiggs", [ IsRecord, IsInt, IsBool ] );
+
+DeclareOperation( "LimitRootDistributionHiggsDummy", [ ] );
