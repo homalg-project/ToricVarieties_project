@@ -231,7 +231,7 @@ int main(int argc, char* argv[]) {
             stop = ( i + 1 ) * package_size - 1;
         }
         else{
-            stop = (int) all_outfluxes.size() -1;
+            stop = (int) all_outfluxes.size();
         }
         
         // Start the worker threads
@@ -293,7 +293,7 @@ int main(int argc, char* argv[]) {
             stop = ( i + 1 ) * package_size - 1;
         }
         else{
-            stop = (int) outfluxes_H1.size() -1;
+            stop = (int) outfluxes_H1.size();
         }
         
         // Start the worker threads

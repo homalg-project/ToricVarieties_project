@@ -76,7 +76,7 @@ void compute_distribution(
     }
     
     // (3) Loop over H1-fluxes
-    for ( int i = start; i <= stop; i++ ){
+    for ( int i = start; i < stop; i++ ){
 
         // (3.1) Loop over H2 fluxes
         for ( int j = 0; j < outfluxes_H2filtered.size(); j++ ){
