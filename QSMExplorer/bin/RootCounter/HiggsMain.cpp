@@ -276,7 +276,7 @@ int main(int argc, char* argv[]) {
     for ( int i = 0; i < legs_per_component.size(); i++ ){
         legs_per_component_halved[ i ] = legs_per_component[ i ] / 2;
     }
-    std::vector<boost::multiprecision::int128_t> final_dist( 3 * h0Max , 0 );
+    std::vector<boost::multiprecision::int128_t> final_dist( h0Max + 1, 0 );
     
     // (5) Partition workload and start threads
     package_size = outfluxes_H1.size() / number_threads;

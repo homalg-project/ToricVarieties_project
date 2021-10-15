@@ -62,7 +62,7 @@ void compute_distribution(
         std::vector<int> & status ){
         
     // (1) Set variables
-    std::vector<boost::multiprecision::int128_t> res( 31, 0 );
+    std::vector<boost::multiprecision::int128_t> res( final_dist.size(), 0 );
     int progress = 0;
     int number_components = legs_per_component_halved.size();
     std::vector<unsigned long long int> f1, f2, f3;
@@ -103,7 +103,7 @@ void compute_distribution(
                 for ( int a1 = 0; a1 < d1.size(); a1++ ){
                     for ( int a2 = 0; a2 < d2.size(); a2++ ){
                         for ( int a3 = 0; a3 < d3.size(); a3++ ){
-                            if ( ( d1[ a1 ] != 0 ) && ( d2[ a2 ] != 0 ) && ( d3[ a3 ] != 0 ) ){
+                            if ( ( d1[ a1 ] != 0 ) && ( d2[ a2 ] != 0 ) && ( d3[ a3 ] != 0 ) && ( a1 + a2 + a3 < res.size() ) ){
                                 res[ a1 + a2 + a3 ] = res[ a1 + a2 + a3 ] + factor * d1[ a1 ] * d2[ a2 ] * d3[ a3 ];
                             }
                         }
