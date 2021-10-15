@@ -205,7 +205,6 @@ int main(int argc, char* argv[]) {
         all_outfluxes[ i ] = dummy;
     }
     
-    
     // (3) Scan all outfluxes to compute "min-distributions"
     // (3) Scan all outfluxes to compute "min-distributions"
     if ( display_details ){
@@ -228,8 +227,12 @@ int main(int argc, char* argv[]) {
 
         // Find start and stop position for thread
         start = i * package_size;
-        if ( i < number_threads - 1 ){ stop = ( i + 1 ) * package_size - 1; }
-        else{ stop = (int) outfluxes_H1.size() -1; }
+        if ( i < number_threads - 1 ){
+            stop = ( i + 1 ) * package_size - 1;
+        }
+        else{
+            stop = (int) all_outfluxes.size() -1;
+        }
         
         // Start the worker threads
         threadList.push_back( std::thread(   FluxScanner, 
