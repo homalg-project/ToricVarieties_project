@@ -268,3 +268,80 @@ InstallMethod( LimitRootDistributionHiggsDummy, [ ],
         return nr;        
         
 end );
+
+
+InstallMethod( LimitRootDistributionHiggsOptimizationDummy, [ ],
+    function( )
+        local genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, i, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes, result_file, nr;
+        
+        # read-out the record for the required data
+        genera := [ 0, 0, 0, 0, 0 ];
+        degrees_H1 := [ 4, 4, 4, 4, 4 ];
+        degrees_H2 := [ 0, 0, 0, 0, 0 ];
+        edges := [ [ 0, 1 ], [ 0, 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 3 ], [ 1, 3 ], [ 0, 3 ], [ 0, 3 ], [ 3, 4 ], [ 3, 4 ] ];
+        total_genus := 6;
+        root := 4;
+        external_legs := [ 4, 2, 2, 2, 4 ];
+        
+        # find the number of processes
+        str := "";
+        a := OutputTextString(str,true);
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        number_processes := EvalString( str );
+        
+        # prepare empty streams for communication with Cpp
+        output_string := "";
+        output := OutputTextUser();
+        input_string := "";
+        input := InputTextString( input_string );
+        
+        # find the counter binary (and check if it exists)
+        dir := FindRootCounterDirectory();
+        bin := Filename( dir, "./distributionCounterHiggsCurve" );
+        if not IsExistingFile( bin ) then
+            Error( "./distributionCounterHiggsCurve is not available in designed folder" );
+        fi;
+        
+        # options convey the necessary information about the nodal curve
+        options := Concatenation( String( Length( genera ) ), " " );
+        for i in [ 1 .. Length( degrees_H1 ) ] do
+            options := Concatenation( options, String( degrees_H1[ i ] ), " " );
+        od;
+        for i in [ 1 .. Length( degrees_H2 ) ] do
+            options := Concatenation( options, String( degrees_H2[ i ] ), " " );
+        od;
+        for i in [ 1 .. Length( genera ) ] do
+            options := Concatenation( options, String( genera[ i ] ), " " );
+        od;
+        options := Concatenation( options, String( Length( edges ) ), " " );
+        for i in [ 1 .. Length( edges ) ] do
+            options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
+        od;
+        for i in [ 1 .. Length( external_legs ) ] do
+            options := Concatenation( options, String( external_legs[ i ] ), " " );
+        od;
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " 10" );
+        # display details
+        options := Concatenation( options, " ", String( 1 ) );
+        
+        # trigger the binary
+        Process( DirectoryCurrent(), bin, input, output, [ options ] );
+        
+        # check if the result file exists
+        result_file := Filename( dir, "result.txt" );
+        if not IsExistingFile( result_file ) then
+            Error( "result.txt is not available in designed folder" );
+        fi;
+        
+        # if yes, read the content and then remove this file
+        input := InputTextFile(result_file);
+        nr := EvalString( ReadAll( input ) );
+        CloseStream(input);
+        RemoveFile( result_file );
+        
+        # return result
+        return nr;        
+        
+end );
