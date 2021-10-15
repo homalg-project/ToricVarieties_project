@@ -32,9 +32,9 @@ boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const
             // N1: Number of partitions of flux f12 (from V( xi, s1) to V( xi, s2 )) into n_half weights, each with admissible ranges being between 1 and r-1.
             // N2: Number of partitions of flux f13 = a - f12 (from V( xi, s1 ) to V( xi, s3 )) into n_half weights, each with admissible ranges being between 1 and r-1.
             // N3: Number of partitions of flux f23 (from V( xi, s2 ) to V( xi, s3 )) into n_half weights, each with admissible ranges being between 1 and r-1.
-            boost::multiprecision::int128_t N1 = number_partitions( f12, n_half, r-1 );
-            boost::multiprecision::int128_t N2 = number_partitions( a - f12, n_half, r-1 );
-            boost::multiprecision::int128_t N3 = number_partitions( f23, n_half, r-1 );
+            boost::multiprecision::int128_t N1 = number_partitions( f12, n_half, r );
+            boost::multiprecision::int128_t N2 = number_partitions( a - f12, n_half, r );
+            boost::multiprecision::int128_t N3 = number_partitions( f23, n_half, r );
             
             // Increase counter accordingly
             count = count + N1 * N2 * N3;
