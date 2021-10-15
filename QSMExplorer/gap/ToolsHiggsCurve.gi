@@ -198,11 +198,12 @@ InstallMethod( LimitRootDistributionHiggsDummy, [ ],
         
         # read-out the record for the required data
         genera := [ 0,0 ];
-        degrees_H1 := [ 3, 3 ];
+        degrees_H1 := [ 4, 4 ];
         degrees_H2 := [ 0, 0 ];
         edges := [ [ 0, 1 ], [ 0, 1 ] ];
+        #edges := [ [ 0, 1 ] ];
         total_genus := 1;
-        root := 6;
+        root := 2;
         external_legs := [ 2, 2 ];
         
         # find the number of processes
