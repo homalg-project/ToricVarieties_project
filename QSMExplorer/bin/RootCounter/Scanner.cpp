@@ -56,12 +56,6 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
         
     for ( int i = start; i < stop; i++ ){
 
-        // (3.0) Display status
-        if ( ( i - start ) * 100 / ( stop - start ) > progress ){
-            progress = ( i - start ) * 100 / ( stop - start );
-            UpdateStatus( status, thread_number, progress );
-        }
-        
         // (3.1) Compute total outflux
         int total_flux = std::accumulate( all_outfluxes[ i ].begin(), all_outfluxes[ i ].end(), 0 );
         
@@ -153,6 +147,18 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
         
         }
     
+        // (3.5) Display status
+        if ( start == stop ){
+            progress = 100;
+            UpdateStatus( status, thread_number, progress );
+        }
+        else{
+            if ( ( i - start ) * 100 / ( stop - start ) > progress ){
+                progress = ( i - start ) * 100 / ( stop - start );
+                UpdateStatus( status, thread_number, progress );
+            }
+        }
+        
     }
     
     // Final update - scan thread is complete
