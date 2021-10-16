@@ -22,3 +22,34 @@ LimitRootDistributionForHiggsCurveInQSM( 1, 4, false );
 LimitRootDistributionForRDQCurveInQSM( 1, 4 );;
 LimitRootDistributionForRDQCurveInQSM( 1, 4, false );
 #! @EndLog
+
+#! The limit root distributions on the Higgs curve are typically very computationally intensive. However, we can also employ this philosophy for simpler setups. Here are two examples along these lines:
+
+#! @Example
+genera := [ 0,0 ];;
+degrees_H1 := [ 4, 4 ];;
+degrees_H2 := [ 0, 0 ];;
+edges := [ [ 0, 1 ], [ 0, 1 ] ];;
+total_genus := 1;;
+root := 2;;
+external_legs := [ 2, 2 ];;
+number_processes := 2;;
+h0Max := 10;;
+data := [ genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, number_processes, h0Max ];;
+n1 := LimitRootDistributionAlongHiggsPhilosophy( data, false );;
+n1;
+#! [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ]
+genera := [ 0, 0, 0, 0, 0 ];;
+degrees_H1 := [ 4, 4, 4, 4, 4 ];;
+degrees_H2 := [ 0, 0, 0, 0, 0 ];;
+edges := [ [ 0, 1 ], [ 0, 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 3 ], [ 1, 3 ], [ 0, 3 ], [ 0, 3 ], [ 3, 4 ], [ 3, 4 ] ];;
+total_genus := 6;;
+root := 4;;
+external_legs := [ 4, 2, 2, 2, 4 ];;
+number_processes := 2;;
+h0Max := 10;;
+data := [ genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, number_processes, h0Max ];;
+n2 := LimitRootDistributionAlongHiggsPhilosophy( data, false );;
+n2;
+#! [ 8374246311441809, 852982581711208, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+#! @EndExample
