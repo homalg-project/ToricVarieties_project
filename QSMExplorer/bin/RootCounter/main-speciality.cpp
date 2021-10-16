@@ -89,8 +89,8 @@ int main(int argc, char* argv[]) {
     
     // save the result to a dummy file next to main.cpp, so gap can read it out
     std::ofstream ofile;
-    std::string file_path = __FILE__;
-    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
+    std::string full_path = argv[ 0 ];
+    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
     ofile.open( dir_path + "/result.txt" );
     if ( special ){
         ofile << "true" << std::endl;
