@@ -1,0 +1,1 @@
+Our root counters expect a working version of the boost library (https://www.boost.org/) to be installed in the subfolder library of this folder. Our makefile attempts to achieve this.
