@@ -1,19 +1,22 @@
 // A program to compute the number of minimal limit roots on full blowups of nodal curves
 
 #include <algorithm>
-#include<iostream>
-#include<fstream>
-#include <sstream> 
-#include <vector>
-#include <thread>
-#include <functional>
-#include <mutex>
 #include <chrono>
+#include <functional>
+#include<fstream>
+#include<iostream>
+#include <mutex>
+#include <sstream>
 #include <stack>
+#include <thread>
+#include <vector>
+
 #include <boost/multiprecision/cpp_int.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 
 // guard for thread-safe operations
-std::mutex myMutexFlex;
+boost::mutex myGuard;
 
 #include "RootDistributionCounter.cpp"
 
@@ -121,8 +124,8 @@ int main(int argc, char* argv[]) {
 
     // set up variables to write to the result file
     std::ofstream ofile;
-    std::string file_path = __FILE__;
-    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
+    std::string full_path = argv[ 0 ];
+    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
     
     // check for degenerate (= trivial) situation
     if ( h0Max < h0MinUsed ){

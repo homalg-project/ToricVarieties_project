@@ -9,11 +9,8 @@ void compute_distribution(
         std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1filtered,
         std::vector<std::vector<boost::multiprecision::int128_t>> dist_H2filtered,
         std::vector<int> legs_per_component_halved,
-        int root,
-        int start,
-        int stop,
+        std::vector<int> integer_data,
         std::vector<boost::multiprecision::int128_t> & final_dist,
-        int thread_number,
         std::vector<int> & status
         );
 void status_updater( std::vector<int> & status );
@@ -24,7 +21,7 @@ void status_updater( std::vector<int> & status );
 void UpdateDistributionThreadSafe( std::vector<boost::multiprecision::int128_t>& central, std::vector<boost::multiprecision::int128_t> & change )
 {
     
-    std::lock_guard<std::mutex> guard(myMutexFlex);
+    boost::mutex::scoped_lock lock(myGuard);
     for ( int i = 0; i < change.size(); i ++ ){
         central[ i ] = central[ i ] + change[ i ];
     }
@@ -34,7 +31,7 @@ void UpdateDistributionThreadSafe( std::vector<boost::multiprecision::int128_t>&
 void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
 {
     
-    std::lock_guard<std::mutex> guard(myMutexFlex);
+    boost::mutex::scoped_lock lock(myGuard2);
     status[ pos ] = progress;
     std::string output = "Status [%]: (";    
     for ( int i = 0; i < status.size() - 1; i ++ ){
@@ -54,13 +51,16 @@ void compute_distribution(
         std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1filtered,
         std::vector<std::vector<boost::multiprecision::int128_t>> dist_H2filtered,
         std::vector<int> legs_per_component_halved,
-        int root,
-        int start,
-        int stop,
+        std::vector<int> integer_data,
         std::vector<boost::multiprecision::int128_t> & final_dist,
-        int thread_number,
         std::vector<int> & status ){
-        
+    
+    // (0) Extract integer data
+    int root = integer_data[ 0 ];
+    int start = integer_data[ 1 ];
+    int stop = integer_data[ 2 ];
+    int thread_number = integer_data[ 3 ];
+    
     // (1) Set variables
     std::vector<boost::multiprecision::int128_t> res( final_dist.size(), 0 );
     int progress = 0;
@@ -76,7 +76,7 @@ void compute_distribution(
     }
     
     // (3) Loop over H1-fluxes
-    for ( int i = start; i < stop; i++ ){
+    for ( int i = start; i <= stop; i++ ){
 
         // (3.1) Loop over H2 fluxes
         for ( int j = 0; j < outfluxes_H2filtered.size(); j++ ){
@@ -93,7 +93,7 @@ void compute_distribution(
                 // Compute combinatorial factor
                 boost::multiprecision::int128_t factor = 1;
                 for ( int c = 0; c < number_components; c++ ){
-                    factor = factor * comb_factor( outfluxes_H1filtered[ i ][ c ], outfluxes_H2filtered[ j ][ c ], legs_per_component_halved[ c ], root );
+                    factor = factor * ( boost::multiprecision::int128_t ) comb_factor( outfluxes_H1filtered[ i ][ c ], outfluxes_H2filtered[ j ][ c ], legs_per_component_halved[ c ], root );
                 }
                 
                 // Update resulting distribution
@@ -104,7 +104,7 @@ void compute_distribution(
                     for ( int a2 = 0; a2 < d2.size(); a2++ ){
                         for ( int a3 = 0; a3 < d3.size(); a3++ ){
                             if ( ( d1[ a1 ] != 0 ) && ( d2[ a2 ] != 0 ) && ( d3[ a3 ] != 0 ) && ( a1 + a2 + a3 < res.size() ) ){
-                                res[ a1 + a2 + a3 ] = res[ a1 + a2 + a3 ] + factor * d1[ a1 ] * d2[ a2 ] * d3[ a3 ];
+                                res[ a1 + a2 + a3 ] = res[ a1 + a2 + a3 ] + factor * (boost::multiprecision::int128_t ) d1[ a1 ] * (boost::multiprecision::int128_t) d2[ a2 ] * (boost::multiprecision::int128_t) d3[ a3 ];
                             }
                         }
                     }
