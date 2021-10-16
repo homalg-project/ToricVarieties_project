@@ -5,7 +5,7 @@
 void UpdateDistribution( std::vector<boost::multiprecision::int128_t>& distribution, std::vector<boost::multiprecision::int128_t> & s )
 {
     
-    std::lock_guard<std::mutex> guard(myMutexFlex);
+    boost::mutex::scoped_lock lock(myGuard);
     for ( int i = 0; i < s.size(); i ++ ){
         distribution[ i ] = distribution[ i ] + s[ i ];
     }
@@ -203,15 +203,17 @@ void countRootDistribution( WeightedDiagramWithExternalLegs dia, int NUM_THREADS
     if ( display_details ){
         std::cout<<"Wait for " << packages.size() << " worker threads \n";
     }
-    std::vector<std::thread> threadList;
+    std::vector<boost::thread> threadList;
     for (int i = 0; i < packages.size(); i++)
     {
         WeightedDiagramWithExternalLegs new_dia = dia;
-        threadList.push_back( std::thread( DistributionDistributer, new_dia, packages[ i ], h0Min, h0Max, std::ref( distribution ), std::ref( display_details ) ) );
+        threadList.push_back( boost::thread( &DistributionDistributer, new_dia, packages[ i ], h0Min, h0Max, boost::ref( distribution ), boost::ref( display_details ) ) );
     }
     
     // Now wait for the results of the worker threads (i.e. call the join() function on each of the std::thread objects) and inform the user
-    std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
+    for ( int i = 0; i < threadList.size(); i ++ ){
+        threadList[ i ].join();
+    }
     
     // determine the total number of roots found
     boost::multiprecision::int128_t total_number = 0;

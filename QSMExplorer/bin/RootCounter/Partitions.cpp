@@ -53,17 +53,17 @@ boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const
 //           Integers r, n.
 // Output: The number of partitions of f into a sum of exactly n integers w1, ... wn with 1 <= w1, ..., wn < r.
 boost::multiprecision::int128_t number_partitions( const int & f, const int & n, const int & r ){
-    boost::multiprecision::int128_t count = 0;
+    boost::multiprecision::int128_t count = (boost::multiprecision::int128_t) 0;
     
     // Only one value to set?
     if( n == 1 ) {
         
         // Check if we have a partition
         if ( ( 1 <= f ) && ( f < r ) ){
-            return 1;
+            return (boost::multiprecision::int128_t) 1;
         }
         else{
-            return 0;
+            return (boost::multiprecision::int128_t) 0;
         }
     
     }

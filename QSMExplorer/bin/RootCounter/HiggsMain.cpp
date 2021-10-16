@@ -11,10 +11,13 @@
 #include <stack>
 #include <thread>
 #include <vector>
-#include <boost/multiprecision/cpp_int.hpp>
 
-// guard for thread-safe operations
-std::mutex myMutexFlex;
+#include <boost/multiprecision/cpp_int.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
+
+// guards for thread-safe operations
+boost::mutex myGuard, myGuard2;
 
 #include "RootDistributionCounter.cpp"
 #include "Scanner.cpp"
@@ -194,7 +197,6 @@ int main(int argc, char* argv[]) {
     
     // (2) Cartesian product to identify all outflux values (and cast it into unsigned long long ints)
     // (2) Cartesian product to identify all outflux values (and cast it into unsigned long long ints)
-    
     std::vector<std::vector<int>> cartesian = product( outflux_values );
     std::vector<std::vector<unsigned long long int>> all_outfluxes( cartesian.size() );
     for ( int i = 0; i < cartesian.size(); i++ ){
@@ -216,9 +218,8 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<unsigned long long int>> outfluxes_H1, outfluxes_H2;
     std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1, dist_H2;
     std::vector<int> status( number_threads, 0 );
-    int h0MinUsed;
     int package_size = all_outfluxes.size() / number_threads;
-    std::vector<std::thread> threadList;
+    std::vector<boost::thread> threadList;
     int start, stop;
     
     // (3.2) Partition workload and start threads
@@ -226,42 +227,26 @@ int main(int argc, char* argv[]) {
     {
 
         // Find start and stop position for thread
-        start = i * package_size;
+        std::vector<int> interval;
+        interval.push_back( i * package_size );
         if ( i < number_threads - 1 ){
-            stop = ( i + 1 ) * package_size - 1;
+            interval.push_back( ( i + 1 ) * package_size - 1 );
         }
         else{
-            stop = (int) all_outfluxes.size();
+            interval.push_back( all_outfluxes.size() - 1 );
         }
         
-        // Start the worker threads
-        threadList.push_back( std::thread(   FluxScanner, 
-                                                                    all_outfluxes,
-                                                                    std::ref( outfluxes_H1 ),
-                                                                    std::ref( outfluxes_H2 ),
-                                                                    std::ref( dist_H1 ),
-                                                                    std::ref( dist_H2 ),
-                                                                    start,
-                                                                    stop,
-                                                                    std::ref( status ),
-                                                                    i,
-                                                                    legs_per_component,
-                                                                    root,
-                                                                    vertices,
-                                                                    degrees_H1,
-                                                                    degrees_H2,
-                                                                    genera,
-                                                                    edges,
-                                                                    external_legs,
-                                                                    genus,
-                                                                    number_threads,
-                                                                    h0Max
-                                                                    ) );
+        // Start thread
+        threadList.push_back( boost::thread( &FluxScanner, all_outfluxes, boost::ref( outfluxes_H1 ),  boost::ref( outfluxes_H2 ),  boost::ref( dist_H1 ), boost::ref( dist_H2 ), boost::ref( status ), input, i, interval ) );
         
     }
-    std::for_each(threadList.begin(),threadList.end(), std::mem_fn(&std::thread::join));
     
-    // Inform what we have achieved
+    // join all these threads
+    for ( int i = 0; i < threadList.size(); i++ ){        
+        threadList[ i ].join();
+    }
+    
+    // (3.3) Inform what we have achieved
     std::chrono::steady_clock::time_point middle = std::chrono::steady_clock::now();
     if ( display_details ){
         std::cout << "\n\n";
@@ -280,39 +265,41 @@ int main(int argc, char* argv[]) {
     
     // (5) Partition workload and start threads
     package_size = outfluxes_H1.size() / number_threads;
-    std::vector<std::thread> threadList2;
+    std::vector<boost::thread> threadList2;
     for ( int i = 0; i < status.size(); i++ ){
         status[ i ] = 0;
     }
     for ( int i = 0; i < number_threads; i++)
     {
 
-        // Find start and stop position for thread
+        // Gather integer data
         start = i * package_size;
         if ( i < number_threads - 1 ){
             stop = ( i + 1 ) * package_size - 1;
         }
         else{
-            stop = (int) outfluxes_H1.size();
+            stop = (int) outfluxes_H1.size() - 1;
         }
+        std::vector<int> integer_data = { root, start, stop, i };
         
         // Start the worker threads
-        threadList2.push_back( std::thread( compute_distribution,
+        threadList2.push_back( boost::thread( &compute_distribution,
                                                                     outfluxes_H1,
                                                                     outfluxes_H2,
                                                                     dist_H1,
                                                                     dist_H2,
                                                                     legs_per_component_halved,
-                                                                    root,
-                                                                    start,
-                                                                    stop,
+                                                                    integer_data,
                                                                     std::ref( final_dist ),
-                                                                    i,
                                                                     std::ref( status )
                                                                 ) );
         
     }
-    std::for_each(threadList2.begin(),threadList2.end(), std::mem_fn(&std::thread::join));
+    
+    // join all these threads
+    for ( int i = 0; i < threadList2.size(); i++ ){        
+        threadList2[ i ].join();
+    }
     
     // (6) Print result
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -327,10 +314,10 @@ int main(int argc, char* argv[]) {
         std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     }
     
-    // (7) Save the result to a dummy file next to main.cpp, so gap can read it out and display intermediate process details
+    // (7) Save the result to a dummy file, so that gap can read it out and display the intermediate process details of the C++ run
     std::ofstream ofile;
-    std::string file_path = __FILE__;
-    std::string dir_path = file_path.substr(0, file_path.rfind("/"));
+    std::string full_path = argv[ 0 ];
+    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
     ofile.open( dir_path + "/result.txt" );
     ofile << "[ ";
     for ( int i = 0; i < final_dist.size() - 1; i ++ ){
