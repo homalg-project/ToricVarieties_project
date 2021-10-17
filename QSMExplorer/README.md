@@ -15,7 +15,7 @@ The corresponding preprint is available at [2104.08297](https://arxiv.org/pdf/21
 
 To get the latest version of this GAP 4 package pull the corresponding repository from github. Subsequently issue `make install` inside the package folder. It will compile `C++`-code and place the resutling binary `counter` in the subfolder `/bin/RootCounter`. This completes the installation of this package.
 
-To handle large integers (10^20 and higher), we use the [boost library](https://www.boost.org/).
+To handle large integers (10^20 and higher), we use the [boost library](https://www.boost.org/). The simplest way to install this library on Ubuntu systems is via `sudo apt-get install libboost-all-dev`. Once this is achieve, just issue `make install` to build the binaries use for limit root counting. Alternatively, we can download the boost library and build it from source. An attempt to provide an automated approach towards this goal is provided via `make install-with-boost-from-source`.
 
 ## Documentation and tests
 
