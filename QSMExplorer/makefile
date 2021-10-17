@@ -24,10 +24,10 @@ install-boost-from-source: uninstall-boost-from-source
 	( cd boost/boost_1_77_0 && ./bootstrap.sh --prefix=$$(realpath ../library) && ./b2 --prefix=$$(realpath ../library) --threading=multi install )
 	
 install-with-boost-from-source: install-boost-from-source
-	( cd bin/RootCounter && g++ -c -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread WDiagram.cpp; )
-	( cd bin/RootCounter && g++ -c -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread main-speciality.cpp && g++ -o specialityChecker main-speciality.o -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread )
-	( cd bin/RootCounter && g++ -c -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread main.cpp && g++ -o distributionCounter WDiagram.o main.o -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread )
-	( cd bin/RootCounter && g++ -c -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -I ../Boost/library/include -L ../../Boost/library/lib -lboost_thread -lpthread )
+	( cd bin/RootCounter && g++ -c -I ../boost/library/include -L ../../boost/library/lib -lboost_thread -lboost_system -lpthread WDiagram.cpp; )
+	( cd bin/RootCounter && g++ -c main-speciality.cpp && g++ -o specialityChecker main-speciality.o )
+	( cd bin/RootCounter && g++ -c -I ../boost/library/include -L ../../boost/library/lib -lboost_thread -lboost_system -lpthread main.cpp && g++ -o distributionCounter WDiagram.o main.o -I ../boost/library/include -L ../../boost/library/lib -lboost_thread -lboost_system -lpthread )
+	( cd bin/RootCounter && g++ -c -I ../boost/library/include -L ../../boost/library/lib -lboost_thread -lboost_system -lpthread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -I ../boost/library/include -L ../../boost/library/lib -lboost_thread -lboost_system -lpthread )
 
 install: uninstall
 	( cd bin/RootCounter && g++ -c -lboost_thread WDiagram.cpp )

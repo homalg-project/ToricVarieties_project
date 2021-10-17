@@ -23,8 +23,8 @@ jobs:
           echo "------------------------------------------------------------------------"
           echo "Step 1: Install system dependencies"
           echo "------------------------------------------------------------------------"
-          sudo apt-get install -y -f --fix-broken texlive-latex-extra time python-pathlib texlive-science time python-pathlib
-          sudo apt-get install -y -f --fix-broken autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
+          sudo apt-get install -y -f texlive-latex-extra time python-pathlib texlive-science time python-pathlib
+          sudo apt-get install -y -f autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
           echo "------------------------------------------------------------------------"
           echo "Step 2: Copy branch"
           echo "------------------------------------------------------------------------"
@@ -90,11 +90,11 @@ jobs:
           echo "(*) Install software in ToricVarieties_project"
           echo ""
           cd ToricVarieties_project
-          make install
+          make install-without-QSM
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
           echo "------------------------------------------------------------------------"
           echo "SetInfoLevel(InfoPackageLoading, 3);" > ~/.gap/gaprc
-          TERM=dumb make -j $(nproc) --output-sync ci-test
+          TERM=dumb make -j $(nproc) --output-sync ci-test-without-QSM
           curl -s https://codecov.io/bash | bash
