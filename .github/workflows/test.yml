@@ -25,6 +25,15 @@ jobs:
           echo "------------------------------------------------------------------------"
           sudo apt-get install -y -f texlive-latex-extra time python-pathlib texlive-science time python-pathlib
           sudo apt-get install -y -f autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
+          version=2.7.13
+          mkdir -p /home/gap/.gap/pkg/Downloads/
+          cd /home/gap/.gap/pkg/Downloads/
+          wget https://www.python.org/ftp/python/$version/Python-$version.tgz
+          tar -xvf Python-$version.tgz
+          cd Python-$version
+          ./configure
+          make
+          sudo make install
           echo "------------------------------------------------------------------------"
           echo "Step 2: Copy branch"
           echo "------------------------------------------------------------------------"
@@ -90,11 +99,11 @@ jobs:
           echo "(*) Install software in ToricVarieties_project"
           echo ""
           cd ToricVarieties_project
-          make install-without-QSM
+          make install-with-local-boost
           echo ""
           echo "------------------------------------------------------------------------"
           echo "Step 4: Perform tests"
           echo "------------------------------------------------------------------------"
           echo "SetInfoLevel(InfoPackageLoading, 3);" > ~/.gap/gaprc
-          TERM=dumb make -j $(nproc) --output-sync ci-test-without-QSM
+          TERM=dumb make -j $(nproc) --output-sync ci-test
           curl -s https://codecov.io/bash | bash

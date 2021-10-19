@@ -12,7 +12,8 @@ install: uninstall
 	( cd QSMExplorer; make install; cd .. )
 	( cd TopcomInterface; make install; cd .. )
 
-install-without-QSM: uninstall
+install-with-local-boost: uninstall
+	( cd QSMExplorer; make install-with-local-boost; cd .. )
 	( cd cohomCalgInterface; make install; cd .. )
 	( cd SpasmInterface; make install; cd .. )
 	( cd H0Approximator; make install; cd .. )
@@ -157,21 +158,8 @@ QSMExplorer_test:
 
 test: AdditionsForToricVarieties_test CoherentSheavesOnToricVarieties_test cohomCalgInterface_test H0Approximator_test SheafCohomologyOnToricVarieties_test SparseMatrices_test SpasmInterface_test ToolsForFPGradedModules_test TopcomInterface_test ToricVarieties_test TruncationsOfFPGradedModules_test QSMExplorer_test
 
-ci-test: doc
-	cd AdditionsForToricVarieties && make ci-test
-	cd CoherentSheavesOnToricVarieties && make ci-test
-	cd cohomCalgInterface && make ci-test
-	cd H0Approximator && make ci-test
-	cd SheafCohomologyOnToricVarieties && make ci-test
-	cd SparseMatrices && make ci-test
-	cd SpasmInterface && make ci-test
-	cd ToolsForFPGradedModules && make ci-test
-	cd TopcomInterface && make ci-test
-	cd ToricVarieties && make ci-test
-	cd TruncationsOfFPGradedModules && make ci-test
+ci-test: doc_QSMExplorer doc
 	cd QSMExplorer && make ci-test
-
-ci-test-without-QSM: doc
 	cd AdditionsForToricVarieties && make ci-test
 	cd CoherentSheavesOnToricVarieties && make ci-test
 	cd cohomCalgInterface && make ci-test
