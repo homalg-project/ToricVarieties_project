@@ -146,8 +146,8 @@ void compute_distribution(
 }
 
 
-// H1-diag-iterator
-// H1-diag-iterator
+// H1-diagonal-iterator
+// H1-diagonal-iterator
 void compute_diagonal_distribution( 
         std::vector<std::vector<unsigned long long int>> outfluxes_H1filtered,
         std::vector<std::vector<unsigned long long int>> outfluxes_H2filtered,
@@ -178,19 +178,75 @@ void compute_diagonal_distribution(
         mapH2.insert( std::make_pair( outfluxes_H2filtered[ i ], dist_H2filtered[ i ] ) );
     }
     
+    // (3) Identify total number of computations
+    int total = stop - start + outfluxes_H1filtered.size();
+    int count = 0;
+    
     // (3) Loop over H1-fluxes
     for ( int i = start; i <= stop; i++ ){
 
-        // (3.1) Pick H3-flux
-        int j = i;
+        // (3.1) Loop over H3 fluxes
+        for ( int j = i+1; j < outfluxes_H1filtered.size(); j++ ){
             
-        // (3.1.1) Compute H2 flux f2
+            // (3.1.1) Compute H2 flux f2
+            std::vector<unsigned long long int> f2;
+            for ( int c = 0; c < number_components; c++ ){
+                f2.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H1filtered[ j ][ c ] ) );
+            }
+            
+            // (3.1.2) Only proceed if H2 flux f2 has non-trivial distribution
+            if ( mapH2.find( f2 ) != mapH2.end() ){
+
+                // Compute combinatorial factor
+                boost::multiprecision::int128_t factor = 1;
+                for ( int c = 0; c < number_components; c++ ){
+                    factor = factor * ( boost::multiprecision::int128_t ) comb_factor( outfluxes_H1filtered[ i ][ c ], f2[ c ], legs_per_component_halved[ c ], root );
+                }
+                
+                // Update resulting distribution
+                d1 = dist_H1filtered[ i ];
+                d2 = mapH2[ f2 ];
+                d3 = dist_H1filtered[ j ];
+                for ( int a1 = 0; a1 < d1.size(); a1++ ){
+                    for ( int a2 = 0; a2 < d2.size(); a2++ ){
+                        for ( int a3 = 0; a3 < d3.size(); a3++ ){
+                            if ( ( d1[ a1 ] != 0 ) && ( d2[ a2 ] != 0 ) && ( d3[ a3 ] != 0 ) && ( a1 + a2 + a3 < res.size() ) ){
+                                res[ a1 + a2 + a3 ] = res[ a1 + a2 + a3 ] + factor * (boost::multiprecision::int128_t ) d1[ a1 ] * (boost::multiprecision::int128_t) d2[ a2 ] * (boost::multiprecision::int128_t) d3[ a3 ];
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        // (3.2) Signal progress
+        count++;
+        if ( progress < int ( 100 * count / total ) ){
+                progress = int ( 100 * count / total );
+                UpdateStatusThreadSafe( status, progress, thread_number );
+        }
+
+    }
+    
+    // (4) Multiply the results computed thus far by 2 (symmetry factor)
+    for ( int i = 0; i < res.size(); i++ ){
+        res[ i ] = ( (boost::multiprecision::int128_t) 2 ) * res[ i ];
+    }
+    
+    // (5) Loop over diagonal (H1) fluxes
+    for ( int i = 0; i <= outfluxes_H1filtered.size()-1; i++ ){
+    
+        // (5.1) Pick H3-flux
+        int j = i;
+        
+        // (5.1.1) Compute H2 flux f2
         std::vector<unsigned long long int> f2;
         for ( int c = 0; c < number_components; c++ ){
             f2.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H1filtered[ j ][ c ] ) );
         }
         
-        // (3.1.2) Only proceed if H2 flux f2 has non-trivial distribution
+        // (5.1.2) Only proceed if H2 flux f2 has non-trivial distribution
         if ( mapH2.find( f2 ) != mapH2.end() ){
             
             // Compute combinatorial factor
@@ -214,21 +270,16 @@ void compute_diagonal_distribution(
             }
         }
         
-        // (3.2) Signal progress
-        if ( start == stop ){
-            progress = 100;
-            UpdateStatusThreadSafe( status, progress, thread_number );
-        }
-        else{
-            if ( progress < int ( 100 * ( i - start ) / ( stop - start ) ) ){
-                progress = int ( 100 * ( i - start ) / ( stop - start ) );
+        // (5.2) Signal progress
+        count++;
+        if ( progress < int ( 100 * count / total ) ){
+                progress = int ( 100 * count / total );
                 UpdateStatusThreadSafe( status, progress, thread_number );
-            }
         }
-
+    
     }
     
-    // (4) Final steps - report results
+    // (6) Final step - report result
     UpdateDistributionThreadSafe( final_dist, res );
     
 }
