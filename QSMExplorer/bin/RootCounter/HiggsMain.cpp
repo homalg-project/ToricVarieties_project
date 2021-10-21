@@ -219,7 +219,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1, dist_H2;
     std::vector<int> status( number_threads, 0 );
     int package_size = all_outfluxes.size() / number_threads;
-    std::vector<boost::thread> threadList;
+    boost::thread_group threadList;
     int start, stop;
     
     // (3.2) Partition workload and start threads
@@ -237,14 +237,11 @@ int main(int argc, char* argv[]) {
         }
         
         // Start thread
-        threadList.push_back( boost::thread( &FluxScanner, all_outfluxes, boost::ref( outfluxes_H1 ),  boost::ref( outfluxes_H2 ),  boost::ref( dist_H1 ), boost::ref( dist_H2 ), boost::ref( status ), input, i, interval ) );
+        boost::thread *t = new boost::thread( FluxScanner, all_outfluxes, boost::ref( outfluxes_H1 ),  boost::ref( outfluxes_H2 ),  boost::ref( dist_H1 ), boost::ref( dist_H2 ), boost::ref( status ), input, i, interval );
+        threadList.add_thread( t );
         
     }
-    
-    // join all these threads
-    for ( int i = 0; i < threadList.size(); i++ ){        
-        threadList[ i ].join();
-    }
+    threadList.join_all();
     
     // (3.3) Inform what we have achieved
     std::chrono::steady_clock::time_point middle = std::chrono::steady_clock::now();
