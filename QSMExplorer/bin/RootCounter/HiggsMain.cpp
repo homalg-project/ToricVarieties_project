@@ -271,56 +271,52 @@ int main(int argc, char* argv[]) {
     }
     if ( number_threads > 1 ){
         
-        // start threads to iterate over non-diagonal fluxes (f1,f3)
-        boost::multiprecision::int128_t total_number_tasks = ( boost::multiprecision::int128_t ) ( outfluxes_H1.size() * ( outfluxes_H1.size() - 1 ) / 2 );
-        boost::multiprecision::int128_t average_number_tasks = total_number_tasks / ( number_threads - 1 );
+        // distribute tasks to threads
+        boost::multiprecision::int128_t total_number_tasks = ( boost::multiprecision::int128_t ) ( outfluxes_H1.size() * ( outfluxes_H1.size() + 1 ) / 2 );
+        boost::multiprecision::int128_t average_number_tasks = total_number_tasks / number_threads;
         int start = 0;
-        for ( int i = 0; i < number_threads - 1; i++)
+        for ( int i = 0; i < number_threads; i++)
         {
             
+            // initialize variables
             int pos = start - 1;
             int tasks = 0;
-            if ( i < number_threads - 2 ){
+            
+            if ( i < number_threads - 1 ){
                 
+                // identify stop position
                 while ( tasks < average_number_tasks ){            
                     pos = pos + 1;
                     tasks = tasks + outfluxes_H1.size() - ( pos + 1 );
                 }
                 stop = pos;
                 
+                // start thread
+                std::vector<int> integer_data = { root, start, stop, i };                
+                boost::thread *t = new boost::thread( compute_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
+                threadList2.add_thread( t );
+                
+                // set start position for the following thread
+                start = pos + 1;
+                
             }
             else{
                 
+                // start last task, which includes scan over diagonal fluxes
                 stop = outfluxes_H1.size() - 1;
+                std::vector<int> integer_data = { root, start, stop, i };                
+                boost::thread *t = new boost::thread( compute_diagonal_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
+                threadList2.add_thread( t );
                 
             }
-            std::vector<int> integer_data = { root, start, stop, i };
-            
-            // Start the worker threads
-            boost::thread *t = new boost::thread( compute_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
-            threadList2.add_thread( t );
-            //threadList2.add_thread( boost::thread( &compute_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) ) );
-            
-            // increase start
-            start = pos + 1;
             
         }
-        
-        // start diagonal thread
-        std::vector<int> integer_data = { root, 0, (int) outfluxes_H1.size() - 1, number_threads - 1 };
-        boost::thread *t = new boost::thread( compute_diagonal_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
-        threadList2.add_thread( t );
-        //threadList2.add_thread( boost::thread( &compute_diagonal_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) ) );
-        
-        // join all these threads
         threadList2.join_all();
         
     }
     else{
         
-        // sequentially perform two tasks after each other
         std::vector<int> integer_data = { root, 0, (int) outfluxes_H1.size() - 1, 0 };
-        compute_distribution( outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, final_dist, status );
         compute_diagonal_distribution( outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, final_dist, status );
         
     }
