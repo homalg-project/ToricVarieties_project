@@ -35,8 +35,7 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
                                 std::vector<std::vector<boost::multiprecision::int128_t>> & dist_H2,
                                 std::vector<int> & status,
                                 std::vector<int> input,
-                                int thread_number,
-                                std::vector<int> interval
+                                int thread_number
                 )
 {
 
@@ -72,8 +71,6 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     int genus = input[ 4 * input[ 0 ] + 2 * numberEdges + 2 ];
     int root = input[ 4 * input[ 0 ] + 2 * numberEdges + 3 ];
     int h0Max = input[ 4 * input[ 0 ] + 2 * numberEdges + 5 ];
-    int start = interval[ 0 ];
-    int stop = interval[ 1 ];
     int number_sub_threads = 1;
     int h0MinUsed = 0;
     int progress = 0;
@@ -83,7 +80,7 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     std::vector<std::vector<unsigned long long int>> out2;
     std::vector<std::vector<boost::multiprecision::int128_t>> d1;
     std::vector<std::vector<boost::multiprecision::int128_t>> d2;
-    for ( int i = start; i <= stop; i++ ){
+    for ( int i = 0; i < all_outfluxes.size(); i++ ){
 
         // (2.1) Compute total outflux and continue only if it is divisible by the root
         int total_flux = std::accumulate( all_outfluxes[ i ].begin(), all_outfluxes[ i ].end(), 0 );
@@ -171,13 +168,13 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
         }
     
         // (2.6) Display status
-        if ( start == stop ){
+        if ( all_outfluxes.size() == 0 ){
             progress = 100;
             UpdateStatus( status, thread_number, progress );
         }
         else{
-            if ( ( i - start ) * 100 / ( stop - start ) > progress ){
-                progress = ( i - start ) * 100 / ( stop - start );
+            if ( i * 100 / ( all_outfluxes.size() ) > progress ){
+                progress = i * 100 / ( all_outfluxes.size() );
                 UpdateStatus( status, thread_number, progress );
             }
         }
@@ -187,7 +184,6 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     // (2.7) Update results
     UpdateCollectedData( outfluxes_H1, dist_H1, out1, d1 );
     UpdateCollectedData( outfluxes_H2, dist_H2, out2, d2 );
-    progress = 100;
-    UpdateStatus( status, thread_number, progress );
+    UpdateStatus( status, thread_number, 100 );
     
 }
