@@ -111,47 +111,24 @@ int main(int argc, char* argv[]) {
         std::cout << "Find minimal and maximal outfluxes...\n";
     }
     
-    // Take time for operation
+    // Take time at start of operation
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     
-    // Initialize variables
-    int min_outflux, max_outflux;
+    // Find outfuxes to be considered
     std::vector<std::vector<int>> outflux_values;
-    
-    // Perform scan
     for ( int i = 0; i < numberVertices; i++ ){
         
-        // Find minimal and maximal outfluxes
-        min_outflux = legs_per_component[ i ];
-        max_outflux = legs_per_component[ i ] * ( root - 1 );
         if ( display_details ){
             std::cout << "Component " << i << ": (" << min_outflux << ", " << max_outflux << ")\n";
-        }
-        
-        // Construct the possible flux values explicitly
-        std::vector<int> possible_values;
-        for ( int j = 0; j < max_outflux - min_outflux + 1; j++ ){
-            possible_values.push_back( min_outflux + j );
-        }
-        
-        // And add this list of values to outflux_values
-        outflux_values.push_back( possible_values );
+        }        
+        outflux_values.push_back( { legs_per_component[ i ], legs_per_component[ i ] * ( root - 1 ) } );
         
     }
+    std::vector<std::vector<unsigned long long int>> all_outfluxes = constructAllOutfluxes( outflux_values, root );
     if ( display_details ){
         std::cout << "\n";
     }
-    
-    // Cartesian product to identify all outflux values (and cast it into unsigned long long ints)
-    std::vector<std::vector<int>> cartesian = product( outflux_values );
-    std::vector<std::vector<unsigned long long int>> all_outfluxes( cartesian.size() );
-    for ( int i = 0; i < cartesian.size(); i++ ){
-        std::vector<unsigned long long int> dummy( cartesian[ i ].size() );
-        for ( int j = 0; j < cartesian[ i ].size(); j++ ){
-            dummy[ j ] = (unsigned long long int ) cartesian[ i ][ j ];
-        }
-        all_outfluxes[ i ] = dummy;
-    }
+
     
     // (1.2) Inform that we are about to scan over all outfluxes
     if ( display_details ){
