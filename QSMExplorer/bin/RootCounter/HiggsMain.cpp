@@ -243,12 +243,26 @@ int main(int argc, char* argv[]) {
     }
     threadList.join_all();
     
-    // (3.3) Inform what we have achieved
+    // (3.3) Find global minimum of H2_fluxes
+    int min_H2 = h0Max;
+    for ( int i = 0; i < dist_H2.size(); i++ ){
+        int k = std::distance( std::begin( dist_H2[ i ] ), std::find_if( std::begin( dist_H2[ i ] ), std::end( dist_H2[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
+        if ( k < min_H2 ){
+            k = min_H2;
+        }
+        if ( k = 0 ){
+            k = min_H2;
+            break;
+        }
+    }
+    
+    // (3.4) Inform what we have achieved
     std::chrono::steady_clock::time_point middle = std::chrono::steady_clock::now();
     if ( display_details ){
         std::cout << "\n\n";
         std::cout << "Outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
         std::cout << "Outfluxes H2: " << outfluxes_H2.size() << ", " << dist_H2.size() << "\n";
+        std::cout << "Global minimum on H2: " << min_H2 << "\n";
         std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(middle - begin).count() << "[s]\n\n";
         std::cout << "Now start to piece the local data together... \n\n";
     }
@@ -262,7 +276,6 @@ int main(int argc, char* argv[]) {
     
     // (5) Partition workload and start threads
     boost::thread_group threadList2;
-    //std::vector<boost::thread> threadList2;
     for ( int i = 0; i < status.size(); i++ ){
         status[ i ] = 0;
     }
@@ -289,7 +302,7 @@ int main(int argc, char* argv[]) {
                 stop = pos;
                 
                 // start thread
-                std::vector<int> integer_data = { root, start, stop, i };                
+                std::vector<int> integer_data = { root, start, stop, i, min_H2 };
                 boost::thread *t = new boost::thread( compute_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
                 threadList2.add_thread( t );
                 
@@ -301,7 +314,7 @@ int main(int argc, char* argv[]) {
                 
                 // start last task, which includes scan over diagonal fluxes
                 stop = outfluxes_H1.size() - 1;
-                std::vector<int> integer_data = { root, start, stop, i };                
+                std::vector<int> integer_data = { root, start, stop, i, min_H2 };                
                 boost::thread *t = new boost::thread( compute_diagonal_distribution, outfluxes_H1, outfluxes_H2, dist_H1, dist_H2, legs_per_component_halved, integer_data, std::ref( final_dist ), std::ref( status ) );
                 threadList2.add_thread( t );
                 
