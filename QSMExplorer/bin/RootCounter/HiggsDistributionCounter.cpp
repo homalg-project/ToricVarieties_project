@@ -43,11 +43,13 @@ void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
     
     boost::mutex::scoped_lock lock(myGuard2);
     status[ pos ] = progress;
-    std::string output = "Status [%]: (";    
+    std::string output = "Status [%]: (";
+    int s = 0;
     for ( int i = 0; i < status.size() - 1; i ++ ){
-        output = output + std::__cxx11::to_string( status[ i ] ) + ", ";
+        s = s + status[ i ];
     }
-    output = output + std::__cxx11::to_string( status[ status.size() - 1 ] ) + ")";
+    s = s / status.size();
+    output = output + std::__cxx11::to_string( s ) + ")";
     std::cout << output << "\r" << std::flush;
     
 }
