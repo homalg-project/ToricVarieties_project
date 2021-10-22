@@ -106,29 +106,11 @@ int main(int argc, char* argv[]) {
     
     // (1.1) Construct all outfluxes
     
-    // Inform that we are about to construct all outfluxes
-    if ( display_details ){
-        std::cout << "Find minimal and maximal outfluxes...\n";
-    }
-    
     // Take time at start of operation
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     
-    // Find outfuxes to be considered
-    std::vector<std::vector<int>> outflux_values;
-    for ( int i = 0; i < numberVertices; i++ ){
-        
-        if ( display_details ){
-            std::cout << "Component " << i << ": (" << min_outflux << ", " << max_outflux << ")\n";
-        }        
-        outflux_values.push_back( { legs_per_component[ i ], legs_per_component[ i ] * ( root - 1 ) } );
-        
-    }
-    std::vector<std::vector<unsigned long long int>> all_outfluxes = constructAllOutfluxes( outflux_values, root );
-    if ( display_details ){
-        std::cout << "\n";
-    }
-
+    // Construct all outfluxes
+    std::vector<std::vector<unsigned long long int>> all_outfluxes = constructAllOutfluxes( legs_per_component, root, display_details );
     
     // (1.2) Inform that we are about to scan over all outfluxes
     if ( display_details ){
@@ -178,11 +160,11 @@ int main(int argc, char* argv[]) {
     // (1.7) Inform what we have achieved
     if ( display_details ){
         std::cout << "\n\n";
-        std::cout << "Outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
-        std::cout << "Outfluxes H2: " << outfluxes_H2.size() << ", " << dist_H2.size() << "\n";
+        std::cout << "Non-trivial outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
+        std::cout << "Non-trivial outfluxes H2: " << outfluxes_H2.size() << ", " << dist_H2.size() << "\n";
         std::cout << "Global minimum on H2: " << min_H2 << "\n";
         std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(middle - begin).count() << "[s]\n\n";
-        std::cout << "Now start to piece the local data together... \n\n";
+        std::cout << "Now piece the local data together... \n\n";
     }
     
     
