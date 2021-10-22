@@ -1,22 +1,51 @@
-auto product(const std::vector<std::vector<int>>& lists) {
-  std::vector<std::vector<int>> result;
-  if (std::find_if(std::begin(lists), std::end(lists), 
-    [](auto e) -> bool { return e.size() == 0; }) != std::end(lists)) {
-    return result;
-  }
-  for (auto& e : lists[0]) {
-    result.push_back({ e });
-  }
-  for (size_t i = 1; i < lists.size(); ++i) {
-    std::vector<std::vector<int>> temp;
-    for (auto& e : result) {
-      for (auto f : lists[i]) {
-        auto e_tmp = e;
-        e_tmp.push_back(f);
-        temp.push_back(e_tmp);
-      }
+// Construct all outfluxes
+std::vector<std::vector<unsigned long long int>> constructAllOutfluxes( const std::vector<std::vector<int>>& lists, int root ) {
+    std::vector<std::vector<unsigned long long int>> result;
+    
+    // initiate the process by using all entries of lists[ 0 ]
+    for ( int i = lists[ 0 ][ 0 ]; i <= lists[ 0 ][ 1 ]; i++ ){
+        result.push_back( { (unsigned long long int) i } );
     }
-    result = temp;
-  }
-  return result;
+    
+    // iterate
+    for ( int i = 1; i < lists.size() - 1; i++ ) {
+        
+        // create temporary vector
+        std::vector<std::vector<unsigned long long int>> temp;        
+        for ( int j = 0; j < result.size(); j++ ){
+            for ( int k = lists[ i ][ 0 ]; k <= lists[ i ][ 1 ]; k++ ){
+                
+                // to every element in result, add every element from lists[ i ]
+                std::vector<unsigned long long int> e_tmp = { result[ j ] };
+                e_tmp.push_back( (unsigned long long int) k );
+                temp.push_back( e_tmp );
+                
+            }
+        }
+        
+        // overwrite result with this temporary list
+        result = temp;
+        
+    }
+    
+    // in the final step, only allow fluxes, such that they are divisible by r
+    std::vector<std::vector<unsigned long long int>> temp;        
+    for ( int j = 0; j < result.size(); j++ ){
+        for ( int k = lists[ lists.size() - 1 ][ 0 ]; k <= lists[ lists.size() - 1 ][ 1 ]; k++ ){
+            
+            // to every element in result, add every element from lists[ lists.size()-1 ]
+            std::vector<unsigned long long int> e_tmp = { result[ j ] };
+            e_tmp.push_back( (unsigned long long int) k );
+            
+            // check if divisible by r
+            int total = std::accumulate( e_tmp.begin(), e_tmp.end(), 0 );
+            if ( total % root == 0 ){
+                temp.push_back( e_tmp );
+            }
+            
+        }
+    }
+    
+    return temp;
+    
 }
