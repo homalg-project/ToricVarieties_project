@@ -248,10 +248,10 @@ int main(int argc, char* argv[]) {
     for ( int i = 0; i < dist_H2.size(); i++ ){
         int k = std::distance( std::begin( dist_H2[ i ] ), std::find_if( std::begin( dist_H2[ i ] ), std::end( dist_H2[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
         if ( k < min_H2 ){
-            k = min_H2;
+            min_H2 = k;
         }
         if ( k = 0 ){
-            k = min_H2;
+            min_H2 = k;
             break;
         }
     }
