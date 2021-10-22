@@ -78,31 +78,32 @@ void compute_distribution(
     int number_components = legs_per_component_halved.size();
     std::vector<unsigned long long int> f1, f2, f3;
     std::vector<boost::multiprecision::int128_t> d1, d2, d3;
-    int m1, m2, m3;
     std::vector<int> change ( status.size(), 0 );
     
-    // (2) Form H1 map for quick access (-> Hash table)
+    // (1.1) Compute minima of H1 and H2 distributions
+    std::vector<int> m1;
+    for ( int i = 0; i < dist_H1filtered.size(); i++ ){
+        m1.push_back( std::distance( std::begin( dist_H1filtered[ i ] ), std::find_if( std::begin( dist_H1filtered[ i ] ), std::end( dist_H1filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) ) );
+    }
+
+    // (2) Form H2 map for quick access (-> Hash table)    
     std::map<std::vector<unsigned long long int>, std::vector<boost::multiprecision::int128_t>> mapH2;
-    for ( int i = 0; i < outfluxes_H2filtered.size(); i ++ ){
+    int m2;
+    std::map<std::vector<unsigned long long int>, int> mapm2;
+    for ( int i = 0; i < dist_H2filtered.size(); i++ ){
         mapH2.insert( std::make_pair( outfluxes_H2filtered[ i ], dist_H2filtered[ i ] ) );
+        m2 = std::distance( std::begin( dist_H2filtered[ i ] ), std::find_if( std::begin( dist_H2filtered[ i ] ), std::end( dist_H2filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
+        mapm2.insert( std::make_pair( outfluxes_H2filtered[ i ], m2 ) );
     }
     
     // (3) Loop over H1-fluxes
     for ( int i = start; i <= stop; i++ ){
         
-        // (3.0) Distribution on H1
-        d1 = dist_H1filtered[ i ];
-        m1 = std::distance( std::begin( dist_H1filtered[ i ] ), std::find_if( std::begin( dist_H1filtered[ i ] ), std::end( dist_H1filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-        
         // (3.1) Loop over H3 fluxes
         for ( int j = i+1; j < outfluxes_H1filtered.size(); j++ ){
             
-            // (3.1.0) Distribution on H3
-            d3 = dist_H1filtered[ j ];
-            m3 = std::distance( std::begin( dist_H1filtered[ j ] ), std::find_if( std::begin( dist_H1filtered[ j ] ), std::end( dist_H1filtered[ j ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-            
             // (3.1.1) Only proceed if m1 + min_H2 + m3 does not exceed the prescribed h0 limit
-            if ( m1 + min_H2 + m3 < res.size() ){
+            if ( m1[ i ] + min_H2 + m1[ j ] < res.size() ){
             
                 // (3.1.2) Compute H2 flux f2
                 std::vector<unsigned long long int> f2;
@@ -113,12 +114,8 @@ void compute_distribution(
                 // (3.1.3) Only proceed if H2 flux f2 has non-trivial distribution
                 if ( mapH2.find( f2 ) != mapH2.end() ){
                     
-                    // (3.1.4) find distribution on H2
-                    d2 = mapH2[ f2 ];
-                    m2 = std::distance( std::begin( d2 ), std::find_if( std::begin( d2 ), std::end( d2 ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-                    
                     // (3.1.5) only proceed if necessary
-                    if ( m1 + m2 + m3 < res.size() ){
+                    if ( m1[ i ] + mapm2[ f2 ] + m1[ j ] < res.size() ){
                         
                         // Compute combinatorial factor
                         boost::multiprecision::int128_t factor = 1;
@@ -127,6 +124,9 @@ void compute_distribution(
                         }
                         
                         // Update resulting distribution
+                        d1 = dist_H1filtered[ i ];
+                        d2 = mapH2[ f2 ];
+                        d3 = dist_H1filtered[ j ];
                         for ( int a1 = 0; a1 < d1.size(); a1++ ){
                             for ( int a2 = 0; a2 < d2.size(); a2++ ){
                                 for ( int a3 = 0; a3 < d3.size(); a3++ ){
@@ -190,13 +190,22 @@ void compute_diagonal_distribution(
     int number_components = legs_per_component_halved.size();
     std::vector<unsigned long long int> f1, f2, f3;
     std::vector<boost::multiprecision::int128_t> d1, d2, d3;
-    int m1, m2, m3;
     std::vector<int> change ( status.size(), 0 );
     
-    // (2) Form H1 map for quick access (-> Hash table)
+    // (1.1) Compute minima of H1 and H2 distributions
+    std::vector<int> m1;
+    for ( int i = 0; i < dist_H1filtered.size(); i++ ){
+        m1.push_back( std::distance( std::begin( dist_H1filtered[ i ] ), std::find_if( std::begin( dist_H1filtered[ i ] ), std::end( dist_H1filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) ) );
+    }
+    
+    // (2) Form H2 map for quick access (-> Hash table)    
     std::map<std::vector<unsigned long long int>, std::vector<boost::multiprecision::int128_t>> mapH2;
-    for ( int i = 0; i < outfluxes_H2filtered.size(); i ++ ){
+    int m2;
+    std::map<std::vector<unsigned long long int>, int> mapm2;
+    for ( int i = 0; i < dist_H2filtered.size(); i++ ){
         mapH2.insert( std::make_pair( outfluxes_H2filtered[ i ], dist_H2filtered[ i ] ) );
+        m2 = std::distance( std::begin( dist_H2filtered[ i ] ), std::find_if( std::begin( dist_H2filtered[ i ] ), std::end( dist_H2filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
+        mapm2.insert( std::make_pair( outfluxes_H2filtered[ i ], m2 ) );
     }
     
     // (3) Identify total number of computations
@@ -206,19 +215,11 @@ void compute_diagonal_distribution(
     // (4) Loop over H1-fluxes
     for ( int i = start; i <= stop; i++ ){
         
-        // (4.0) Distribution on H1
-        d1 = dist_H1filtered[ i ];
-        m1 = std::distance( std::begin( dist_H1filtered[ i ] ), std::find_if( std::begin( dist_H1filtered[ i ] ), std::end( dist_H1filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-        
         // (4.1) Loop over H3 fluxes
         for ( int j = i+1; j < outfluxes_H1filtered.size(); j++ ){
             
-            // (4.1.0) Distribution on H3
-            d3 = dist_H1filtered[ j ];
-            m3 = std::distance( std::begin( dist_H1filtered[ j ] ), std::find_if( std::begin( dist_H1filtered[ j ] ), std::end( dist_H1filtered[ j ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-            
             // (4.1.1) Only proceed if m1 + min_H2 + m3 does not exceed the prescribed h0 limit
-            if ( m1 + min_H2 + m3 < res.size() ){
+            if ( m1[ i ] + min_H2 + m1[ j ] < res.size() ){
             
                 // (4.1.2) Compute H2 flux f2
                 std::vector<unsigned long long int> f2;
@@ -229,12 +230,8 @@ void compute_diagonal_distribution(
                 // (4.1.3) Only proceed if H2 flux f2 has non-trivial distribution
                 if ( mapH2.find( f2 ) != mapH2.end() ){
                     
-                    // (4.1.4) find distribution on H2
-                    d2 = mapH2[ f2 ];
-                    m2 = std::distance( std::begin( d2 ), std::find_if( std::begin( d2 ), std::end( d2 ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-                    
-                    // (4.1.5) only proceed if necessary
-                    if ( m1 + m2 + m3 < res.size() ){
+                    // (4.1.4) only proceed if necessary
+                    if ( m1[ i ] + mapm2[ f2 ] + m1[ j ] < res.size() ){
                         
                         // Compute combinatorial factor
                         boost::multiprecision::int128_t factor = 1;
@@ -243,6 +240,9 @@ void compute_diagonal_distribution(
                         }
                         
                         // Update resulting distribution
+                        d1 = dist_H1filtered[ i ];
+                        d2 = mapH2[ f2 ];
+                        d3 = dist_H1filtered[ j ];
                         for ( int a1 = 0; a1 < d1.size(); a1++ ){
                             for ( int a2 = 0; a2 < d2.size(); a2++ ){
                                 for ( int a3 = 0; a3 < d3.size(); a3++ ){
@@ -272,36 +272,23 @@ void compute_diagonal_distribution(
         res[ i ] = ( (boost::multiprecision::int128_t) 2 ) * res[ i ];
     }
     
-    // (6) Loop over diagonal (H1) fluxes
+    // (6) Loop over diagonal (H1) fluxes: H3-flux = H1-flux
     for ( int i = 0; i <= outfluxes_H1filtered.size()-1; i++ ){
         
-        // (6.1) Distribution on H1
-        d1 = dist_H1filtered[ i ];
-        m1 = std::distance( std::begin( dist_H1filtered[ i ] ), std::find_if( std::begin( dist_H1filtered[ i ] ), std::end( dist_H1filtered[ i ] ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-        
-        // (6.2) Pick same H3-flux
-        int j = i;
-        d3 = d1;
-        m3 = m1;
-        
-        // (6.3) Only proceed if necessary
-        if ( m1 + min_H2 + m3 < res.size() ){
+        // (6.1) Only proceed if necessary
+        if ( m1[ i ] + min_H2 + m1[ i ] < res.size() ){
             
-            // (6.3.1) Compute H2 flux f2
+            // (6.2.1) Compute H2 flux f2
             std::vector<unsigned long long int> f2;
             for ( int c = 0; c < number_components; c++ ){
-                f2.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H1filtered[ j ][ c ] ) );
+                f2.push_back( (unsigned long long int) ( 3 *  legs_per_component_halved[ c ] * root - outfluxes_H1filtered[ i ][ c ] - outfluxes_H1filtered[ i ][ c ] ) );
             }
             
-            // (6.3.2) Only proceed if H2 flux f2 has non-trivial distribution
+            // (6.2.2) Only proceed if H2 flux f2 has non-trivial distribution
             if ( mapH2.find( f2 ) != mapH2.end() ){
                 
-                // (6.3.3) distribution on H2
-                d2 = mapH2[ f2 ];
-                m2 = std::distance( std::begin( d2 ), std::find_if( std::begin( d2 ), std::end( d2 ), [](boost::multiprecision::int128_t x) { return x != 0; }) );
-                
-                // (6.3.4) only proceed if necessary
-                if ( m1 + m2 + m3 < res.size() ){
+                // (6.2.3) only proceed if necessary
+                if ( m1[ i ] + mapm2[ f2 ] + m1[ i ] < res.size() ){
                     
                     // Compute combinatorial factor
                     boost::multiprecision::int128_t factor = 1;
@@ -310,6 +297,9 @@ void compute_diagonal_distribution(
                     }
                     
                     // Update resulting distribution
+                    d1 = dist_H1filtered[ i ];
+                    d2 = mapH2[ f2 ];
+                    d3 = d1;
                     for ( int a1 = 0; a1 < d1.size(); a1++ ){
                         for ( int a2 = 0; a2 < d2.size(); a2++ ){
                             for ( int a3 = 0; a3 < d3.size(); a3++ ){
