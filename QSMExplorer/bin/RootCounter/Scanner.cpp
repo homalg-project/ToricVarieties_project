@@ -1,12 +1,14 @@
 void UpdateCollectedData( std::vector<std::vector<unsigned long long int>>& collector1,
                                             std::vector<std::vector<boost::multiprecision::int128_t>>& collector2,
-                                            std::vector<unsigned long long int> & change1,
-                                            std::vector<boost::multiprecision::int128_t> & change2 )
+                                            std::vector<std::vector<unsigned long long int>> & change1,
+                                            std::vector<std::vector<boost::multiprecision::int128_t>> & change2 )
 {
     
     boost::mutex::scoped_lock lock(myGuard);
-    collector1.push_back( change1 );
-    collector2.push_back( change2 );
+    for ( int i = 0; i < change1.size(); i++ ){
+        collector1.push_back( change1[ i ] );
+        collector2.push_back( change2[ i ] );
+    }
     
 }
 
@@ -75,39 +77,41 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
     int number_sub_threads = 1;
     int h0MinUsed = 0;
     int progress = 0;
-     
+    
     // (2) Iterate
+    std::vector<std::vector<unsigned long long int>> out1;
+    std::vector<std::vector<unsigned long long int>> out2;
+    std::vector<std::vector<boost::multiprecision::int128_t>> d1;
+    std::vector<std::vector<boost::multiprecision::int128_t>> d2;
     for ( int i = start; i <= stop; i++ ){
 
-        // (2.1) Compute total outflux
+        // (2.1) Compute total outflux and continue only if it is divisible by the root
         int total_flux = std::accumulate( all_outfluxes[ i ].begin(), all_outfluxes[ i ].end(), 0 );
+        if ( total_flux % root == 0 ){
         
-        // (2.2) Generate weights for the outflux
-        std::vector<int> external_weights( number_external_legs );
-        int iterator = 0;
-        for ( int j = 0; j < legs_per_component.size(); j++ ){
-            
-            int flux_for_component = all_outfluxes[ i ][ j ];
-            int leg_number = legs_per_component[ j ];
-            int remaining_legs = leg_number;
-            
-            for ( int k = 0; k < leg_number; k++ ){
-                external_weights[ iterator ] = flux_for_component / remaining_legs;
-                flux_for_component = flux_for_component - ( flux_for_component / remaining_legs );
-                remaining_legs = remaining_legs - 1;
-                iterator = iterator + 1;
+            // (2.2) Generate weights for the outflux
+            std::vector<int> external_weights( number_external_legs );
+            int iterator = 0;
+            for ( int j = 0; j < legs_per_component.size(); j++ ){
+                
+                int flux_for_component = all_outfluxes[ i ][ j ];
+                int leg_number = legs_per_component[ j ];
+                int remaining_legs = leg_number;
+                
+                for ( int k = 0; k < leg_number; k++ ){
+                    external_weights[ iterator ] = flux_for_component / remaining_legs;
+                    flux_for_component = flux_for_component - ( flux_for_component / remaining_legs );
+                    remaining_legs = remaining_legs - 1;
+                    iterator = iterator + 1;
+                }
+                
             }
             
-        }
-        
-        // (2.3) Compute corresponding distribution on H1
-        bool display = false;
-        if ( ( total_degree_H1 - total_flux ) % root == 0 ){
+            // (2.3) Do not display intermediate steps
+            bool display = false;
             
-            // Construct weighted H1-diagram
+            // (2.4) Compute corresponding distribution on H1
             WeightedDiagramWithExternalLegs dia_H1 = WeightedDiagramWithExternalLegs( vertices, degrees_H1, genera, edges, external_legs, external_weights, genus, root );
-            
-            // Only proceed if situation is not automatically degenerate
             h0MinUsed = dia_H1.get_h0_min();
             if ( h0Max >= h0MinUsed ){
                 
@@ -128,20 +132,15 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
                     }
                     
                     // And remember this result
-                    UpdateCollectedData( outfluxes_H1, dist_H1, all_outfluxes[ i ], dist );
+                    out1.push_back( all_outfluxes[ i ] );
+                    d1.push_back( dist );
                     
                 }
                 
             }
-        }
-        
-        // (2.4) Compute corresponding distribution on H2
-        if ( ( total_degree_H2 - total_flux ) % root == 0 ){
             
-            // Construct weighted H2-diagram
+            // (2.5) Compute corresponding distribution on H2
             WeightedDiagramWithExternalLegs dia_H2 = WeightedDiagramWithExternalLegs( vertices, degrees_H2, genera, edges, external_legs, external_weights, genus, root );
-            
-            // Only proceed if situation is not automatically degenerate
             h0MinUsed = dia_H2.get_h0_min();
             if ( h0Max >= h0MinUsed ){
                 
@@ -162,15 +161,16 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
                     }
                     
                     // And remember this result
-                    UpdateCollectedData( outfluxes_H2, dist_H2, all_outfluxes[ i ], dist );
-                
+                    out2.push_back( all_outfluxes[ i ] );
+                    d2.push_back( dist );
+                    
                 }
             
             }
         
         }
     
-        // (2.5) Display status
+        // (2.6) Display status
         if ( start == stop ){
             progress = 100;
             UpdateStatus( status, thread_number, progress );
@@ -184,7 +184,9 @@ void FluxScanner(    std::vector<std::vector<unsigned long long int>> all_outflu
         
     }
     
-    // Final update - scan thread is complete
+    // (2.7) Update results
+    UpdateCollectedData( outfluxes_H1, dist_H1, out1, d1 );
+    UpdateCollectedData( outfluxes_H2, dist_H2, out2, d2 );
     progress = 100;
     UpdateStatus( status, thread_number, progress );
     
