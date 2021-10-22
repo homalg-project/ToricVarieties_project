@@ -334,6 +334,7 @@ int main(int argc, char* argv[]) {
     // (6) Print result
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     if ( display_details ){
+        std::cout << "\n\n";
         std::cout << "##############\n";
         std::cout << "Found root distribution:\n";
         std::cout << "##############\n";
