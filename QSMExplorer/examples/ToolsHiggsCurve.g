@@ -53,3 +53,22 @@ n2 := LimitRootDistributionAlongHiggsPhilosophy( data, false );;
 n2;
 #! [ 8374246311441809, 852982581711208, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 #! @EndExample
+
+#! We can also first perform the divide step and then the conquer step.
+
+#! @Example
+genera := [ 0, 0, 0, 0, 0 ];;
+degrees_H1 := [ 4, 4, 4, 4, 4 ];;
+degrees_H2 := [ 0, 0, 0, 0, 0 ];;
+edges := [ [ 0, 1 ], [ 0, 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 3 ], [ 1, 3 ], [ 0, 3 ], [ 0, 3 ], [ 3, 4 ], [ 3, 4 ] ];;
+total_genus := 6;;
+root := 4;;
+external_legs := [ 4, 2, 2, 2, 4 ];;
+number_processes := 2;;
+h0Max := 10;;
+data := [ genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, number_processes, h0Max ];;
+LimitRootDistributionAlongHiggsPhilosophyDivide( data, false );;
+n2 := LimitRootDistributionAlongHiggsPhilosophyConquer( data, false );;
+n2;
+#! [ 8374246311441809, 852982581711208, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+#! @EndExample
