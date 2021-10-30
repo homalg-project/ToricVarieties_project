@@ -45,7 +45,7 @@ void UpdateStatusThreadSafe( std::vector<int>& status, int progress, int pos )
     status[ pos ] = progress;
     std::string output = "Status [%]: (";
     int s = 0;
-    for ( int i = 0; i < status.size() - 1; i ++ ){
+    for ( int i = 0; i < status.size(); i ++ ){
         s = s + status[ i ];
     }
     s = s / status.size();
