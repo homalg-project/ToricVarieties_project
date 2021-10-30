@@ -154,10 +154,56 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    // (1.6) Take time after intermediate step
+    // (1.6) Write intermediate results to files
+    if ( display_details ){
+        std::cout << "\n\n";
+        std::cout << "Write results to files";    
+    }
+    
+    std::string full_path = argv[ 0 ];
+    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
+    
+    std::ofstream out_file;
+    out_file.open( dir_path + "/f1.txt" );
+    for ( int i = 0; i < outfluxes_H1.size(); i++ ){
+        for ( int j = 0; j < outfluxes_H1[i].size() - 1; j ++ ){
+            out_file << outfluxes_H1[i][j] << ", ";
+        }
+        out_file << outfluxes_H1[i][outfluxes_H1[i].size()-1] << "\n";
+    }
+    out_file.close();
+    std::ofstream out_file2;
+    out_file2.open( dir_path + "/f2.txt" );
+    for ( int i = 0; i < outfluxes_H2.size(); i++ ){
+        for ( int j = 0; j < outfluxes_H2[i].size() - 1; j ++ ){
+            out_file2 << outfluxes_H2[i][j] << ", ";
+        }
+        out_file2 << outfluxes_H2[i][outfluxes_H2[i].size()-1] << "\n";
+    }
+    out_file.close();
+    std::ofstream out_file3;
+    out_file3.open( dir_path + "/d1.txt" );
+    for ( int i = 0; i < dist_H1.size(); i++ ){
+        for ( int j = 0; j < dist_H1[i].size() - 1; j ++ ){
+            out_file3 << dist_H1[i][j] << ", ";
+        }
+        out_file3 << dist_H1[i][dist_H1[i].size()-1] << "\n";
+    }
+    out_file3.close();
+    std::ofstream out_file4;
+    out_file4.open( dir_path + "/d2.txt" );
+    for ( int i = 0; i < dist_H2.size(); i++ ){
+        for ( int j = 0; j < dist_H2[i].size() - 1; j ++ ){
+            out_file4 << dist_H2[i][j] << ", ";
+        }
+        out_file4 << dist_H2[i][dist_H2[i].size()-1] << "\n";
+    }
+    out_file4.close();
+    
+    // (1.7) Take time after intermediate step
     std::chrono::steady_clock::time_point middle = std::chrono::steady_clock::now();
     
-    // (1.7) Inform what we have achieved
+    // (1.8) Inform what we have achieved
     if ( display_details ){
         std::cout << "\n\n";
         std::cout << "Non-trivial outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
@@ -259,8 +305,6 @@ int main(int argc, char* argv[]) {
         std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - middle).count() << "[s]\n\n";
     }
     std::ofstream ofile;
-    std::string full_path = argv[ 0 ];
-    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
     ofile.open( dir_path + "/result.txt" );
     ofile << "[ ";
     for ( int i = 0; i < final_dist.size() - 1; i ++ ){
