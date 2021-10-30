@@ -110,20 +110,21 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<boost::multiprecision::int128_t>> dist_H1, dist_H2;
     
     // (1.2) Read data
+    std::string full_path = argv[ 0 ];
+    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));    
     std::string line;
     unsigned long long int num;
     boost::multiprecision::int128_t precise_num;
-    std::ifstream infileF1("f1.txt");
+    std::ifstream infileF1(dir_path+"/f1.txt");
     while (std::getline(infileF1, line))
     {
         boost::erase_all(line, ",");
         std::istringstream iss(line);
         std::vector<long long unsigned int> flux;
         while (iss >> num){flux.push_back(num);}
-        std::cout << "\n\n";
         outfluxes_H1.push_back(flux);
     }
-    std::ifstream infileF2("f2.txt");
+    std::ifstream infileF2(dir_path+"/f2.txt");
     while (std::getline(infileF2, line))
     {
         boost::erase_all(line, ",");
@@ -132,7 +133,7 @@ int main(int argc, char* argv[]) {
         while (iss >> num){flux.push_back(num);}
         outfluxes_H2.push_back(flux);
     }
-    std::ifstream infileD1("d1.txt");
+    std::ifstream infileD1(dir_path+"/d1.txt");
     while (std::getline(infileD1, line))
     {
         boost::erase_all(line, ",");
@@ -141,7 +142,7 @@ int main(int argc, char* argv[]) {
         while (iss >> precise_num){dist.push_back(precise_num);}
         dist_H1.push_back(dist);
     }
-    std::ifstream infileD2("d2.txt");
+    std::ifstream infileD2(dir_path+"/d2.txt");
     while (std::getline(infileD2, line))
     {
         boost::erase_all(line, ",");
@@ -264,8 +265,8 @@ int main(int argc, char* argv[]) {
         std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]\n\n";
     }
     std::ofstream ofile;
-    std::string full_path = argv[ 0 ];
-    std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
+    //std::string full_path = argv[ 0 ];
+    //std::string dir_path = full_path.substr(0, full_path.find_last_of("."));
     ofile.open( dir_path + "/result.txt" );
     ofile << "[ ";
     for ( int i = 0; i < final_dist.size() - 1; i ++ ){
