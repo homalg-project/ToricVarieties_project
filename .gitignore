@@ -61,13 +61,14 @@ QSMExplorer/bin/RootCounter/HiggsMain.o
 QSMExplorer/bin/RootCounter/distributionCounterHiggsCurve
 QSMExplorer/bin/RootCounter/ConquerStep.o
 QSMExplorer/bin/RootCounter/conquerStep
+QSMExplorer/bin/RootCounter/DivideStep.o
+QSMExplorer/bin/RootCounter/divideStep
 QSMExplorer/bin/RootCounter/d1.txt
 QSMExplorer/bin/RootCounter/d2.txt
 QSMExplorer/bin/RootCounter/f1.txt
 QSMExplorer/bin/RootCounter/f2.txt
 QSMExplorer/boost/boost_1_77_0
 QSMExplorer/boost/library
-
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
