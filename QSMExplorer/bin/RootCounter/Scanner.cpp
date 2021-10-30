@@ -19,7 +19,7 @@ void UpdateStatus( std::vector<int>& status, int thread_number, int progress )
     status[ thread_number ] = progress;
     std::string output = "Status [%]: (";
     int s = 0;
-    for ( int i = 0; i < status.size() - 1; i ++ ){
+    for ( int i = 0; i < status.size(); i ++ ){
         s = s + status[ i ];
     }
     s = s / status.size();
