@@ -345,7 +345,7 @@ InstallMethod( LimitRootDistributionHiggsDivide, [ IsRecord, IsInt, IsBool ],
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
         # return result
-        return nr;        
+        return 0;        
         
 end );
 
