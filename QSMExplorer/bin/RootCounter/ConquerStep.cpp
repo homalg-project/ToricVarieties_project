@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
                 
                 // initialize variables
                 int pos = start - 1;
-                int tasks = 0;
+                boost::multiprecision::int128_t tasks = 0;
                 
                 if ( i < number_threads - 1 ){
                     
