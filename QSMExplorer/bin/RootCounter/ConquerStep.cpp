@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Non-trivial outfluxes H1: " << outfluxes_H1.size() << ", " << dist_H1.size() << "\n";
         std::cout << "Non-trivial outfluxes H2: " << outfluxes_H2.size() << ", " << dist_H2.size() << "\n";
         std::cout << "Global minimum on H2: " << min_H2 << "\n";
-        std::cout << "Now piece the local data together... \n\n";
+        std::cout << "Now piece the local data together in " << number_threads << " threads... \n\n";
     }
     
     // (2) Piece the data together
