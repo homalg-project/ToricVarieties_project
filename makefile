@@ -10,21 +10,21 @@ install: uninstall
 	( cd SpasmInterface; make install; cd .. )
 	( cd H0Approximator; make install; cd .. )
 	( cd QSMExplorer; make install; cd .. )
-	( cd TopcomInterface; make install; cd .. )
+	#( cd TopcomInterface; make install; cd .. )
 
 install-with-local-boost: uninstall
 	( cd QSMExplorer; make install-with-local-boost; cd .. )
 	( cd cohomCalgInterface; make install; cd .. )
 	( cd SpasmInterface; make install; cd .. )
 	( cd H0Approximator; make install; cd .. )
-	( cd TopcomInterface; make install; cd .. )
+	#( cd TopcomInterface; make install; cd .. )
 
 uninstall:
 	( cd cohomCalgInterface; make uninstall; cd .. )
 	( cd SpasmInterface; make uninstall; cd .. )
 	( cd H0Approximator; make uninstall; cd .. )
 	( cd QSMExplorer; make uninstall; cd .. )
-	( cd TopcomInterface; make uninstall; cd .. )
+	#( cd TopcomInterface; make uninstall; cd .. )
 
 AdditionsForToricVarieties_clean_tst:
 	cd AdditionsForToricVarieties/tst && ./clean
@@ -168,7 +168,7 @@ ci-test: doc_QSMExplorer doc
 	cd SparseMatrices && make ci-test
 	cd SpasmInterface && make ci-test
 	cd ToolsForFPGradedModules && make ci-test
-	cd TopcomInterface && make ci-test
+	#cd TopcomInterface && make ci-test
 	cd ToricVarieties && make ci-test
 	cd TruncationsOfFPGradedModules && make ci-test
 
