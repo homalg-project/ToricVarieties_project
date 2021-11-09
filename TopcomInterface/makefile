@@ -13,9 +13,9 @@ docclean:
 	(cd doc ; ./clean)
 
 install: uninstall
-	curl -sS http://www.rambau.wm.uni-bayreuth.de/Software/TOPCOM-0.17.8.tar.gz > Topcom.tar.gz
-	tar -xf Topcom.tar.gz
-	rm Topcom.tar.gz
+	curl -sS https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Downloads/TOPCOM-0_17_8.tgz > Topcom.tgz
+	tar -xf Topcom.tgz
+	rm Topcom.tgz
 	mv topcom* topcom
 	( cd topcom; ./configure CFLAGS="-m64" CXXFLAGS="-m64"; make -j $$(nproc) )
 
