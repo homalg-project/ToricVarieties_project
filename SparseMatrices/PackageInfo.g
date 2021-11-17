@@ -16,7 +16,7 @@ PackageName := "SparseMatrices",
 Subtitle := "A package to handle sparse matrices in gap",
 
 Version := Maximum( [
-   "2021.09.05",
+   "2021.11.17",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -47,7 +47,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/homalg-project/ToricVarieties_project/tree/master/SparseMatrices",
 ArchiveFormats := ".zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-09-05/SparseMatrices",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-11-17/SparseMatrices",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
