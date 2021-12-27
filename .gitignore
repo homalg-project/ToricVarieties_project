@@ -69,6 +69,8 @@ QSMExplorer/bin/RootCounter/f1.txt
 QSMExplorer/bin/RootCounter/f2.txt
 QSMExplorer/boost/boost_1_77_0
 QSMExplorer/boost/library
+QSMExplorer/bin/RootCounter/listOfOutfluxes
+QSMExplorer/bin/RootCounter/listOfOutfluxes.o
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*

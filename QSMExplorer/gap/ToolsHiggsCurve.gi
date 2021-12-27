@@ -637,3 +637,99 @@ InstallMethod( LimitRootDistributionAlongHiggsPhilosophyConquer, [ IsList, IsBoo
         return nr;        
         
 end );
+
+
+
+##############################################################################################
+##
+#! @Section Save all outfluxes
+##
+##############################################################################################
+
+InstallMethod( AllOutfluxesForHiggsCurveInQSMToFile, [ IsInt ],
+    function( index )
+        local data;
+        
+        data := ReadQSM( index );
+        if ( data <> fail ) then
+            return WriteOutfuxes( data );
+        fi;
+        
+end );
+
+InstallMethod( AllOutfluxesForHiggsCurveInQSMByPolytopeToFile, [ IsInt ],
+    function( index )
+        local data;
+        
+        data := ReadQSMByPolytope( index );
+        if ( data <> fail ) then
+            return WriteOutfuxes( data );
+        fi;
+        
+end );
+
+InstallMethod( WriteOutfuxes, [ IsRecord ],
+    function( data )
+        local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes, result_file, nr;
+        
+        # read-out the record for the required data
+        Kbar3 := Int( data.Kbar3 );
+        genera := EvalString( data.CiGenus );
+        degrees_H1 := ( 12 + 3 * Kbar3 ) * EvalString( data.CiDegreeKbar );
+        degrees_H2 := ( -18 + 3 * Kbar3 ) * EvalString( data.CiDegreeKbar );
+        edges := EvalString( data.EdgeList );
+        total_genus := Int( Kbar3/2 + 1 );
+        root := 2 * Kbar3;
+        
+        # construct the external legs
+        external_legs := 2 * EvalString( data.CiDegreeKbar );
+        
+        # find the number of processes
+        str := "";
+        a := OutputTextString(str,true);
+        dir := Directory( "/usr/bin" );
+        nproc := Filename( dir, "nproc" );
+        Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
+        number_processes := EvalString( str );
+        
+        # prepare empty streams for communication with Cpp
+        output_string := "";
+        output := OutputTextUser();
+        input_string := "";
+        input := InputTextString( input_string );
+        
+        # find the counter binary (and check if it exists)
+        dir := FindRootCounterDirectory();
+        bin := Filename( dir, "./listOfOutfluxes" );
+        if not IsExistingFile( bin ) then
+            Error( "./listOfOutfluxes is not available in designed folder" );
+        fi;
+        
+        # options convey the necessary information about the nodal curve
+        options := Concatenation( String( Length( genera ) ), " " );
+        for i in [ 1 .. Length( degrees_H1 ) ] do
+            options := Concatenation( options, String( degrees_H1[ i ] ), " " );
+        od;
+        for i in [ 1 .. Length( degrees_H2 ) ] do
+            options := Concatenation( options, String( degrees_H2[ i ] ), " " );
+        od;
+        for i in [ 1 .. Length( genera ) ] do
+            options := Concatenation( options, String( genera[ i ] ), " " );
+        od;
+        options := Concatenation( options, String( Length( edges ) ), " " );
+        for i in [ 1 .. Length( edges ) ] do
+            options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
+        od;
+        for i in [ 1 .. Length( external_legs ) ] do
+            options := Concatenation( options, String( external_legs[ i ] ), " " );
+        od;
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( 0 ) );
+        options := Concatenation( options, " ", String( 1 ) );
+        
+        # trigger the binary
+        Process( DirectoryCurrent(), bin, input, output, [ options ] );
+        
+        # return
+        return true;
+        
+end );
