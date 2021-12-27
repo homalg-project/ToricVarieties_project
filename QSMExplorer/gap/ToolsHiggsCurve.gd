@@ -84,3 +84,24 @@ DeclareOperation( "LimitRootDistributionHiggsConquer", [ IsRecord, IsInt, IsBool
 DeclareOperation( "LimitRootDistributionAlongHiggsPhilosophy", [ IsList, IsBool ] );
 DeclareOperation( "LimitRootDistributionAlongHiggsPhilosophyDivide", [ IsList, IsBool ] );
 DeclareOperation( "LimitRootDistributionAlongHiggsPhilosophyConquer", [ IsList, IsBool ] );
+
+
+
+##############################################################################################
+##
+#! @Section Save all outfluxes
+##
+##############################################################################################
+
+#! @Description
+#! This operation saves all outfluxes in a file.
+#! @Returns true on success and errors otherwise.
+#! @Arguments
+DeclareOperation( "AllOutfluxesForHiggsCurveInQSMToFile", [ IsInt ] );
+
+#! @Description
+#! This operation saves all outfluxes in a file.
+#! @Returns true on success and errors otherwise.
+#! @Arguments
+DeclareOperation( "AllOutfluxesForHiggsCurveInQSMByPolytopeToFile", [ IsInt ] );
+DeclareOperation( "WriteOutfuxes", [ IsRecord ] );
