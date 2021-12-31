@@ -642,34 +642,34 @@ end );
 
 ##############################################################################################
 ##
-#! @Section Save all outfluxes
+##  Save all outfluxes
 ##
 ##############################################################################################
 
-InstallMethod( AllOutfluxesForHiggsCurveInQSMToFile, [ IsInt ],
-    function( index )
+InstallMethod( AllOutfluxesForHiggsCurveInQSMToFile, [ IsInt, IsInt ],
+    function( index, h0Max )
         local data;
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return WriteOutfuxes( data );
+            return WriteOutfuxes( data, h0Max );
         fi;
         
 end );
 
-InstallMethod( AllOutfluxesForHiggsCurveInQSMByPolytopeToFile, [ IsInt ],
-    function( index )
+InstallMethod( AllOutfluxesForHiggsCurveInQSMByPolytopeToFile, [ IsInt, IsInt ],
+    function( index, h0Max )
         local data;
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return WriteOutfuxes( data );
+            return WriteOutfuxes( data, h0Max );
         fi;
         
 end );
 
-InstallMethod( WriteOutfuxes, [ IsRecord ],
-    function( data )
+InstallMethod( WriteOutfuxes, [ IsRecord, IsInt ],
+    function( data, h0Max )
         local Kbar3, genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, external_edges, i, j, dir, bin, output, output_string, input, input_string, options, str, a, nproc, number_processes, result_file, nr;
         
         # read-out the record for the required data
@@ -723,7 +723,7 @@ InstallMethod( WriteOutfuxes, [ IsRecord ],
         for i in [ 1 .. Length( external_legs ) ] do
             options := Concatenation( options, String( external_legs[ i ] ), " " );
         od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( 0 ) );
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( h0Max ) );
         options := Concatenation( options, " ", String( 1 ) );
         
         # trigger the binary
