@@ -97,11 +97,11 @@ DeclareOperation( "LimitRootDistributionAlongHiggsPhilosophyConquer", [ IsList, 
 #! This operation saves all outfluxes in a file.
 #! @Returns true on success and errors otherwise.
 #! @Arguments
-DeclareOperation( "AllOutfluxesForHiggsCurveInQSMToFile", [ IsInt ] );
+DeclareOperation( "AllOutfluxesForHiggsCurveInQSMToFile", [ IsInt, IsInt ] );
 
 #! @Description
 #! This operation saves all outfluxes in a file.
 #! @Returns true on success and errors otherwise.
 #! @Arguments
-DeclareOperation( "AllOutfluxesForHiggsCurveInQSMByPolytopeToFile", [ IsInt ] );
-DeclareOperation( "WriteOutfuxes", [ IsRecord ] );
+DeclareOperation( "AllOutfluxesForHiggsCurveInQSMByPolytopeToFile", [ IsInt, IsInt ] );
+DeclareOperation( "WriteOutfuxes", [ IsRecord, IsInt ] );

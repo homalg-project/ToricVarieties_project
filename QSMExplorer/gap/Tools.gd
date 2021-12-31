@@ -40,6 +40,13 @@ DeclareOperation( "FindDualGraphScript", [ ] );
 DeclareOperation( "FindRootCounterDirectory", [ ] );
 
 
+#! @Description
+#! This operation identifies the location of the C++-program which computes the speciality of a linear series.
+#! @Returns the directory in which the binary is contained
+#! @Arguments none
+DeclareOperation( "FindSpecialityDirectory", [ ] );
+
+
 ##############################################################################################
 ##
 #! @Section Read information from database

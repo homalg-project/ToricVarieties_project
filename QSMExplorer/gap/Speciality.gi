@@ -53,7 +53,7 @@ InstallMethod( Speciality, [ IsList, IsList, IsBool ],
         number_processes := EvalString( str );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindSpecialityDirectory();
         bin := Filename( dir, "./specialityChecker" );
         if not IsExistingFile( bin ) then
             Error( "./specialityChecker is not available in designed folder" );

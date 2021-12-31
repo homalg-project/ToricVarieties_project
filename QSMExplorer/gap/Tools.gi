@@ -101,7 +101,33 @@ InstallMethod( FindRootCounterDirectory,
     package_directory := DirectoriesPackageLibrary( "QSMExplorer", "bin/RootCounter" );
     if Length( package_directory ) > 1 then
         
-        Error( "Found at least two versions of QSMExplorer - unable to determine ./counter" );
+        Error( "Found at least two versions of QSMExplorer - unable to determine ./distributionCounter" );
+        return;
+        
+    else
+        dir := package_directory[ 1 ];
+    fi;
+    
+    # return the result
+    return dir;
+    
+end );
+
+
+InstallMethod( FindSpecialityDirectory,
+               "",
+               [ ],
+  function( )
+  local package_directory, dir;
+    
+    # Initialse binary as fail and try in the following to do better
+    dir := fail;
+    
+    # Binary provided with QSMExplorer package
+    package_directory := DirectoriesPackageLibrary( "QSMExplorer", "bin/Speciality" );
+    if Length( package_directory ) > 1 then
+        
+        Error( "Found at least two versions of QSMExplorer - unable to determine ./specialityChecker" );
         return;
         
     else

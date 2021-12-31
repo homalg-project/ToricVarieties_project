@@ -193,20 +193,20 @@ CountMinimalLimitRootsOfQSM( 1 );
 #! @Example
 n := CountMinimalLimitRootsOfQSMByPolytope( 8, false );;
 n;
-#! [ 142560 ]
+#! [ 0, 0, 0, 142560 ]
 n := CountMinimalLimitRootsOfQSM( 1, false );;
 n;
-#! [ 11110 ]
+#! [ 0, 0, 0, 11110 ]
 #! @EndExample
 
 #! We can also wonder how many limit roots exist with number of global sections at most L. For example, this is achieved by the following:
 #! @Example
 n1 := CountLimitRootDistributionOfQSMByPolytope( 8, 3, 4, false );;
 n1;
-#! [ 142560, 0 ]
+#! [ 0, 0, 0, 142560, 0 ]
 n2 := CountLimitRootDistributionOfQSM( 10, 3, 6, false );;
 n2;
-#! [ 781680888, 25196800, 106800, 0 ]
+#! [ 0, 0, 0, 781680888, 25196800, 106800, 0 ]
 #! @EndExample
 
 #! We can also compute the root distribution with weights on external legs of the quark doublet curve. Here is an example:
@@ -215,7 +215,7 @@ dist := CountLimitRootDistributionWithExternalLegsOfQSM( 1, 0, 4, [ 1,1,11,11,11
 dist;
 #! [ 1716, 8325, 1260, 0, 0 ]
 dist2 := CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( 8, 0, 4, [ 1, 11, 11, 11, 1, 1 ], false );
-#! [ 1573, 110160, 36288, 0, 0 ]
+#! [ 1573, 109395, 36036, 0, 0 ]
 #! @EndExample
 
 #! We can also perform a sufficient test to tell if the K3s are elliptic. To this end, it suffices to find an element of Pic( K3 ) with vanishing self-intersection number
@@ -364,78 +364,78 @@ SimplifiedDualGraphWithExternalLegsOfQSMByPolytope( 8 );;
 #! We verify that the results computed in our PRD letter for the spaces with Kbar^3 = 6 are still reproduced by this software:
 #! @Example
 CountMinimalLimitRootsOfQSMByPolytope( 8, false );
-#! [ 142560 ]
+#! [ 0, 0, 0, 142560 ]
 CountMinimalLimitRootsOfQSMByPolytope( 4, false );
-#! [ 11110 ]
+#! [ 0, 0, 0, 11110 ]
 CountMinimalLimitRootsOfQSMByPolytope( 134, false );
-#! [ 10010 ]
+#! [ 0, 0, 0, 10010 ]
 CountMinimalLimitRootsOfQSMByPolytope( 128, false );
-#! [ 8910 ]
+#! [ 0, 0, 0, 8910 ]
 CountMinimalLimitRootsOfQSMByPolytope( 130, false );
-#! [ 8910 ]
+#! [ 0, 0, 0, 8910 ]
 CountMinimalLimitRootsOfQSMByPolytope( 136, false );
-#! [ 8910 ]
+#! [ 0, 0, 0, 8910 ]
 CountMinimalLimitRootsOfQSMByPolytope( 236, false );
-#! [ 8910 ]
+#! [ 0, 0, 0, 8910 ]
 #! @EndExample
 
 #! Finally, we also verify that the results computed in our PRD letter for some spaces with Kbar^3 = 10 are still reproduced by this software:
 #! @Example
 CountMinimalLimitRootsOfQSMByPolytope( 88, false );
-#! [ 781680888 ]
+#! [ 0, 0, 0, 781680888 ]
 CountMinimalLimitRootsOfQSMByPolytope( 110, false );
-#! [ 738662983 ]
+#! [ 0, 0, 0, 738662983 ]
 CountMinimalLimitRootsOfQSMByPolytope( 272, false );
-#! [ 736011640 ]
+#! [ 0, 0, 0, 736011640 ]
 CountMinimalLimitRootsOfQSMByPolytope( 274, false );
-#! [ 736011640 ]
+#! [ 0, 0, 0, 736011640 ]
 CountMinimalLimitRootsOfQSMByPolytope( 387, false );
-#! [ 733798300 ]
+#! [ 0, 0, 0, 733798300 ]
 #! @EndExample
 
 #! The remaining results can be checked analogousyl as follows:
 
-#! @Log
+#! @Example
 CountMinimalLimitRootsOfQSMByPolytope( 798, false );
-#! [ 690950608 ]
+#! [ 0, 0, 0, 690950608 ]
 CountMinimalLimitRootsOfQSMByPolytope( 808, false );
-#! [ 690950608 ]
+#! [ 0, 0, 0, 690950608 ]
 CountMinimalLimitRootsOfQSMByPolytope( 810, false );
-#! [ 690950608 ]
+#! [ 0, 0, 0, 690950608 ]
 CountMinimalLimitRootsOfQSMByPolytope( 812, false );
-#! [ 690950608 ]
+#! [ 0, 0, 0, 690950608 ]
 CountMinimalLimitRootsOfQSMByPolytope( 254, false );
-#! [ 35004914 ]
+#! [ 0, 0, 0, 35004914 ]
 CountMinimalLimitRootsOfQSMByPolytope( 52, false );
-#! [ 34980351 ]
+#! [ 0, 0, 0, 34980351 ]
 CountMinimalLimitRootsOfQSMByPolytope( 302, false );
-#! [ 34980682 ]
+#! [ 0, 0, 0, 34908682 ]
 CountMinimalLimitRootsOfQSMByPolytope( 786, false );
-#! [ 32860461 ]
+#! [ 0, 0, 0, 32860461 ]
 CountMinimalLimitRootsOfQSMByPolytope( 762, false );
-#! [ 32858151 ]
+#! [ 0, 0, 0, 32858151 ]
 CountMinimalLimitRootsOfQSMByPolytope( 417, false );
-#! [ 32857596 ]
+#! [ 0, 0, 0, 32857596 ]
 CountMinimalLimitRootsOfQSMByPolytope( 838, false );
-#! [ 32845047 ]
+#! [ 0, 0, 0, 32845047 ]
 CountMinimalLimitRootsOfQSMByPolytope( 782, false );
-#! [ 32844379 ]
+#! [ 0, 0, 0, 32844379 ]
 CountMinimalLimitRootsOfQSMByPolytope( 377, false );
-#! [ 30846440 ]
+#! [ 0, 0, 0, 30846440 ]
 CountMinimalLimitRootsOfQSMByPolytope( 499, false );
-#! [ 30846440 ]
+#! [ 0, 0, 0, 30846440 ]
 CountMinimalLimitRootsOfQSMByPolytope( 503, false );
-#! [ 30846440 ]
+#! [ 0, 0, 0, 30846440 ]
 CountMinimalLimitRootsOfQSMByPolytope( 1348, false );
-#! [ 30845702 ]
+#! [ 0, 0, 0, 30845702 ]
 CountMinimalLimitRootsOfQSMByPolytope( 882, false );
-#! [ 30840098 ]
+#! [ 0, 0, 0, 30840098 ]
 CountMinimalLimitRootsOfQSMByPolytope( 1340, false );
-#! [ 28954543 ]
+#! [ 0, 0, 0, 28954543 ]
 CountMinimalLimitRootsOfQSMByPolytope( 1879, false );
-#! [ 28950852 ]
+#! [ 0, 0, 0, 28950852 ]
 CountMinimalLimitRootsOfQSMByPolytope( 1384, false );
-#! [ 27178020 ]
+#! [ 0, 0, 0, 27178020 ]
 CountMinimalLimitRootsOfQSMByPolytope( 856, false );
-#! [ 22807749 ]
-#! @EndLog
+#! [ 0, 0, 0, 30840098 ]
+#! @EndExample
