@@ -70,9 +70,8 @@ external_legs := [ 4, 2, 2, 2, 4 ];;
 number_processes := 2;;
 h0Max := 10;;
 data := [ genera, degrees_H1, degrees_H2, edges, total_genus, root, external_legs, number_processes, h0Max ];;
+LimitRootDistributionAlongHiggsPhilosophyDivide( data, false );;
+n2 := LimitRootDistributionAlongHiggsPhilosophyConquer( data, false );;
+n2;
+#! [ 8374246311441809, 852982581711208, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 #! @EndExample
-
-# LimitRootDistributionAlongHiggsPhilosophyDivide( data, false );;
-# n2 := LimitRootDistributionAlongHiggsPhilosophyConquer( data, false );;
-# n2;
-# #! [ 8374246311441809, 852982581711208, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
