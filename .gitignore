@@ -52,17 +52,18 @@ H0Approximator/bin/*
 */coverage*
 */performance*
 
+QSMExplorer/bin/RootCounterHiggs/ConquerStep.cpp
+QSMExplorer/bin/RootCounterHiggs/ConquerStep.o
+QSMExplorer/bin/RootCounterHiggs/DivideStep.cpp
+QSMExplorer/bin/RootCounterHiggs/DivideStep.o
+QSMExplorer/bin/RootCounterHiggs/RootCounter/distributionCounter
+QSMExplorer/bin/RootCounterHiggs/RootCounter/main.o
+QSMExplorer/bin/RootCounterHiggs/conquerStep
+QSMExplorer/bin/RootCounterHiggs/divideStep
 QSMExplorer/bin/RootCounterHiggs/distributionCounterHiggsCurve
 QSMExplorer/bin/RootCounterHiggs/HiggsMain.o
-QSMExplorer/bin/RootCounter/WDiagram.o
-QSMExplorer/bin/RootCounter/main.o
-QSMExplorer/bin/RootCounter/distributionCounter
 QSMExplorer/bin/RootCounter/main-speciality.o
 QSMExplorer/bin/RootCounter/specialityChecker
-QSMExplorer/bin/RootCounter/ConquerStep.o
-QSMExplorer/bin/RootCounter/conquerStep
-QSMExplorer/bin/RootCounter/DivideStep.o
-QSMExplorer/bin/RootCounter/divideStep
 QSMExplorer/bin/RootCounterHiggs/d1.txt
 QSMExplorer/bin/RootCounterHiggs/d2.txt
 QSMExplorer/bin/RootCounterHiggs/f1.txt
