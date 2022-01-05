@@ -98,7 +98,7 @@ InstallMethod( FindRootCounterDirectory,
     dir := fail;
     
     # Binary provided with QSMExplorer package
-    package_directory := DirectoriesPackageLibrary( "QSMExplorer", "bin/RootCounter" );
+    package_directory := DirectoriesPackageLibrary( "QSMExplorer", "bin/RootCounterHiggs/RootCounter" );
     if Length( package_directory ) > 1 then
         
         Error( "Found at least two versions of QSMExplorer - unable to determine ./distributionCounter" );
