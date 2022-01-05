@@ -310,7 +310,7 @@ InstallMethod( LimitRootDistributionHiggsDivide, [ IsRecord, IsInt, IsBool ],
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./divideStep" );
         if not IsExistingFile( bin ) then
             Error( "./divideStep is not available in designed folder" );
@@ -380,7 +380,7 @@ InstallMethod( LimitRootDistributionHiggsConquer, [ IsRecord, IsInt, IsBool ],
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./conquerStep" );
         if not IsExistingFile( bin ) then
             Error( "./conquerStep is not available in designed folder" );
@@ -526,7 +526,7 @@ InstallMethod( LimitRootDistributionAlongHiggsPhilosophyDivide, [ IsList, IsBool
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./divideStep" );
         if not IsExistingFile( bin ) then
             Error( "./divideStep is not available in designed folder" );
@@ -587,7 +587,7 @@ InstallMethod( LimitRootDistributionAlongHiggsPhilosophyConquer, [ IsList, IsBoo
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./conquerStep" );
         if not IsExistingFile( bin ) then
             Error( "./conquerStep is not available in designed folder" );
