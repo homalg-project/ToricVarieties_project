@@ -52,6 +52,10 @@ H0Approximator/bin/*
 */coverage*
 */performance*
 
+QSMExplorer/bin/RootCounterHiggs/listOfOutfluxes
+QSMExplorer/bin/RootCounterHiggs/listOfOutfluxes.o
+QSMExplorer/bin/RootCounterHiggs/outfluxes_H1.txt
+QSMExplorer/bin/RootCounterHiggs/outfluxes_H2.txt
 QSMExplorer/bin/RootCounterHiggs/ConquerStep.cpp
 QSMExplorer/bin/RootCounterHiggs/ConquerStep.o
 QSMExplorer/bin/RootCounterHiggs/DivideStep.cpp

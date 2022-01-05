@@ -699,7 +699,7 @@ InstallMethod( WriteOutfuxes, [ IsRecord, IsInt ],
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./listOfOutfluxes" );
         if not IsExistingFile( bin ) then
             Error( "./listOfOutfluxes is not available in designed folder" );
