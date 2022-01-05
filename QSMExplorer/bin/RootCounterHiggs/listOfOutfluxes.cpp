@@ -1,22 +1,16 @@
 // A program to compute the number of minimal limit roots on full blowups of nodal curves
 
 #include <algorithm>
-//#include <chrono>
 #include <functional>
 #include<fstream>
 #include<iostream>
-//#include <map>
-//#include <mutex>
 #include <numeric>
 #include <sstream>
 #include <stack>
-//#include <thread>
 #include <vector>
-//#include <boost/multiprecision/cpp_int.hpp>
-//#include <boost/thread/mutex.hpp>
-//#include <boost/thread/thread.hpp>
-#include "PrintData.cpp"
-#include "Cartesian.cpp"
+
+#include "OtherTasks/PrintData.cpp"
+#include "OtherTasks/Cartesian.cpp"
 
 // The main routine
 int main(int argc, char* argv[]) {
