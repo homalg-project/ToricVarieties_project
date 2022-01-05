@@ -14,6 +14,7 @@ docclean:
 
 uninstall:
 	(cd bin/RootCounter && rm -f main.o && rm -f distributionCounter)
+	(cd bin/RootCounterHiggs && rm -f HiggsMain.o && rm -f distributionCounterHiggsCurve)
 	(cd bin/Speciality && rm -f main-speciality.o && rm -f specialityChecker)
 	
 uninstall-boost-from-source:
@@ -36,7 +37,7 @@ install-with-links-to-local-boost: uninstall
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread listOfOutfluxes.cpp && g++ -o listOfOutfluxes listOfOutfluxes.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )	
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread WDiagram.cpp; )
 	(cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread main.cpp && g++ -o distributionCounter main.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread)
-	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
+	(cd bin/RootCounterHiggs && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve HiggsMain.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread)
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread ConquerStep.cpp && g++ -o conquerStep WDiagram.o ConquerStep.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread DivideStep.cpp && g++ -o divideStep WDiagram.o DivideStep.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
     
@@ -45,7 +46,7 @@ install-with-links-to-local-boost-and-profiling: uninstall
 	#( cd bin/RootCounter && g++ -pg -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread listOfOutfluxes.cpp && g++ -pg -o listOfOutfluxes listOfOutfluxes.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
 	#( cd bin/RootCounter && g++ -pg -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread WDiagram.cpp; )	
 	(cd bin/RootCounter && g++ -pg -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread main.cpp && g++ -pg -o distributionCounter main.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
-	#( cd bin/RootCounter && g++ -pg -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread HiggsMain.cpp && g++ -pg -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
+	(cd bin/RootCounterHiggs && g++ -pg -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread HiggsMain.cpp && g++ -pg -o distributionCounterHiggsCurve HiggsMain.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread)
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread ConquerStep.cpp && g++ -o conquerStep WDiagram.o ConquerStep.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
 	#( cd bin/RootCounter && g++ -c -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread DivideStep.cpp && g++ -o divideStep WDiagram.o DivideStep.o -Wl,-rpath=${P1} -I${P2} -L${P1} -lboost_thread -lboost_system -lpthread )
 	
@@ -54,7 +55,7 @@ install: uninstall
 	#( cd bin/RootCounter && g++ -c -lboost_thread WDiagram.cpp )
 	#( cd bin/RootCounter && g++ -c -lboost_thread listOfOutfluxes.cpp && g++ -o listOfOutfluxes listOfOutfluxes.o -lboost_thread -lpthread )
 	(cd bin/RootCounter && g++ -c -lboost_thread main.cpp && g++ -o distributionCounter main.o -lboost_thread -lpthread)
-	#( cd bin/RootCounter && g++ -c -lboost_thread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve WDiagram.o HiggsMain.o -lboost_thread -lpthread )
+	(cd bin/RootCounterHiggs && g++ -c -lboost_thread HiggsMain.cpp && g++ -o distributionCounterHiggsCurve HiggsMain.o -lboost_thread -lpthread)
 	#( cd bin/RootCounter && g++ -c -lboost_thread ConquerStep.cpp && g++ -o conquerStep WDiagram.o ConquerStep.o -lboost_thread -lpthread )
 	#( cd bin/RootCounter && g++ -c -lboost_thread DivideStep.cpp && g++ -o divideStep WDiagram.o DivideStep.o -lboost_thread -lpthread )
 	

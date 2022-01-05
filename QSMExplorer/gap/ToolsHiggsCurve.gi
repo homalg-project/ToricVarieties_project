@@ -228,7 +228,7 @@ InstallMethod( LimitRootDistributionHiggs, [ IsRecord, IsInt, IsBool ],
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./distributionCounterHiggsCurve" );
         if not IsExistingFile( bin ) then
             Error( "./distributionCounterHiggsCurve is not available in designed folder" );
@@ -453,7 +453,7 @@ InstallMethod( LimitRootDistributionAlongHiggsPhilosophy, [ IsList, IsBool ],
         input := InputTextString( input_string );
         
         # find the counter binary (and check if it exists)
-        dir := FindRootCounterDirectory();
+        dir := FindHiggsRootCounterDirectory();
         bin := Filename( dir, "./distributionCounterHiggsCurve" );
         if not IsExistingFile( bin ) then
             Error( "./distributionCounterHiggsCurve is not available in designed folder" );
