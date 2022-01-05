@@ -8,10 +8,13 @@ doc/manual.six: makedoc.g \
 		gap/*.gd gap/*.gi examples/*.g
 		(cd tst ; ./clean)
 	        gap makedoc.g
-
+	
+clean: uninstall docclean
+	(cd bin/RootCounterHiggs && rm -f d1.txt && rm -f d2.txt && rm -f f1.txt && rm -f f2.txt && rm -f outfluxes_H1.txt && rm -f outfluxes_H1.txt)
+	        
 docclean:
 	(cd doc && ./clean)
-
+	
 uninstall:
 	(cd bin/RootCounterHiggs/RootCounter && rm -f main.o && rm -f distributionCounter)
 	(cd bin/RootCounterHiggs && rm -f HiggsMain.o && rm -f distributionCounterHiggsCurve)
