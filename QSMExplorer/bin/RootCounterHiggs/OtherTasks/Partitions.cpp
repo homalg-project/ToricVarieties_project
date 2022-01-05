@@ -1,6 +1,5 @@
 // Combinatorial factors for root bundle counting
 boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const int & n_half, const int & r );
-boost::multiprecision::int128_t number_partitions( const int & f, const int & n, const int & r );
 
 
 // Task: Combinatorial factor for root bundle counting
@@ -46,33 +45,4 @@ boost::multiprecision::int128_t comb_factor( const int & a, const int & b, const
     // Return result
     return count;
     
-}
-
-// Task: Compute number of partitions of an integer f.
-// Input: Integer f to be partitioned.
-//           Integers r, n.
-// Output: The number of partitions of f into a sum of exactly n integers w1, ... wn with 1 <= w1, ..., wn < r.
-boost::multiprecision::int128_t number_partitions( const int & f, const int & n, const int & r ){
-    boost::multiprecision::int128_t count = (boost::multiprecision::int128_t) 0;
-    
-    // Only one value to set?
-    if( n == 1 ) {
-        
-        // Check if we have a partition
-        if ( ( 1 <= f ) && ( f < r ) ){
-            return (boost::multiprecision::int128_t) 1;
-        }
-        else{
-            return (boost::multiprecision::int128_t) 0;
-        }
-    
-    }
-    
-    // Pick values and make recursive call
-    for ( int i = 1; i < r; i++ ){
-        count = count + number_partitions( f - i, n-1, r );
-    }
-    
-    // return final result
-    return count;    
 }

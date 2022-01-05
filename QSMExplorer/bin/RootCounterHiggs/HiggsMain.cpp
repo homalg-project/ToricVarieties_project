@@ -7,6 +7,7 @@
 #include<iostream>
 #include <map>
 #include <mutex>
+#include <numeric>
 #include <sstream>
 #include <stack>
 #include <thread>
@@ -19,12 +20,19 @@
 // guards for thread-safe operations
 boost::mutex myGuard, myGuard2;
 
-#include "PrintData.cpp"
-#include "RootDistributionCounter.cpp"
-#include "Scanner.cpp"
-#include "Cartesian.cpp"
-#include "Partitions.cpp"
-#include "HiggsDistributionCounter.cpp"
+// do not display details
+bool display_details = false;
+
+// include root counter routines
+#include "RootCounter/compute_graph_information.cpp"
+#include "RootCounter/rootCounter-v2.cpp"
+
+// include other routines
+#include "OtherTasks/PrintData.cpp"
+#include "OtherTasks/Scanner.cpp"
+#include "OtherTasks/Cartesian.cpp"
+#include "OtherTasks/Partitions.cpp"
+#include "OtherTasks/HiggsDistributionCounter.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
@@ -157,7 +165,7 @@ int main(int argc, char* argv[]) {
     // (1.6) Write intermediate results to files
     if ( display_details ){
         std::cout << "\n\n";
-        std::cout << "Write results to files";    
+        std::cout << "Write results to files";
     }
     
     std::string full_path = argv[ 0 ];

@@ -34,7 +34,7 @@ DeclareOperation( "FindDataBase", [ ] );
 DeclareOperation( "FindDualGraphScript", [ ] );
 
 #! @Description
-#! This operation identifies the location of the C++-program which computes a lower bound to the number of limit roots with minimal number of global sections on a nodal curve.
+#! This operation identifies the location of the C++-program which computes a lower bound to the number of limit roots on a nodal curves.
 #! @Returns the directory in which the binary is contained
 #! @Arguments none
 DeclareOperation( "FindRootCounterDirectory", [ ] );
@@ -45,6 +45,13 @@ DeclareOperation( "FindRootCounterDirectory", [ ] );
 #! @Returns the directory in which the binary is contained
 #! @Arguments none
 DeclareOperation( "FindSpecialityDirectory", [ ] );
+
+
+#! @Description
+#! This operation identifies the location of the C++-program which computes a lower bound to the number of limit roots on Higgs curves.
+#! @Returns the directory in which the binary is contained
+#! @Arguments none
+DeclareOperation( "FindHiggsRootCounterDirectory", [ ] );
 
 
 ##############################################################################################
