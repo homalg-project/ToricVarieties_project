@@ -78,6 +78,8 @@ QSMExplorer/bin/RootCounter/listOfOutfluxes
 QSMExplorer/bin/RootCounter/listOfOutfluxes.o
 QSMExplorer/bin/Speciality/main-speciality.o
 QSMExplorer/bin/Speciality/specialityChecker
+QSMExplorer/bin/PartialBlowups/partialBlowups
+QSMExplorer/bin/PartialBlowups/partial_blowup.o
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
