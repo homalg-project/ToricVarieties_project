@@ -39,6 +39,11 @@ DeclareOperation( "FindDualGraphScript", [ ] );
 #! @Arguments none
 DeclareOperation( "FindRootCounterDirectory", [ ] );
 
+#! @Description
+#! This operation identifies the location of the C++-program which computes a lower bound to the number of partial blowup limit roots on a nodal curves.
+#! @Returns the directory in which the binary is contained
+#! @Arguments none
+DeclareOperation( "FindPartialBlowupRootCounterDirectory", [ ] );
 
 #! @Description
 #! This operation identifies the location of the C++-program which computes the speciality of a linear series.
@@ -484,26 +489,48 @@ DeclareOperation( "CountMinimalLimitRoots", [ IsRecord, IsBool ] );
 
 ##############################################################################################
 ##
-#! @Section Counting distribution of limit roots
+#! @Section Counting distribution of full-blowup limit roots
 ##
 ##############################################################################################
 
-
 #! @Description
-#! This function computes the number of limit roots in the i-th QSM with at most L global sections.
+#! This function computes the number of limit roots in the i-th QSM with at at least min and at most max global sections.
 #! @Returns integer or fail
-#! @Arguments Integer i, integer L
+#! @Arguments Integer i, integer min, integer max
 DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt, IsBool ] );
 
 #! @Description
-#! This function computes the number of limit roots in the QSM defined by polytope i  with at most L global sections.
+#! This function computes the number of limit roots in the QSM defined by polytope i with at least min and at most max global sections.
 #! @Returns integer or fail
-#! @Arguments Integer i, integer L
+#! @Arguments Integer i, integer min, integer max
 DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
 
 DeclareOperation( "CountLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsBool ] );
+
+
+##############################################################################################
+##
+#! @Section Counting distribution of all (even partial blowup) limit roots
+##
+##############################################################################################
+
+#! @Description
+#! This function computes the number of (partial blowup) limit roots in the i-th QSM with at least min and at most max global sections.
+#! @Returns integer or fail
+#! @Arguments Integer i, integer min, integer max
+DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt, IsBool ] );
+
+#! @Description
+#! This function computes the number of (partial blowup) limit roots in the QSM defined by polytope i with at least min and at most max global sections.
+#! @Returns integer or fail
+#! @Arguments Integer i, integer min, integer max
+DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
+
+DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsBool ] );
 
 
 ##############################################################################################
