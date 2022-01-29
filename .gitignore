@@ -76,6 +76,8 @@ QSMExplorer/boost/boost_1_77_0
 QSMExplorer/boost/library
 QSMExplorer/bin/RootCounter/listOfOutfluxes
 QSMExplorer/bin/RootCounter/listOfOutfluxes.o
+QSMExplorer/bin/Speciality/main-speciality.o
+QSMExplorer/bin/Speciality/specialityChecker
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
