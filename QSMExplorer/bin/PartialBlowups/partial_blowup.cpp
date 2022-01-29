@@ -22,7 +22,7 @@
 boost::mutex myGuard;
 
 // include root counter
-bool display_details = false;
+bool display_more_details = false;
 #include "rootCounter-v2.cpp"
 
 // Optimizations for speedup
@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
     int h0Min = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 4 ];
     int h0Max = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 5 ];
     int details = input[ 2 * numberVertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 6 ];
+    bool display_details = false;
     if ( details >= 0 ){
         display_details = true;
     }
@@ -184,7 +185,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<boost::multiprecision::int128_t>> n_clear;
     std::vector<std::vector<boost::multiprecision::int128_t>> n_unclear;
     for (int h0_value = 0; h0_value < h0Min; h0_value++){
-        std::vector<boost::multiprecision::int128_t> result(edges.size() ,0);
+        std::vector<boost::multiprecision::int128_t> result(edges.size()+1,0);
         n_clear.push_back(result);
         n_unclear.push_back(result);
     }
@@ -266,15 +267,15 @@ int main(int argc, char* argv[]) {
     // print result
     if (display_details){
         
+        std::cout << "\n";
         boost::multiprecision::int128_t total_number_roots = (boost::multiprecision::int128_t) (pow(root, 2 * genus));
         for (int i = h0Min; i <= h0Max; i++){
             std::cout << "h0 = " << i << ":\n";
             std::cout << "-------------------------\n";
-            std::cout << "# no-blowup-edges \t # roots with h0 = " << i << "\t # roots with h0 >= " << i << "\n";
             for (int j = 0; j <= edges.size(); j++){
-                std::cout << j << ":\t" << n_clear[i][j] << " (" << (double) (100 * n_clear[i][j]/total_number_roots)  << "%)\t" << n_unclear[i][j] << " (" << (double) (100 * n_unclear[i][j]/total_number_roots)  << "%)\n";
+                std::cout << j << ":\t" << n_clear[i][j] << " (" << (double) (100 * n_clear[i][j]/total_number_roots)  << "%)\t\t" << n_unclear[i][j] << " (" << (double) (100 * n_unclear[i][j]/total_number_roots)  << "%)\n";
             }
-            std::cout << "\n";
+            std::cout << "\n\n";
         }
         
     }
