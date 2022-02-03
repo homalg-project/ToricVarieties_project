@@ -21,7 +21,6 @@
 
 // guard for thread-safe operations
 boost::mutex myGuard;
-int max_no_blowups = 15;
 
 // include root counter
 bool display_more_details = false;
@@ -121,12 +120,6 @@ int main(int argc, char* argv[]) {
         }
         return -1;
     }
-    if (max_no_blowups > edges.size()){
-        if (display_details){
-            std::cout << "Maximal number of no blowups must not exceed the number of edges. Replaced by " << edges.size() << ".\n";
-        }
-        max_no_blowups = edges.size();
-    }
     if (h0Max < 0){
         if (display_details){
             std::cout << "h0Max must not be negative. Replaced by 0. \n";
@@ -204,7 +197,7 @@ int main(int argc, char* argv[]) {
         std::vector<boost::multiprecision::int128_t> results_clear;
         std::vector<boost::multiprecision::int128_t> results_unclear;
         
-        for (int i = 0; i <= max_no_blowups; i++){
+        for (int i = 0; i <= edges.size(); i++){
             
             // identify the number of ways in which we can perform this number of non-blowups
             std::vector<std::vector<int>> combinations = get_combinations_of_indices_to_pick(i, edges.size());
@@ -223,13 +216,15 @@ int main(int argc, char* argv[]) {
                 // prepare graph information
                 std::vector<std::vector<int>> no_blowup_edges;
                 std::vector<std::vector<int>> proper_edges = edges;
+                std::vector<int> vertices_neighbouring_node;
                 bool bc_clear = true;
                 for (int k = 0; k < positions_no_blowup.size(); k++){
                     if ((genera[proper_edges[positions_no_blowup[k]][0]] > 0) || (genera[proper_edges[positions_no_blowup[k]][1]] > 0)){
                         bc_clear = false;
                     }
-                
                     no_blowup_edges.push_back(proper_edges[positions_no_blowup[k]]);
+                    vertices_neighbouring_node.push_back(proper_edges[positions_no_blowup[k]][0]);
+                    vertices_neighbouring_node.push_back(proper_edges[positions_no_blowup[k]][1]);
                     proper_edges.erase(proper_edges.begin()+positions_no_blowup[k]);
                 }
                 
@@ -237,6 +232,38 @@ int main(int argc, char* argv[]) {
                 std::vector<int> edge_numbers(degrees.size(),0);
                 std::vector<std::vector<std::vector<int>>> graph_stratification;
                 additional_graph_information(proper_edges, edge_numbers, graph_stratification);
+                
+                // implement restrictive condition on clear/non-clear boundary conditions:
+                // only clear if all no-blowup-edges are disjoint
+                
+                // remove duplicate vertices if necessary
+                sort(vertices_neighbouring_node.begin(), vertices_neighbouring_node.end());
+                vertices_neighbouring_node.erase(unique(vertices_neighbouring_node.begin(),vertices_neighbouring_node.end() ), vertices_neighbouring_node.end());
+                
+                // check if any vertex neighbours two or more nodes
+                for (int k = 0; k < vertices_neighbouring_node.size(); k++){
+                    
+                    // it is already known that the boundary conditions are not clear
+                    if (bc_clear == false){
+                        break;
+                    }
+                    
+                    // otherwise count
+                    int counter = 0;
+                    for (int l = 0; l < no_blowup_edges.size(); l++){
+                        if (no_blowup_edges[l][0] == vertices_neighbouring_node[k]){
+                          counter++;
+                        }
+                        if (no_blowup_edges[l][1] == vertices_neighbouring_node[k]){
+                          counter++;
+                        }
+                        if (counter > 1){
+                            bc_clear = false;
+                            break;
+                        }
+                    }
+                    
+                }
                 
                 // compute number of roots
                 std::vector<boost::multiprecision::int128_t> results = parallel_root_counter(genus, degrees, genera, proper_edges, no_blowup_edges, root, graph_stratification, edge_numbers, h0_value, number_threads);
@@ -277,7 +304,7 @@ int main(int argc, char* argv[]) {
         
         // print the exact numbers
         std::cout << "\n";
-        for (int j = 0; j <= max_no_blowups; j++){
+        for (int j = 0; j <= edges.size(); j++){
             std::cout << j << ":\t";
             for (int i = h0Min; i <= h0Max; i++){
                 std::cout << n_clear[i][j] << "\t" << n_unclear[i][j] << "\t";
@@ -290,12 +317,12 @@ int main(int argc, char* argv[]) {
         std::cout << "Total:\t";
         for (int i = h0Min; i <= h0Max; i++){
             counter = (boost::multiprecision::int128_t) 0;
-            for (int j = 0; j <= max_no_blowups; j++){
+            for (int j = 0; j <= edges.size(); j++){
                 counter += n_clear[i][j];
             }
             std::cout << counter << "\t";
             counter = (boost::multiprecision::int128_t) 0;
-            for (int j = 0; j <= max_no_blowups; j++){
+            for (int j = 0; j <= edges.size(); j++){
                 counter += n_unclear[i][j];
             }
             std::cout << counter << "\t";
@@ -307,7 +334,7 @@ int main(int argc, char* argv[]) {
         
         // print the percentages
         using LongFloat=boost::multiprecision::cpp_bin_float_quad;
-        for (int j = 0; j <= max_no_blowups; j++){
+        for (int j = 0; j <= edges.size(); j++){
             std::cout << j << ":\t";
             for (int i = h0Min; i <= h0Max; i++){
                 LongFloat r1 = LongFloat(100) * LongFloat(n_clear[i][j]) / LongFloat(total_number_roots);
@@ -322,12 +349,12 @@ int main(int argc, char* argv[]) {
         LongFloat percentage_counter;
         for (int i = h0Min; i <= h0Max; i++){
             percentage_counter = 0;
-            for (int j = 0; j <= max_no_blowups; j++){
+            for (int j = 0; j <= edges.size(); j++){
                 percentage_counter += LongFloat(100) * LongFloat(n_clear[i][j]) / LongFloat(total_number_roots);
             }
             std::cout << std::setprecision(3) << percentage_counter << "\t";
                         percentage_counter = 0;
-            for (int j = 0; j <= max_no_blowups; j++){
+            for (int j = 0; j <= edges.size(); j++){
                 percentage_counter += LongFloat(100) * LongFloat(n_unclear[i][j]) / LongFloat(total_number_roots);
             }
             std::cout << std::setprecision(3) << percentage_counter << "\t";
