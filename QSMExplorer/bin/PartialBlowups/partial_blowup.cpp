@@ -14,12 +14,14 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #include "compute_graph_information.cpp"
 #include "pick_elements.cpp"
 #include "betti_number.cpp"
 
 // guard for thread-safe operations
 boost::mutex myGuard;
+int max_no_blowups = 15;
 
 // include root counter
 bool display_more_details = false;
@@ -119,6 +121,12 @@ int main(int argc, char* argv[]) {
         }
         return -1;
     }
+    if (max_no_blowups > edges.size()){
+        if (display_details){
+            std::cout << "Maximal number of no blowups must not exceed the number of edges. Replaced by " << edges.size() << ".\n";
+        }
+        max_no_blowups = edges.size();
+    }
     if (h0Max < 0){
         if (display_details){
             std::cout << "h0Max must not be negative. Replaced by 0. \n";
@@ -196,7 +204,7 @@ int main(int argc, char* argv[]) {
         std::vector<boost::multiprecision::int128_t> results_clear;
         std::vector<boost::multiprecision::int128_t> results_unclear;
         
-        for (int i = 0; i <= edges.size(); i++){
+        for (int i = 0; i <= max_no_blowups; i++){
             
             // identify the number of ways in which we can perform this number of non-blowups
             std::vector<std::vector<int>> combinations = get_combinations_of_indices_to_pick(i, edges.size());
@@ -267,17 +275,66 @@ int main(int argc, char* argv[]) {
     // print result
     if (display_details){
         
+        // print the exact numbers
         std::cout << "\n";
-        boost::multiprecision::int128_t total_number_roots = (boost::multiprecision::int128_t) (pow(root, 2 * genus));
-        for (int i = h0Min; i <= h0Max; i++){
-            std::cout << "h0 = " << i << ":\n";
-            std::cout << "-------------------------\n";
-            for (int j = 0; j <= edges.size(); j++){
-                std::cout << j << ":\t" << n_clear[i][j] << " (" << (double) (100 * n_clear[i][j]/total_number_roots)  << "%)\t\t" << n_unclear[i][j] << " (" << (double) (100 * n_unclear[i][j]/total_number_roots)  << "%)\n";
+        for (int j = 0; j <= max_no_blowups; j++){
+            std::cout << j << ":\t";
+            for (int i = h0Min; i <= h0Max; i++){
+                std::cout << n_clear[i][j] << "\t" << n_unclear[i][j] << "\t";
             }
-            std::cout << "\n\n";
+            std::cout << "\n";
         }
         
+        // print the totals
+        boost::multiprecision::int128_t counter;
+        std::cout << "Total:\t";
+        for (int i = h0Min; i <= h0Max; i++){
+            counter = (boost::multiprecision::int128_t) 0;
+            for (int j = 0; j <= max_no_blowups; j++){
+                counter += n_clear[i][j];
+            }
+            std::cout << counter << "\t";
+            counter = (boost::multiprecision::int128_t) 0;
+            for (int j = 0; j <= max_no_blowups; j++){
+                counter += n_unclear[i][j];
+            }
+            std::cout << counter << "\t";
+        }
+        std::cout << "\n\n";
+        
+        // compute the total number of roots
+        boost::multiprecision::int128_t total_number_roots = (boost::multiprecision::int128_t) (pow(root, 2 * genus));
+        
+        // print the percentages
+        using LongFloat=boost::multiprecision::cpp_bin_float_quad;
+        for (int j = 0; j <= max_no_blowups; j++){
+            std::cout << j << ":\t";
+            for (int i = h0Min; i <= h0Max; i++){
+                LongFloat r1 = LongFloat(100) * LongFloat(n_clear[i][j]) / LongFloat(total_number_roots);
+                LongFloat r2 = LongFloat(100) * LongFloat(n_unclear[i][j]) / LongFloat(total_number_roots);
+                std::cout << std::setprecision(3) << r1 << "\t" << std::setprecision(3) << r2 << "\t";
+            }
+            std::cout << "\n";
+        }
+
+        // print the totals
+        std::cout << "Total:\t";
+        LongFloat percentage_counter;
+        for (int i = h0Min; i <= h0Max; i++){
+            percentage_counter = 0;
+            for (int j = 0; j <= max_no_blowups; j++){
+                percentage_counter += LongFloat(100) * LongFloat(n_clear[i][j]) / LongFloat(total_number_roots);
+            }
+            std::cout << std::setprecision(3) << percentage_counter << "\t";
+                        percentage_counter = 0;
+            for (int j = 0; j <= max_no_blowups; j++){
+                percentage_counter += LongFloat(100) * LongFloat(n_unclear[i][j]) / LongFloat(total_number_roots);
+            }
+            std::cout << std::setprecision(3) << percentage_counter << "\t";
+        }
+        
+        // separate the print-out from other results
+        std::cout << "\n\n";
     }
     
     // save the result to a dummy file next to main.cpp, so gap can read it out and display intermediate process details
