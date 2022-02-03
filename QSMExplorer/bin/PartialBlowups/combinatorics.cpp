@@ -72,14 +72,14 @@ void comp_partitions(
 
 
 
-// Task: Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
+// Task: Compute partitions of an integer N including possible boundary conditions.
 void comp_partitions_without_blowups(
         const int & N,
         const int & n,
         const std::vector<std::vector<int>> no_blowup_edges,
         std::vector<std::vector<int>> & partitions){
         
-        // Compute all partitions with "naive" total sum ranging between N and no_blowup_edges.size()
+        // Compute all partitions with "naive" total sum ranging between N and N + no_blowup_edges.size()
         std::vector<std::vector<int>> naive_partitions;
         for (int i = 0; i <= no_blowup_edges.size(); i++){
             comp_partitions(N+i, n, std::vector<int>(n,0), std::vector<int>(n,N+i), naive_partitions);
