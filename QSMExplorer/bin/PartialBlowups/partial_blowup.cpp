@@ -1,16 +1,19 @@
-// A program to compute the number of minimal limit roots on full blowups of nodal curves
+// A program to compute the number of root bundles on certain partial blowups of certain nodal curves
 
 #include <algorithm>
+#include <cassert>
 #include <chrono>
 #include <functional>
 #include<fstream>
 #include<iostream>
 #include <mutex>
 #include <numeric>
+#include <set>
 #include <sstream>
 #include <stack>
 #include <thread>
 #include <vector>
+
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
@@ -18,7 +21,6 @@
 
 #include "Auxilliary/combinatorics.cpp"
 #include "Auxilliary/compute_graph_information.cpp"
-#include "Auxilliary/combinations.cpp"
 #include "Auxilliary/tree_like_computations.cpp"
 
 // guard for thread-safe operations
