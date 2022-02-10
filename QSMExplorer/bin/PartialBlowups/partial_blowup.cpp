@@ -26,7 +26,7 @@ boost::mutex myGuard;
 
 // include root counter
 bool display_more_details = false;
-#include "rootCounter-v2.cpp"
+#include "GenericRootCounter/rootCounter-v2.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
