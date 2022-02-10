@@ -15,9 +15,11 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
-#include "compute_graph_information.cpp"
-#include "pick_elements.cpp"
-#include "betti_number.cpp"
+
+#include "Auxilliary/combinatorics.cpp"
+#include "Auxilliary/compute_graph_information.cpp"
+#include "Auxilliary/combinations.cpp"
+#include "Auxilliary/betti_number.cpp"
 
 // guard for thread-safe operations
 boost::mutex myGuard;
