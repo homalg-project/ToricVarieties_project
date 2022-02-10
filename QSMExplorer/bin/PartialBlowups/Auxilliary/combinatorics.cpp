@@ -147,10 +147,54 @@ void comp_partitions_without_blowups(
 }
 
 
+// (4) Compute partitions of an integer N including possible boundary conditions.
+// (4) Compute partitions of an integer N including possible boundary conditions.
+// (4) Compute partitions of an integer N including possible boundary conditions.
 
-// (4) Compute number of partitions of an integer f.
-// (4) Compute number of partitions of an integer f.
-// (4) Compute number of partitions of an integer f.
+// This works for any tree-like blowup and is used for this particular purpose.
+void comp_partitions_with_nodes(const int & N,
+                                                    const int & n,
+                                                    const std::vector<std::vector<int>> & resolved_edges,
+                                                    const std::vector<std::vector<int>> & nodal_edges,
+                                                    std::vector<std::vector<int>> & partitions,
+                                                    std::vector<bool> & lower_bounds)
+{
+    
+    // Compute all partitions wisth "naive" total sum ranging between N and N + nodal_edges.size()
+    std::vector<std::vector<int>> naive_partitions;
+    for (int i = 0; i <= nodal_edges.size(); i++){
+        comp_partitions(N+i, n, std::vector<int>(n,0), std::vector<int>(n,N+i), naive_partitions);
+    }
+    
+    // Check boundary conditions for each naive partition
+    for (int i = 0; i < naive_partitions.size(); i++){
+        
+        // Find degrees corresponding to h0
+        std::vector<int> degrees;
+        for (int j = 0; j < naive_partitions[i].size(); j++){
+            if (naive_partitions[i][j] > 0){degrees.push_back(naive_partitions[i][j]-1);}
+            else{degrees.push_back(-1);}
+        }
+        
+        // Compute h0 and if this is a lower bound
+        int h0;
+        bool lower_bound;
+        h0_from_partial_blowups(degrees, resolved_edges, nodal_edges, false, h0, lower_bound);
+        
+        // Check if ok and if so add to the list of results
+        if (h0 == N){
+            partitions.push_back(naive_partitions[i]);
+            lower_bounds.push_back(lower_bound);
+        }
+    
+    }
+        
+}
+
+
+// (5) Compute number of partitions of an integer f.
+// (5) Compute number of partitions of an integer f.
+// (5) Compute number of partitions of an integer f.
 
 // Task: Compute number of partitions of an integer f.
 // Input: Integer f to be partitioned.
