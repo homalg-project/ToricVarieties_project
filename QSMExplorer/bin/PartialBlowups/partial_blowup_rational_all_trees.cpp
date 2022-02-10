@@ -208,6 +208,7 @@ int main(int argc, char* argv[]) {
             }
             std::cout << std::setprecision(3) << percentage_counter << "\t";
         }
+        std::cout << "\n\n";
     
     }
     
