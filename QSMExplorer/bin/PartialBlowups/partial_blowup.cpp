@@ -19,7 +19,7 @@
 #include "Auxilliary/combinatorics.cpp"
 #include "Auxilliary/compute_graph_information.cpp"
 #include "Auxilliary/combinations.cpp"
-#include "Auxilliary/betti_number.cpp"
+#include "Auxilliary/tree_like_computations.cpp"
 
 // guard for thread-safe operations
 boost::mutex myGuard;
@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
     int v = *max_element(std::begin(maxes), std::end(maxes)) + 1;
     
     // compute the betti number
-    int b1 = betti_number(v, edges);
+    int b1 = betti_number(edges);
     boost::multiprecision::int128_t geo_mult = (boost::multiprecision::int128_t) (pow(root, b1));
     
     

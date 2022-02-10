@@ -265,11 +265,70 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
 
 
 
+// (4) Compute betti number
+// (4) Compute betti number
+// (4) Compute betti number
+
+int betti_number(std::vector<std::vector<int>>& input_edges)
+{
+    
+    // (1) Find all vertices (avoiding duplicated) and sort them in ascending order
+    std::vector<int> vertices;
+    for (int i = 0; i < input_edges.size(); i++){
+        if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][0]))) {
+            vertices.push_back(input_edges[i][0]);
+        }
+        if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][1]))) {
+            vertices.push_back(input_edges[i][1]);
+        }
+    }
+    //sort(vertices.begin(), vertices.end());
+    
+    // (2) Construct two maps:
+    // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
+    // degree_correspondence: new vertex indices "0, 1, 2, 3, ..." -> degree on this vertex
+    std::map<int, int> vertex_correspondence;
+    for (int i = 0; i < vertices.size(); i++){
+        vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
+    }
+    
+    // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
+    std::vector<std::vector<int>> edges;
+    for (int i = 0; i < input_edges.size(); i++){
+        std::vector<int> new_edge = {vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]};
+        edges.push_back(new_edge);
+    }
+    
+    // (4) Count number of connected components
+    int c = 0;
+    int parent[vertices.size()];
+    for (int i = 0; i < vertices.size(); i++) {
+        parent[i] = i;
+    }
+    for (auto x : edges) {
+        parent[merge(parent, x[0])] = merge(parent, x[1]);
+    }
+    for (int i = 0; i < vertices.size(); i++) {
+        c += (parent[i] == i);
+    }
+    for (int i = 0; i < vertices.size(); i++) {
+        parent[i] = merge(parent, parent[i]);
+    }
+    std::map<int, std::list<int>> m;
+    for (int i = 0; i < vertices.size(); i++) {
+        m[parent[i]].push_back(i);
+    }
+    
+    // compute betti number
+    return edges.size() + c - vertices.size();
+    
+}
 
 
-// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
-// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
-// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+
+// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
 
 void h0_from_partial_blowups(const std::vector<int>& degrees,
                                             const std::vector<std::vector<int>>& resolved_edges,                
