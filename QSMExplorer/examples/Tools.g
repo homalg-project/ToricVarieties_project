@@ -439,3 +439,9 @@ CountMinimalLimitRootsOfQSMByPolytope( 1384, false );
 CountMinimalLimitRootsOfQSMByPolytope( 856, false );
 #! [ 0, 0, 0, 30840098 ]
 #! @EndExample
+
+#! By now, we support advanced functionality to analysis limit root line bundles obtained from partial blowups. For example, we have the following:
+
+#! @Example
+CountPartialBlowupLimitRootDistributionOfQSMByPolytopeFromTreelikeAnalysis(4,3,3);;
+#! @EndExample
