@@ -113,44 +113,6 @@ void comp_partitions(
 // (3) Compute partitions of an integer N including possible boundary conditions.
 // (3) Compute partitions of an integer N including possible boundary conditions.
 
-void comp_partitions_without_blowups(
-        const int & N,
-        const int & n,
-        const std::vector<std::vector<int>> no_blowup_edges,
-        std::vector<std::vector<int>> & partitions){
-        
-        // Compute all partitions with "naive" total sum ranging between N and N + no_blowup_edges.size()
-        std::vector<std::vector<int>> naive_partitions;
-        for (int i = 0; i <= no_blowup_edges.size(); i++){
-            comp_partitions(N+i, n, std::vector<int>(n,0), std::vector<int>(n,N+i), naive_partitions);
-        }
-        
-        // Check boundary conditions for each naive partition
-        for (int i = 0; i < naive_partitions.size(); i++){
-            
-            // now take the boundary conditions into account
-            int conditions = 0;
-            for (int j = 0; j < no_blowup_edges.size(); j++){
-                if ((naive_partitions[i][no_blowup_edges[j][0]]>0) || (naive_partitions[i][no_blowup_edges[j][1]]>0)){
-                    conditions++;
-                }
-            }
-            
-            // check if the total sum matches the desired value
-            int total = std::accumulate(naive_partitions[i].begin(), naive_partitions[i].end(), 0);
-            if (total - conditions == N){
-                partitions.push_back(naive_partitions[i]);
-            }
-            
-        }
-        
-}
-
-
-// (4) Compute partitions of an integer N including possible boundary conditions.
-// (4) Compute partitions of an integer N including possible boundary conditions.
-// (4) Compute partitions of an integer N including possible boundary conditions.
-
 // This works for any tree-like blowup and is used for this particular purpose.
 void comp_partitions_with_nodes(const int & N,
                                                     const int & n,
@@ -205,9 +167,9 @@ void comp_partitions_with_nodes(const int & N,
 }
 
 
-// (5) Compute number of partitions of an integer f.
-// (5) Compute number of partitions of an integer f.
-// (5) Compute number of partitions of an integer f.
+// (4) Compute number of partitions of an integer f.
+// (4) Compute number of partitions of an integer f.
+// (4) Compute number of partitions of an integer f.
 
 // Task: Compute number of partitions of an integer f.
 // Input: Integer f to be partitioned.
