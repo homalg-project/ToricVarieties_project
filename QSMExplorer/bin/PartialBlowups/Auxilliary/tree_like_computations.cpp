@@ -118,10 +118,11 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
 // (2) Find the connected components of a graph
 // (2) Find the connected components of a graph
 
-int merge(int* parent, int x)
+int merge(std::vector<int> & parent, int x)
 {
-    if (parent[x] == x)
+    if (parent[x] == x){
         return x;
+    }
     return merge(parent, parent[x]);
 }
 
@@ -152,7 +153,6 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
             vertices.push_back(input_edges[i][1]);
         }
     }
-    //sort(vertices.begin(), vertices.end());
     
     // (2) Construct two maps:
     // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
@@ -166,15 +166,12 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
     // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
     std::vector<std::vector<int>> edges;
     for (int i = 0; i < input_edges.size(); i++){
-        std::vector<int> new_edge = {vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]};
-        edges.push_back(new_edge);
+        edges.push_back({vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]});
     }
     
     // (4) Compute the connected components
-    int parent[vertices.size()];
-    for (int i = 0; i < vertices.size(); i++) {
-        parent[i] = i;
-    }
+    std::vector<int> parent(vertices.size());
+    std::iota(std::begin(parent), std::end(parent), 0);
     for (int i = 0; i < edges.size(); i++){
         parent[merge(parent, edges[i][0])] = merge(parent, edges[i][1]);
     }
@@ -190,17 +187,11 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
     }
     
     // (5) Construct edge list of the connected components
-    std::vector<std::vector<int>> copy_of_edges(edges.begin(), edges.end());
     edges_of_connected_components.resize(connected_components.size());
-    while (copy_of_edges.size() > 0){
-        // pick first edge and erase it from copy of edges
-        std::vector<int> edge = copy_of_edges[0];
-        copy_of_edges.erase(copy_of_edges.begin());
-        
-        // check to which connected component this edge belongs
-        for (int i = 0; i < connected_components.size(); i++){
-            if (std::count(connected_components[i].begin(), connected_components[i].end(), edge[0])){
-                edges_of_connected_components[i].push_back(edge);
+    for (int i = 0; i < edges.size(); i++){
+        for (int j = 0; j < connected_components.size(); j++){
+            if (std::count(connected_components[j].begin(), connected_components[j].end(), edges[i][0])){
+                edges_of_connected_components[j].push_back(edges[i]);
                 break;
             }
         }
@@ -239,11 +230,8 @@ int betti_number(std::vector<std::vector<int>>& input_edges)
             vertices.push_back(input_edges[i][1]);
         }
     }
-    //sort(vertices.begin(), vertices.end());
     
-    // (2) Construct two maps:
-    // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
-    // degree_correspondence: new vertex indices "0, 1, 2, 3, ..." -> degree on this vertex
+    // (2) Construct vertex_correspondence: input vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
     std::map<int, int> vertex_correspondence;
     for (int i = 0; i < vertices.size(); i++){
         vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
@@ -252,32 +240,22 @@ int betti_number(std::vector<std::vector<int>>& input_edges)
     // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
     std::vector<std::vector<int>> edges;
     for (int i = 0; i < input_edges.size(); i++){
-        std::vector<int> new_edge = {vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]};
-        edges.push_back(new_edge);
+        edges.push_back({vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]});
     }
     
     // (4) Count number of connected components
     int c = 0;
-    int parent[vertices.size()];
-    for (int i = 0; i < vertices.size(); i++) {
-        parent[i] = i;
-    }
-    for (auto x : edges) {
-        parent[merge(parent, x[0])] = merge(parent, x[1]);
+    std::vector<int> parent(vertices.size());
+    std::iota(std::begin(parent), std::end(parent), 0);
+    for (int i = 0; i < edges.size(); i++){
+        parent[merge(parent, edges[i][0])] = merge(parent, edges[i][1]);
     }
     for (int i = 0; i < vertices.size(); i++) {
         c += (parent[i] == i);
     }
-    for (int i = 0; i < vertices.size(); i++) {
-        parent[i] = merge(parent, parent[i]);
-    }
-    std::map<int, std::list<int>> m;
-    for (int i = 0; i < vertices.size(); i++) {
-        m[parent[i]].push_back(i);
-    }
     
-    // compute betti number
-    return edges.size() + c - vertices.size();
+    // return betti number
+    return input_edges.size() + c - vertices.size();
     
 }
 
