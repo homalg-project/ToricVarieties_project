@@ -18,80 +18,48 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         print_vector_of_vector("Edges:\n", nodal_edges);
     }
     
-    // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
-    // reorder degrees accordingly as well
+    // make copy of the degrees
     std::vector<int> simple_degrees(degrees.begin(), degrees.end());
+    
+    // establish vertex correspondence: input vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
     std::map<int, int> vertex_correspondence;
     for (int i = 0; i < vertices.size(); i++){
         vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
     }
     
-    // form list of edges with internal/new vertex indices (-> can be easily processed below)
+    // adjust list of edges accordingly
     std::vector<std::vector<int>> simple_edges;
     for (int i = 0; i < nodal_edges.size(); i++){
-        std::vector<int> new_edge = {vertex_correspondence[nodal_edges[i][0]], vertex_correspondence[nodal_edges[i][1]]};
-        simple_edges.push_back(new_edge);
+        simple_edges.push_back({vertex_correspondence[nodal_edges[i][0]], vertex_correspondence[nodal_edges[i][1]]});
     }
     
     // simplify the graph as much as possible
     while(true){
         
-        // (1) Iminus or Iplus trivial?
-        std::vector<int> Iminus;
-        for (int i = 0; i < simple_degrees.size(); i++){
-            if (simple_degrees[i] < 0){
-                Iminus.push_back(i);
-            }
-        }
-        if ((Iminus.size() == 0) || (Iminus.size() == simple_degrees.size())){break;}
-        
-        // (2) no edges left?
+        // (1) no edges left?
         if (simple_edges.size() == 0){break;}
         
-        // (3) No intersections among Iminus and Iplus?
-        bool non_trivial_intersection = false;
-        std::vector<std::vector<int>> intersections;
-        for (int i = 0; i < simple_degrees.size(); i++){
-            std::vector<int> helper(simple_degrees.size(), 0);
-            for (int j = 0; j < simple_edges.size(); j++){
-                if (simple_edges[j][0] == i){
-                    helper[simple_edges[j][1]]++;
-                    if ((simple_degrees[i] < 0) && (simple_degrees[simple_edges[j][1]] >= 0)){
-                        non_trivial_intersection = true;
-                    }
-                    if ((simple_degrees[i] >= 0) && (simple_degrees[simple_edges[j][1]] < 0)){
-                        non_trivial_intersection = true;
-                    }
-                }
-                if (simple_edges[j][1] == i){
-                    helper[simple_edges[j][0]]++;
-                    if ((simple_degrees[i] < 0) && (simple_degrees[simple_edges[j][0]] >= 0)){
-                        non_trivial_intersection = true;
-                    }
-                    if ((simple_degrees[i] >= 0) && (simple_degrees[simple_edges[j][0]] < 0)){
-                        non_trivial_intersection = true;
-                    }
-                }
-            }
-            intersections.push_back(helper);
-        }
-        if (!non_trivial_intersection){break;}
-        
-        // (3) compute new degrees (C+,L+)
+        // (2) compute new degrees (C+,L+)
         std::map<int, int> dictionary;
         std::vector<int> new_degrees;
-        int index = 0;
         for (int i = 0; i < simple_degrees.size(); i ++){
             if (simple_degrees[i] >= 0){
-                dictionary.insert(std::pair<int, int>(i, index));
-                index++;
+                dictionary.insert(std::pair<int, int>(i, dictionary.size()));
                 int new_deg = simple_degrees[i];
-                for(int j = 0; j < Iminus.size(); j ++){
-                    new_deg -= intersections[i][Iminus[j]];
+                for(int j = 0; j < simple_edges.size(); j++){
+                    if ((simple_edges[j][0] == i) && (simple_degrees[simple_edges[j][1]] < 0)){
+                        new_deg -= 1;
+                    }
+                    if ((simple_edges[j][1] == i) && (simple_degrees[simple_edges[j][0]] < 0)){
+                        new_deg -= 1;
+                    }
                 }
                 new_degrees.push_back(new_deg);
             }
         }
+        
+        // (3) degenerate case
+        if ((new_degrees == simple_degrees) || (new_degrees.size() == 0)) {break;}
         
         // (4) compute new edges
         std::vector<std::vector<int>> new_edges;
@@ -113,13 +81,16 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         
     }
     
-    // split the degrees into negative and non-negative part
-    std::vector<int> neg, pos;
-    std::partition_copy(simple_degrees.begin(), simple_degrees.end(), back_inserter(neg), back_inserter(pos), [](int value){return value < 0;});
-    
-    // compute total positive degree
-    int h0 = std::accumulate(pos.begin(), pos.end(), 0);
-    if (pos.size() > 0){
+    // compute h0
+    int h0 = 0;
+    bool positive_component = false;
+    for (int i = 0; i < simple_degrees.size(); i++){
+        if (simple_degrees[i] >= 0){
+            h0 += simple_degrees[i];
+            positive_component = true;
+        }
+    }
+    if (positive_component){
         h0++;
     }
     
