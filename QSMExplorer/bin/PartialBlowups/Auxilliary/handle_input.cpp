@@ -86,9 +86,6 @@ void consistency_check(const int & genus,
                                       const int & number_threads)
 {
     if (genus < 0){throw std::invalid_argument("Genus must not be negative!");}
-    for (int i = 0; i < genera.size(); i++){
-        if ((genera[i] > 0) || (genera[i] < 0)){throw std::invalid_argument("No genus must be different from 0!");}
-    }
     if (root <= 1){throw std::invalid_argument("Root must be at least 2!");}
     if (h0Min > h0Max){throw std::invalid_argument("h0Min must not be larger than h0Max!");}
     if (h0Min < 0){throw std::invalid_argument("h0Min must not be negative!");}

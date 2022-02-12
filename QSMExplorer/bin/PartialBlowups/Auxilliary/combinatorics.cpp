@@ -156,6 +156,7 @@ void comp_partitions_with_nodes(const int & N,
                                                     const int & n,
                                                     const std::vector<std::vector<int>> & resolved_edges,
                                                     const std::vector<std::vector<int>> & nodal_edges,
+                                                    const std::vector<int> & genera,
                                                     std::vector<std::vector<int>> & partitions,
                                                     std::vector<bool> & lower_bounds)
 {
@@ -171,15 +172,27 @@ void comp_partitions_with_nodes(const int & N,
         
         // Find degrees corresponding to h0
         std::vector<int> degrees;
-        for (int j = 0; j < naive_partitions[i].size(); j++){
-            if (naive_partitions[i][j] > 0){degrees.push_back(naive_partitions[i][j]-1);}
-            else{degrees.push_back(-1);}
+        for (int j = 0; j < genera.size(); j++){
+            if (naive_partitions[i][j] > 0){
+                if (genera[j] == 0){
+                    degrees.push_back(naive_partitions[i][j]-1);
+                }
+                if (genera[j] == 1){
+                    degrees.push_back(naive_partitions[i][j]);
+                }
+            }
+            else{
+                // On a g = 1 curve, h0 = 0 does not imply that d < 0.
+                // Rather, we could also have a non-trivial d = 0 bundle.
+                // Since we are currently only computing a lower bound, it should be ok to place -1.
+                degrees.push_back(-1);
+            }
         }
         
         // Compute h0 and if this is a lower bound
         int h0;
         bool lower_bound;
-        h0_from_partial_blowups(degrees, resolved_edges, nodal_edges, false, h0, lower_bound);
+        h0_from_partial_blowups(degrees, resolved_edges, nodal_edges, genera, false, h0, lower_bound);
         
         // Check if ok and if so add to the list of results
         if (h0 == N){

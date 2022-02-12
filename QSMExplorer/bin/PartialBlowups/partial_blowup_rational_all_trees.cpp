@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
                 additional_graph_information(resolved_edges, edge_numbers, graph_stratification);
                 
                 // Compute number of roots
-                std::vector<boost::multiprecision::int128_t> results = parallel_root_counter(genus, degrees, resolved_edges, nodal_edges, root, graph_stratification, edge_numbers, h0_value, number_threads);
+                std::vector<boost::multiprecision::int128_t> results = parallel_root_counter(genus, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, edge_numbers, h0_value, number_threads);
                 
                 // Update results
                 sum_exact_result += (boost::multiprecision::int128_t) (geo_mult * results[0]);

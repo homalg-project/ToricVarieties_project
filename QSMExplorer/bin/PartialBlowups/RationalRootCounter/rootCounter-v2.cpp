@@ -14,15 +14,20 @@ void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & centra
 
 // Worker thread for parallel run
 void worker(
-                                const std::vector<int> degrees,
+                                const std::vector<int> genera,
                                 const std::vector<std::vector<int>> resolved_edges,
                                 const int root,
                                 const std::vector<std::vector<std::vector<int>>> graph_stratification,
                                 const std::vector<int> edge_numbers,
                                 const std::vector<std::vector<int>> outfluxes,
                                 const std::vector<bool> lbs,
+                                const std::vector<std::vector<int>> partitions,
                                 std::vector<boost::multiprecision::int128_t> & sums)
 {
+    
+    // determine number of local roots
+    int number_elliptic_curves = std::count(genera.begin(), genera.end(), 1);
+    boost::multiprecision::int128_t number_local_roots = (boost::multiprecision::int128_t) std::pow(root,2*number_elliptic_curves);
     
     // save total number of roots found
     boost::multiprecision::int128_t total_clear = 0;
@@ -118,11 +123,34 @@ void worker(
                 }
                 
             }
-            // no action required -> increase numbers
+            // no action required -> we can increase the counted numbers
             else{
-                //total_clear = total_clear + (boost::multiprecision::int128_t) currentSnapshot.mult;
-                if (lbs[i]){total_unclear = total_unclear + (boost::multiprecision::int128_t) currentSnapshot.mult;}
-                else{total_clear = total_clear + (boost::multiprecision::int128_t) currentSnapshot.mult;}
+                
+                // Case 1: We have computed merely a lower bound
+                if (lbs[i]){
+                    total_unclear = total_unclear + (boost::multiprecision::int128_t) currentSnapshot.mult * number_local_roots;
+                }
+                
+                // Case 2: We have perse not just a lower bound, but need to be more careful with (g = 1, d = 0).
+                if (!lbs[i]){
+                    
+                    // Count number of bundles for which we identified h0 exactly.
+                    boost::multiprecision::int128_t number_roots_with_determined_h0 = 1;
+                    for (int j = 0; j < genera.size(); j++){
+                        if ((genera[j] == 1) && (partitions[i][j] == 0)){
+                            number_roots_with_determined_h0 = number_roots_with_determined_h0 * (boost::multiprecision::int128_t) (root * root - 1);
+                        }
+                        if ((genera[j] == 1) && (partitions[i][j] > 0)){
+                            number_roots_with_determined_h0 = number_roots_with_determined_h0 * (boost::multiprecision::int128_t) (root * root);
+                        }
+                    }
+                    
+                    // Update the record accordingly
+                    total_clear = total_clear + (boost::multiprecision::int128_t) currentSnapshot.mult * number_roots_with_determined_h0;
+                    total_unclear += (boost::multiprecision::int128_t) currentSnapshot.mult * (number_local_roots - number_roots_with_determined_h0);
+                    
+                }
+                
             }
             
         }
@@ -140,6 +168,7 @@ void worker(
 std::vector<boost::multiprecision::int128_t> parallel_root_counter(
                                 const int genus,
                                 const std::vector<int> degrees,
+                                const std::vector<int> genera,
                                 const std::vector<std::vector<int>> resolved_edges,
                                 const std::vector<std::vector<int>> nodal_edges,
                                 const int root,
@@ -148,12 +177,13 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
                                 const int & h0_value,
                                 const int & thread_number)
 {
-    
+  
     // (1) Partition h0
     // (1) Partition h0
     std::vector<std::vector<int>> partitions;
     std::vector<bool> lower_bounds;
-    comp_partitions_with_nodes(h0_value, degrees.size(), resolved_edges, nodal_edges, partitions, lower_bounds);
+    comp_partitions_with_nodes(h0_value, degrees.size(), resolved_edges, nodal_edges, genera, partitions, lower_bounds);
+    
     
     // (2) Find fluxes corresponding to partitions
     // (2) Find fluxes corresponding to partitions
@@ -162,6 +192,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     };
     std::vector<std::vector<int>> outfluxes;
     std::vector<bool> lbs;
+    std::vector<std::vector<int>> h0_partitions;
     for (int i = 0; i < partitions.size(); i++){
         
         // create stack and first snapshot
@@ -186,7 +217,10 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
                 
                 // non-trivial h0:
                 if (partitions[i][j] > 0){
-                    int f = degrees[j] + root - root * partitions[i][j];
+                    int f = degrees[j] - root * partitions[i][j];
+                    if (genera[j] == 0){
+                        f += root;
+                    }
                     if ((edge_numbers[j] <= f) && (f <= edge_numbers[j] * (root-1)) && ((degrees[j] - f) % root == 0)){
                         std::vector<int> new_flux = currentSnapshot.flux;
                         new_flux.push_back(f);
@@ -198,7 +232,10 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
                 
                 // trivial h0:
                 if (partitions[i][j] == 0){
-                    int min_flux = degrees[j] + 1;
+                    int min_flux = degrees[j];
+                    if (genera[j] == 0){
+                        min_flux++;
+                    }
                     if (min_flux < edge_numbers[j]){
                         min_flux = edge_numbers[j];
                     }
@@ -218,6 +255,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             else if (std::accumulate(currentSnapshot.flux.begin(),currentSnapshot.flux.end(),0) == root * resolved_edges.size()){
                 outfluxes.push_back(currentSnapshot.flux);
                 lbs.push_back(lower_bounds[i]);
+                h0_partitions.push_back(partitions[i]);
             }
             
         }
@@ -240,13 +278,15 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             if (i < thread_number - 1){
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, degrees, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, boost::ref(sums));
+                std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.begin() + (i+1) * package_size);
+                boost::thread *t = new boost::thread(worker, genera, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
-                boost::thread *t = new boost::thread(worker, degrees, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, boost::ref(sums));
+                std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.end());
+                boost::thread *t = new boost::thread(worker, genera, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -256,7 +296,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(degrees, resolved_edges, root, graph_stratification, edge_numbers, outfluxes, lbs, boost::ref(sums));
+        worker(genera, resolved_edges, root, graph_stratification, edge_numbers, outfluxes, lbs, h0_partitions, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
