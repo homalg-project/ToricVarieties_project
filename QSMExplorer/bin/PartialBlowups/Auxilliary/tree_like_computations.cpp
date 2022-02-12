@@ -20,12 +20,10 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
     
     // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
     // reorder degrees accordingly as well
-    std::vector<int> simple_degrees;
+    std::vector<int> simple_degrees(degrees.begin(), degrees.end());
     std::map<int, int> vertex_correspondence;
     for (int i = 0; i < vertices.size(); i++){
         vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
-        //simple_degrees.push_back(degrees[vertices[i]]);
-        simple_degrees.push_back(degrees[i]);
     }
     
     // form list of edges with internal/new vertex indices (-> can be easily processed below)
