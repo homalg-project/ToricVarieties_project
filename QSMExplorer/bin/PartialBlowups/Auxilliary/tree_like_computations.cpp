@@ -29,14 +29,11 @@ void print_vector_of_vector(const std::string &message, const std::vector<std::v
 // (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 // (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 
-int h0_on_rational_tree(const std::vector<int>& degrees,
+int h0_on_rational_tree(const std::vector<int>& vertices,
+                                     const std::vector<int>& degrees,
                                      const std::vector<std::vector<int>>& nodal_edges,
                                      const bool& details)
 {
-    
-    // save entered degrees and edges
-    std::vector<int> simple_degrees(degrees.begin(), degrees.end());
-    std::vector<std::vector<int>> simple_edges(nodal_edges.begin(), nodal_edges.end());
     
     // inform about entered graph
     if (details){
@@ -44,8 +41,25 @@ int h0_on_rational_tree(const std::vector<int>& degrees,
         std::cout << "############################################\n";
         std::cout << "Simplify tree-like graph:\n";
         std::cout << "--------------------------------\n\n";
-        print_vector("Degrees: ", simple_degrees);
-        print_vector_of_vector("Edges:\n", simple_edges);
+        print_vector("Degrees: ", degrees);
+        print_vector_of_vector("Edges:\n", nodal_edges);
+    }
+    
+    // vertex_correspondence: our vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
+    // reorder degrees accordingly as well
+    std::vector<int> simple_degrees;
+    std::map<int, int> vertex_correspondence;
+    for (int i = 0; i < vertices.size(); i++){
+        vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
+        //simple_degrees.push_back(degrees[vertices[i]]);
+        simple_degrees.push_back(degrees[i]);
+    }
+    
+    // form list of edges with internal/new vertex indices (-> can be easily processed below)
+    std::vector<std::vector<int>> simple_edges;
+    for (int i = 0; i < nodal_edges.size(); i++){
+        std::vector<int> new_edge = {vertex_correspondence[nodal_edges[i][0]], vertex_correspondence[nodal_edges[i][1]]};
+        simple_edges.push_back(new_edge);
     }
     
     // simplify the graph as much as possible
@@ -471,7 +485,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
             for (int j = 0; j < connected_components[i].size(); j++){
                 helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
             }
-            h0 += h0_on_rational_tree(helper_degrees, edges_of_connected_components[i], details);
+            h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i], details);
         }
     }
     
