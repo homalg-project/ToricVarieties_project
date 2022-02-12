@@ -29,9 +29,9 @@ void print_vector_of_vector(const std::string &message, const std::vector<std::v
 // (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 // (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 
-int h0_on_tree(const std::vector<int>& degrees, 
-                        const std::vector<std::vector<int>>& nodal_edges,
-                        const bool& details)
+int h0_on_rational_tree(const std::vector<int>& degrees,
+                                     const std::vector<std::vector<int>>& nodal_edges,
+                                     const bool& details)
 {
     
     // save entered degrees and edges
@@ -265,6 +265,7 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
 
 
 
+
 // (4) Compute betti number
 // (4) Compute betti number
 // (4) Compute betti number
@@ -333,6 +334,7 @@ int betti_number(std::vector<std::vector<int>>& input_edges)
 void h0_from_partial_blowups(const std::vector<int>& degrees,
                                             const std::vector<std::vector<int>>& resolved_edges,                
                                             const std::vector<std::vector<int>>& nodal_edges,
+                                            const std::vector<int> & genera,
                                             const bool & details,
                                             int & h0,
                                             bool & lower_bound)
@@ -341,6 +343,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     // (0) Initial assumption: We can compute the exact number of global sections
     lower_bound = false;
     
+    
     // (1) Find compoents with nodes and add h0's from components without nodes
     std::vector<int> components_with_nodes;
     h0 = 0;
@@ -348,13 +351,49 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
         bool test = false; // component i has no nodes attached to it
         for (int j = 0; j < nodal_edges.size(); j++){
             if ((nodal_edges[j][0] == i) || (nodal_edges[j][1] == i)){
+                
+                // Check for degenerate case: Is a g = 1 attached to node? If so, provide only lower bound.
+                if (genera[i] == 1){
+                    lower_bound = true;
+                    h0 = 0;
+                    for (int k = 0; k < degrees.size(); k++){
+                        if ((degrees[k] >= 0)&&(genera[k] == 0)){
+                            h0 += degrees[k]+1;
+                        }
+                        if ((degrees[k] >= 0)&&(genera[k] == 1)){
+                            h0 += degrees[k];
+                        }
+                    }
+                    if (h0 >= nodal_edges.size()){
+                        h0 -= nodal_edges.size();
+                    }
+                    else{
+                        h0 = 0;
+                    }
+                    if (details){
+                        std::cout << "Lower bound since elliptic curve found attached to node: h0 >= " << h0 << "\n";
+                    }
+                    return;
+                }
+
+                // Remember this component
                 components_with_nodes.push_back(i);
                 test = true;
+                
+                // Off to the next component
                 break;
+                
             }
         }
-        if (!test && (degrees[i] >= 0)){h0 += degrees[i]+1;}
+        if (!test && (degrees[i] >= 0) && (genera[i] == 0)){
+            h0 += degrees[i]+1;
+        }
+        if (!test && (degrees[i] >= 0) && (genera[i] == 1)){
+            // We only compute a lower bound. So we assume that d = 0 on elliptic curve implies h0 = 0.
+            h0 += degrees[i];
+        }
     }
+    
     
     // (2) Inform what we find from non-nodal curves
     if (details){
@@ -365,19 +404,22 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
         std::cout << "############################################\n\n";
     }
     
-    // (3) Check degenerate case: No nodes
+    
+    // (3) Degenerate case: no nodes
     if (components_with_nodes.size() == 0){
         if (details){std::cout << "h0 = " << h0 << "\n";}
         return;
     }
     
-    // (3) Compute all connected componentss
+    
+    // (4) Compute all connected componentss
     std::vector<std::vector<int>> connected_components;
     std::vector<std::vector<std::vector<int>>> edges_of_connected_components(connected_components.size());
     std::map<int, int> degree_correspondence;
     find_connected_components(nodal_edges, degrees, details, connected_components, edges_of_connected_components, degree_correspondence);
     
-    // (4) Iterate over the connected components
+    
+    // (5) Iterate over the connected components
     for (int i = 0; i < connected_components.size(); i++){
         // if NOT tree-like
         if (edges_of_connected_components[i].size()+1-connected_components[i].size() > 0){
@@ -408,7 +450,9 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
                 std::cout << "Local sections: " << local_sections << "\n";
             }
             if (local_sections > number_nodes){
-                h0 += local_sections - number_nodes;
+                if (local_sections >= number_nodes){
+                    h0 += local_sections - number_nodes;
+                }
                 if (details){
                     std::cout << "=> H0 >= " << local_sections - number_nodes << "\n";
                     std::cout << "############################################\n\n";
@@ -427,11 +471,12 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
             for (int j = 0; j < connected_components[i].size(); j++){
                 helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
             }
-            h0 += h0_on_tree(helper_degrees, edges_of_connected_components[i], details);
+            h0 += h0_on_rational_tree(helper_degrees, edges_of_connected_components[i], details);
         }
     }
     
-    // (5) Print result
+    
+    // (6) Print result
     if (details){
         std::cout << "\n";
         std::cout << "############################################\n";

@@ -1977,8 +1977,8 @@ InstallMethod( CountPartialBlowupLimitRootDistributionFromTreelikeAnalysis, [ Is
                 Error( "The genera must be integers." );
                 return -1;
             fi;
-            if genera[ i ] <> 0 then
-                Error( "The genera must all be zero for this method to apply." );
+            if genera[ i ] < 0 then
+                Error( "The genera must not be negative." );
                 return -1;
             fi;
         od;
