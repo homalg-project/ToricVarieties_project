@@ -171,21 +171,30 @@ void comp_partitions_with_nodes(const int & N,
 // (4) Compute number of partitions of an integer f.
 // (4) Compute number of partitions of an integer f.
 
-// Task: Compute number of partitions of an integer f.
-// Input: Integer f to be partitioned.
-//           Integers r, n.
-// Output: The number of partitions of f into a sum of exactly n integers w1, ... wn with 1 <= w1, ..., wn < r.
-boost::multiprecision::int128_t number_partitions(
-        const int & f,
-        const int & n,
-        const int & r)
+// Task: Compute the number of partitions of an integer f into n integers w1, ... ,wn with values 1 <= w1, ..., wn < r.
+// Careful: THE ORDER DOES MATTER!
+
+boost::multiprecision::int128_t partition_helper(const int & f,
+                                                                            const int & n,
+                                                                            const int & r,
+                                                                            std::vector<std::vector<boost::multiprecision::int128_t>> & memory)
 {
     
     // initialize the counter
     boost::multiprecision::int128_t count = (boost::multiprecision::int128_t) 0;
     
+    // Valid value for f?
+    if (f < 1){
+        return 0;
+    }
+    
+    // Valid value for n?
+    if (n < 1){
+        return 0;
+    }
+    
     // Only one value to set? Check if we have a partition
-    if(n == 1) {
+    if(n == 1){
         if ((1<= f)&&(f<r)){
             return (boost::multiprecision::int128_t) 1;
         }
@@ -196,9 +205,32 @@ boost::multiprecision::int128_t number_partitions(
     
     // Pick values and make recursive call
     for (int i = 1; i < r; i++){
-        count = count + number_partitions(f - i, n-1, r);
+        if (1 <= f-i){
+            if (memory[f-i][n-1] = -1){
+                memory[f-i-1][n-1-1] = partition_helper(f - i, n-1, r, memory);
+            }
+            count = count + memory[f-i-1][n-1-1];
+        }
     }
     
     // return final result
     return count;    
+}
+
+boost::multiprecision::int128_t number_partitions(
+        const int & f,
+        const int & n,
+        const int & r)
+{
+    
+    // We recursively compute number_partitions(f-i, n-1, r).
+    // This means the first argument can range between 1 and f.
+    // The second argument can range between 1 and n.
+    // -> At most, we have to perform f * n computations.
+    // Cache them to speed up the computation!
+    
+    // Initialize memory and start computation
+    std::vector<std::vector<boost::multiprecision::int128_t>> memory(f, std::vector<boost::multiprecision::int128_t>(n, (boost::multiprecision::int128_t) -1)); 
+    return partition_helper(f, n, r, memory);
+    
 }
