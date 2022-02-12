@@ -37,7 +37,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
     while(true){
         
         // (1) Iminus or Iplus trivial?
-        std::vector<int> Iminus, Iplus;
+        std::vector<int> Iminus;
         for (int i = 0; i < simple_degrees.size(); i++){
             if (simple_degrees[i] < 0){
                 Iminus.push_back(i);
@@ -78,12 +78,12 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         if (!non_trivial_intersection){break;}
         
         // (3) compute new degrees (C+,L+)
-        std::vector<int> dictionary(simple_degrees.size(), -1);
+        std::map<int, int> dictionary;
         std::vector<int> new_degrees;
         int index = 0;
         for (int i = 0; i < simple_degrees.size(); i ++){
             if (simple_degrees[i] >= 0){
-                dictionary[i] = index;
+                dictionary.insert(std::pair<int, int>(i, index));
                 index++;
                 int new_deg = simple_degrees[i];
                 for(int j = 0; j < Iminus.size(); j ++){
