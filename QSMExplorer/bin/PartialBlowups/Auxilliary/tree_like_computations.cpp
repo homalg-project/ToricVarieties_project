@@ -1,33 +1,6 @@
-// (1) Helper functions to print vectors and vectors of vectors
-// (1) Helper functions to print vectors and vectors of vectors
-// (1) Helper functions to print vectors and vectors of vectors
-
-void print_vector(const std::string &message, const std::vector<int> &values)
-{
-    std::cout << message;
-    for (auto i: values)
-        std::cout << i << ", ";
-    std::cout << "\n";
-}
-
-void print_vector_of_vector(const std::string &message, const std::vector<std::vector<int>> &values)
-{
-    std::cout << message;
-    for (int i = 0; i < values.size(); i++){
-        print_vector("", values[i]);
-    }
-    std::cout << "\n";
-}
-
-
-
-
-
-
-
-// (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
-// (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
-// (2) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
+// (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
+// (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
+// (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 
 int h0_on_rational_tree(const std::vector<int>& vertices,
                                      const std::vector<int>& degrees,
@@ -172,9 +145,9 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
 
 
 
-// (3) Find the connected components of a graph
-// (3) Find the connected components of a graph
-// (3) Find the connected components of a graph
+// (2) Find the connected components of a graph
+// (2) Find the connected components of a graph
+// (2) Find the connected components of a graph
 
 int merge(int* parent, int x)
 {
@@ -280,9 +253,9 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
 
 
 
-// (4) Compute betti number
-// (4) Compute betti number
-// (4) Compute betti number
+// (3) Compute betti number
+// (3) Compute betti number
+// (3) Compute betti number
 
 int betti_number(std::vector<std::vector<int>>& input_edges)
 {
@@ -341,9 +314,9 @@ int betti_number(std::vector<std::vector<int>>& input_edges)
 
 
 
-// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
-// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
-// (5) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
+// (4) Compute/estimate via lower bound h0 on nodal curve with P1s as components
 
 void h0_from_partial_blowups(const std::vector<int>& degrees,
                                             const std::vector<std::vector<int>>& resolved_edges,                
