@@ -541,31 +541,6 @@ DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, 
 
 ##############################################################################################
 ##
-#! @Section Counting distribution of limit roots by computing cohomology on tree-like rational nodal curves.
-##
-##############################################################################################
-
-#! Currently, this approach is limited to curves with g = 0 components only. This limitation is there for simplicity only and extends are possible.
-
-#! @Description
-#! This function computes the number of (partial blowup) limit roots in the i-th QSM with at least min and at most max global sections.
-#! @Returns integer or fail
-#! @Arguments Integer i, integer min, integer max
-DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMFromTreelikeAnalysis", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMFromTreelikeAnalysis", [ IsInt, IsInt, IsInt, IsBool ] );
-
-#! @Description
-#! This function computes the number of (partial blowup) limit roots in the QSM defined by polytope i with at least min and at most max global sections.
-#! @Returns integer or fail
-#! @Arguments Integer i, integer min, integer max
-DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytopeFromTreelikeAnalysis", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytopeFromTreelikeAnalysis", [ IsInt, IsInt, IsInt, IsBool ] );
-
-DeclareOperation( "CountPartialBlowupLimitRootDistributionFromTreelikeAnalysis", [ IsRecord, IsInt, IsInt, IsBool ] );
-
-
-##############################################################################################
-##
 #! @Section Counting distribution of limit roots with external legs
 ##
 ##############################################################################################
