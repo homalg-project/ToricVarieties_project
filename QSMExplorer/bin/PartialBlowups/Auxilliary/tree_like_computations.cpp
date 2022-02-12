@@ -310,11 +310,9 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
                     return;
                 }
 
-                // Remember this component
+                // Remember this component and off to the next
                 components_with_nodes.push_back(i);
                 test = true;
-                
-                // Off to the next component
                 break;
                 
             }
@@ -348,7 +346,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     
     // (4) Compute all connected componentss
     std::vector<std::vector<int>> connected_components;
-    std::vector<std::vector<std::vector<int>>> edges_of_connected_components(connected_components.size());
+    std::vector<std::vector<std::vector<int>>> edges_of_connected_components;
     std::map<int, int> degree_correspondence;
     find_connected_components(nodal_edges, degrees, details, connected_components, edges_of_connected_components, degree_correspondence);
     
