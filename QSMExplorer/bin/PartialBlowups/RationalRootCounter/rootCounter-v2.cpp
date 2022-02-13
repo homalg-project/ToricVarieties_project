@@ -134,6 +134,14 @@ void worker(
                 // Case 2: We have perse not just a lower bound, but need to be more careful with (g = 1, d = 0).
                 if (!lbs[i]){
                     
+                    if (display_unsorted_setups){
+                        std::cout << "##################\n";
+                        std::cout << "Could not sort the following:\n";
+                        print_vector_of_vector("Blowups along\n", resolved_edges);
+                        print_vector("Partition: ", partitions[i]);
+                        std::cout << "##################\n\n";
+                    }
+                    
                     // Count number of bundles for which we identified h0 exactly.
                     boost::multiprecision::int128_t number_roots_with_determined_h0 = 1;
                     for (int j = 0; j < genera.size(); j++){
