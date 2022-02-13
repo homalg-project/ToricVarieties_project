@@ -1,4 +1,4 @@
-// A program to compute the number of root bundles on certain partial blowups of certain nodal curves
+// A program to compute the number of root bundles on partial blowups of certain nodal curves
 
 #include <algorithm>
 #include <cassert>
@@ -19,19 +19,16 @@
 #include <boost/thread/thread.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
+boost::mutex myGuard;
+bool display_more_details = false;
+bool display_unsorted_setups = true;
+
 #include "Auxilliary/print_vectors.cpp"
 #include "Auxilliary/handle_input.cpp"
 #include "Auxilliary/return_result.cpp"
 #include "Auxilliary/compute_graph_information.cpp"
 #include "Auxilliary/tree_like_computations.cpp"
 #include "Auxilliary/combinatorics.cpp"
-
-
-// guard for thread-safe operations
-boost::mutex myGuard;
-
-// include root counter
-bool display_more_details = false;
 #include "RationalRootCounter/rootCounter-v2.cpp"
 
 // Optimizations for speedup
