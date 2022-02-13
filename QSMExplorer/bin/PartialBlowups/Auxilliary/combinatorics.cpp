@@ -31,6 +31,8 @@ void get_combinations_of_indices_to_pick(std::size_t number_of_elements_to_pick,
 // (2) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
 // (2) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
 
+// Task: Given an integer N, partition it into a sum of n integers w_1,...,w_n. The k-th integer w_n can have values minima[k] <= k <= maxima[k].
+
 void comp_partitions(
         const int & N,
         const int & n,
@@ -117,7 +119,7 @@ void comp_partitions_with_nodes(const int & N,
                                                     std::vector<bool> & lower_bounds)
 {
     
-    // Compute all partitions wisth "naive" total sum ranging between N and N + nodal_edges.size()
+    // Compute all partitions with "naive" total sum ranging between N and N + nodal_edges.size()
     std::vector<std::vector<int>> naive_partitions;
     for (int i = 0; i <= nodal_edges.size(); i++){
         comp_partitions(N+i, n, std::vector<int>(n,0), std::vector<int>(n,N+i), naive_partitions);
@@ -157,7 +159,7 @@ void comp_partitions_with_nodes(const int & N,
         }
     
     }
-        
+    
 }
 
 
