@@ -1,35 +1,6 @@
-// (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
-// (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
-// (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
-
-void get_combinations_of_indices_to_pick(const int number_of_elements_to_pick, const int number_of_elements, std::vector<std::vector<int>> & combinations)
-{
-    
-    // compute the combinations
-    if (number_of_elements == number_of_elements_to_pick){
-        std::vector<int> v(number_of_elements);
-        std::iota(std::begin(v), std::end(v), 0);
-        combinations = {v};
-    }
-    else{
-        assert(number_of_elements > number_of_elements_to_pick);
-        std::vector<bool> pick_element_n(number_of_elements_to_pick, true);
-        pick_element_n.insert(pick_element_n.end(), number_of_elements - number_of_elements_to_pick, 0);        
-        do{
-            std::vector<int> combination;
-            for(int i = 0; i < number_of_elements; ++i){
-                if (pick_element_n[i]) combination.push_back(i);
-            }
-            combinations.push_back(combination);
-        } while (std::prev_permutation(pick_element_n.begin(), pick_element_n.end()));
-    }
-    
-}
-
-
-// (2) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
-// (2) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
-// (2) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
+// (1) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
+// (1) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
+// (1) Compute partitions of an integer N into a sum of n integers with specified minima and maxima.
 
 // Task: Given an integer N, partition it into a sum of n integers w_1,...,w_n. The k-th integer w_n can have values minima[k] <= k <= maxima[k].
 
@@ -105,9 +76,9 @@ void comp_partitions(
 }
 
 
-// (3) Compute partitions of an integer N including possible boundary conditions.
-// (3) Compute partitions of an integer N including possible boundary conditions.
-// (3) Compute partitions of an integer N including possible boundary conditions.
+// (2) Compute partitions of an integer N including possible boundary conditions.
+// (2) Compute partitions of an integer N including possible boundary conditions.
+// (2) Compute partitions of an integer N including possible boundary conditions.
 
 // This works for any tree-like blowup and is used for this particular purpose.
 void comp_partitions_with_nodes(const int & N,
@@ -163,9 +134,9 @@ void comp_partitions_with_nodes(const int & N,
 }
 
 
-// (4) Compute number of partitions of an integer f.
-// (4) Compute number of partitions of an integer f.
-// (4) Compute number of partitions of an integer f.
+// (3) Compute number of partitions of an integer f.
+// (3) Compute number of partitions of an integer f.
+// (3) Compute number of partitions of an integer f.
 
 // Task: Compute the number of partitions of an integer f into n integers w1, ... ,wn with values 1 <= w1, ..., wn < r.
 // Careful: THE ORDER DOES MATTER!
