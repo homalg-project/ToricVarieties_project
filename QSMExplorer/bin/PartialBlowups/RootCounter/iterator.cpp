@@ -52,25 +52,67 @@ void iterator(const std::vector<std::vector<int>> & edges,
                      std::vector<boost::multiprecision::int128_t> & results_lower_bound)
 {
     
-    // Iterate over the number of edges
+    // declare variable to capture results
+    boost::multiprecision::int128_t sum_exact_result, sum_lower_bound;
+
+    // snapshot stack
+    struct SnapShotStruct{
+        std::vector<int> combination;
+    };
+    
+    // Iterate over combination of all partial blowups via stack
     for (int i = 0; i <= edges.size(); i++){
         
-        // In how many ways can we leave i nodes in the curve?
-        std::vector<std::vector<int>> combinations;
-        get_combinations_of_indices_to_pick(i, edges.size(), combinations);
-        
-        // Initialize variables to capture result
-        boost::multiprecision::int128_t sum_exact_result, sum_lower_bound;
+        // set values to zero
         sum_exact_result = sum_lower_bound = 0;
         
-        // Iterate over all possibilities
-        for (int j = 0; j < combinations.size(); j++){
-            std::vector<int> positions_no_blowup = combinations[j];
-            sort(positions_no_blowup.begin(), positions_no_blowup.end(), std::greater<int>());
-            compute_root_bundles(edges, degrees, genera, genus, root, h0_value, number_threads, positions_no_blowup, sum_exact_result, sum_lower_bound);
+        // Initialize stack
+        std::stack<SnapShotStruct> snapshotStack;
+        SnapShotStruct currentSnapshot;
+        currentSnapshot.combination = {};
+        snapshotStack.push(currentSnapshot);
+        
+        // Run...
+        while(!snapshotStack.empty())
+        {
+            
+            // pick the top snapshot and delete it from the stack
+            currentSnapshot= snapshotStack.top();
+            snapshotStack.pop();
+            
+            // more values to be set
+            if (currentSnapshot.combination.size() < i){
+                
+                if (currentSnapshot.combination.empty()){
+                    for (int j = edges.size() - 1; j >= 0; j--){
+                        SnapShotStruct newSnapshot;
+                        newSnapshot.combination = {j};
+                        snapshotStack.push(newSnapshot);
+                    }
+                }
+                else{
+                    int current_max = currentSnapshot.combination[currentSnapshot.combination.size() - 1];
+                    if (currentSnapshot.combination.back() > 0){
+                        for (int j = currentSnapshot.combination.back() - 1; j >=0; j--){
+                            std::vector<int> new_combination = currentSnapshot.combination;
+                            new_combination.push_back(j);
+                            SnapShotStruct newSnapshot;
+                            newSnapshot.combination = new_combination;
+                            snapshotStack.push(newSnapshot);
+                        }
+                    }
+                }
+                
+            }
+            
+            // no more values to be set -> compute roots
+            if (currentSnapshot.combination.size() == i){
+                compute_root_bundles(edges, degrees, genera, genus, root, h0_value, number_threads, currentSnapshot.combination, sum_exact_result, sum_lower_bound);
+            }
+            
         }
         
-        // Remember result from leaving exactly i nodes
+        // remember result from leaving i-nodes
         results_exact.push_back(sum_exact_result);
         results_lower_bound.push_back(sum_lower_bound);
         
