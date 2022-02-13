@@ -1,16 +1,9 @@
-// method to check if a vector contains an element
-template <typename T>
-bool contains(const std::vector<T> & vec, const T & elem)
+bool contains(const std::vector<int> & vec, const int & elem)
 {
-    bool result = false;
-    if(std::find(vec.begin(), vec.end(), elem) != vec.end())
-    {
-        result = true;
-    }
-    return result;
+    return (std::find(vec.begin(), vec.end(), elem) != vec.end());
 }
 
-// method to compute new graph_information
+// method to compute additional information about the graph in question
 void additional_graph_information(
                                   const std::vector<std::vector<int>> & edges,
                                   std::vector<int> & edge_numbers,
