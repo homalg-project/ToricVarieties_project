@@ -217,7 +217,7 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
 // (3) Compute betti number
 // (3) Compute betti number
 
-int betti_number(std::vector<std::vector<int>>& input_edges)
+int betti_number(const std::vector<std::vector<int>>& input_edges)
 {
     
     // (1) Find all vertices (avoiding duplicated) and sort them in ascending order
