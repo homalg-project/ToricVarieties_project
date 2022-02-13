@@ -13,17 +13,21 @@ void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & centra
 
 
 // Worker thread for parallel run
-void worker(
-                                const std::vector<int> genera,
+void worker(            const std::vector<std::vector<int>> integer_data,
                                 const std::vector<std::vector<int>> resolved_edges,
+                                const std::vector<std::vector<int>> nodal_edges,
                                 const int root,
                                 const std::vector<std::vector<std::vector<int>>> graph_stratification,
-                                const std::vector<int> edge_numbers,
                                 const std::vector<std::vector<int>> outfluxes,
                                 const std::vector<bool> lbs,
                                 const std::vector<std::vector<int>> partitions,
                                 std::vector<boost::multiprecision::int128_t> & sums)
 {
+    
+    // identify data
+    std::vector<int> degrees = integer_data[0];
+    std::vector<int> genera = integer_data[1];
+    std::vector<int> edge_numbers = integer_data[2];
     
     // determine number of local roots
     int number_elliptic_curves = std::count(genera.begin(), genera.end(), 1);
@@ -126,29 +130,26 @@ void worker(
             // no action required -> we can increase the counted numbers
             else{
                 
+                // define variable to quantify is the setup could not be sorted completely
+                bool unsorted_setup = false;
+                
                 // Case 1: We have computed merely a lower bound
                 if (lbs[i]){
                     total_unclear = total_unclear + (boost::multiprecision::int128_t) currentSnapshot.mult * number_local_roots;
+                    unsorted_setup = true;
                 }
                 
                 // Case 2: We have perse not just a lower bound, but need to be more careful with (g = 1, d = 0).
                 if (!lbs[i]){
                     
-                    if (display_unsorted_setups){
-                        std::cout << "##################\n";
-                        std::cout << "Could not sort the following:\n";
-                        print_vector_of_vector("Blowups along\n", resolved_edges);
-                        print_vector("Partition: ", partitions[i]);
-                        std::cout << "##################\n\n";
-                    }
-                    
                     // Count number of bundles for which we identified h0 exactly.
                     boost::multiprecision::int128_t number_roots_with_determined_h0 = 1;
                     for (int j = 0; j < genera.size(); j++){
-                        if ((genera[j] == 1) && (partitions[i][j] == 0)){
+                        if ((genera[j] == 1) && (degrees[j] == outfluxes[i][j])){
                             number_roots_with_determined_h0 = number_roots_with_determined_h0 * (boost::multiprecision::int128_t) (root * root - 1);
+                            unsorted_setup = true;
                         }
-                        if ((genera[j] == 1) && (partitions[i][j] > 0)){
+                        if ((genera[j] == 1) && (degrees[j] != outfluxes[i][j])){
                             number_roots_with_determined_h0 = number_roots_with_determined_h0 * (boost::multiprecision::int128_t) (root * root);
                         }
                     }
@@ -157,6 +158,17 @@ void worker(
                     total_clear = total_clear + (boost::multiprecision::int128_t) currentSnapshot.mult * number_roots_with_determined_h0;
                     total_unclear += (boost::multiprecision::int128_t) currentSnapshot.mult * (number_local_roots - number_roots_with_determined_h0);
                     
+                }
+                
+                // display unsorted setup
+                if (display_unsorted_setups and  unsorted_setup){
+                    std::cout << "##################\n";
+                    std::cout << "Could not sort the following:\n";
+                    print_vector_of_vector("Nodal edges\n", nodal_edges);
+                    print_vector("Degrees: ", degrees);
+                    print_vector("Fluxes: ", outfluxes[i]);
+                    print_vector("Partition: ", partitions[i]);
+                    std::cout << "##################\n\n";
                 }
                 
             }
@@ -262,8 +274,8 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             // no more fluxes to be set --> add to list of fluxes if the sum of fluxes equals the number of resolved_edges * root (necessary and sufficient for non-zero number of weight assignments)
             else if (std::accumulate(currentSnapshot.flux.begin(),currentSnapshot.flux.end(),0) == root * resolved_edges.size()){
                 outfluxes.push_back(currentSnapshot.flux);
-                lbs.push_back(lower_bounds[i]);
                 h0_partitions.push_back(partitions[i]);
+                lbs.push_back(lower_bounds[i]);
             }
             
         }
@@ -275,6 +287,10 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     // (3) Split the outfluxes into as many packages as determined by thread_number and start the threads
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::vector<boost::multiprecision::int128_t> sums = {0,0};
+    std::vector<std::vector<int>> integer_data;
+    integer_data.push_back(degrees);
+    integer_data.push_back(genera);
+    integer_data.push_back(edge_numbers);
     if (thread_number > 1){
         boost::thread_group threadList;
         int package_size = (int) outfluxes.size()/thread_number;
@@ -287,14 +303,14 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
                 std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, genera, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
                 std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.end());
-                boost::thread *t = new boost::thread(worker, genera, resolved_edges, root, graph_stratification, edge_numbers, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -304,7 +320,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(genera, resolved_edges, root, graph_stratification, edge_numbers, outfluxes, lbs, h0_partitions, boost::ref(sums));
+        worker(integer_data, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, h0_partitions, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
