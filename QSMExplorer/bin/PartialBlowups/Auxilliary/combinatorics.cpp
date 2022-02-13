@@ -2,11 +2,8 @@
 // (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
 // (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
 
-std::vector<std::vector<int>> get_combinations_of_indices_to_pick(std::size_t number_of_elements_to_pick, std::size_t number_of_elements)
+void get_combinations_of_indices_to_pick(std::size_t number_of_elements_to_pick, std::size_t number_of_elements, std::vector<std::vector<int>> & combinations)
 {
-    
-    // initialize container for result
-    std::vector<std::vector<int>> combinations;
     
     // compute the combinations
     if (number_of_elements == number_of_elements_to_pick){
@@ -26,9 +23,6 @@ std::vector<std::vector<int>> get_combinations_of_indices_to_pick(std::size_t nu
             combinations.push_back(combination);
         } while (std::prev_permutation(pick_element_n.begin(), pick_element_n.end()));
     }
-    
-    // return result
-    return combinations;
     
 }
 

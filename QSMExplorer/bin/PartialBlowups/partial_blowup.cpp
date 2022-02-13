@@ -104,7 +104,8 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i <= edges.size(); i++){
             
             // In how many ways can we leave i nodes in the curve?
-            std::vector<std::vector<int>> combinations = get_combinations_of_indices_to_pick(i, edges.size());
+            std::vector<std::vector<int>> combinations;
+            get_combinations_of_indices_to_pick(i, edges.size(), combinations);
             
             // Initialize variables to capture result
             boost::multiprecision::int128_t sum_exact_result, sum_lower_bound;
