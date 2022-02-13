@@ -165,6 +165,7 @@ void worker(            const std::vector<std::vector<int>> integer_data,
                     std::cout << "##################\n";
                     std::cout << "Could not sort the following:\n";
                     print_vector_of_vector("Nodal edges\n", nodal_edges);
+                    print_vector("Genera: ", genera);
                     print_vector("Degrees: ", degrees);
                     print_vector("Fluxes: ", outfluxes[i]);
                     print_vector("Partition: ", partitions[i]);
