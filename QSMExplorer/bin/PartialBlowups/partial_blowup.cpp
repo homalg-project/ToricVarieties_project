@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
     // ##### 4. Return the result
     // ######################################
     
-    return_result(argv[0], n_exact, n_lower_bound, edges, genus, root, h0Min, h0Max, display_details);
+    return_result(argv[0], n_exact, n_lower_bound, edges.size(), genus, root, h0Min, h0Max, betti_number(edges), display_details);
     return 0;
     
 }

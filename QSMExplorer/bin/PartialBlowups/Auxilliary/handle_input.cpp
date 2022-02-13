@@ -23,9 +23,8 @@ void parse_input(const std::string input_string,
     }
     
     // (2) Read-off vertices, degrees and genera
-    number_vertices = input[0];
+    int number_vertices = input[0];
     for (int i = 1; i <= number_vertices; i++){
-        vertices.push_back(i - 1);
         degrees.push_back(input[i]);
         genera.push_back(input[i + number_vertices]);
     }
