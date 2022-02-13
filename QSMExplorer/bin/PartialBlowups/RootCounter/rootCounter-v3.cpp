@@ -1,7 +1,7 @@
 // Thread-safe addition to the result
 void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & central,
-                                                boost::multiprecision::int128_t & change_clear,
-                                                boost::multiprecision::int128_t & change_unclear)
+                                                const boost::multiprecision::int128_t & change_clear,
+                                                const boost::multiprecision::int128_t & change_unclear)
 {
     boost::mutex::scoped_lock lock(myGuard);
     central[0] += change_clear;

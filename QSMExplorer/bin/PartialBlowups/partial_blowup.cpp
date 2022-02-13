@@ -55,12 +55,12 @@ int main(int argc, char* argv[]) {
     // ##### (1) Parse input
     // ######################################
     
-    std::vector<int> vertices, degrees, genera;
+    std::vector<int> degrees, genera;
     std::vector<std::vector<int>> edges;
-    int number_vertices, genus, root, number_threads, h0Min, h0Max;
+    int genus, root, number_threads, h0Min, h0Max;
     bool display_details;
     std::string input_string = argv[1];
-    parse_input(input_string, number_vertices, vertices, degrees, genera, edges, genus, root, number_threads, h0Min, h0Max, display_details);
+    parse_input(input_string, degrees, genera, edges, genus, root, number_threads, h0Min, h0Max, display_details);
     
     
     // ######################################

@@ -2,15 +2,15 @@
 // (1) Return result
 // (1) Return result
 
-void return_result(std::string full_path,
-                            std::vector<std::vector<boost::multiprecision::int128_t>> & n_exact,
-                            std::vector<std::vector<boost::multiprecision::int128_t>> & n_lower_bound,
-                            std::vector<std::vector<int>> & edges,
-                            int & genus,
-                            int & root,
-                            int & h0Min,
-                            int & h0Max,
-                            bool & display_details)
+void return_result(const std::string & full_path,
+                            const std::vector<std::vector<boost::multiprecision::int128_t>> & n_exact,
+                            const std::vector<std::vector<boost::multiprecision::int128_t>> & n_lower_bound,
+                            const std::vector<std::vector<int>> & edges,
+                            const int & genus,
+                            const int & root,
+                            const int & h0Min,
+                            const int & h0Max,
+                            const bool & display_details)
 {
     
     // print result
