@@ -21,7 +21,7 @@
 
 boost::mutex myGuard;
 bool display_more_details = false;
-bool display_unsorted_setups = true;
+bool display_unsorted_setups = false;
 
 #include "Auxilliary/print_vectors.cpp"
 #include "Auxilliary/handle_input.cpp"
@@ -29,7 +29,7 @@ bool display_unsorted_setups = true;
 #include "Auxilliary/compute_graph_information.cpp"
 #include "Auxilliary/tree_like_computations.cpp"
 #include "Auxilliary/combinatorics.cpp"
-#include "RationalRootCounter/rootCounter-v2.cpp"
+#include "RootCounter/rootCounter-v3.cpp"
 
 // Optimizations for speedup
 #pragma GCC optimize("Ofast")
