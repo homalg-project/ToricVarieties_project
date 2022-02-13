@@ -2,9 +2,7 @@
 // (1) Parse input
 // (1) Parse input
 
-void parse_input(std::string input_string,
-                            int & number_vertices,
-                            std::vector<int> & vertices,
+void parse_input(const std::string input_string,
                             std::vector<int> & degrees,
                             std::vector<int> & genera,
                             std::vector<std::vector<int>> & edges,

@@ -2,7 +2,7 @@
 // (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
 // (1) Calculate numbers of ways in which we can pick number_of_elements_to_pick from number_of_elements
 
-void get_combinations_of_indices_to_pick(std::size_t number_of_elements_to_pick, std::size_t number_of_elements, std::vector<std::vector<int>> & combinations)
+void get_combinations_of_indices_to_pick(const int number_of_elements_to_pick, const int number_of_elements, std::vector<std::vector<int>> & combinations)
 {
     
     // compute the combinations
