@@ -65,6 +65,8 @@ void worker(            const std::vector<int> degrees,
                 int N = currentSnapshot.flux[currentSnapshot.k];
                 int n = graph_stratification[currentSnapshot.k][0].size();
                 std::vector<int> minima, maxima;
+                minima.reserve(degrees.size());
+                maxima.reserve(degrees.size());
                 for (int j = 0; j < n; j++){
                     int vertex_number = graph_stratification[currentSnapshot.k][0][j];
                     int number_of_attached_resolved_edges = graph_stratification[currentSnapshot.k][1][j];
@@ -207,6 +209,8 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     };
     std::vector<std::vector<int>> outfluxes;
     std::vector<bool> lbs;
+    outfluxes.reserve(partitions.size());
+    lbs.reserve(partitions.size());
     for (int i = 0; i < partitions.size(); i++){
         
         // create stack and first snapshot
