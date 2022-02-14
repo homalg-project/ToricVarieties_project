@@ -20,7 +20,6 @@ void worker(            const std::vector<std::vector<int>> integer_data,
                                 const std::vector<std::vector<std::vector<int>>> graph_stratification,
                                 const std::vector<std::vector<int>> outfluxes,
                                 const std::vector<bool> lbs,
-                                const std::vector<std::vector<int>> partitions,
                                 std::vector<boost::multiprecision::int128_t> & sums)
 {
     
@@ -167,7 +166,6 @@ void worker(            const std::vector<std::vector<int>> integer_data,
                     print_vector("Genera: ", genera);
                     print_vector("Degrees: ", degrees);
                     print_vector("Fluxes: ", outfluxes[i]);
-                    print_vector("Partition: ", partitions[i]);
                     std::cout << "##################\n\n";
                 }
                 
@@ -212,7 +210,6 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     };
     std::vector<std::vector<int>> outfluxes;
     std::vector<bool> lbs;
-    std::vector<std::vector<int>> h0_partitions;
     for (int i = 0; i < partitions.size(); i++){
         
         // create stack and first snapshot
@@ -274,7 +271,6 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             // no more fluxes to be set --> add to list of fluxes if the sum of fluxes equals the number of resolved_edges * root (necessary and sufficient for non-zero number of weight assignments)
             else if (std::accumulate(currentSnapshot.flux.begin(),currentSnapshot.flux.end(),0) == root * resolved_edges.size()){
                 outfluxes.push_back(currentSnapshot.flux);
-                h0_partitions.push_back(partitions[i]);
                 lbs.push_back(lower_bounds[i]);
             }
             
@@ -301,15 +297,13 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             if (i < thread_number - 1){
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
-                std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
-                std::vector<std::vector<int>> partial_h0_partitions(h0_partitions.begin() + i * package_size, h0_partitions.end());
-                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, partial_h0_partitions, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -319,7 +313,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(integer_data, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, h0_partitions, boost::ref(sums));
+        worker(integer_data, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
