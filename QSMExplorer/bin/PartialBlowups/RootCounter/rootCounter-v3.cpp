@@ -27,7 +27,6 @@ void worker(            const std::vector<std::vector<int>> integer_data,
     // identify data
     std::vector<int> degrees = integer_data[0];
     std::vector<int> genera = integer_data[1];
-    std::vector<int> edge_numbers = integer_data[2];
     
     // determine number of local roots
     int number_elliptic_curves = std::count(genera.begin(), genera.end(), 1);
@@ -291,7 +290,6 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     std::vector<std::vector<int>> integer_data;
     integer_data.push_back(degrees);
     integer_data.push_back(genera);
-    integer_data.push_back(edge_numbers);
     if (thread_number > 1){
         boost::thread_group threadList;
         int package_size = (int) outfluxes.size()/thread_number;
