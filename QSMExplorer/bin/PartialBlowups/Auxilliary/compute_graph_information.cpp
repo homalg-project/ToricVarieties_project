@@ -64,6 +64,7 @@ void additional_graph_information(
         
         // compute new list of edges
         std::vector<std::vector<int>> new_edges;
+        new_edges.reserve(scan_edges.size());
         for (int i = 0; i < scan_edges.size(); i++){
             if (scan_edges[i][0] != index && scan_edges[i][1] != index){
                 new_edges.push_back(scan_edges[i]);

@@ -29,6 +29,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
     
     // adjust list of edges accordingly
     std::vector<std::vector<int>> simple_edges;
+    simple_edges.reserve(nodal_edges.size());
     for (int i = 0; i < nodal_edges.size(); i++){
         simple_edges.push_back({vertex_correspondence[nodal_edges[i][0]], vertex_correspondence[nodal_edges[i][1]]});
     }
@@ -42,6 +43,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         // (2) compute new degrees (C+,L+)
         std::map<int, int> dictionary;
         std::vector<int> new_degrees;
+        new_degrees.reserve(degrees.size());
         for (int i = 0; i < simple_degrees.size(); i ++){
             if (simple_degrees[i] >= 0){
                 dictionary.insert(std::pair<int, int>(i, dictionary.size()));
@@ -63,6 +65,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         
         // (4) compute new edges
         std::vector<std::vector<int>> new_edges;
+        new_edges.reserve(simple_edges.size());
         for (int i = 0; i < simple_edges.size(); i ++){
             if ((simple_degrees[simple_edges[i][0]] >= 0) and (simple_degrees[simple_edges[i][1]] >= 0)){
                 new_edges.push_back({dictionary[simple_edges[i][0]], dictionary[simple_edges[i][1]]});
@@ -145,6 +148,7 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
     
     // (1) Find all vertices (avoiding duplicated) and sort them in ascending order
     std::vector<int> vertices;
+    vertices.reserve(2*input_edges.size());
     for (int i = 0; i < input_edges.size(); i++){
         if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][0]))) {
             vertices.push_back(input_edges[i][0]);
@@ -165,6 +169,7 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
     
     // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
     std::vector<std::vector<int>> edges;
+    edges.reserve(input_edges.size());
     for (int i = 0; i < input_edges.size(); i++){
         edges.push_back({vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]});
     }
@@ -222,6 +227,7 @@ int betti_number(const std::vector<std::vector<int>>& input_edges)
     
     // (1) Find all vertices (avoiding duplicated) and sort them in ascending order
     std::vector<int> vertices;
+    vertices.reserve(2*input_edges.size());
     for (int i = 0; i < input_edges.size(); i++){
         if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][0]))) {
             vertices.push_back(input_edges[i][0]);
@@ -239,6 +245,7 @@ int betti_number(const std::vector<std::vector<int>>& input_edges)
     
     // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
     std::vector<std::vector<int>> edges;
+    edges.reserve(input_edges.size());
     for (int i = 0; i < input_edges.size(); i++){
         edges.push_back({vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]});
     }
@@ -280,6 +287,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     
     // (1) Find compoents with nodes and add h0's from components without nodes
     std::vector<int> components_with_nodes;
+    components_with_nodes.reserve(2*resolved_edges.size() + 2*nodal_edges.size());
     h0 = 0;
     for (int i = 0; i < degrees.size(); i++){
         bool test = false; // component i has no nodes attached to it
@@ -346,6 +354,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     
     // (4) Compute all connected componentss
     std::vector<std::vector<int>> connected_components;
+    connected_components.reserve(2*resolved_edges.size() + 2*nodal_edges.size());
     std::vector<std::vector<std::vector<int>>> edges_of_connected_components;
     std::map<int, int> degree_correspondence;
     find_connected_components(nodal_edges, degrees, details, connected_components, edges_of_connected_components, degree_correspondence);
@@ -400,6 +409,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
         // if tree-like
         else{
             std::vector<int> helper_degrees;
+            helper_degrees.reserve(degrees.size());
             for (int j = 0; j < connected_components[i].size(); j++){
                 helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
             }
