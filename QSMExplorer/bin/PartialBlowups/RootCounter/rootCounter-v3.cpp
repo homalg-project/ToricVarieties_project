@@ -13,7 +13,8 @@ void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & centra
 
 
 // Worker thread for parallel run
-void worker(            const std::vector<std::vector<int>> integer_data,
+void worker(            const std::vector<int> degrees,
+                                const std::vector<int> genera,
                                 const std::vector<std::vector<int>> resolved_edges,
                                 const std::vector<std::vector<int>> nodal_edges,
                                 const int root,
@@ -22,10 +23,6 @@ void worker(            const std::vector<std::vector<int>> integer_data,
                                 const std::vector<bool> lbs,
                                 std::vector<boost::multiprecision::int128_t> & sums)
 {
-    
-    // identify data
-    std::vector<int> degrees = integer_data[0];
-    std::vector<int> genera = integer_data[1];
     
     // determine number of local roots
     int number_elliptic_curves = std::count(genera.begin(), genera.end(), 1);
@@ -283,9 +280,6 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     // (3) Split the outfluxes into as many packages as determined by thread_number and start the threads
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     std::vector<boost::multiprecision::int128_t> sums = {0,0};
-    std::vector<std::vector<int>> integer_data;
-    integer_data.push_back(degrees);
-    integer_data.push_back(genera);
     if (thread_number > 1){
         boost::thread_group threadList;
         int package_size = (int) outfluxes.size()/thread_number;
@@ -297,13 +291,13 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             if (i < thread_number - 1){
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
-                boost::thread *t = new boost::thread(worker, integer_data, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -313,7 +307,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(integer_data, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
+        worker(degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
