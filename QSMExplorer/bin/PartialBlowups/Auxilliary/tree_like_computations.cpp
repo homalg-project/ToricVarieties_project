@@ -1,3 +1,61 @@
+// (0) Number connected components
+// (0) Number connected components
+// (0) Number connected components
+
+int merge(std::vector<int> & parent, int x)
+{
+    if (parent[x] == x){
+        return x;
+    }
+    return merge(parent, parent[x]);
+}
+
+int number_connected_components(const std::vector<std::vector<int>>& input_edges)
+{
+    
+    // (1) Find all vertices (avoiding duplicated) and sort them in ascending order
+    std::vector<int> vertices;
+    vertices.reserve(2*input_edges.size());
+    for (int i = 0; i < input_edges.size(); i++){
+        if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][0]))) {
+            vertices.push_back(input_edges[i][0]);
+        }
+        if (!(std::count(vertices.begin(), vertices.end(), input_edges[i][1]))) {
+            vertices.push_back(input_edges[i][1]);
+        }
+    }
+    
+    // (2) Construct vertex_correspondence: input vertex names (e.g. "0, 2, 5, 6, ...") -> "0, 1, 2, 3, ..."
+    std::map<int, int> vertex_correspondence;
+    for (int i = 0; i < vertices.size(); i++){
+        vertex_correspondence.insert(std::pair<int, int>(vertices[i], i));
+    }
+    
+    // (3) Form list of edges with internal/new vertex indices (-> can be easily processed below)
+    std::vector<std::vector<int>> edges;
+    edges.reserve(input_edges.size());
+    for (int i = 0; i < input_edges.size(); i++){
+        edges.push_back({vertex_correspondence[input_edges[i][0]], vertex_correspondence[input_edges[i][1]]});
+    }
+    
+    // (4) Count number of connected components
+    int c = 0;
+    std::vector<int> parent(vertices.size());
+    std::iota(std::begin(parent), std::end(parent), 0);
+    for (int i = 0; i < edges.size(); i++){
+        parent[merge(parent, edges[i][0])] = merge(parent, edges[i][1]);
+    }
+    for (int i = 0; i < vertices.size(); i++) {
+        c += (parent[i] == i);
+    }
+    
+    // return betti number
+    return c;
+    
+}
+
+
+
 // (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 // (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 // (1) Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
@@ -94,7 +152,15 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         }
     }
     if (positive_component){
-        h0++;
+        // find edges that form I_+
+        std::vector<std::vector<int>> edges_of_Iplus;
+        for (int i = 0; i < simple_edges.size(); i++){
+            if ((simple_degrees[simple_edges[i][0]] >= 0) && (simple_degrees[simple_edges[i][1]] >= 0)){
+                edges_of_Iplus.push_back(simple_edges[i]);
+            }
+        }
+        // and increase I+ accordingly
+        h0 += number_connected_components(edges_of_Iplus);
     }
     
     // inform about result
@@ -120,14 +186,6 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
 // (2) Find the connected components of a graph
 // (2) Find the connected components of a graph
 // (2) Find the connected components of a graph
-
-int merge(std::vector<int> & parent, int x)
-{
-    if (parent[x] == x){
-        return x;
-    }
-    return merge(parent, parent[x]);
-}
 
 void find_connected_components(const std::vector<std::vector<int>> & input_edges,
                                                     const std::vector<int> & degrees,
