@@ -152,15 +152,33 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         }
     }
     if (positive_component){
-        // find edges that form I_+
+        
+        // compute number of connected components
         std::vector<std::vector<int>> edges_of_Iplus;
         for (int i = 0; i < simple_edges.size(); i++){
             if ((simple_degrees[simple_edges[i][0]] >= 0) && (simple_degrees[simple_edges[i][1]] >= 0)){
                 edges_of_Iplus.push_back(simple_edges[i]);
             }
         }
-        // and increase I+ accordingly
-        h0 += number_connected_components(edges_of_Iplus);
+        int ncc = number_connected_components(edges_of_Iplus);
+        
+        // add also all vertices which are disconnected
+        int number_disconnected_vertices = 0;
+        for (int i = 0; i < simple_degrees.size(); i++){
+            bool test = true;
+            for (int j = 0; j < simple_edges.size(); j++){
+                if ((simple_edges[j][0] == i) || (simple_edges[j][1] == i)){
+                    test = false;
+                }
+            }
+            if (test){
+                number_disconnected_vertices++;
+            }
+        }
+        
+        // increase h0
+        h0 = h0 + ncc + number_disconnected_vertices;
+        
     }
     
     // inform about result
