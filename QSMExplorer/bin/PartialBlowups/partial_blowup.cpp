@@ -19,7 +19,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
-boost::mutex myGuard;
+boost::mutex myGuard, myGuard2;
 bool display_more_details = false;
 bool display_unsorted_setups = false;
 

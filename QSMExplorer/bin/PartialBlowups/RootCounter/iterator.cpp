@@ -5,7 +5,7 @@
 void UpdateCountsThreadSafe(std::vector<boost::multiprecision::int128_t> & central,
                                                  const std::vector<boost::multiprecision::int128_t> & changes)
 {
-    boost::mutex::scoped_lock lock(myGuard);
+    boost::mutex::scoped_lock lock(myGuard2);
     central[0] += (boost::multiprecision::int128_t) (changes[0]);
     central[1] += (boost::multiprecision::int128_t) (changes[1]);
 }
@@ -41,7 +41,8 @@ void compute_root_bundles(const std::vector<std::vector<int>> & edges,
     additional_graph_information(resolved_edges, edge_numbers, graph_stratification);
     
     // Compute number of roots
-    std::vector<boost::multiprecision::int128_t> results = parallel_root_counter(genus, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, edge_numbers, h0_value, number_sub_threads);
+    int number = 1;
+    std::vector<boost::multiprecision::int128_t> results = parallel_root_counter(genus, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, edge_numbers, h0_value, number);
     
     // Update results
     UpdateCountsThreadSafe(sums, results);
