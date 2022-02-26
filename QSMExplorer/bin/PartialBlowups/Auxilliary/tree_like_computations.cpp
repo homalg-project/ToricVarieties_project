@@ -259,18 +259,30 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         
     }
     
-    // compute h0
+    // initialize h0
     int h0 = 0;
+    
+    // is there at least one component with non-negative degree?
     bool positive_component = false;
     for (int i = 0; i < simple_degrees.size(); i++){
         if (simple_degrees[i] >= 0){
-            h0 += simple_degrees[i];
             positive_component = true;
+            break;
         }
     }
+    
+    // if there is at least one component with non-negative degree, then perform detailed study
     if (positive_component){
         
-        // compute number of connected components
+        // sum of all non-negative degrees
+        int sum_non_negative_degrees = 0;
+        for (int i = 0; i < simple_degrees.size(); i++){
+            if (simple_degrees[i] >= 0){
+                sum_non_negative_degrees += simple_degrees[i];
+            }
+        }
+        
+        // compute number of connected components of I_plus
         std::vector<std::vector<int>> edges_of_Iplus;
         for (int i = 0; i < simple_edges.size(); i++){
             if ((simple_degrees[simple_edges[i][0]] >= 0) && (simple_degrees[simple_edges[i][1]] >= 0)){
@@ -279,7 +291,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         }
         int ncc = number_connected_components(edges_of_Iplus);
         
-        // add also all vertices which are disconnected
+        // find all vertices which are disconnected and have a non-negative degree
         int number_disconnected_vertices = 0;
         for (int i = 0; i < simple_degrees.size(); i++){
             bool test = true;
@@ -288,13 +300,13 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
                     test = false;
                 }
             }
-            if (test){
+            if ((test==true) && (simple_degrees[i] >= 0)){
                 number_disconnected_vertices++;
             }
         }
         
         // increase h0
-        h0 = h0 + ncc + number_disconnected_vertices;
+        h0 = sum_non_negative_degrees + ncc + number_disconnected_vertices;
         
     }
     
