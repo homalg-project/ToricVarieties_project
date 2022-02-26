@@ -11,6 +11,8 @@ void return_result(const std::string & full_path,
                             const int & h0Min,
                             const int & h0Max,
                             const int & b1,
+                            const std::chrono::steady_clock::time_point & before,
+                            const std::chrono::steady_clock::time_point & after,
                             const bool & display_details)
 {
     
@@ -77,6 +79,26 @@ void return_result(const std::string & full_path,
         }
         std::cout << "\n\n";
     
+        // did we find all root bundles?
+        boost::multiprecision::int128_t total_roots_found;
+        for (int i = 0; i <= h0Max - h0Min; i++){
+            for (int j = 0; j <= number_of_edges; j++){
+                total_roots_found += n_exact[i][j];
+            }
+            for (int j = 0; j <= number_of_edges; j++){
+                total_roots_found += n_lower_bound[i][j];
+            }
+        }
+        
+        std::cout << "\n##########################################\n";
+        std::cout << "Results:\n";
+        std::cout << "-----------------------\n";
+        std::cout << "Number of roots found: " << (boost::multiprecision::int128_t) (geo_mult * total_roots_found) << "\n";
+        std::cout << "Number of total roots: " << (boost::multiprecision::int128_t) (pow(root, 2 * genus)) << "\n";
+        std::cout << "Difference: " << (boost::multiprecision::int128_t) (pow(root, 2 * genus)) - (boost::multiprecision::int128_t) (geo_mult * total_roots_found) << "\n";
+        std::cout << "Time for run: " << std::chrono::duration_cast<std::chrono::seconds>(after - before).count() << "[s]\n";
+        std::cout << "##########################################\n\n";
+        
     }
     
     // set up variables to write to the result file

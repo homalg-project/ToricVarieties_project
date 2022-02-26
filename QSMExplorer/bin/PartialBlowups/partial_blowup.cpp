@@ -75,6 +75,7 @@ int main(int argc, char* argv[]) {
     // ######################################
         
     // count roots in the desired interval
+    std::chrono::steady_clock::time_point before = std::chrono::steady_clock::now();
     int lower_bound = (int) (std::accumulate(degrees.begin(),degrees.end(),0)/root) - genus + 1;
     std::vector<std::vector<boost::multiprecision::int128_t>> n_exact, n_lower_bound;
     for (int h0_value = h0Min; h0_value <= h0Max; h0_value++){
@@ -94,12 +95,13 @@ int main(int argc, char* argv[]) {
         n_lower_bound.push_back(results_lower_bound);
         
     }
-        
+    std::chrono::steady_clock::time_point after = std::chrono::steady_clock::now();
+    
     // ######################################
     // ##### 4. Return the result
     // ######################################
     
-    return_result(argv[0], n_exact, n_lower_bound, edges.size(), genus, root, h0Min, h0Max, betti_number(edges), display_details);
+    return_result(argv[0], n_exact, n_lower_bound, edges.size(), genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
     return 0;
     
 }
