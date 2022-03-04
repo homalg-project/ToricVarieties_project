@@ -48,7 +48,7 @@ rec(
 Status := "dev",
 PackageWWWHome := "https://github.com/HereAround/TopcomInterface",
 ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2021-11-17/TopcomInterface",
+ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2022-03-04/TopcomInterface",
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
