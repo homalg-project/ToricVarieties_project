@@ -66,11 +66,19 @@ rec(
 ],
 
 Status := "dev",
-PackageWWWHome := "https://homalg-project.github.io/ToricVarieties_project/QSMExplorer",
-ArchiveFormats := ".tar.gz .zip",
-ArchiveURL     := "https://github.com/homalg-project/ToricVarieties_project/releases/download/2022-03-04/QSMExplorer",
-README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/homalg-project/ToricVarieties_project",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://homalg-project.github.io/ToricVarieties_project/", ~.PackageName ),
+ArchiveFormats  := ".tar.gz .zip",
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/", ReplacedString( ~.Version, ".", "-"),
+                                 "/", ~.PackageName, "-", ~.Version ),
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML := "QSMExplorer allows to investigate one Quadrillion F-theory Standard Models quickly and efficiently",
 
