@@ -53,7 +53,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome  := Concatenation( "https://homalg-project.github.io/ToricVarieties_project/", ~.PackageName ),
-ArchiveFormats  := ".tar.gz .zip",
+ArchiveFormats  := ".tar.gz",
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/", ReplacedString( ~.Version, ".", "-"),
                                  "/", ~.PackageName, "-", ~.Version ),
