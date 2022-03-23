@@ -46,17 +46,10 @@ DeclareOperation( "FindRootCounterDirectory", [ ] );
 DeclareOperation( "FindPartialBlowupRootCounterDirectory", [ ] );
 
 #! @Description
-#! This operation identifies the location of the C++-program which computes a lower bound to the number of partial blowup limit roots on a nodal curves.
-#! @Returns the directory in which the binary is contained
-#! @Arguments none
-DeclareOperation( "FindPartialBlowupRootCounterFromTreelikeAnalysisDirectory", [ ] );
-
-#! @Description
 #! This operation identifies the location of the C++-program which computes the speciality of a linear series.
 #! @Returns the directory in which the binary is contained
 #! @Arguments none
 DeclareOperation( "FindSpecialityDirectory", [ ] );
-
 
 #! @Description
 #! This operation identifies the location of the C++-program which computes a lower bound to the number of limit roots on Higgs curves.
