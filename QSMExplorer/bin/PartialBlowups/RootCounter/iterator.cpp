@@ -83,6 +83,8 @@ void iterator(const std::vector<std::vector<int>> & edges,
                      const int & genus,
                      const int & root,
                      const int & h0_value,
+                     const int & numNodesMin,
+                     const int & numNodesMax,
                      const int & total_number_threads,
                      std::vector<boost::multiprecision::int128_t> & results_exact,
                      std::vector<boost::multiprecision::int128_t> & results_lower_bound)
@@ -97,7 +99,7 @@ void iterator(const std::vector<std::vector<int>> & edges,
     };
     
     // Iterate over combination of all partial blowups via stack
-    for (int i = 0; i <= edges.size(); i++){
+    for (int i = numNodesMin; i <= numNodesMax; i++){
         
         // initialize vector to capture all combinations
         std::vector<std::vector<int>> combinations;

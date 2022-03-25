@@ -5,7 +5,8 @@
 void return_result(const std::string & full_path,
                             const std::vector<std::vector<boost::multiprecision::int128_t>> & n_exact,
                             const std::vector<std::vector<boost::multiprecision::int128_t>> & n_lower_bound,
-                            const int & number_of_edges,
+                            const int & numberBlowupsConsidered,
+                            const int & numNodesMin,
                             const int & genus,
                             const int & root,
                             const int & h0Min,
@@ -21,8 +22,8 @@ void return_result(const std::string & full_path,
         
         // print the exact numbers
         std::cout << "\n";
-        for (int j = 0; j <= number_of_edges; j++){
-            std::cout << j << ":\t";
+        for (int j = 0; j <= numberBlowupsConsidered; j++){
+            std::cout << j + numNodesMin << ":\t";
             for (int i = 0; i <= h0Max - h0Min; i++){
                 std::cout << n_exact[i][j] << "\t" << n_lower_bound[i][j] << "\t";
             }
@@ -34,12 +35,12 @@ void return_result(const std::string & full_path,
         std::cout << "Total:\t";
         for (int i = 0; i <= h0Max - h0Min; i++){
             counter = (boost::multiprecision::int128_t) 0;
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 counter += n_exact[i][j];
             }
             std::cout << counter << "\t";
             counter = (boost::multiprecision::int128_t) 0;
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 counter += n_lower_bound[i][j];
             }
             std::cout << counter << "\t";
@@ -52,8 +53,8 @@ void return_result(const std::string & full_path,
         
         // print the percentages
         using LongFloat=boost::multiprecision::cpp_bin_float_quad;
-        for (int j = 0; j <= number_of_edges; j++){
-            std::cout << j << ":\t";
+        for (int j = 0; j <= numberBlowupsConsidered; j++){
+            std::cout << j + numNodesMin << ":\t";
             for (int i = 0; i <= h0Max - h0Min; i++){
                 LongFloat r1 = LongFloat(100) * LongFloat(n_exact[i][j]) / LongFloat(total_number_roots);
                 LongFloat r2 = LongFloat(100) * LongFloat(n_lower_bound[i][j]) / LongFloat(total_number_roots);
@@ -67,12 +68,12 @@ void return_result(const std::string & full_path,
         LongFloat percentage_counter;
         for (int i = 0; i <= h0Max - h0Min; i++){
             percentage_counter = 0;
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 percentage_counter += LongFloat(100) * LongFloat(n_exact[i][j]) / LongFloat(total_number_roots);
             }
             std::cout << std::setprecision(3) << percentage_counter << "\t";
                         percentage_counter = 0;
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 percentage_counter += LongFloat(100) * LongFloat(n_lower_bound[i][j]) / LongFloat(total_number_roots);
             }
             std::cout << std::setprecision(3) << percentage_counter << "\t";
@@ -82,10 +83,10 @@ void return_result(const std::string & full_path,
         // did we find all root bundles?
         boost::multiprecision::int128_t total_roots_found;
         for (int i = 0; i <= h0Max - h0Min; i++){
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 total_roots_found += n_exact[i][j];
             }
-            for (int j = 0; j <= number_of_edges; j++){
+            for (int j = 0; j <= numberBlowupsConsidered; j++){
                 total_roots_found += n_lower_bound[i][j];
             }
         }

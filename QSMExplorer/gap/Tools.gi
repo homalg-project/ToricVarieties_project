@@ -1826,7 +1826,7 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
             options := Concatenation( options, String( external_legs[ i ] ), " " );
             options := Concatenation( options, String( external_weights[ i ] ), " " );
         od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ) );
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ), " 0 ", String( Length(edges) ) );
         
         # display details?
         if display_details then
