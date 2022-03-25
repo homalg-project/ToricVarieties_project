@@ -201,10 +201,10 @@ n;
 
 #! We can also wonder how many limit roots exist with number of global sections at most L. For example, this is achieved by the following:
 #! @Example
-n1 := CountLimitRootDistributionOfQSMByPolytope( 8, 3, 4, false );;
+n1 := CountMinimalLimitRootDistributionOfQSMByPolytope( 8, 3, 4, false );;
 n1;
 #! [ 0, 0, 0, 142560, 0 ]
-n2 := CountLimitRootDistributionOfQSM( 10, 3, 6, false );;
+n2 := CountMinimalLimitRootDistributionOfQSM( 10, 3, 6, false );;
 n2;
 #! [ 0, 0, 0, 781680888, 25196800, 106800, 0 ]
 #! @EndExample
