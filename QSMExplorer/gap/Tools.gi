@@ -1517,78 +1517,49 @@ end );
 ##
 ##############################################################################################
 
-InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt ],
+InstallMethod( CountMinimalLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt ],
     function( index, h0Min, h0Max )
         local data;
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, true );
+            return Concatenation( List( [ 0 .. h0Min-1 ], i -> 0 ), List( CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, 0, true )[ 1 ], k -> k[1] ) );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt, IsBool ],
+InstallMethod( CountMinimalLimitRootDistributionOfQSM, [ IsInt, IsInt, IsInt, IsBool ],
     function( index, h0Min, h0Max, display_details )
         local data;
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, display_details );
+            return Concatenation( List( [ 0 .. h0Min-1 ], i -> 0 ), List( CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, 0, display_details )[ 1 ], k -> k[1] ) );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt ],
+InstallMethod( CountMinimalLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt ],
     function( index, h0Min, h0Max )
         local data;
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, true );
+            return Concatenation( List( [ 0 .. h0Min-1 ], i -> 0 ), List( CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, 0, true )[ 1 ], k -> k[1] ) );
         fi;
         
 end );
 
-InstallMethod( CountLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsBool ],
+InstallMethod( CountMinimalLimitRootDistributionOfQSMByPolytope, [ IsInt, IsInt, IsInt, IsBool ],
     function( index, h0Min, h0Max, display_details )
         local data;
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountLimitRootDistribution( data, h0Min, h0Max, display_details );
+            return Concatenation( List( [ 0 .. h0Min-1 ], i -> 0 ), List( CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, 0, display_details )[ 1 ], k -> k[1] ) );
         fi;
         
 end );
-
-InstallMethod( CountLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsBool ],
-    function( data, h0Min, h0Max, display_details )
-        local index, Kbar3, genera, degrees, edges, total_genus, root, min;
-        
-        # trigger warning if needed
-        index := Int( data.PolyInx );
-        if ( Position( [ 8, 4, 134, 128, 130, 136, 236, 88, 110, 272, 274, 387, 798, 808, 810, 812, 254, 52, 302, 786, 762, 417, 838, 782, 377, 499, 503, 1348, 882, 1340, 1879, 1384, 856 ], index ) = fail ) then
-            
-            Print( "\n\n" );
-            Print( "WARNING:\n" );
-            Print( "The root counting data for this polytope has not (yet) been optimized. The computation may take a long time.\n" );
-            Print( "WARNING:\n\n" );
-            
-        fi;
-        
-        # read-out the record for the required data
-        Kbar3 := Int( data.Kbar3 );
-        genera := EvalString( data.CiGenus );
-        degrees := ( 6 + Kbar3 ) * EvalString( data.CiDegreeKbar );
-        edges := EvalString( data.EdgeList );
-        total_genus := Int( Kbar3/2 + 1 );
-        root := 2 * Kbar3;
-
-        # call other function to compute this root distribution
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, h0Min, h0Max, [], [] ], display_details );
-        
-end );
-
 
 
 ##############################################################################################

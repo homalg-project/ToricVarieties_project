@@ -494,17 +494,15 @@ DeclareOperation( "CountMinimalLimitRootsOfQSMByPolytope", [ IsInt, IsBool ] );
 #! This function computes the number of limit roots in the i-th QSM with at at least min and at most max global sections.
 #! @Returns integer or fail
 #! @Arguments Integer i, integer min, integer max
-DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "CountLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt, IsBool ] );
+DeclareOperation( "CountMinimalLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "CountMinimalLimitRootDistributionOfQSM", [ IsInt, IsInt, IsInt, IsBool ] );
 
 #! @Description
 #! This function computes the number of limit roots in the QSM defined by polytope i with at least min and at most max global sections.
 #! @Returns integer or fail
 #! @Arguments Integer i, integer min, integer max
-DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "CountLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
-
-DeclareOperation( "CountLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsBool ] );
+DeclareOperation( "CountMinimalLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "CountMinimalLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
 
 
 ##############################################################################################
