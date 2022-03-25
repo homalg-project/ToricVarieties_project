@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
         
         // Are we below the lower bound? -> Answer is trivial
         if (h0_value < lower_bound){
-            std::vector<boost::multiprecision::int128_t> result(edges.size()+1,0);
+            std::vector<boost::multiprecision::int128_t> result(numNodesMax - numNodesMin + 1,0);
             n_exact.push_back(result);
             n_lower_bound.push_back(result);
             continue;

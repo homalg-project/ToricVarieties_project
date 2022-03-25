@@ -1471,7 +1471,7 @@ InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt ],
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, true );
+            return List( CountPartialBlowupLimitRootDistribution( data, 0, 3, 0, 0, true )[ 1 ], k -> k[1] );
         fi;
         
 end );
@@ -1482,18 +1482,18 @@ InstallMethod( CountMinimalLimitRootsOfQSM, [ IsInt, IsBool ],
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, display_details );
+            return List( CountPartialBlowupLimitRootDistribution( data, 0, 3, 0, 0, display_details )[ 1 ], k -> k[1] );
         fi;
         
 end );
 
 InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt ],
     function( index )
-        local data;
+        local data, res;
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, true );
+            return List( CountPartialBlowupLimitRootDistribution( data, 0, 3, 0, 0, false )[ 1 ], k -> k[1] );
         fi;
     
 end );
@@ -1504,39 +1504,11 @@ InstallMethod( CountMinimalLimitRootsOfQSMByPolytope, [ IsInt, IsBool ],
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountMinimalLimitRoots( data, display_details );
+            return List( CountPartialBlowupLimitRootDistribution( data, 0, 3, 0, 0, display_details )[ 1 ], k -> k[1] );
         fi;
     
 end );
 
-InstallMethod( CountMinimalLimitRoots, [ IsRecord, IsBool ],
-    function( data, display_details )
-        local index, Kbar3, genera, degrees, edges, total_genus, root, min;
-        
-        # trigger warning if needed
-        index := Int( data.PolyInx );
-        if ( Position( [ 8, 4, 134, 128, 130, 136, 236, 88, 110, 272, 274, 387, 798, 808, 810, 812, 254, 52, 302, 786, 762, 417, 838, 782, 377, 499, 503, 1348, 882, 1340, 1879, 1384, 856 ], index ) = fail ) then
-            
-            Print( "\n\n" );
-            Print( "WARNING:\n" );
-            Print( "The root counting data for this polytope has not (yet) been optimized. The computation may take a long time.\n" );
-            Print( "WARNING:\n\n" );
-            
-        fi;
-        
-        # read-out the record for the required data
-        Kbar3 := Int( data.Kbar3 );
-        genera := EvalString( data.CiGenus );
-        degrees := ( 6 + Kbar3 ) * EvalString( data.CiDegreeKbar );
-        edges := EvalString( data.EdgeList );
-        total_genus := Int( Kbar3/2 + 1 );
-        root := 2 * Kbar3;
-        
-        # compute minimal roots
-        min := Int( Sum( degrees ) / root - total_genus + 1 );
-        return CountDistributionWithExternalLegs( [ genera, degrees, edges, total_genus, root, min, min, [], [] ], display_details );
-        
-end );
 
 
 ##############################################################################################

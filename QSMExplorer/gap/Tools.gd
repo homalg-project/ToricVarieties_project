@@ -483,8 +483,6 @@ DeclareOperation( "CountMinimalLimitRootsOfQSM", [ IsInt, IsBool ] );
 DeclareOperation( "CountMinimalLimitRootsOfQSMByPolytope", [ IsInt ] );
 DeclareOperation( "CountMinimalLimitRootsOfQSMByPolytope", [ IsInt, IsBool ] );
 
-DeclareOperation( "CountMinimalLimitRoots", [ IsRecord, IsBool ] );
-
 
 ##############################################################################################
 ##
