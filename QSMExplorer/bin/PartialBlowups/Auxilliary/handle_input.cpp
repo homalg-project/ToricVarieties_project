@@ -41,33 +41,19 @@ void parse_input(const std::string & input_string,
         edges.push_back(helper);
     }
     
-    // (4) Read-off the external edges and weights
-    int numberExternalEdges = input[2 * number_vertices + 1 + 1 + 2 * numberEdges];
-    std::vector<int> external_legs, external_weights;
-    for (int i = 0; i < numberExternalEdges; i ++){
-        int index = 2 * number_vertices + 1 + 1 + 2 * numberEdges + 1 + 2 * i;
-        external_legs.push_back(input[index]);
-        external_weights.push_back(input[index + 1]);
-    }
+    // (4) Read-off integer data
+    genus = input[2 * number_vertices + 2 + 2 * numberEdges];
+    root = input[2 * number_vertices + 2 + 2 * numberEdges + 1];
+    number_threads = input[2 * number_vertices + 2 + 2 * numberEdges + 2];
+    h0Min = input[2 * number_vertices + 2 + 2 * numberEdges + 3];
+    h0Max = input[2 * number_vertices + 2 + 2 * numberEdges + 4];
+    numNodesMin = input[2 * number_vertices + 2 + 2 * numberEdges + 5];
+    numNodesMax = input[2 * number_vertices + 2 + 2 * numberEdges + 6];
     
-    // (5) Read-off integer data
-    genus = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 1];
-    root = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 2];
-    number_threads = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 3];
-    h0Min = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 4];
-    h0Max = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 5];
-    numNodesMin = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 6];
-    numNodesMax = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 7];
-    
-    // (6) Read-off if we are to display details
-    int details = input[2 * number_vertices + 2 + 2 * numberEdges + 2 * numberExternalEdges + 8];
+    // (5) Read-off if we are to display details
+    int details = input[2 * number_vertices + 2 + 2 * numberEdges + 7];
     if (details >= 0){display_details = true;}
     else{display_details = false;}
-        
-    // (7) Subtract external_weights from degrees
-    for (int i = 0; i < external_legs.size(); i++){
-        degrees[external_legs[i]] -= external_weights[i];
-    }
     
 }
 

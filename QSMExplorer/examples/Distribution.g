@@ -1,6 +1,6 @@
 #! @Chapter Tools for computing root bundle distributions in the Quadrillion F-theory Standard Models
 
-#! @Section Examples
+#! @Section Example: Root bundles on the quark-doublet curve
 
 LoadPackage( "QSMExplorer" );
 
