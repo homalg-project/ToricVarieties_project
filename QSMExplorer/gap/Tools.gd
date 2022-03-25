@@ -529,7 +529,7 @@ DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSM", [ IsInt, IsInt
 DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
 
-DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsBool ] );
+DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsBool ] );
 
 
 ##############################################################################################
