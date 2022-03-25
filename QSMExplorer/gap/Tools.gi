@@ -1631,7 +1631,7 @@ InstallMethod( CountPartialBlowupLimitRootDistributionOfQSM, [ IsInt, IsInt, IsI
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, true );
+            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, Length( EvalString( data.EdgeList ) ), true );
         fi;
         
 end );
@@ -1642,7 +1642,7 @@ InstallMethod( CountPartialBlowupLimitRootDistributionOfQSM, [ IsInt, IsInt, IsI
         
         data := ReadQSM( index );
         if ( data <> fail ) then
-            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, display_details );
+            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, Length( EvalString( data.EdgeList ) ), display_details );
         fi;
         
 end );
@@ -1653,7 +1653,7 @@ InstallMethod( CountPartialBlowupLimitRootDistributionOfQSMByPolytope, [ IsInt, 
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, true );
+            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, Length( EvalString( data.EdgeList ) ), true );
         fi;
         
 end );
@@ -1664,13 +1664,13 @@ InstallMethod( CountPartialBlowupLimitRootDistributionOfQSMByPolytope, [ IsInt, 
         
         data := ReadQSMByPolytope( index );
         if ( data <> fail ) then
-            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, display_details );
+            return CountPartialBlowupLimitRootDistribution( data, h0Min, h0Max, 0, Length( EvalString( data.EdgeList ) ), display_details );
         fi;
         
 end );
 
-InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsBool ],
-    function( data, h0Min, h0Max, display_details )
+InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsBool ],
+    function( data, h0Min, h0Max, numNodesMin, numNodesMax, display_details )
         local index, Kbar3, genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, options, i, result;
         
         # trigger warning if needed
@@ -1826,7 +1826,7 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
             options := Concatenation( options, String( external_legs[ i ] ), " " );
             options := Concatenation( options, String( external_weights[ i ] ), " " );
         od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ), " 0 ", String( Length(edges) ) );
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ), " ", String( numNodesMin ), " ", String( numNodesMax ) );
         
         # display details?
         if display_details then
