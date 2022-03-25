@@ -8,7 +8,7 @@
 ##                                  Muyang Liu
 ##                                  University of Pennsylvania
 ##
-##  Copyright 2021
+##  Copyright 2022
 ##
 ##  A package to explore one Quadrillion F-theory Standard Models
 ##
