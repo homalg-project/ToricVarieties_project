@@ -247,8 +247,6 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [IsList],
         for i in [ 1 .. Length( edges ) ] do
             options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
         od;
-        external_legs := [];
-        options := Concatenation( options, String( Length( external_legs ) ), " " );
         options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( h0_min ), " ", String( h0_max ), " ", String( numNodesMin ), " ", String( numNodesMax ), " 1" );
     
         # trigger the binary
