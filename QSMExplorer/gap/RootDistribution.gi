@@ -167,7 +167,7 @@ end );
 
 InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsBool ],
     function( data, h0Min, h0Max, numNodesMin, numNodesMax, display_details )
-        local index, Kbar3, genera, degrees, edges, total_genus, root, min, max, external_legs, external_weights, str, a, nproc, number_processes, dir, bin, result_file, output_string, output, input_string, input, options, i, result;
+        local index, Kbar3, genera, degrees, edges, total_genus, root, str, a, dir, nproc, number_processes;
         
         # trigger warning if needed
         index := Int( data.PolyInx );
@@ -187,102 +187,6 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
         edges := EvalString( data.EdgeList );
         total_genus := Int( Kbar3/2 + 1 );
         root := 2 * Kbar3;
-        min := h0Min;
-        max := h0Max;
-        external_legs := [];
-        external_weights := [];
-        
-        # Check that we receive as many degrees as genera
-        if Length( degrees ) <> Length( genera ) then
-            Error( "The number of degrees must match the number of genera." );
-            return -1;
-        fi;
-        
-        # Check that the genera and degrees are suitable integers
-        for i in [ 1 .. Length( degrees ) ] do
-            if not IsInt( degrees[ i ] ) then
-                Error( "The degrees must be integers." );
-                return -1;
-            fi;
-            if not IsInt( genera[ i ] ) then
-                Error( "The genera must be integers." );
-                return -1;
-            fi;
-            if genera[ i ] < 0 then
-                Error( "The genera must be non-negative." );
-                return -1;
-            fi;
-        od;
-        
-        # Check edges
-        for i in [ 1 .. Length( edges ) ] do
-            if ( not IsList( edges[ i ] ) ) then
-                Error( "Each edges must be a list." );
-                return -1;
-            fi;
-            if ( ( Length( edges[ i ] ) > 2 ) or ( Length( edges[ i ] ) < 2 ) ) then                
-                Error( "Each edges must consist of exactly two integers." );
-                return -1;
-            fi;
-            if ( not IsInt( edges[ i ][ 1 ] ) ) or ( not IsInt( edges[ i ][ 2 ] ) ) then
-                Error( "Each edge must consist of exactly two integers." );
-                return -1;            
-            fi;
-            if ( ( edges[ i ][ 1 ] < 0 ) or ( edges[ i ][ 1 ] >= Length( genera ) ) ) then
-                Error( Concatenation( "Vertices are labeled from 0 to ", String( Length( genera ) - 1 ), "." ) );
-                return -1;            
-            fi;
-            if ( ( edges[ i ][ 2 ] < 0 ) or ( edges[ i ][ 2 ] >= Length( genera ) ) ) then
-                Error( Concatenation( "Vertices are labeled from 0 to ", String( Length( genera ) - 1 ), "." ) );
-                return -1;            
-            fi;
-        od;
-        
-        # Check total genus
-        if not IsInt( total_genus ) then
-            Error( "Total genus must be a non-negative integer." );
-            return -1;                    
-        fi;
-        if ( total_genus < 0 ) then
-            Error( "Total genus must be a non-negative integer." );
-            return -1;                    
-        fi;
-        
-        # Check root
-        if not IsInt( root ) then
-            Error( "Root must be a non-negative integer." );
-            return -1;                    
-        fi;
-        if ( root < 0 ) then
-            Error( "Root must be a non-negative integer." );
-            return -1;                    
-        fi;
-        
-        # Check min, max
-        if ( ( not IsInt( min ) ) or ( not IsInt( max ) ) ) then
-            Error( "Min and max must be non-negative integers." );
-            return -1;                    
-        fi;
-        if ( max < min ) then
-            Error( "Min must not exceed max." );
-            return -1;                    
-        fi;
-        
-        # Check if min and max are meaningful
-        if ( min < 0 ) then
-            Print( "Min must not be negative. Replaced by 0 in order to proceed.\n" );
-            min := 0;
-        fi;
-        if ( max < 0 ) then
-            Print( "Max must not be negative. Therefore, min and max are replaced by 0 in order to proceed.\n" );
-            min := 0;
-            max := 0;
-        fi;
-        
-        # Check for degenerate case, i.e. where there are no roots
-        if not IsInt( ( Sum( degrees ) - Sum( external_weights ) ) / root ) then
-            return List( [ min .. max ], i -> 0);
-        fi;
         
         # determine the number of processors to determine how many threads we will initiate
         str := "";
@@ -291,6 +195,32 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
         nproc := Filename( dir, "nproc" );
         Process( DirectoryCurrent(), nproc, InputTextNone(), a, [ "--all" ] );
         number_processes := EvalString( str );
+        
+        # package data
+        data := [genera, degrees, edges, total_genus, root, h0Min, h0Max, numNodesMin, numNodesMax, display_details, number_processes];
+        
+        # start the counter
+        return CountPartialBlowupLimitRootDistribution(data);
+        
+end );
+
+
+InstallMethod( CountPartialBlowupLimitRootDistribution, [IsList],
+    function(data)
+        local genera, degrees, edges, total_genus, root, h0_min, h0_max, numNodesMin, numNodesMax, display_details, number_processes, dir, bin, output_string, output, input_string, options, external_legs, i, result_file, input, result;
+        
+        # read out data
+        genera := data[1];
+        degrees := data[2];
+        edges := data[3];
+        total_genus := data[4];
+        root := data[5];
+        h0_min := data[6];
+        h0_max := data[7];
+        numNodesMin := data[8];
+        numNodesMax := data[9];
+        display_details := data[10];
+        number_processes := data[11];
         
         # find the counter binary (and check if it exists)
         dir := FindPartialBlowupRootCounterDirectory();
@@ -304,7 +234,7 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
         output := OutputTextUser();
         input_string := "";
         input := InputTextString( input_string );
-                
+        
         # options convey the necessary information about the nodal curve
         options := Concatenation( String( Length( genera ) ), " " );
         for i in [ 1 .. Length( degrees ) ] do
@@ -317,20 +247,10 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
         for i in [ 1 .. Length( edges ) ] do
             options := Concatenation( options, String( edges[ i ][ 1 ] ), " ", String( edges[ i ][ 2 ] ), " " );
         od;
+        external_legs := [];
         options := Concatenation( options, String( Length( external_legs ) ), " " );
-        for i in [ 1 .. Length( external_legs ) ] do
-            options := Concatenation( options, String( external_legs[ i ] ), " " );
-            options := Concatenation( options, String( external_weights[ i ] ), " " );
-        od;
-        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( min ), " ", String( max ), " ", String( numNodesMin ), " ", String( numNodesMax ) );
-        
-        # display details?
-        if display_details then
-            options := Concatenation( options, " ", String( 1 ) );
-        else
-            options := Concatenation( options, " ", String( -1 ) );
-        fi;
-        
+        options := Concatenation( options, String( total_genus ), " ", String( root ), " ", String( number_processes ), " ", String( h0_min ), " ", String( h0_max ), " ", String( numNodesMin ), " ", String( numNodesMax ), " 1" );
+    
         # trigger the binary
         Process( DirectoryCurrent(), bin, input, output, [ options ] );
         
@@ -347,6 +267,6 @@ InstallMethod( CountPartialBlowupLimitRootDistribution, [ IsRecord, IsInt, IsInt
         RemoveFile( result_file );
         
         # return result
-        return result;        
+        return result;
         
 end );
