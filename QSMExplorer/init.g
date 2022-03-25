@@ -16,6 +16,7 @@
 #############################################################################
 
 ReadPackage( "QSMExplorer", "gap/Tools.gd" );
+ReadPackage( "QSMExplorer", "gap/RootDistribution.gd" );
 ReadPackage( "QSMExplorer", "gap/WDiagram.gd" );
 ReadPackage( "QSMExplorer", "gap/WDiagramWithExternalLegs.gd" );
 ReadPackage( "QSMExplorer", "gap/Speciality.gd" );
