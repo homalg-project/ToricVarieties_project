@@ -17,7 +17,4 @@
 
 ReadPackage( "QSMExplorer", "gap/Tools.gi" );
 ReadPackage( "QSMExplorer", "gap/RootDistribution.gi" );
-ReadPackage( "QSMExplorer", "gap/WDiagram.gi" );
-ReadPackage( "QSMExplorer", "gap/WDiagramWithExternalLegs.gi" );
 ReadPackage( "QSMExplorer", "gap/Speciality.gi" );
-ReadPackage( "QSMExplorer", "gap/ToolsHiggsCurve.gi" );

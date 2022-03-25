@@ -1,4 +1,4 @@
-#! @Chapter Tools for investigation of one Quadrillion F-theory Standard Models
+#! @Chapter Tools for computing root bundle distributions in the Quadrillion F-theory Standard Models
 
 #! @Section Examples
 
@@ -26,15 +26,6 @@ n1;
 n2 := CountMinimalLimitRootDistributionOfQSM( 10, 3, 6, false );;
 n2;
 #! [ 0, 0, 0, 781680888, 25196800, 106800, 0 ]
-#! @EndExample
-
-#! We can also compute the root distribution with weights on external legs of the quark doublet curve. Here is an example:
-#! @Example
-dist := CountLimitRootDistributionWithExternalLegsOfQSM( 1, 0, 4, [ 1,1,11,11,11,1 ], false );;
-dist;
-#! [ 1716, 8325, 1260, 0, 0 ]
-dist2 := CountLimitRootDistributionWithExternalLegsOfQSMByPolytope( 8, 0, 4, [ 1, 11, 11, 11, 1, 1 ], false );
-#! [ 1573, 109395, 36036, 0, 0 ]
 #! @EndExample
 
 #! We verify that the results computed in our PRD letter for the spaces with Kbar^3 = 6 are still reproduced by this software:

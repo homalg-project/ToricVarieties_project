@@ -75,26 +75,3 @@ DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ Is
 DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
 
 DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsBool ] );
-
-
-##############################################################################################
-##
-#! @Section Counting distribution of limit roots with external legs
-##
-##############################################################################################
-
-#! @Description
-#! This function computes the number of limit roots in the i-th QSM with at most L global sections for an assignment of weights w on the external legs.
-#! @Returns integer or fail
-#! @Arguments Integer i, integer L, list w
-DeclareOperation( "CountLimitRootDistributionWithExternalLegsOfQSM", [ IsInt, IsInt, IsInt, IsList ] );
-DeclareOperation( "CountLimitRootDistributionWithExternalLegsOfQSM", [ IsInt, IsInt, IsInt, IsList, IsBool ] );
-
-#! @Description
-#! This function computes the number of limit roots in the QSM defined by polytope i  with at most L global sections  for an assignment of weights w on the external legs.
-#! @Returns integer or fail
-#! @Arguments Integer i, integer L, list w
-DeclareOperation( "CountLimitRootDistributionWithExternalLegsOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsList ] );
-DeclareOperation( "CountLimitRootDistributionWithExternalLegsOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsList, IsBool ] );
-
-DeclareOperation( "CountLimitRootDistributionWithExternalLegs", [ IsRecord, IsInt, IsInt, IsList, IsBool ] );
