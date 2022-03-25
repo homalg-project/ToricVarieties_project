@@ -57,18 +57,17 @@ int main(int argc, char* argv[]) {
     
     std::vector<int> degrees, genera;
     std::vector<std::vector<int>> edges;
-    int genus, root, number_threads, h0Min, h0Max;
+    int genus, root, number_threads, h0Min, h0Max, numNodesMin, numNodesMax;
     bool display_details;
     std::string input_string = argv[1];
-    parse_input(input_string, degrees, genera, edges, genus, root, number_threads, h0Min, h0Max, display_details);
+    parse_input(input_string, degrees, genera, edges, genus, root, number_threads, h0Min, h0Max, numNodesMin, numNodesMax, display_details);
     
     
     // ######################################
     // ##### (2) Consistency check
     // ######################################
     
-    consistency_check(genus, genera, degrees, root, h0Min, h0Max, number_threads);
-    
+    consistency_check(genus, genera, degrees, edges, root, h0Min, h0Max, numNodesMin, numNodesMax, number_threads);
     
     // ######################################
     // ##### 3. Compute root bundles
@@ -90,7 +89,7 @@ int main(int argc, char* argv[]) {
         
         // Compute number of root bundles
         std::vector<boost::multiprecision::int128_t> results_exact, results_lower_bound;
-        iterator(edges, degrees, genera, genus, root, h0_value, number_threads, results_exact, results_lower_bound);
+        iterator(edges, degrees, genera, genus, root, h0_value, numNodesMin, numNodesMax, number_threads, results_exact, results_lower_bound);
         n_exact.push_back(results_exact);
         n_lower_bound.push_back(results_lower_bound);
         
@@ -101,7 +100,7 @@ int main(int argc, char* argv[]) {
     // ##### 4. Return the result
     // ######################################
     
-    return_result(argv[0], n_exact, n_lower_bound, edges.size(), genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
+    return_result(argv[0], n_exact, n_lower_bound, numNodesMax - numNodesMin, numNodesMin, genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
     return 0;
     
 }
