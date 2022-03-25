@@ -38,12 +38,12 @@ rec(
     Email := "martin.bies@alumni.uni-heidelberg.de",
     WWWHome := "https://martinbies.github.io/",
     PostalAddress := Concatenation(
-                 "Department of Mathematics \n",
+                 "Department of Physics and Astronomy \n",
                  "University of Pennsylvania \n",
                  "David Rittenhouse Laboratory \n",
                  "209 S 33rd St \n",
-                 "Philadelphia \n",
-                 "PA 19104" ),
+                 "Philadelphia, PA 19104-6396 \n",
+                 "United States" ),
     Place         := "Philadelphia",
     Institution   := "University of Pennsylvania"
     ),
