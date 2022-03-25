@@ -41,7 +41,7 @@ CountMinimalLimitRootsOfQSMByPolytope( 128, false );
 #! @EndExample
 
 #! Finally, we also verify that the results computed in our PRD letter for some spaces with Kbar^3 = 10 are still reproduced by this software:
-#! @Log
+#! @Example
 CountMinimalLimitRootsOfQSMByPolytope( 88, false );
 #! [ 0, 0, 0, 781680888 ]
 CountMinimalLimitRootsOfQSMByPolytope( 110, false );
@@ -52,11 +52,11 @@ CountMinimalLimitRootsOfQSMByPolytope( 274, false );
 #! [ 0, 0, 0, 736011640 ]
 CountMinimalLimitRootsOfQSMByPolytope( 387, false );
 #! [ 0, 0, 0, 733798300 ]
-#! @EndLog
+#! @EndExample
 
 #! The remaining results can be checked analogousyl as follows:
 
-#! @Log
+#! @Example
 CountMinimalLimitRootsOfQSMByPolytope( 798, false );
 #! [ 0, 0, 0, 690950608 ]
 CountMinimalLimitRootsOfQSMByPolytope( 808, false );
@@ -99,9 +99,9 @@ CountMinimalLimitRootsOfQSMByPolytope( 1384, false );
 #! [ 0, 0, 0, 27178020 ]
 CountMinimalLimitRootsOfQSMByPolytope( 856, false );
 #! [ 0, 0, 0, 30840098 ]
-#! @EndLog
+#! @EndExample
 
-#! By now, we support advanced functionality to analysis limit root line bundles obtained from partial blowups. For example, we have the following:
+#! By now, we support advanced functionality to analyze limit root line bundles obtained also from partial blowups. For example, we have the following:
 
 #! @Example
 CountPartialBlowupLimitRootDistributionOfQSMByPolytope(4,3,3);;
