@@ -38,12 +38,6 @@ CountMinimalLimitRootsOfQSMByPolytope( 134, false );
 #! [ 0, 0, 0, 10010 ]
 CountMinimalLimitRootsOfQSMByPolytope( 128, false );
 #! [ 0, 0, 0, 8910 ]
-CountMinimalLimitRootsOfQSMByPolytope( 130, false );
-#! [ 0, 0, 0, 8910 ]
-CountMinimalLimitRootsOfQSMByPolytope( 136, false );
-#! [ 0, 0, 0, 8910 ]
-CountMinimalLimitRootsOfQSMByPolytope( 236, false );
-#! [ 0, 0, 0, 8910 ]
 #! @EndExample
 
 #! Finally, we also verify that the results computed in our PRD letter for some spaces with Kbar^3 = 10 are still reproduced by this software:

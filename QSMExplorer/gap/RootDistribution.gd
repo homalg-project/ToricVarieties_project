@@ -75,3 +75,4 @@ DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ Is
 DeclareOperation( "CountPartialBlowupLimitRootDistributionOfQSMByPolytope", [ IsInt, IsInt, IsInt, IsBool ] );
 
 DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsRecord, IsInt, IsInt, IsInt, IsInt, IsBool ] );
+DeclareOperation( "CountPartialBlowupLimitRootDistribution", [ IsList ] );
