@@ -43,7 +43,7 @@ install-with-links-to-local-boost-and-profiling: uninstall
 	
 install: uninstall
 	(cd bin/Speciality && g++ -std=gnu++14 -c main-speciality.cpp && g++ -std=gnu++14 -o specialityChecker main-speciality.o)
-	(cd bin/PartialBlowups && g++ -std=gnu++14 -c -lboost_thread partial_blowup.cpp && g++ -std=gnu++14 -o partialBlowups partial_blowup.o -lboost_thread -lpthread)
+	(cd bin/PartialBlowups && g++ -std=gnu++14 -c -lboost_thread -lboost_system -lpthread partial_blowup.cpp && g++ -std=gnu++14 -o partialBlowups partial_blowup.o -lboost_thread -lboost_system -lpthread)
 	
 test:	doc
 	gap tst/testall.g
