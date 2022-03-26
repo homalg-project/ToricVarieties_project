@@ -59,7 +59,7 @@ results := [
 [ 0, 0, 0, 30840098 ]];;
 indexes := DuplicateFreeList(List([1..5], k -> Random([1..Length(setups)])));;
 List([1..5], k -> CountMinimalLimitRootsOfQSMByPolytope(setups[indexes[k]], false)=results[indexes[k]]);
-#! [true, true]
+#! [true, true, true, true, true]
 #! @EndExample
 
 #! By now, we support advanced functionality to analyze limit root line bundles obtained also from partial blowups. For example, we have the following:
