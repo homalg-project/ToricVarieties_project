@@ -18,92 +18,43 @@ jobs:
       image: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v1
-      - name: Copy ToricVarieties_project branch
+      - name: Install system dependencies
         run: |
-          echo "------------------------------------------------------------------------"
-          echo "Step 1: Install system dependencies"
-          echo "------------------------------------------------------------------------"
+          sudo rm -f -r /etc/apt/sources.list.d/macaulay2.list
+          sudo apt-get update
           sudo apt-get install -y -f texlive-latex-extra time python-pathlib texlive-science time python-pathlib
           sudo apt-get install -y -f autoconf build-essential curl libgmp-dev libtool libatlas-base-dev libblas-dev liblapack-dev libcdd-dev
-          version=2.7.13
-          mkdir -p /home/gap/.gap/pkg/Downloads/
-          cd /home/gap/.gap/pkg/Downloads/
-          wget https://www.python.org/ftp/python/$version/Python-$version.tgz
-          tar -xvf Python-$version.tgz
-          cd Python-$version
-          ./configure
-          make
-          sudo make install
-          echo "------------------------------------------------------------------------"
-          echo "Step 2: Copy branch"
-          echo "------------------------------------------------------------------------"
-          echo""
-          echo "(*) Prepare folder for latest packages"
-          echo""
+          sudo apt-get install -y -f libboost-all-dev
+          sudo apt-get install -y -f libboost1.65-dev
+      - name: Prepare folder for latest gap packages needed for the tests
+        run: |
           mkdir -p /home/gap/.gap/pkg/
           sudo cp -a $GITHUB_WORKSPACE /home/gap/.gap/pkg/
           sudo chown -R gap:gap /home/gap/.gap/pkg/
-      - name: Install packages and conduct tests
+      - name: Clone and install latest gap packages and issue tests
         run: |
           export HOME="/home/gap"
           cd /home/gap/.gap/pkg/
-          echo "(*) Clone AutoDoc"
           git clone https://github.com/homalg-project/AutoDoc.git
-          echo""
-          echo "(*) Clone CAP_project"
           git clone https://github.com/homalg-project/CAP_project.git
-          echo ""
-          echo "(*) Clone CddInterface"
           git clone https://github.com/homalg-project/CddInterface.git
-          echo ""
-          echo "(*) Clone ComplexesForCAP"
+          cd CddInterface/
+          ./install.sh /home/gap/inst/gap*
+          cd ..          
           git clone https://github.com/homalg-project/ComplexesForCAP.git
-          echo ""
-          echo "(*) Clone homalg_project"
           git clone https://github.com/homalg-project/homalg_project.git
-          echo ""
-          echo "(*) Clone LessGenerators"
-          git clone https://github.com/homalg-project/LessGenerators.git
-          echo ""
-          echo "(*) Clone NConvex"
-          git clone https://github.com/homalg-project/NConvex.git
-          echo ""
-          echo "(*) Clone PrimaryDecomposition"
-          git clone https://github.com/homalg-project/PrimaryDecomposition.git
-          echo ""
-          echo "(*) Clone QPA2"
-          git clone https://github.com/sunnyquiver/QPA2.git
-          echo ""
-          echo "(*) Clone SingularForHomalg"
-          git clone https://github.com/homalg-project/SingularForHomalg.git
-          echo ""
-          echo "(*) Clone HigherHomologicalAlgebra"
-          git clone https://github.com/homalg-project/HigherHomologicalAlgebra.git
-          echo ""
-          echo "------------------------------------------------------------------------"
-          echo "Step 3: Install packages"
-          echo "------------------------------------------------------------------------"
-          echo ""
-          echo "(*) Install Gauss"
-          echo ""
           cd homalg_project/Gauss/
           ./configure /home/gap/inst/gap*
           make -j $(nproc)
-          cd ../..
-          echo ""
-          echo "(*) Install CddInterface"
-          echo ""
-          cd CddInterface/
-          ./install.sh /home/gap/inst/gap*
-          cd ..
-          echo "(*) Install software in ToricVarieties_project"
-          echo ""
+          cd ../..          
+          git clone https://github.com/homalg-project/LessGenerators.git
+          git clone https://github.com/homalg-project/NConvex.git
+          git clone https://github.com/homalg-project/PrimaryDecomposition.git
+          git clone https://github.com/sunnyquiver/QPA2.git
+          git clone https://github.com/homalg-project/SingularForHomalg.git
+          git clone https://github.com/homalg-project/HigherHomologicalAlgebra.git
           cd ToricVarieties_project
-          make install-with-local-boost
-          echo ""
-          echo "------------------------------------------------------------------------"
-          echo "Step 4: Perform tests"
-          echo "------------------------------------------------------------------------"
+          make install
           echo "SetInfoLevel(InfoPackageLoading, 3);" > ~/.gap/gaprc
           TERM=dumb make -j $(nproc) --output-sync ci-test
           curl -s https://codecov.io/bash | bash
