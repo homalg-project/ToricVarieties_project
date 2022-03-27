@@ -9,7 +9,8 @@ This algorithm is the result of ongoing collaboration with
 * [Ron Donagi](https://www.math.upenn.edu/people/ron-donagi)
 * [Muyang Liu](https://www.sas.upenn.edu/heptheory/node/392)
 * [Marielle Ong](https://sites.google.com/site/marielleongswebpage/)
-The corresponding preprint is available at [2104.08297](https://arxiv.org/pdf/2104.08297.pdf).
+
+The first preprint is available at [2104.08297](https://arxiv.org/pdf/2104.08297.pdf) and has been published as [PRD letter](https://journals.aps.org/prd/abstract/10.1103/PhysRevD.104.L061903). A related work is expected to appear relatively soon.
 
 
 ## Installation
