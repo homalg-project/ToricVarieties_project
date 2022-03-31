@@ -77,8 +77,8 @@ ArchiveFormats  := ".tar.gz",
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/", ReplacedString( ~.Version, ".", "-"),
                                  "/", ~.PackageName, "-", ~.Version ),
-README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 
 AbstractHTML := "H0Approximator allows to estimate global sections of a line bundle on curves in dP3 and H2",
 

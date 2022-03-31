@@ -77,8 +77,8 @@ ArchiveFormats  := ".tar.gz",
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/", ReplacedString( ~.Version, ".", "-"),
                                  "/", ~.PackageName, "-", ~.Version ),
-README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 
 AbstractHTML := "QSMExplorer allows to investigate one Quadrillion F-theory Standard Models quickly and efficiently",
 
