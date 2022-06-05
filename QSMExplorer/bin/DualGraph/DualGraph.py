@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.8
+#!/usr/bin/python3
 
 # function to convert a string to a list of integers
 def convert_string_to_list_of_ints( s ):
