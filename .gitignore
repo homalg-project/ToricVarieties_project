@@ -80,6 +80,8 @@ QSMExplorer/bin/Speciality/main-speciality.o
 QSMExplorer/bin/Speciality/specialityChecker
 QSMExplorer/bin/PartialBlowups/partialBlowups
 QSMExplorer/bin/PartialBlowups/partial_blowup.o
+QSMExplorer/bin/PartialBlowups/rootsPowersKC
+QSMExplorer/bin/PartialBlowups/roots_powers_KC.o
 QSMExplorer/bin/PartialBlowups/partialBlowupsAllTrees
 QSMExplorer/bin/PartialBlowups/partial_blowup_rational_all_trees.o
 
