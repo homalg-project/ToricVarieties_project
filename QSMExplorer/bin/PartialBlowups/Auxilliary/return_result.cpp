@@ -128,3 +128,54 @@ void return_result(const std::string & full_path,
     ofile.close();
     
 }
+
+
+
+// (2) Return simple result
+// (2) Return simple result
+// (2) Return simple result
+
+void return_simple_result(const std::string & full_path,
+                            const std::vector<std::vector<boost::multiprecision::int128_t>> & n_exact,
+                            const std::vector<std::vector<boost::multiprecision::int128_t>> & n_lower_bound,
+                            const int & numberBlowupsConsidered,
+                            const int & numNodesMin,
+                            const int & genus,
+                            const int & root,
+                            const int & h0Min,
+                            const int & h0Max,
+                            const int & b1,
+                            const std::chrono::steady_clock::time_point & before,
+                            const std::chrono::steady_clock::time_point & after,
+                            const bool & display_details)
+{
+    
+    // did we find all root bundles?
+    boost::multiprecision::int128_t geo_mult = (boost::multiprecision::int128_t) (pow(root, b1));
+    boost::multiprecision::int128_t total_number_roots = ((boost::multiprecision::int128_t) (pow(root, 2 * genus))/geo_mult);
+    boost::multiprecision::int128_t total_roots_found;
+    for (int i = 0; i <= h0Max - h0Min; i++){
+        for (int j = 0; j <= numberBlowupsConsidered; j++){
+            total_roots_found += n_exact[i][j] + n_lower_bound[i][j];
+        }
+    }
+    if (total_roots_found != total_number_roots){
+        std::cout << "\n\nNOT ALL ROOTS FOUND!\n\n";
+    }
+    
+    // print the number of those roots with exactly the lowest h0
+    using LongFloat=boost::multiprecision::cpp_bin_float_quad;
+    boost::multiprecision::int128_t counter;
+    for (int i = 0; i <= h0Max - h0Min; i++){
+        counter = (boost::multiprecision::int128_t) 0;
+        for (int j = 0; j <= numberBlowupsConsidered; j++){
+            counter += n_exact[i][j];
+        }
+        if (counter != 0){
+            std::cout << counter << "\t\t";
+            LongFloat percentage_counter = LongFloat(100) * LongFloat(counter) / LongFloat(total_number_roots);
+            std::cout << std::setprecision(3) << percentage_counter << "\t" << i << "\n";
+            break;
+        }
+    }
+}

@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
     // ##### 4. Return the result
     // ######################################
     
-    return_result(argv[0], n_exact, n_lower_bound, numNodesMax - numNodesMin, numNodesMin, genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
+    return_simple_result(argv[0], n_exact, n_lower_bound, numNodesMax - numNodesMin, numNodesMin, genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
     return 0;
     
 }
