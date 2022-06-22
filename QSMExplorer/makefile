@@ -18,7 +18,8 @@ uninstall:
 	(cd bin/Speciality && rm -f main-speciality.o && rm -f specialityChecker)
 	(cd bin/PartialBlowups && rm -f partial_blowup.o && rm -f partialBlowups)
 	(cd bin/PartialBlowups && rm -f roots_powers_KC.o && rm -f rootsPowersKC)
-	
+	(cd bin/PartialBlowups && rm -f roots_powers_auto.o && rm -f rootsPowersAuto)
+
 uninstall-boost-from-source:
 	(cd boost && rm -r -f boost_1_77_0 && rm -r -f library)
 
