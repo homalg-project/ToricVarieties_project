@@ -76,22 +76,33 @@ int main(int argc, char* argv[]) {
     // count roots in the desired interval
     std::chrono::steady_clock::time_point before = std::chrono::steady_clock::now();
     int lower_bound = (int) (std::accumulate(degrees.begin(),degrees.end(),0)/root) - genus + 1;
-    std::vector<std::vector<boost::multiprecision::int128_t>> n_exact, n_lower_bound;
-    for (int h0_value = h0Min; h0_value <= h0Max; h0_value++){
+    int index = 0;
+    boost::multiprecision::int128_t n_exact, n_lower_bound;
+    for (int h0_value = 0; h0_value <= h0Max; h0_value++){
         
-        // Are we below the lower bound? -> Answer is trivial
-        if (h0_value < lower_bound){
-            std::vector<boost::multiprecision::int128_t> result(numNodesMax - numNodesMin + 1,0);
-            n_exact.push_back(result);
-            n_lower_bound.push_back(result);
-            continue;
+        // Reset counters
+        std::vector<boost::multiprecision::int128_t> results_exact, results_lower_bound;        
+        
+        // Are we above the lower bound? -> Answer could be non-trivial trivial
+        if (h0_value >= lower_bound){
+            iterator(edges, degrees, genera, genus, root, h0_value, numNodesMin, numNodesMax, number_threads, results_exact, results_lower_bound);
         }
         
-        // Compute number of root bundles
-        std::vector<boost::multiprecision::int128_t> results_exact, results_lower_bound;
-        iterator(edges, degrees, genera, genus, root, h0_value, numNodesMin, numNodesMax, number_threads, results_exact, results_lower_bound);
-        n_exact.push_back(results_exact);
-        n_lower_bound.push_back(results_lower_bound);
+        // Compute the total number of roots found
+        n_exact = 0;
+        n_lower_bound = 0;
+        for (int i = 0; i < results_exact.size(); i++){
+            n_exact += results_exact[i];
+            n_lower_bound += results_lower_bound[i];
+        }
+        
+        // Is the result non-trivial?
+        if ((n_exact != 0) || (n_lower_bound != 0)){
+            // Stop loop for improved performance
+            // NOTE: This means that no check for "total number of roots found?" will be conducted!
+            index = h0_value;
+            break;
+        }
         
     }
     std::chrono::steady_clock::time_point after = std::chrono::steady_clock::now();
@@ -100,7 +111,7 @@ int main(int argc, char* argv[]) {
     // ##### 4. Return the result
     // ######################################
     
-    return_simple_result(argv[0], n_exact, n_lower_bound, numNodesMax - numNodesMin, numNodesMin, genus, root, h0Min, h0Max, betti_number(edges), before, after, display_details);
+    return_simple_result(n_exact, n_lower_bound, index, root, genus);
     return 0;
     
 }
