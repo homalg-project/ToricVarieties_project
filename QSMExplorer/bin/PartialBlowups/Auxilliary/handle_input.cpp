@@ -91,7 +91,7 @@ void parse_simple_input(const std::string & input_string,
     display_details = true;
 
     // (2) Read-off edges
-    for (int i = 0; i < (int)((input.size()-1)/2); i++){
+    for (int i = 0; i < (int)((input.size()/2)-1); i++){
         std::vector<int> helper(2);
         helper[0] = input[2*i];
         helper[1] = input[2*i+1];
@@ -110,7 +110,7 @@ void parse_simple_input(const std::string & input_string,
     
     // (4) Determine genus, root and maximal number of nodes
     genus = edges.size() + 1 - number_vertices;
-    root = input[input.size()-1];
+    root = input[input.size()-2];
     numNodesMax = edges.size();
     
     // (5) Find degress, h0Max and set the genera to 0
@@ -120,11 +120,12 @@ void parse_simple_input(const std::string & input_string,
         edges_per_component[input[2*i+1]]++;
     }
     h0Max = 0;
+    int power = input[input.size()-1];
     for (int i=0; i < number_vertices; i++){
         int d = edges_per_component[i]-2;
-        degrees.push_back(d*input[input.size()-1]);
+        degrees.push_back(d*power);
         if (d >= 0){
-            h0Max += d+1;
+            h0Max += d*power+1;
         }
         genera.push_back(0);
     }
