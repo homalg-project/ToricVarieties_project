@@ -16,7 +16,7 @@ PackageName := "CoherentSheavesOnToricVarieties",
 Subtitle := "A package to model coherent toric sheaves as elements in a Serre quotient category.",
 
 Version := Maximum( [
-   "2022.03.23",
+   "2022.07.13",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
