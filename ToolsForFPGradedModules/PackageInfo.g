@@ -16,7 +16,7 @@ PackageName := "ToolsForFPGradedModules",
 Subtitle := "A package to provide additional structures for toric varieties",
 
 Version := Maximum( [
-   "2022.03.23",
+   "2022.07.13",
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
