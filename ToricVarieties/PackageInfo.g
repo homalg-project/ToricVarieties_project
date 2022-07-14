@@ -110,6 +110,8 @@ AvailabilityTest := ReturnTrue,
 
 Keywords := [ "Toric geometry", "Toric varieties", "Divisors", "Geometry"],
 
+TestFile := "tst/testall.g",
+
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := """
