@@ -418,12 +418,96 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     
     // (5) Iterate over the connected components
     for (int i = 0; i < connected_components.size(); i++){
-        // if NOT tree-like
-        if (edges_of_connected_components[i].size()+1-connected_components[i].size() > 0){
+        
+        // count the number of amputated components
+        int amputated_components = 0;
+        for (int j = 0; j < connected_components[i].size(); j++){
+            int count_for_component_j = 0;
+            for (int k = 0; k < edges_of_connected_components[i].size(); k++){
+                if (edges_of_connected_components[i][k][0] == connected_components[i][j]){
+                    count_for_component_j++;
+                }
+                if (edges_of_connected_components[i][k][1] == connected_components[i][j]){
+                    count_for_component_j++;
+                }
+                if (count_for_component_j > 1){
+                    break;
+                }
+            }
+            
+            if (count_for_component_j == 1){
+                amputated_components++;
+            }
+        }
+        
+        // tree-like case
+        if (edges_of_connected_components[i].size()+1-connected_components[i].size() == 0){
+            std::vector<int> helper_degrees;
+            helper_degrees.reserve(degrees.size());
+            for (int j = 0; j < connected_components[i].size(); j++){
+                helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
+            }
+            h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i], details);
+        }
+
+        // simple circuit of two components
+        else if (edges_of_connected_components[i].size() == 2 && connected_components[i].size() == 2){
+            
+            // count local sections
+            int local_sections = 0;
+            for (int j = 0; j < connected_components[i].size(); j++){
+                if (degree_correspondence[connected_components[i][j]] >= 0){
+                    local_sections += degree_correspondence[connected_components[i][j]] + 1;
+                }
+            }
+            
+            // determine global sections
+            if (local_sections >= 2){
+                h0 += local_sections - 2;
+            }
+            
+            // handle canonical bundle
+            if ((degree_correspondence[connected_components[i][0]] == 0) && (degree_correspondence[connected_components[i][1]] == 0)){
+                lower_bound = true;
+            }
+        }
+
+        // simple circuit of three components
+        else if (edges_of_connected_components[i].size() == 3 && connected_components[i].size() == 3 && amputated_components == 0){
+            
+            // compute local sections
+            int local_sections = 0;
+            int non_negative_components = 0;
+            for (int j = 0; j < connected_components[i].size(); j++){
+                if (degree_correspondence[connected_components[i][j]] >= 0){
+                    local_sections += degree_correspondence[connected_components[i][j]] + 1;
+                    non_negative_components++;
+                }
+            }
+            
+            // determine global sections
+            if (non_negative_components == 1 && local_sections > 2){
+                h0 += local_sections - 2;
+            }
+            if (non_negative_components > 1 && local_sections > 3){
+                h0 += local_sections - 3;
+            }
+            
+            // handle canonical bundle
+            if ((degree_correspondence[connected_components[i][0]]==0)
+                && (degree_correspondence[connected_components[i][1]]==0)
+                && (degree_correspondence[connected_components[i][2]]==0)){
+                lower_bound = true;
+            }
+            
+        }
+        
+        // beyond what we can currently handle
+        else{
             if (details){
                 std::cout << "\n";
                 std::cout << "############################################\n";
-                std::cout << "Study NON-tree like graph:\n";
+                std::cout << "Study circuit which is possibly jumping:\n";
                 std::cout << "--------------------------------\n\n";
             }
             lower_bound = true;
@@ -461,15 +545,6 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
                     std::cout << "############################################\n\n";
                 }
             }
-        }
-        // if tree-like
-        else{
-            std::vector<int> helper_degrees;
-            helper_degrees.reserve(degrees.size());
-            for (int j = 0; j < connected_components[i].size(); j++){
-                helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
-            }
-            h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i], details);
         }
     }
     
