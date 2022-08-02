@@ -158,7 +158,7 @@ void worker(            const std::vector<int> degrees,
                 }
                 
                 // display unsorted setup
-                if (display_unsorted_setups and  unsorted_setup){
+                if (display_unsorted_setups and unsorted_setup){
                     std::cout << "##################\n";
                     std::cout << "Could not sort the following:\n";
                     print_vector_of_vector("Nodal edges\n", nodal_edges);
