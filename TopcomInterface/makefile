@@ -13,7 +13,7 @@ docclean:
 	(cd doc ; ./clean)
 
 install: uninstall
-	curl -sS https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Downloads/TOPCOM-0_17_8.tgz > Topcom.tgz
+	curl -sS https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Downloads/TOPCOM-1_1_2.tgz > Topcom.tgz
 	tar -xf Topcom.tgz
 	rm Topcom.tgz
 	mv topcom* topcom
