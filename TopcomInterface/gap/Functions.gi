@@ -693,9 +693,9 @@ InstallMethod( chiro2alltriangs,
                                     input1,
                                     input2,
                                     options_list );
-
+    
     # finally evaluate the output
-    return EvalString( Concatenation( "[", result, "]" ) );
+    return result;
 
 end );
 
@@ -728,7 +728,7 @@ InstallMethod( points2alltriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( Concatenation( "[", result, "]" ) );
+    return result;
 
 end );
 
@@ -827,7 +827,7 @@ InstallMethod( chiro2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( Concatenation( "[", result, "]" ) );
+    return result;
 
 end );
 
@@ -860,7 +860,7 @@ InstallMethod( points2allfinetriangs,
                                     options_list );
 
     # finally evaluate the output
-    return EvalString( Concatenation( "[", result, "]" ) );
+    return result;
 
 end );
 

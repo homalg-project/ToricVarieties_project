@@ -74,7 +74,9 @@ InstallMethod( ExecuteTopcomForPoints,
                [ IsDirectory, IsString, IsList, IsList, IsList ],
   function( topcomDirectory, name_of_binary, input1, input2, options_list )
 
-  local topcomBinary, output_string, output, input_string, input, options, supported_options, i, trias;
+  local topcomBinary, output_string, output, input, input_string, tmp_file_name, tmp_file, options, supported_options, i, trias;
+  
+    #input, options, supported_options, i, trias;
 
     # setup filename for this file
     topcomBinary := Filename( topcomDirectory, name_of_binary );
@@ -86,9 +88,16 @@ InstallMethod( ExecuteTopcomForPoints,
     output_string := "";
     output := OutputTextString( output_string, true );
 
-    # prepare input_stream to launch topcom
+    # write temporary file with instructions on what to compute
+    tmp_file_name := Filename( topcomDirectory, "input_file.dat" );
+    tmp_file := OutputTextFile( tmp_file_name, false );
     input_string := Concatenation( String( input1 ), " ", String( input2 )," " );
-    input := InputTextString( input_string );
+    RemoveCharacters(input_string, " \n\t\r");
+    AppendTo( tmp_file, input_string );
+    CloseStream( tmp_file );
+
+    # prepare input_stream
+    input := InputTextFile(tmp_file_name);
     
     # introduce the options currently supported by topcom and this interface
     supported_options := [ "checktriang", "flipdeficiency", "heights", "noinsertion", 
@@ -101,14 +110,20 @@ InstallMethod( ExecuteTopcomForPoints,
         fi;
     od;
 
-    # prepare options to be handed to topcom
-    options := "";
-    for i in [ 1 .. Length( options_list ) ] do
-      options := Concatenation( options, "--", String( options_list[ i ] ), " " );
-    od;
-    
     # execute topcom
-    Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
+    if Length(options_list) = 0 then
+        # no options - execute directly
+        Process( DirectoryCurrent(), topcomBinary, input, output, [ ] );
+    else
+        # prepare options
+        options := "";
+        for i in [ 1 .. Length( options_list ) -1 ] do
+            options := Concatenation( options, "--", String( options_list[ i ] ), " " );
+        od;
+        options := Concatenation( options, "--", String( options_list[ Length( options_list ) ] ) );
+        # and execute
+        Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
+    fi;
     
     # now process the triangulations
     output_string := ReplacedString( output_string, "}\n{", "],[" );
@@ -116,6 +131,9 @@ InstallMethod( ExecuteTopcomForPoints,
     output_string := ReplacedString( output_string, "}", "]" );
     RemoveCharacters( output_string, "\n" );
 
+    # remove the temporary file
+    RemoveFile(tmp_file_name);
+    
     # finally return the result
     return output_string;
 
@@ -127,7 +145,7 @@ InstallMethod( ExecuteTopcomForChiro,
                [ IsDirectory, IsString, IsString, IsList, IsList ],
   function( topcomDirectory, name_of_binary, input1, input2, options_list )
 
-  local topcomBinary, output_string, output, input_string, input, options, supported_options, i, trias;
+  local topcomBinary, output_string, output, input, input_string, tmp_file_name, tmp_file, options, supported_options, i, trias;
 
     # setup filename for this file
     topcomBinary := Filename( topcomDirectory, name_of_binary );
@@ -139,9 +157,16 @@ InstallMethod( ExecuteTopcomForChiro,
     output_string := "";
     output := OutputTextString( output_string, true );
 
-    # prepare input_stream to launch topcom
-    input_string := Concatenation( input1, " ", String( input2 )," " );
-    input := InputTextString( input_string );
+    # write temporary file with instructions on what to compute
+    tmp_file_name := Filename( topcomDirectory, "input_file.dat" );
+    tmp_file := OutputTextFile( tmp_file_name, false );
+    input_string := Concatenation( String( input1 ), " ", String( input2 )," " );
+    RemoveCharacters(input_string, " \n\t\r");
+    AppendTo( tmp_file, input_string );
+    CloseStream( tmp_file );
+
+    # prepare input_stream
+    input := InputTextFile(tmp_file_name);
     
     # introduce the options currently supported by topcom and this interface
     supported_options := [ "checktriang", "flipdeficiency", "heights", "noinsertion", 
@@ -154,14 +179,20 @@ InstallMethod( ExecuteTopcomForChiro,
         fi;
     od;
 
-    # prepare options to be handed to topcom
-    options := "";
-    for i in [ 1 .. Length( options_list ) ] do
-      options := Concatenation( options, "--", String( options_list[ i ] ), " " );
-    od;
-    
     # execute topcom
-    Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
+    if Length(options_list) = 0 then
+        # no options - execute directly
+        Process( DirectoryCurrent(), topcomBinary, input, output, [ ] );
+    else
+        # prepare options
+        options := "";
+        for i in [ 1 .. Length( options_list ) -1 ] do
+            options := Concatenation( options, "--", String( options_list[ i ] ), " " );
+        od;
+        options := Concatenation( options, "--", String( options_list[ Length( options_list ) ] ) );
+        # and execute
+        Process( DirectoryCurrent(), topcomBinary, input, output, [ options ] );
+    fi;
     
     # now process the triangulations
     output_string := ReplacedString( output_string, "}\n{", "],[" );
