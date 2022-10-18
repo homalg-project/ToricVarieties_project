@@ -1,5 +1,5 @@
 # TopcomInterface
-A `Gap4`-package which provides an interface to the software `topcom` (http://www.rambau.wm.uni-bayreuth.de/TOPCOM/).
+A `Gap4`-package which provides an interface to the software `topcom` (http://www.rambau.wm.uni-bayreuth.de/TOPCOM/). This interface requires `topcom` version 1.1.2. It may or may not work with newer version. Communication with older version is most likely not possibly with this software.
 
 
 ## Installation
