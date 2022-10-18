@@ -37,7 +37,7 @@ chiro2dual( chiro );
 #! ---+----++----+--++-+++++-+++--+----+0-+-++-++--+--+--+---+--+--++--++---++-+-\
 #! -+-+--+--+--+----++-++---++-++---"
 chiro2circuits( points2chiro( rays ) );
-#! "C[0] := [[0,1,2],[]];"
+#! [ [ [ 0, 1, 2 ], [  ] ] ]
 chiro2cocircuits( points2chiro( rays ) );
 #! "3,2:[[[1],[2]][[0],[2]][[0],[1]]]"
 result := cocircuits2facets( chiro2cocircuits( chiro ) );
@@ -71,15 +71,15 @@ chiro2finetriang( chiro );
 points2finetriang( rays );
 #! [ [ [ 0, 1 ], [ 1, 2 ], [ 0, 2 ] ] ]
 chiro2triangs( points2chiro( rays ) );
-#! "T[0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 points2triangs( rays );
-#! "T[0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 chiro2ntriangs( points2chiro( rays ) );
 #! 1
 points2ntriangs( rays );
 #! 1
 chiro2finetriangs( points2chiro( rays ) );
-#! "T[0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 points2finetriang( rays );
 #! [ [ [ 0, 1 ], [ 1, 2 ], [ 0, 2 ] ] ]
 chiro2nfinetriangs( points2chiro( rays ) );
@@ -87,19 +87,19 @@ chiro2nfinetriangs( points2chiro( rays ) );
 points2nfinetriangs( rays );
 #! 1
 chiro2alltriangs( points2chiro( rays ) );
-#! "T[0,0,0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 points2alltriangs( rays );
-#! "T[0,0,0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 chiro2nalltriangs( points2chiro( rays ) );
 #! 1
 points2nalltriangs( rays );
 #! 1
 chiro2allfinetriangs( points2chiro( rays ) );
-#! "T[0,0,0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 points2allfinetriangs( rays );
-#! "T[0,0,0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 points2allfinetriangs( rays, [], ["regular"] );
-#! "T[0,0,0] := [[0,1],[0,2],[1,2]];"
+#! [ [ [ 0, 1 ], [ 0, 2 ], [ 1, 2 ] ] ]
 chiro2nallfinetriangs( points2chiro( rays ) );
 #! 1
 points2nallfinetriangs( rays );
