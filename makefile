@@ -2,8 +2,7 @@ all: doc test
 
 .PHONY: test clean install uninstall
 
-clean:
-	clean_all
+clean: clean_all
 
 install: uninstall
 	( cd cohomCalgInterface; make install; cd .. )

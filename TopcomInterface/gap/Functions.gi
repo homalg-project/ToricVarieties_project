@@ -88,7 +88,7 @@ InstallMethod( chiro2circuits,
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -100,9 +100,13 @@ InstallMethod( chiro2circuits,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return result;
-
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
+    
 end );
 
 
@@ -418,7 +422,7 @@ InstallMethod( chiro2triangs,
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -430,8 +434,12 @@ InstallMethod( chiro2triangs,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return result;
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
 
 end );
 
@@ -451,7 +459,7 @@ InstallMethod( points2triangs,
                [ IsList, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -463,8 +471,12 @@ InstallMethod( points2triangs,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return result;
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
 
 end );
 
@@ -550,7 +562,7 @@ InstallMethod( chiro2finetriangs,
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -562,9 +574,13 @@ InstallMethod( chiro2finetriangs,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return result;
-
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
+    
 end );
 
 
@@ -682,7 +698,7 @@ InstallMethod( chiro2alltriangs,
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -694,9 +710,13 @@ InstallMethod( chiro2alltriangs,
                                     input2,
                                     options_list );
     
-    # finally evaluate the output
-    return result;
-
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
+    
 end );
 
 
@@ -715,7 +735,7 @@ InstallMethod( points2alltriangs,
                [ IsList, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -726,10 +746,14 @@ InstallMethod( points2alltriangs,
                                     input1,
                                     input2,
                                     options_list );
-
-    # finally evaluate the output
-    return result;
-
+    
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
+    
 end );
 
 
@@ -814,7 +838,7 @@ InstallMethod( chiro2allfinetriangs,
                [ IsString, IsList, IsList ],
   function( input1, input2, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -826,9 +850,13 @@ InstallMethod( chiro2allfinetriangs,
                                     input2,
                                     options_list );
 
-    # finally evaluate the output
-    return result;
-
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
+    
 end );
 
 
@@ -847,7 +875,7 @@ InstallMethod( points2allfinetriangs,
                [ IsList, IsList, IsList ],
   function( points, ref_triangulation, options_list )
 
-  local topcomDirectory, result;
+  local topcomDirectory, result, substrings;
 
     # find the topcom binary
     topcomDirectory := FindTopcomDirectory( );
@@ -858,9 +886,13 @@ InstallMethod( points2allfinetriangs,
                                     points, 
                                     ref_triangulation, 
                                     options_list );
-
-    # finally evaluate the output
-    return result;
+    
+    # TODO Further processing necessary due to changed output of topcom
+    # TODO Further processing necessary due to changed output of topcom
+    
+    # Split at every occurance of ":"
+    substrings := SplitString(result, ':' );
+    return List( [ 2 .. Length(substrings) ], i -> EvalString( List( [ 3 .. Length( substrings[ i ] ) ], j -> substrings[ i ][ j ] ) ) );
 
 end );
 
