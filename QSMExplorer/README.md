@@ -39,4 +39,5 @@ This work is partially supported by:
 - Simons Foundation Collaboration grant #390287 on ``Homological Mirror Symmetry'',
 - Simons Foundation Collaboration grant #724069 on ``Special Holonomy in Geometry, Analysis and Physics'',
 - Slovenian Research Agency No.~P1-0306,
-- Fay R.~and Eugene L.~Langberg Chair.
+- Fay R.~and Eugene L.~Langberg Chair,
+- SFB-TRR 195 ``Symbolic Tools in Mathematics and their Application of the German Research Foundation (DFG)``.

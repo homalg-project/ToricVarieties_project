@@ -23,4 +23,4 @@ E-mail me if there are any questions, remarks, suggestions. Also, I would like t
 
 ## Funding
 
-The work of Martin Bies is partially supported by *NSF grant DMS 201673*, the *Simons Foundation Collaboration grant #390287 on Homological Mirror Symmetry* and the *Simons Foundation Collaboration grant #724069 on Special Holonomy in Geometry, Analysis and Physics*.
+The work of Martin Bies is supported by SFB-TRR 195 ``Symbolic Tools in Mathematics and their Application of the German Research Foundation (DFG)``.
