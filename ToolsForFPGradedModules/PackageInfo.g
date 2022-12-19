@@ -74,7 +74,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
-                           [ "FreydCategoriesForCAP", ">= 2019.03.04" ],
+                           [ "FreydCategoriesForCAP", ">= 2022.12-03" ],
                            [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
                            [ "GradedModules", ">= 2020.01.02" ],
                            [ "IO_ForHomalg", ">= 2020.04.30" ],

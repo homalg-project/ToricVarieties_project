@@ -76,6 +76,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "AutoDoc", ">=2016.02.16" ],
                            [ "ToricVarieties", ">= 2016.05.03" ],
                            [ "AdditionsForToricVarieties", ">= 2020.01.16" ],
+                           [ "LinearAlgebraForCAP", ">= 2022.12-03" ],
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := []

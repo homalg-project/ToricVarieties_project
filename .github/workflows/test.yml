@@ -11,7 +11,7 @@ jobs:
     name: GAP ${{ matrix.image }} - ${{ matrix.os }}          
     strategy:
       matrix:
-        image: [gapsystem/gap-docker, gapsystem/gap-docker-master]
+        image: [gapsystem/gap-docker-master]
         os: [ ubuntu-22.04, ubuntu-20.04, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     container:
