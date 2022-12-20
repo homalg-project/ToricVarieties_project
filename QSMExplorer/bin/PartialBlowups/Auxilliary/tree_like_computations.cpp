@@ -408,7 +408,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
     }
     
     
-    // (4) Compute all connected componentss
+    // (4) Compute all connected components
     std::vector<std::vector<int>> connected_components;
     connected_components.reserve(2*resolved_edges.size() + 2*nodal_edges.size());
     std::vector<std::vector<std::vector<int>>> edges_of_connected_components;

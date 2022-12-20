@@ -167,22 +167,71 @@ void worker(            const std::vector<int> degrees,
                     
                 }
                 
-                // display unsorted setup
+                // save unsorted setup
                 if (display_unsorted_setups and unsorted_setup){
-                    std::vector<std::vector<int>> new_unsorted_setup;
-                    new_unsorted_setup.push_back(genera);
-                    std::vector<int> new_degrees;
+                    
+                    // (1) Compute the normalized degrees
+                    std::vector<int> normalized_degrees;
                     for (int j = 0; j < degrees.size(); j++){
                         if ((degrees[j] - outfluxes[i][j]) % root == 0){
-                            new_degrees.push_back((int)((degrees[j] - outfluxes[i][j])/root));
+                            normalized_degrees.push_back((int)((degrees[j] - outfluxes[i][j])/root));
                         }
                         else{
                             throw std::invalid_argument( "Something is seriously wrong!" );
                         }
                     }
-                    new_unsorted_setup.push_back(new_degrees);
+                    
+                    // (2) Remove components without nodes and without jumps
+                    // Result:
+                    // H0 from all components that can be ignored: separate_h0
+                    // New graph: new_genera, new_degrees, new_nodal_edges
+                    std::map<int, int> before_after_correspondence;
+                    int separate_h0 = 0;
+                    int other_component_counter = 0;
+                    std::vector<int> new_genera, new_degrees;
+                    std::vector<std::vector<int>> new_nodal_edges;
+                    for (int j = 0; j < degrees.size(); j++){
+                        
+                        // initialize the test
+                        bool test = true;
+                        
+                        // are there nodes attached to the j-th component?
+                        for (int k = 0; k < nodal_edges.size(); k++){
+                            if ((nodal_edges[k][0] == j) || (nodal_edges[k][1] == j)){
+                                test = false;
+                            }
+                        }
+                        
+                        // is there a jump on the j-th component?
+                        if (genera[j] == 1 && normalized_degrees[j] == 0){
+                            test = false;
+                        }
+                        
+                        // if there are no nodes and no jump, then remember this component and compute its h0 contribution
+                        if (test){
+                            if (normalized_degrees[j] >= 0){
+                                separate_h0 += normalized_degrees[j] - genera[j] + 1;
+                            }
+                        }
+                        else{
+                            new_genera.push_back(genera[j]);
+                            new_degrees.push_back(normalized_degrees[j]);
+                            before_after_correspondence.insert(std::pair<int, int>(j, other_component_counter));
+                            other_component_counter++;
+                        }
+                        
+                    }
                     for (int j = 0; j < nodal_edges.size(); j++){
-                        new_unsorted_setup.push_back(nodal_edges[j]);
+                        new_nodal_edges.push_back({before_after_correspondence[nodal_edges[j][0]], before_after_correspondence[nodal_edges[j][1]]});
+                    }
+                    
+                    // add this setup to the list of unsorted setups
+                    std::vector<std::vector<int>> new_unsorted_setup;
+                    new_unsorted_setup.push_back(new_genera);
+                    new_unsorted_setup.push_back(new_degrees);
+                    new_unsorted_setup.push_back({separate_h0});
+                    for (int j = 0; j < new_nodal_edges.size(); j++){
+                        new_unsorted_setup.push_back(new_nodal_edges[j]);
                     }
                     UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                 }
