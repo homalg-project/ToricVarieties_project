@@ -16,7 +16,9 @@ void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & centra
 void UpdateUnsortedThreadSafe(std::vector<std::vector<std::vector<int>>> & list_unsorted, const std::vector<std::vector<int>> & new_unsorted)
 {
     boost::mutex::scoped_lock lock(myGuard3);
-    list_unsorted.push_back(new_unsorted);
+    if (std::find(std::begin(list_unsorted), std::end(list_unsorted), new_unsorted) == std::end(list_unsorted)) {    
+        list_unsorted.push_back(new_unsorted);
+    }
 }
 
 
