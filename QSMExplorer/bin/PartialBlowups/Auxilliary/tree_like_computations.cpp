@@ -559,60 +559,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
                 }
             }
             
-            
         }
-        /*
-        // simple circuit of two components
-        else if (edges_of_connected_components[i].size() == 2 && connected_components[i].size() == 2){
-            
-            // count local sections
-            int local_sections = 0;
-            for (int j = 0; j < connected_components[i].size(); j++){
-                if (degree_correspondence[connected_components[i][j]] >= 0){
-                    local_sections += degree_correspondence[connected_components[i][j]] + 1;
-                }
-            }
-            
-            // determine global sections
-            if (local_sections >= 2){
-                h0 += local_sections - 2;
-            }
-            
-            // handle canonical bundle
-            if ((degree_correspondence[connected_components[i][0]] == 0) && (degree_correspondence[connected_components[i][1]] == 0)){
-                lower_bound = true;
-            }
-        }
-        
-        // simple circuit of three components
-        else if (edges_of_connected_components[i].size() == 3 && connected_components[i].size() == 3 && amputated_components == 0){
-            
-            // compute local sections
-            int local_sections = 0;
-            int non_negative_components = 0;
-            for (int j = 0; j < connected_components[i].size(); j++){
-                if (degree_correspondence[connected_components[i][j]] >= 0){
-                    local_sections += degree_correspondence[connected_components[i][j]] + 1;
-                    non_negative_components++;
-                }
-            }
-            
-            // determine global sections
-            if (non_negative_components == 1 && local_sections > 2){
-                h0 += local_sections - 2;
-            }
-            if (non_negative_components > 1 && local_sections > 3){
-                h0 += local_sections - 3;
-            }
-            
-            // handle canonical bundle
-            if ((degree_correspondence[connected_components[i][0]]==0)
-                && (degree_correspondence[connected_components[i][1]]==0)
-                && (degree_correspondence[connected_components[i][2]]==0)){
-                lower_bound = true;
-            }
-            
-        }*/
         
         // beyond what we can currently handle
         else{
