@@ -12,6 +12,14 @@ void UpdateCountThreadSafe(std::vector<boost::multiprecision::int128_t> & centra
 }
 
 
+// Thread-safe addition to the list of unsorted setups
+void UpdateUnsortedThreadSafe(std::vector<std::vector<std::vector<int>>> & list_unsorted, const std::vector<std::vector<int>> & new_unsorted)
+{
+    boost::mutex::scoped_lock lock(myGuard3);
+    list_unsorted.push_back(new_unsorted);
+}
+
+
 // Worker thread for parallel run
 void worker(            const std::vector<int> degrees,
                                 const std::vector<int> genera,
@@ -159,15 +167,23 @@ void worker(            const std::vector<int> degrees,
                 
                 // display unsorted setup
                 if (display_unsorted_setups and unsorted_setup){
-                    std::cout << "##################\n";
-                    std::cout << "Could not sort the following:\n";
-                    print_vector_of_vector("Nodal edges\n", nodal_edges);
-                    print_vector("Genera: ", genera);
-                    print_vector("Degrees: ", degrees);
-                    print_vector("Fluxes: ", outfluxes[i]);
-                    std::cout << "##################\n\n";
+                    std::vector<std::vector<int>> new_unsorted_setup;
+                    new_unsorted_setup.push_back(genera);
+                    std::vector<int> new_degrees;
+                    for (int j = 0; j < degrees.size(); j++){
+                        if ((degrees[j] - outfluxes[i][j]) % root == 0){
+                            new_degrees.push_back((int)((degrees[j] - outfluxes[i][j])/root));
+                        }
+                        else{
+                            throw std::invalid_argument( "Something is seriously wrong!" );
+                        }
+                    }
+                    new_unsorted_setup.push_back(new_degrees);
+                    for (int j = 0; j < nodal_edges.size(); j++){
+                        new_unsorted_setup.push_back(nodal_edges[j]);
+                    }
+                    UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                 }
-                
             }
             
         }

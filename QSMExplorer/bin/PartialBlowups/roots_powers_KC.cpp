@@ -19,9 +19,10 @@
 #include <boost/thread/thread.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
-boost::mutex myGuard, myGuard2;
+boost::mutex myGuard, myGuard2, myGuard3;
 bool display_more_details = false;
 bool display_unsorted_setups = false;
+std::vector<std::vector<std::vector<int>>> unsorted;
 
 #include "Auxilliary/print_vectors.cpp"
 #include "Auxilliary/handle_input.cpp"
