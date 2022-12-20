@@ -116,17 +116,18 @@ int main(int argc, char* argv[]) {
         // extract the data of the setup
         std::vector<int> unsorted_genera = unsorted[i][0];
         std::vector<int> unsorted_degrees = unsorted[i][1];
-        std::vector<std::vector<int>> unsorted_nodes;
-        for (int j = 2; j < unsorted[i].size(); j++){
-            unsorted_nodes.push_back(unsorted[i][j]);
+        int separate_h0 = unsorted[i][2][0];
+        std::vector<std::vector<int>> nodal_edges_of_setup;
+        for (int j = 3; j < unsorted[i].size(); j++){
+            nodal_edges_of_setup.push_back(unsorted[i][j]);
         }
         
         MyFile << "##################\n";
         MyFile << "Nodal edges: [";
-        for (int j = 0; j < unsorted_nodes.size() - 1; j++){
-            MyFile << "[" << std::to_string(unsorted_nodes[j][0]) << ", " << std::to_string(unsorted_nodes[j][1]) << "], ";
+        for (int j = 0; j < nodal_edges_of_setup.size() - 1; j++){
+            MyFile << "[" << std::to_string(nodal_edges_of_setup[j][0]) << ", " << std::to_string(nodal_edges_of_setup[j][1]) << "], ";
         }
-        MyFile << "[" << std::to_string(unsorted_nodes[unsorted_nodes.size() - 1][0]) << ", " << std::to_string(unsorted_nodes[unsorted_nodes.size() - 1][1]) << "]]\n";
+        MyFile << "[" << std::to_string(nodal_edges_of_setup[nodal_edges_of_setup.size() - 1][0]) << ", " << std::to_string(nodal_edges_of_setup[nodal_edges_of_setup.size() - 1][1]) << "]]\n";
         
         MyFile << "Genera: [";
         for (int j = 0; j < unsorted_genera.size() - 1; j++){
@@ -139,6 +140,8 @@ int main(int argc, char* argv[]) {
             MyFile << std::to_string(unsorted_degrees[j]) << ", ";
         }
         MyFile << std::to_string(unsorted_degrees[unsorted_degrees.size() - 1]) << "]\n";
+        
+        MyFile << "Separate h0: " << std::to_string(separate_h0) << "\n";
         
         MyFile << "##################\n\n";
 
