@@ -429,6 +429,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
             h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i], details);
         }
         
+        /*
         // handle a couple of simple cases with b1 = 1
         else if (edges_of_connected_components[i].size()+1-connected_components[i].size() == 1 
             && connected_components[i].size() >= 2 && connected_components[i].size() <= 3){
@@ -559,7 +560,7 @@ void h0_from_partial_blowups(const std::vector<int>& degrees,
                 }
             }
             
-        }
+        }*/
         
         // beyond what we can currently handle
         else{
