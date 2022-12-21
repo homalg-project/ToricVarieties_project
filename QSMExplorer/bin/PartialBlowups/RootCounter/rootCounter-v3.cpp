@@ -25,7 +25,6 @@ void UpdateUnsortedThreadSafe(std::vector<std::vector<std::vector<int>>> & list_
 // Worker thread for parallel run
 void worker(            const std::vector<int> degrees,
                                 const std::vector<int> genera,
-                                const std::vector<std::vector<int>> resolved_edges,
                                 const std::vector<std::vector<int>> nodal_edges,
                                 const int root,
                                 const std::vector<std::vector<std::vector<int>>> graph_stratification,
@@ -323,13 +322,13 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             if (i < thread_number - 1){
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
                 std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
-                boost::thread *t = new boost::thread(worker, degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -339,7 +338,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(degrees, genera, resolved_edges, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
+        worker(degrees, genera, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
