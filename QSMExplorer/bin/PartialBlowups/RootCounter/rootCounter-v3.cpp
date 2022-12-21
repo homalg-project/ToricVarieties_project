@@ -180,60 +180,21 @@ void worker(            const std::vector<int> degrees,
                             throw std::invalid_argument( "Something is seriously wrong!" );
                         }
                     }
-                    
-                    // (2) Remove components without nodes and without jumps
-                    // Result:
-                    // H0 from all components that can be ignored: separate_h0
-                    // New graph: new_genera, new_degrees, new_edges
-                    std::map<int, int> before_after_correspondence;
-                    int separate_h0 = 0;
-                    int other_component_counter = 0;
-                    std::vector<int> new_genera, new_degrees;
-                    std::vector<std::vector<int>> new_edges;
-                    for (int j = 0; j < degrees.size(); j++){
-                        
-                        // initialize the test
-                        bool test = true;
-                        
-                        // are there nodes attached to the j-th component?
-                        for (int k = 0; k < nodal_edges.size(); k++){
-                            if ((nodal_edges[k][0] == j) || (nodal_edges[k][1] == j)){
-                                test = false;
-                            }
+                                        
+                    // (2) Compute the connected components and save them (modulo removal of duplicates)
+                    std::vector<std::vector<std::vector<int>>> edges_of_cc;
+                    std::vector<std::vector<int>> degs_of_cc, gens_of_cc;
+                    find_connected_components2(nodal_edges, normalized_degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
+                    for (int j = 0; j < edges_of_cc.size(); j++){
+                        std::vector<std::vector<int>> new_unsorted_setup;
+                        new_unsorted_setup.push_back(gens_of_cc[j]);
+                        new_unsorted_setup.push_back(degs_of_cc[j]);
+                        for (int k = 0; k < edges_of_cc[j].size(); k++){
+                            new_unsorted_setup.push_back(edges_of_cc[j][k]);
                         }
-                        
-                        // is there a jump on the j-th component?
-                        if (genera[j] == 1 && normalized_degrees[j] == 0){
-                            test = false;
-                        }
-                        
-                        // if there are no nodes and no jump, then remember this component and compute its h0 contribution
-                        if (test){
-                            if (normalized_degrees[j] >= 0){
-                                separate_h0 += normalized_degrees[j] - genera[j] + 1;
-                            }
-                        }
-                        else{
-                            new_genera.push_back(genera[j]);
-                            new_degrees.push_back(normalized_degrees[j]);
-                            before_after_correspondence.insert(std::pair<int, int>(j, other_component_counter));
-                            other_component_counter++;
-                        }
-                        
-                    }
-                    for (int j = 0; j < nodal_edges.size(); j++){
-                        new_edges.push_back({before_after_correspondence[nodal_edges[j][0]], before_after_correspondence[nodal_edges[j][1]]});
+                        UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                     }
                     
-                    // add this setup to the list of unsorted setups
-                    std::vector<std::vector<int>> new_unsorted_setup;
-                    new_unsorted_setup.push_back(new_genera);
-                    new_unsorted_setup.push_back(new_degrees);
-                    new_unsorted_setup.push_back({separate_h0});
-                    for (int j = 0; j < new_edges.size(); j++){
-                        new_unsorted_setup.push_back(new_edges[j]);
-                    }
-                    UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                 }
             }
             

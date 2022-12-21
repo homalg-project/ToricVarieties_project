@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     bool display_details;
     std::string input_string = argv[1];
     parse_input(input_string, unsorted_degrees, unsorted_genera, edges, genus, root, number_threads, h0Min, h0Max, numNodesMin, numNodesMax, display_details);
-    
+    number_threads = 1;
     
     // ######################################
     // ##### (2) Consistency check
@@ -117,9 +117,8 @@ int main(int argc, char* argv[]) {
         // extract the data of the setup
         std::vector<int> unsorted_genera = unsorted[i][0];
         std::vector<int> unsorted_degrees = unsorted[i][1];
-        int separate_h0 = unsorted[i][2][0];
         std::vector<std::vector<int>> nodal_edges_of_setup;
-        for (int j = 3; j < unsorted[i].size(); j++){
+        for (int j = 2; j < unsorted[i].size(); j++){
             nodal_edges_of_setup.push_back(unsorted[i][j]);
         }
         
@@ -141,8 +140,6 @@ int main(int argc, char* argv[]) {
             MyFile << std::to_string(unsorted_degrees[j]) << ", ";
         }
         MyFile << std::to_string(unsorted_degrees[unsorted_degrees.size() - 1]) << "]\n";
-        
-        MyFile << "Separate h0: " << std::to_string(separate_h0) << "\n";
         
         MyFile << "##################\n\n";
 

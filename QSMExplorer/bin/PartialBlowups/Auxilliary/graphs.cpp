@@ -184,12 +184,11 @@ void find_connected_components(const std::vector<std::vector<int>> & input_edges
 void find_connected_components2(const std::vector<std::vector<int>> & input_edges,
                                 const std::vector<int> & degrees,
                                 const std::vector<int> & genera,
-                                //const bool & details,
                                 std::vector<std::vector<std::vector<int>>> & edges_of_cc,
                                 std::vector<std::vector<int>> & degrees_of_cc,
                                 std::vector<std::vector<int>> & genera_of_cc)
 {
-        
+
     // (1) Find all vertices, but avoid duplicates
     std::vector<int> vertices;
     vertices.reserve(2*input_edges.size());
@@ -240,11 +239,8 @@ void find_connected_components2(const std::vector<std::vector<int>> & input_edge
         vertices_of_cc.push_back(it->second);
     }
     
-    //print_vector_of_vector("Vertices of cc: ", vertices_of_cc);
-    //std::cout << "\n\n";
-    
     // (5) Construct edge list of the connected components
-    //edges_of_cc.resize(vertices_of_cc.size());
+    edges_of_cc.resize(vertices_of_cc.size());
     for (int i = 0; i < edges.size(); i++){
         for (int j = 0; j < vertices_of_cc.size(); j++){
             if (std::count(vertices_of_cc[j].begin(), vertices_of_cc[j].end(), edges[i][0])){
@@ -254,21 +250,14 @@ void find_connected_components2(const std::vector<std::vector<int>> & input_edge
         }
     }
     
-    // (6) Construct list of degrees
-    //degrees_of_cc.resize(vertices_of_cc.size());
-    //genera_of_cc.resize(vertices_of_cc.size());
+    // (6) Construct list of degrees and genera
+    degrees_of_cc.resize(vertices_of_cc.size());
+    genera_of_cc.resize(vertices_of_cc.size());
     for (int i = 0; i < vertices_of_cc.size(); i++){
-        std::vector<int> degrees_of_this_connected_component;
-        std::vector<int> genera_of_this_connected_component;
         for (int j = 0; j < vertices_of_cc[i].size(); j++){
-            degrees_of_this_connected_component.push_back(degree_correspondence[vertices_of_cc[i][j]]);
-            genera_of_this_connected_component.push_back(genus_correspondence[vertices_of_cc[i][j]]);
+            degrees_of_cc[i].push_back(degree_correspondence[vertices_of_cc[i][j]]);
+            genera_of_cc[i].push_back(genus_correspondence[vertices_of_cc[i][j]]);
         }
-        //print_vector("Degrees of component: ", degrees_of_this_connected_component);
-        degrees_of_cc.push_back(degrees_of_this_connected_component);
-        genera_of_cc.push_back(genera_of_this_connected_component);
     }
-    
-    //print_vector_of_vector("Degrees", degrees_of_cc);
-    
+
 }
