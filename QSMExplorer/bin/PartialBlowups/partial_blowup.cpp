@@ -33,6 +33,7 @@ std::vector<std::vector<std::vector<int>>> unsorted;
 #include "Auxilliary/print_vectors.cpp"
 #include "Auxilliary/handle_input.cpp"
 #include "Auxilliary/return_result.cpp"
+#include "Auxilliary/graphs.cpp"
 #include "Auxilliary/compute_graph_information.cpp"
 #include "Auxilliary/tree_like_computations.cpp"
 #include "Auxilliary/combinatorics.cpp"
