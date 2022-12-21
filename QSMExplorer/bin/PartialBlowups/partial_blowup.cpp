@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
         }
         
         MyFile << "##################\n";
-        MyFile << "Nodal edges: [";
+        MyFile << "Edges: [";
         for (int j = 0; j < nodal_edges_of_setup.size() - 1; j++){
             MyFile << "[" << std::to_string(nodal_edges_of_setup[j][0]) << ", " << std::to_string(nodal_edges_of_setup[j][1]) << "], ";
         }

@@ -184,12 +184,12 @@ void worker(            const std::vector<int> degrees,
                     // (2) Remove components without nodes and without jumps
                     // Result:
                     // H0 from all components that can be ignored: separate_h0
-                    // New graph: new_genera, new_degrees, new_nodal_edges
+                    // New graph: new_genera, new_degrees, new_edges
                     std::map<int, int> before_after_correspondence;
                     int separate_h0 = 0;
                     int other_component_counter = 0;
                     std::vector<int> new_genera, new_degrees;
-                    std::vector<std::vector<int>> new_nodal_edges;
+                    std::vector<std::vector<int>> new_edges;
                     for (int j = 0; j < degrees.size(); j++){
                         
                         // initialize the test
@@ -222,7 +222,7 @@ void worker(            const std::vector<int> degrees,
                         
                     }
                     for (int j = 0; j < nodal_edges.size(); j++){
-                        new_nodal_edges.push_back({before_after_correspondence[nodal_edges[j][0]], before_after_correspondence[nodal_edges[j][1]]});
+                        new_edges.push_back({before_after_correspondence[nodal_edges[j][0]], before_after_correspondence[nodal_edges[j][1]]});
                     }
                     
                     // add this setup to the list of unsorted setups
@@ -230,8 +230,8 @@ void worker(            const std::vector<int> degrees,
                     new_unsorted_setup.push_back(new_genera);
                     new_unsorted_setup.push_back(new_degrees);
                     new_unsorted_setup.push_back({separate_h0});
-                    for (int j = 0; j < new_nodal_edges.size(); j++){
-                        new_unsorted_setup.push_back(new_nodal_edges[j]);
+                    for (int j = 0; j < new_edges.size(); j++){
+                        new_unsorted_setup.push_back(new_edges[j]);
                     }
                     UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                 }
