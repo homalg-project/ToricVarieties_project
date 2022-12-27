@@ -82,11 +82,10 @@ void comp_partitions(
 
 // This works for any tree-like blowup and is used for this particular purpose.
 void comp_partitions_with_nodes(const int & N,
-                                                    const int & n,
-                                                    const std::vector<std::vector<int>> & nodal_edges,
-                                                    const std::vector<int> & genera,
-                                                    std::vector<std::vector<int>> & partitions,
-                                                    std::vector<bool> & lower_bounds)
+                                const int & n,
+                                const std::vector<std::vector<int>> & nodal_edges,
+                                const std::vector<int> & genera,
+                                std::vector<std::vector<int>> & partitions)
 {
     
     // Compute all partitions with "naive" total sum ranging between N and N + nodal_edges.size()
@@ -112,7 +111,7 @@ void comp_partitions_with_nodes(const int & N,
             else{
                 // On a g = 1 curve, h0 = 0 does not imply that d < 0.
                 // Rather, we could also have a non-trivial d = 0 bundle.
-                // Since we are currently only computing a lower bound, it should be ok to place -1.
+                // Since we are currently only computing a lower bound for any g = 1 setup, it should be ok to place -1.
                 degrees.push_back(-1);
             }
         }
@@ -125,7 +124,6 @@ void comp_partitions_with_nodes(const int & N,
         // Check if ok and if so add to the list of results
         if (h0 == N){
             partitions.push_back(naive_partitions[i]);
-            lower_bounds.push_back(lower_bound);
         }
     
     }

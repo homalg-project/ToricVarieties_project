@@ -29,7 +29,6 @@ void worker(            const std::vector<int> degrees,
                                 const int root,
                                 const std::vector<std::vector<std::vector<int>>> graph_stratification,
                                 const std::vector<std::vector<int>> outfluxes,
-                                const std::vector<bool> lbs,
                                 std::vector<boost::multiprecision::int128_t> & sums)
 {
     
@@ -139,14 +138,19 @@ void worker(            const std::vector<int> degrees,
                 // define variable to quantify is the setup could not be sorted completely
                 bool unsorted_setup = false;
                 
+                int dummy_h0;
+                bool lbs_test;
+                h0_on_nodal_curve(degrees, nodal_edges, genera, dummy_h0, lbs_test);
+                
+                
                 // Case 1: We have computed merely a lower bound
-                if (lbs[i]){
+                if (lbs_test){
                     total_unclear = total_unclear + (boost::multiprecision::int128_t) currentSnapshot.mult * number_local_roots;
                     unsorted_setup = true;
                 }
                 
                 // Case 2: We have perse not just a lower bound, but need to be more careful with (g = 1, d = 0).
-                if (!lbs[i]){
+                if (!lbs_test){
                     
                     // Count number of bundles for which we identified h0 exactly.
                     boost::multiprecision::int128_t number_roots_with_determined_h0 = 1;
@@ -233,8 +237,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
     // (1) Partition h0
     // (1) Partition h0
     std::vector<std::vector<int>> partitions;
-    std::vector<bool> lower_bounds;
-    comp_partitions_with_nodes(h0_value, degrees.size(), nodal_edges, genera, partitions, lower_bounds);
+    comp_partitions_with_nodes(h0_value, degrees.size(), nodal_edges, genera, partitions);
     
     
     // (2) Find fluxes corresponding to partitions
@@ -243,9 +246,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         std::vector<int> flux;
     };
     std::vector<std::vector<int>> outfluxes;
-    std::vector<bool> lbs;
     outfluxes.reserve(partitions.size());
-    lbs.reserve(partitions.size());
     for (int i = 0; i < partitions.size(); i++){
         
         // create stack and first snapshot
@@ -307,7 +308,6 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
             // no more fluxes to be set --> add to list of fluxes if the sum of fluxes equals the number of resolved_edges * root (necessary and sufficient for non-zero number of weight assignments)
             else if (std::accumulate(currentSnapshot.flux.begin(),currentSnapshot.flux.end(),0) == root * resolved_edges.size()){
                 outfluxes.push_back(currentSnapshot.flux);
-                lbs.push_back(lower_bounds[i]);
             }
             
         }
@@ -329,14 +329,12 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         {
             if (i < thread_number - 1){
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.begin() + (i+1) * package_size);
-                std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.begin() + (i+1) * package_size);
-                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, boost::ref(sums));
                 threadList.add_thread(t);
             }
             else{
                 std::vector<std::vector<int>> partial_outfluxes(outfluxes.begin() + i * package_size, outfluxes.end());
-                std::vector<bool> partial_lbs(lbs.begin() + i * package_size, lbs.end());
-                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, partial_lbs, boost::ref(sums));
+                boost::thread *t = new boost::thread(worker, degrees, genera, nodal_edges, root, graph_stratification, partial_outfluxes, boost::ref(sums));
                 threadList.add_thread(t);
             }
         }
@@ -346,7 +344,7 @@ std::vector<boost::multiprecision::int128_t> parallel_root_counter(
         if (display_more_details){
             std::cout << "Computing in one thread...\n";
         }
-        worker(degrees, genera, nodal_edges, root, graph_stratification, outfluxes, lbs, boost::ref(sums));
+        worker(degrees, genera, nodal_edges, root, graph_stratification, outfluxes, boost::ref(sums));
     }
     std::chrono::steady_clock::time_point later = std::chrono::steady_clock::now();
     
