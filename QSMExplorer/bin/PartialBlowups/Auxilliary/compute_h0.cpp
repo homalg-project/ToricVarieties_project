@@ -3,11 +3,10 @@
 // Compute/estimate via lower bound h0 on nodal curve
 
 void h0_on_nodal_curve(const std::vector<int>& degrees,
-                                            const std::vector<std::vector<int>>& nodal_edges,
-                                            const std::vector<int> & genera,
-                                            const bool & details,
-                                            int & h0,
-                                            bool & lower_bound)
+                        const std::vector<std::vector<int>>& nodal_edges,
+                        const std::vector<int> & genera,
+                        int & h0,
+                        bool & lower_bound)
 {
     
     // (0) Initial assumption: We can compute the exact number of global sections
@@ -40,9 +39,6 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
                     else{
                         h0 = 0;
                     }
-                    if (details){
-                        std::cout << "Lower bound since elliptic curve found attached to node: h0 >= " << h0 << "\n";
-                    }
                     return;
                 }
 
@@ -63,19 +59,8 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
     }
     
     
-    // (2) Inform what we find from non-nodal curves
-    if (details){
-        std::cout << "\n";
-        std::cout << "############################################\n";
-        print_vector("degrees: ", degrees);
-        std::cout << "H0 = " << h0 << " from NON-nodal components:\n";
-        std::cout << "############################################\n\n";
-    }
-    
-    
     // (3) Degenerate case: no nodes
     if (components_with_nodes.size() == 0){
-        if (details){std::cout << "h0 = " << h0 << "\n";}
         return;
     }
     
@@ -84,7 +69,7 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
     std::vector<std::vector<int>> connected_components;
     std::vector<std::vector<std::vector<int>>> edges_of_connected_components;
     std::map<int, int> degree_correspondence;
-    find_connected_components(nodal_edges, degrees, details, connected_components, edges_of_connected_components, degree_correspondence);
+    find_connected_components(nodal_edges, degrees, false, connected_components, edges_of_connected_components, degree_correspondence);
     
     
     // (5) Iterate over the connected components
@@ -97,7 +82,7 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
             for (int j = 0; j < connected_components[i].size(); j++){
                 helper_degrees.push_back(degree_correspondence[connected_components[i][j]]);
             }
-            h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i], details);
+            h0 += h0_on_rational_tree(connected_components[i], helper_degrees, edges_of_connected_components[i]);
         }
         
         /*
@@ -235,64 +220,22 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
         
         // beyond what we can currently handle
         else{
-            if (details){
-                std::cout << "\n";
-                std::cout << "############################################\n";
-                std::cout << "Study circuit which is possibly jumping:\n";
-                std::cout << "--------------------------------\n\n";
-            }
             lower_bound = true;
             int number_nodes = edges_of_connected_components[i].size();
             int local_sections = 0;
-            if (details){
-              std::cout << "Degrees: ";
-            }
             for (int j = 0; j < connected_components[i].size(); j++){
-                if (details){
-                  std::cout << degree_correspondence[connected_components[i][j]] << ", ";
-                }
                 if (degree_correspondence[connected_components[i][j]] >= 0){
                     local_sections += degree_correspondence[connected_components[i][j]] + 1;
                 }
-            }
-            if (details){
-                std::cout << "\nb1 = " << edges_of_connected_components[i].size()+1-connected_components[i].size() << "\n";
-                print_vector_of_vector("\nEdges:\n", edges_of_connected_components[i]);
-                std::cout << "Number nodes: " << number_nodes << "\n";
-                std::cout << "Local sections: " << local_sections << "\n";
             }
             if (local_sections > number_nodes){
                 if (local_sections >= number_nodes){
                     h0 += local_sections - number_nodes;
                 }
-                if (details){
-                    std::cout << "=> H0 >= " << local_sections - number_nodes << "\n";
-                    std::cout << "############################################\n\n";
-                }
-            }
-            else{
-                if (details){
-                    std::cout << "=> H0 >= 0\n";
-                    std::cout << "############################################\n\n";
-                }
             }
         }
     }
     
-    
-    // (6) Print result
-    if (details){
-        std::cout << "\n";
-        std::cout << "############################################\n";
-        std::cout << "Final result:\n";
-        std::cout << "--------------------------------\n";
-        if (lower_bound){std::cout << "H0 >= " << h0 << "\n";}
-        else{std::cout << "H0 = " << h0 << "\n";}
-        std::cout << "############################################\n";
-        std::cout << "############################################\n\n";
-    }
-    
-    // (6) Return the result
     return;
     
 }
