@@ -3,20 +3,9 @@
 // Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 
 int h0_on_rational_tree(const std::vector<int>& vertices,
-                                     const std::vector<int>& degrees,
-                                     const std::vector<std::vector<int>>& nodal_edges,
-                                     const bool& details)
+                        const std::vector<int>& degrees,
+                        const std::vector<std::vector<int>>& nodal_edges)
 {
-    
-    // inform about entered graph
-    if (details){
-        std::cout << "\n";
-        std::cout << "############################################\n";
-        std::cout << "Simplify tree-like graph:\n";
-        std::cout << "--------------------------------\n\n";
-        print_vector("Degrees: ", degrees);
-        print_vector_of_vector("Edges:\n", nodal_edges);
-    }
     
     // make copy of the degrees
     std::vector<int> simple_degrees(degrees.begin(), degrees.end());
@@ -75,13 +64,7 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         // (5) update
         simple_degrees = new_degrees;
         simple_edges = new_edges;
-        
-        // (6) inform about simplified graph
-        if (details){
-            print_vector("Degrees: ", simple_degrees);
-            print_vector_of_vector("Edges:\n", simple_edges);
-        }
-        
+                
     }
     
     // initialize h0
@@ -133,14 +116,6 @@ int h0_on_rational_tree(const std::vector<int>& vertices,
         // increase h0
         h0 = sum_non_negative_degrees + ncc + number_disconnected_vertices;
         
-    }
-    
-    // inform about result
-    if (details){
-      std::cout << "--------------------------------\n";
-      std::cout << "Graph fully simplified\n";
-      std::cout << "Result: H0 = " << h0 << "\n";
-      std::cout << "############################################\n\n";
     }
     
     // return result
