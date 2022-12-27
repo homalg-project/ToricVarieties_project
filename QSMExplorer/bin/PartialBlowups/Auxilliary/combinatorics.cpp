@@ -83,7 +83,6 @@ void comp_partitions(
 // This works for any tree-like blowup and is used for this particular purpose.
 void comp_partitions_with_nodes(const int & N,
                                                     const int & n,
-                                                    const std::vector<std::vector<int>> & resolved_edges,
                                                     const std::vector<std::vector<int>> & nodal_edges,
                                                     const std::vector<int> & genera,
                                                     std::vector<std::vector<int>> & partitions,
