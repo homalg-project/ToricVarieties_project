@@ -184,14 +184,22 @@ void worker(            const std::vector<int> degrees,
                     std::vector<std::vector<std::vector<int>>> edges_of_cc;
                     std::vector<std::vector<int>> degs_of_cc, gens_of_cc;
                     find_connected_components2(nodal_edges, normalized_degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
+                    
+                    // (3) Check which connected components could be sorted by our algorithms
                     for (int j = 0; j < edges_of_cc.size(); j++){
-                        std::vector<std::vector<int>> new_unsorted_setup;
-                        new_unsorted_setup.push_back(gens_of_cc[j]);
-                        new_unsorted_setup.push_back(degs_of_cc[j]);
-                        for (int k = 0; k < edges_of_cc[j].size(); k++){
-                            new_unsorted_setup.push_back(edges_of_cc[j][k]);
+                        int h0_of_cc;
+                        bool exact_result_for_cc;
+                        h0_from_partial_blowups(degs_of_cc[j], {}, edges_of_cc[j], gens_of_cc[j], false, h0_of_cc, exact_result_for_cc);
+                        if (exact_result_for_cc){
+                            std::vector<std::vector<int>> new_unsorted_setup;
+                            new_unsorted_setup.push_back(gens_of_cc[j]);
+                            new_unsorted_setup.push_back(degs_of_cc[j]);
+                            new_unsorted_setup.push_back({h0_of_cc});
+                            for (int k = 0; k < edges_of_cc[j].size(); k++){
+                                new_unsorted_setup.push_back(edges_of_cc[j][k]);
+                            }
+                            UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                         }
-                        UpdateUnsortedThreadSafe(unsorted, new_unsorted_setup);
                     }
                     
                 }
