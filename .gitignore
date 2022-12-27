@@ -84,6 +84,7 @@ QSMExplorer/bin/PartialBlowups/rootsPowersKC
 QSMExplorer/bin/PartialBlowups/roots_powers_KC.o
 QSMExplorer/bin/PartialBlowups/partialBlowupsAllTrees
 QSMExplorer/bin/PartialBlowups/partial_blowup_rational_all_trees.o
+QSMExplorer/UnsortedSetups.txt
 
 TopcomInterface/topcom*
 TopcomInterface/tst/topcom*
