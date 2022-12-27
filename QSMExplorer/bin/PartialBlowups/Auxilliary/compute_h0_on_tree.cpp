@@ -2,10 +2,21 @@
 // Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 // Compute h0 on a CONNECTED tree-like rational curve (no check for connected conducted)
 
-int h0_on_rational_tree(const std::vector<int>& vertices,
-                        const std::vector<int>& degrees,
+int h0_on_rational_tree(const std::vector<int>& degrees,
                         const std::vector<std::vector<int>>& nodal_edges)
 {
+    
+    // Find all vertices (avoiding duplicated) and sort them in ascending order
+    std::vector<int> vertices;
+    vertices.reserve(2*nodal_edges.size());
+    for (int i = 0; i < nodal_edges.size(); i++){
+        if (!(std::count(vertices.begin(), vertices.end(), nodal_edges[i][0]))) {
+            vertices.push_back(nodal_edges[i][0]);
+        }
+        if (!(std::count(vertices.begin(), vertices.end(), nodal_edges[i][1]))) {
+            vertices.push_back(nodal_edges[i][1]);
+        }
+    }
     
     // make copy of the degrees
     std::vector<int> simple_degrees(degrees.begin(), degrees.end());
