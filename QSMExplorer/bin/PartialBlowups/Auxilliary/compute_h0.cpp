@@ -68,7 +68,7 @@ void h0_on_nodal_curve(const std::vector<int>& degrees,
     // (4) Compute all connected components
     std::vector<std::vector<std::vector<int>>> edges_of_cc;
     std::vector<std::vector<int>> degs_of_cc, gens_of_cc;
-    find_connected_components2(nodal_edges, degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
+    find_connected_components(nodal_edges, degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
     
     
     // (5) Iterate over the connected components

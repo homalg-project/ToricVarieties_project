@@ -183,7 +183,7 @@ void worker(            const std::vector<int> degrees,
                     // (2) Compute the connected components and save them (modulo removal of duplicates)
                     std::vector<std::vector<std::vector<int>>> edges_of_cc;
                     std::vector<std::vector<int>> degs_of_cc, gens_of_cc;
-                    find_connected_components2(nodal_edges, normalized_degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
+                    find_connected_components(nodal_edges, normalized_degrees, genera, edges_of_cc, degs_of_cc, gens_of_cc);
                     
                     // (3) Check which connected components could be sorted by our algorithms
                     for (int j = 0; j < edges_of_cc.size(); j++){
