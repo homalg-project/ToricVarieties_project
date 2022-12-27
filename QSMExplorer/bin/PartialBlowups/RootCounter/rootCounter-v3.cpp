@@ -189,7 +189,7 @@ void worker(            const std::vector<int> degrees,
                     for (int j = 0; j < edges_of_cc.size(); j++){
                         int h0_of_cc;
                         bool exact_result_for_cc;
-                        h0_on_nodal_curve(degs_of_cc[j], {}, edges_of_cc[j], gens_of_cc[j], false, h0_of_cc, exact_result_for_cc);
+                        h0_on_nodal_curve(degs_of_cc[j], edges_of_cc[j], gens_of_cc[j], false, h0_of_cc, exact_result_for_cc);
                         if (exact_result_for_cc){
                             std::vector<std::vector<int>> new_unsorted_setup;
                             new_unsorted_setup.push_back(gens_of_cc[j]);
