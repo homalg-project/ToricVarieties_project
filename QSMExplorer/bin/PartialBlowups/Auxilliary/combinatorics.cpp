@@ -121,7 +121,7 @@ void comp_partitions_with_nodes(const int & N,
         // Compute h0 and if this is a lower bound
         int h0;
         bool lower_bound;
-        h0_from_partial_blowups(degrees, resolved_edges, nodal_edges, genera, false, h0, lower_bound);
+        h0_on_nodal_curve(degrees, resolved_edges, nodal_edges, genera, false, h0, lower_bound);
         
         // Check if ok and if so add to the list of results
         if (h0 == N){
