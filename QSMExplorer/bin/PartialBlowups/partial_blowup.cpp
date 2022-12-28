@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     bool display_details;
     std::string input_string = argv[1];
     parse_input(input_string, unsorted_degrees, unsorted_genera, edges, genus, root, number_threads, h0Min, h0Max, numNodesMin, numNodesMax, display_details);
-    number_threads = 1;
+    
     
     // ######################################
     // ##### (2) Consistency check
