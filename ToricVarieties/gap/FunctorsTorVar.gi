@@ -103,7 +103,7 @@ InstallGlobalFunction( _Functor_PicardGroup_OnToricVarieties,
     
 end );
 
-InstallValue( functor_PicardGroup_for_toric_varieties,
+BindGlobal( "functor_PicardGroup_for_toric_varieties",
         CreateHomalgFunctor(
                 [ "name", "PicardGroup" ],
                 [ "category", TORIC_VARIETIES.category ],
@@ -173,7 +173,7 @@ InstallGlobalFunction( _Functor_ClassGroup_OnToricVarieties,
     
 end );
 
-InstallValue( functor_ClassGroup_for_toric_varieties,
+BindGlobal( "functor_ClassGroup_for_toric_varieties",
         CreateHomalgFunctor(
                 [ "name", "ClassGroup" ],
                 [ "category", TORIC_VARIETIES.category ],
