@@ -1,3 +1,7 @@
+# IMPORTANT
+The development on the ToricVarieties_project has been stopped in favor of [https://www.oscar-system.org/](OSCAR). See for instance [https://docs.oscar-system.org/stable/AlgebraicGeometry/ToricVarieties/intro/](here) for the existing functionality on toric varieties.
+
+
 # ToricVarieties_project
 
 [![CI](https://github.com/homalg-project/ToricVarieties_project/actions/workflows/test.yml/badge.svg)](https://github.com/homalg-project/ToricVarieties_project/actions/workflows/test.yml)
