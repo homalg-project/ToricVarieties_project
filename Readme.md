@@ -1,5 +1,5 @@
 # IMPORTANT
-The development on the ToricVarieties_project has been stopped in favor of [https://www.oscar-system.org/](OSCAR). See for instance [https://docs.oscar-system.org/stable/AlgebraicGeometry/ToricVarieties/intro/](here) for the existing functionality on toric varieties.
+The development on the ToricVarieties_project has been stopped in favor of [OSCAR](https://www.oscar-system.org/). See for instance [here](https://docs.oscar-system.org/stable/AlgebraicGeometry/ToricVarieties/intro/) for the existing functionality on toric varieties.
 
 
 # ToricVarieties_project
